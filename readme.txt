@@ -70,6 +70,9 @@ The attribute "excluded_layouts" lets you stop one or more layouts from being di
 
 The premium version allows you to add more than 100 products to the plugin, to use the 'Tags' feature, and to add additional images to products.
 
+= Why do I get a "Page not found" error when I turn on SEO friendly links? =
+
+You need to have some kind of pretty permalinks already enabled on your blog for them to work on the plugin. 
 
 == Screenshots ==
 
