@@ -209,6 +209,11 @@
 	<p><?php _e("The name of the product your users will see.", 'UPCP') ?></p>
 </div>
 <div class="form-field">
+	<label for="Item_Slug"><?php _e("Slug", 'UPCP') ?></label>
+	<input name="Item_Slug" id="Item_Slug" type="text" value="" size="60" />
+	<p><?php _e("The slug for your product if you use pretty permalinks.", 'UPCP') ?></p>
+</div>
+<div class="form-field">
 	<label for="Item_Image"><?php _e("Image", 'UPCP') ?></label>
 	<input id="Item_Image" type="text" size="36" name="Item_Image" value="http://" /> 
   <input id="Item_Image_button" class="button" type="button" value="Upload Image" />

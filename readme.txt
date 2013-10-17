@@ -1,7 +1,7 @@
 === Plugin Name ===
 Contributors: Rustaurius 
-Tags: product catalogue, restaurant menu, responsive, customizable CSS, affiliate links
-Requires at least: 3.0.1
+Tags: product catalogue, restaurant menu, responsive, customizable CSS, SEO friendly, affiliate links
+Requires at least: 3.5.0
 Tested up to: 3.6.1
 License: GPLv3
 License URI:http://www.gnu.org/licenses/gpl-3.0.html
@@ -19,6 +19,8 @@ Key Features:
 
 * 3 default layout formats, users can tab between them
 * Fully customizable via CSS
+* SEO friendly single product pages
+* UTF8 support
 * Drag-and-drop to re-order your catalogues
 * Upload products from a spreadsheet
 * Change starting layout by setting the "starting_layout" attribute
@@ -78,6 +80,11 @@ The premium version allows you to add more than 100 products to the plugin, to u
 5. The admin area
 
 == Changelog ==
+= 2.0.1 =
+- Added in the WordPress Uploader for product images
+- SEO friendly single product URLs are now an option
+- Plugin tables now use UTF8 encoding
+
 = 2.0 =
 - Added an 'Options' page
 - Added 'Read More' as an option on the 'Options' page
@@ -106,6 +113,6 @@ Initial Version.
 
 == Upgrade Notice ==
 
-= 1.2 = 
+= 2.0.1 = 
 
-- Shortcode easier to find, product links for affiliate sites, pagination for admin interface, single pages for products if FancyBox for Wordpress isn't installed
+- UTF8 support for the UPCP tables, WordPress Uploader for product images, SEO friendly URLs as an option 

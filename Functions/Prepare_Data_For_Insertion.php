@@ -5,6 +5,7 @@ function Add_Edit_Product() {
 		/* Process the $_POST data where neccessary before storage */
 		$Item_ID = $_POST['Item_ID'];
 		$Item_Name = stripslashes_deep($_POST['Item_Name']);
+		$Item_Slug = $_POST['Item_Slug'];
 		$Item_Photo_URL = $_POST['Item_Image'];
 		$Item_Description = stripslashes_deep($_POST['Item_Description']);
 		$Item_Price = $_POST['Item_Price'];
@@ -19,11 +20,11 @@ function Add_Edit_Product() {
 		if (!isset($error) or $error == __('No file was uploaded.', 'UPCP')) {
 				/* Pass the data to the appropriate function in Update_Admin_Databases.php to create the product */
 				if ($_POST['action'] == "Add_Product") {
-					  $user_update = Add_UPCP_Product($Item_Name, $Item_Photo_URL, $Item_Description, $Item_Price, $Item_Link, $Category_ID, $Global_Item_ID, $Item_Special_Attr, $SubCategory_ID, $Tags);
+					  $user_update = Add_UPCP_Product($Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Description, $Item_Price, $Item_Link, $Category_ID, $Global_Item_ID, $Item_Special_Attr, $SubCategory_ID, $Tags);
 				}
 				/* Pass the data to the appropriate function in Update_Admin_Databases.php to edit the product */
 				else {
-						$user_update = Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Photo_URL, $Item_Description, $Item_Price, $Item_Link, $Category_ID, $Global_Item_ID, $Item_Special_Attr, $SubCategory_ID, $Tags);
+						$user_update = Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Description, $Item_Price, $Item_Link, $Category_ID, $Global_Item_ID, $Item_Special_Attr, $SubCategory_ID, $Tags);
 				}
 				$user_update = array("Message_Type" => "Update", "Message" => $user_update);
 				return $user_update;

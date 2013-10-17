@@ -6,7 +6,7 @@ Description: Plugin to create a customizable product catalogue for businesses, r
 Author: Tim Ruse
 Author URI: http://www.EtoileWebDesign.com/
 Text Domain: UPCP
-Version: 2.0
+Version: 2.0.1
 */
 
 global $UPCP_db_version;
@@ -22,12 +22,12 @@ $catalogues_table_name = $wpdb->prefix . "UPCP_Catalogues";
 $catalogue_items_table_name = $wpdb->prefix . "UPCP_Catalogue_Items";
 $tags_table_name = $wpdb->prefix . "UPCP_Tags";
 $tagged_items_table_name = $wpdb->prefix . "UPCP_Tagged_Items";
-$UPCP_db_version = "1.2";
+$UPCP_db_version = "2.0.1.2";
 
 /* When plugin is activated */
 register_activation_hook(__FILE__,'Install_UPCP_DB');
 register_activation_hook(__FILE__,'Initial_UPCP_Data');
-register_activation_hook(__FILE__,'Install_UPCP_Options');
+register_activation_hook(__FILE__,'Initial_UPCP_Options');
 
 /* When plugin is deactivation*/
 register_deactivation_hook( __FILE__, 'Remove_UPCP' );
@@ -66,6 +66,9 @@ function UPCP_plugin_settings_link($links) {
  
 $plugin = plugin_basename(__FILE__); 
 add_filter("plugin_action_links_$plugin", 'UPCP_plugin_settings_link' );
+
+/* Put in the pretty permalinks filter */
+add_filter( 'query_vars', 'add_query_vars_filter' );
 
 function Add_UPCP_Scripts() {
 		if (isset($_GET['page']) && $_GET['page'] == 'UPCP-options') {
@@ -126,10 +129,17 @@ include "Functions/Process_Ajax.php";
 include "Functions/Shortcodes.php";
 include "Functions/Full_Upgrade.php";
 include "Functions/Version_Upgrade.php";
+include "Functions/Rewrite_Rules.php";
 
 // Updates the UPCP database when required
 if (get_option('UPCP_DB_Version') != $UPCP_db_version) {
 	  UpdateItemsTable();
 		update_option('UPCP_DB_Version', $UPCP_db_version);
+}
+
+if (get_option("UPCP_Update_RR_Rules") == "Yes") {
+	  add_filter( 'query_vars', 'add_query_vars_filter' );
+		add_filter('init', 'UPCP_Rewrite_Rules');
+		update_option("UPCP_Update_RR_Rules", "No");
 }
 ?>

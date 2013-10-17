@@ -3,6 +3,7 @@
 		$Links = get_option("UPCP_Product_Links");
 		$Tags = get_option("UPCP_Tag_Logic");
 		$ReadMore = get_option("UPCP_Read_More");
+		$PrettyLinks = get_option("UPCP_Pretty_Links");
 ?>
 <div class="wrap">
 <div id="icon-options-general" class="icon32"><br /></div><h2>Settings</h2>
@@ -26,6 +27,15 @@
 	<label title='Same'><input type='radio' name='product_links' value='Same' <?php if($Links == "Same") {echo "checked='checked'";} ?> /> <span>Open in Same Window</span></label><br />
 	<label title='New'><input type='radio' name='product_links' value='New' <?php if($Links == "New") {echo "checked='checked'";} ?> /> <span>Open in New Window</span></label><br />
 	<!--<label title='External'><input type='radio' name='product_links' value='External' <?php if($Links == "External") {echo "checked='checked'";} ?> /> <span>Open External Links Only in New Window</span></label><br />-->
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row">Pretty Permalinks</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span>Use Pretty Permalinks for Product Pages</span></legend>
+	<label title='Yes'><input type='radio' name='pretty_links' value='Yes' <?php if($PrettyLinks == "Yes") {echo "checked='checked'";} ?> /> <span>Yes</span></label><br />
+	<label title='No'><input type='radio' name='pretty_links' value='No' <?php if($PrettyLinks == "No") {echo "checked='checked'";} ?> /> <span>No</span></label><br />
 	</fieldset>
 </td>
 </tr>

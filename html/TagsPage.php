@@ -218,7 +218,7 @@
 <div class="Info-Div">
 		<h2><?php _e("Full Version Required!", 'UPCP') ?></h2>
 		<div class="upcp-full-version-explanation">
-				<?php _e("The full version of the Ultimate Product Catalogue Plugin is required to use tags. Please upgrade to unlock this page!", 'UPCP') ?>
+				<?php _e("The full version of the Ultimate Product Catalogue Plugin is required to use tags.", "UPCP");?><a href="http://www.etoilewebdesign.com/ultimate-product-catalogue-plugin/"><?php _e(" Please upgrade to unlock this page!", 'UPCP'); ?></a>
 		</div>
 </div>
 <?php } ?>	

@@ -4,7 +4,7 @@
 <div id="upcp_pro" class="postbox " >
 		<div class="handlediv" title="Click to toggle"></div><h3 class='hndle'><span><?php _e("Full Version", 'UPCP') ?></span></h3>
 		<div class="inside">
-				<ul><li><?php _e("Upgrade to the full version to take advantage of all the available features of the Ultimate Product Catalogue for Wordpress!", 'UPCP') ?></li>
+				<ul><li><a href="http://www.etoilewebdesign.com/ultimate-product-catalogue-plugin/"><?php _e("Upgrade to the full version ", "UPCP"); ?></a><?php _e("to take advantage of all the available features of the Ultimate Product Catalogue for Wordpress!", 'UPCP'); ?></li>
 				<div class="full-version-form-div">
 						<form action="admin.php?page=UPCP-options" method="post">
 								<div class="form-field form-required">
@@ -18,6 +18,7 @@
 </div>
 </div>
 <?php } ?>
+<?php/* echo get_option('plugin_error');*/?>
 
 <!-- List of the catalogues which have already been created -->
 <div id="col-right">

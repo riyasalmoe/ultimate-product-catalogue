@@ -10,6 +10,7 @@ function Insert_Product_Catalog($atts) {
 		$Tag_Logic = get_option("UPCP_Tag_Logic");
 		$Color = get_option("UPCP_Color_Scheme");
 		$Links = get_option("UPCP_Product_Links");
+		$Pretty_Links = get_option("UPCP_Pretty_Links");
 		
 		// Get the attributes passed by the shortcode, and store them in new variables for processing
 		extract( shortcode_atts( array(
@@ -22,7 +23,7 @@ function Insert_Product_Catalog($atts) {
 														)
 												);
 		
-		if ($_GET['SingleProduct'] != "") {$ReturnString = SingleProductPage(); return $ReturnString;}
+		if (get_query_var('single_product') != "" or $_GET['SingleProduct'] != "") {$ReturnString = SingleProductPage(); return $ReturnString;}
 											
 		$Catalogue_ID = $id;
 		$Catalogue_Sidebar = $sidebar;
@@ -249,6 +250,7 @@ function AddProduct($format, $Item_ID) {
 		
 		$ReadMore = get_option("UPCP_Read_More");
 		$Links = get_option("UPCP_Product_Links");
+		$Pretty_Links = get_option("UPCP_Pretty_Links");
 		if ($Links == "New") {$NewWindow = true;}
 		else {$NewWindow = false;}
 		
@@ -280,6 +282,7 @@ function AddProduct($format, $Item_ID) {
 		
 		if ($Product->Item_Link != "") {$ItemLink = $Product->Item_Link;}
 		elseif ($FancyBox_Installed) {$ItemLink = "#prod-cat-addt-details-" . $Product->Item_ID; $FancyBoxClass = true;}
+		elseif ($Pretty_Links == "Yes") {$ItemLink = $uri_parts[0] . "" . $Product->Item_Slug . "/?" . $uri_parts[1];}
 		else {$ItemLink = $uri_parts[0] . "?" . $uri_parts[1] . "&SingleProduct=" . $Product->Item_ID;}
 
 		//Create the listing for the thumbnail layout display
@@ -409,7 +412,11 @@ function AddProduct($format, $Item_ID) {
 
 function SingleProductPage() {
 		global $wpdb, $items_table_name, $item_images_table_name;
-		$Product = $wpdb->get_row("SELECT * FROM $items_table_name WHERE Item_ID=" . $_GET['SingleProduct']);
+		
+		$Pretty_Links = get_option("UPCP_Pretty_Links");
+		
+		if ($Pretty_Links == "Yes") {$Product = $wpdb->get_row("SELECT * FROM $items_table_name WHERE Item_Slug='" . get_query_var('single_product') . "'");}
+		else {$Product = $wpdb->get_row("SELECT * FROM $items_table_name WHERE Item_ID='" . $_GET['SingleProduct'] . "'");}
 		$Item_Images = $wpdb->get_results("SELECT Item_Image_URL, Item_Image_ID FROM $item_images_table_name WHERE Item_ID=" . $_GET['SingleProduct']);
 		
 		$Links = get_option("UPCP_Product_Links");
@@ -420,9 +427,10 @@ function SingleProductPage() {
 		$uri_parts = explode('?', $_SERVER['REQUEST_URI'], 2);
 		$SP_Perm_URL = $uri_parts[0] . "?" . $uri_parts[1];
 		$Return_URL = $uri_parts[0];
-		if ($uri_parts[0] == "/") {$Return_URL .= "?" . substr($uri_parts[1], 0, strpos($uri_parts[1], "&"));}
+		if ($Pretty_Links == "Yes") {$Return_URL = substr($uri_parts[0], 0, strrpos($uri_parts[0], "/", -2)) . "/?" . $uri_parts[1];}
+		elseif ($uri_parts[0] == "/") {$Return_URL .= "?" . substr($uri_parts[1], 0, strpos($uri_parts[1], "&"));}
 		
-		if ($uri_parts[1] = "") {$SP_Perm_URL .= "Product_ID=" . $Product->Item_ID;}
+		if ($uri_parts[1] == "") {$SP_Perm_URL .= "Product_ID=" . $Product->Item_ID;}
 		else {$SP_Perm_URL .= "&Product_ID=" . $Product->Item_ID;}
 		
 		$ProductString .= "<div class='prod-cat-back-link'>";

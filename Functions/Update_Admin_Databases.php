@@ -303,7 +303,7 @@ function Delete_Products_Catalogue() {
 
 /* Adds a single new product inputted via the form on the left-hand side of the
 *  products' page to the UPCP database */
-function Add_UPCP_Product($Item_Name, $Item_Photo_URL, $Item_Description, $Item_Price, $Item_Link, $Category_ID = "", $Global_Item_ID = "", $Item_Special_Attr = "", $SubCategory_ID = "", $Tags = array()) {
+function Add_UPCP_Product($Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Description, $Item_Price, $Item_Link, $Category_ID = "", $Global_Item_ID = "", $Item_Special_Attr = "", $SubCategory_ID = "", $Tags = array()) {
 		global $wpdb;
 		global $items_table_name;
 		global $categories_table_name;
@@ -328,6 +328,7 @@ function Add_UPCP_Product($Item_Name, $Item_Photo_URL, $Item_Description, $Item_
 		$wpdb->insert($items_table_name,
 				array(
 						'Item_Name' => $Item_Name,
+						'Item_Slug' => $Item_Slug,
 						'Item_Description' => $Item_Description,
 						'Item_Price' => $Item_Price,
 						'Item_Link' => $Item_Link,
@@ -360,7 +361,7 @@ function Add_UPCP_Product($Item_Name, $Item_Photo_URL, $Item_Description, $Item_
 }
 
 /* Edits a single product in the UPCP database */
-function Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Photo_URL, $Item_Description, $Item_Price, $Item_Link, $Category_ID = "", $Global_Item_ID = "", $Item_Special_Attr = "", $SubCategory_ID = "", $Tags = array()) {
+function Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Description, $Item_Price, $Item_Link, $Category_ID = "", $Global_Item_ID = "", $Item_Special_Attr = "", $SubCategory_ID = "", $Tags = array()) {
 		global $wpdb;
 		global $items_table_name;
 		global $categories_table_name;
@@ -392,6 +393,7 @@ function Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Photo_URL, $Item_Descript
 						$items_table_name,
 						array(
 						'Item_Name' => $Item_Name,
+						'Item_Slug' => $Item_Slug,
 						'Item_Description' => $Item_Description,
 						'Item_Price' => $Item_Price,
 						'Item_Link' => $Item_Link,
@@ -592,6 +594,11 @@ function Update_UPCP_Options() {
 		update_option('UPCP_Product_Links', $_POST['product_links']);
 		update_option('UPCP_Tag_Logic', $_POST['tag_logic']);
 		update_option("UPCP_Read_More", $_POST['read_more']);
+		update_option("UPCP_Pretty_Links", $_POST['pretty_links']);
+		
+		if ($_POST['Pretty_Links'] == "Yes") {
+			 update_option("UPCP_Update_RR_Rules", "Yes");
+		}
 		
 		$update = __("Options have been succesfully updated.", 'UPCP');
 		return $update;

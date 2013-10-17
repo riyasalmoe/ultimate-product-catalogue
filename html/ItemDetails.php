@@ -20,6 +20,11 @@
 								<p><?php _e("The name of the product your users will see.", 'UPCP') ?></p></td>
 						</tr>
 						<tr>
+								<th><label for="Item_Slug"><?php _e("Slug", 'UPCP') ?></label></th>
+								<td><input name="Item_Slug" id="Item_Slug" type="text" value="<?php echo $Product->Item_Slug;?>" size="60" />
+								<p><?php _e("The slug for your product if you use pretty permalinks.", 'UPCP') ?></p></td>
+						</tr>
+						<tr>
 								<th><label for="Item_Image"><?php _e("Image", 'UPCP') ?></label></th>
 								<td><input id="Item_Image" type="text" size="36" name="Item_Image" value="<?php echo $Product->Item_Photo_URL;?>" /> 
   							<input id="Item_Image_button" class="button" type="button" value="Upload Image" />
@@ -119,7 +124,7 @@
 						<div class="Explanation-Div">
 								<h2><?php _e("Full Version Required!", 'UPCP') ?></h2>
 								<div class="upcp-full-version-explanation">
-										<?php _e("The full version of the Ultimate Product Catalogue Plugin is required to additional product images. Please upgrade to unlock this page!", 'UPCP') ?>
+										<?php _e("The full version of the Ultimate Product Catalogue Plugin is required to additional product images.", "UPCP");?><a href="http://www.etoilewebdesign.com/ultimate-product-catalogue-plugin/"><?php _e(" Please upgrade to unlock this page!", 'UPCP'); ?></a>
 								</div>
 						</div>
 				<?php } ?>
