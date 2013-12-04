@@ -8,4 +8,5 @@ function Initial_UPCP_Options() {
 		update_option("UPCP_Pretty_Links", "No");
 		update_option("UPCP_Mobile_SS", "No");
 		update_option("UPCP_Install_Flag", "Yes");
+		update_option("UPCP_First_Install_Version", "2.1");
 }
