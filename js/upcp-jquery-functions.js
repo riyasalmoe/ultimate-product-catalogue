@@ -1,3 +1,24 @@
+function FieldFocus (Field) {
+		if (Field.value == Field.defaultValue){
+			  Field.value = '';
+		}
+}
+
+function FieldBlur(Field) {
+		if (Field.value == '') {
+			  Field.value = Field.defaultValue;
+		}
+}
+
+function UPCPHighlight(Field, Color) {
+		if (jQuery(Field.parentNode).hasClass('highlight'+Color)) {
+			  jQuery(Field.parentNode).removeClass('highlight'+Color);
+		}
+		else {
+				jQuery(Field.parentNode).addClass('highlight'+Color);
+		}
+}
+
 function UPCP_Filer_Results() {
 		
 		Fail = false;
@@ -6,7 +27,10 @@ function UPCP_Filer_Results() {
 		var TagBoxValues = [];
 		
 		jQuery('.upcp-clear').each(function() {jQuery(this).remove();});
-		TargetProdName = jQuery('.jquery-prod-name-text').val();
+		var TargetProdName = "";
+		jQuery('.jquery-prod-name-text').each(function(){
+				if (jQuery('.jquery-prod-name-text').val() != '' && jQuery('.jquery-prod-name-text').val() != 'Name...') {TargetProdName = jQuery('.jquery-prod-name-text').val();}
+		});
 		jQuery('.jquery-prod-cat-value').each(function() {if (jQuery(this).prop('checked')) {CatBoxValues.push(jQuery(this).val());}});
 		jQuery('.jquery-prod-sub-cat-value').each(function() {if (jQuery(this).prop('checked')) {SubBoxValues.push(jQuery(this).val());}});
 		jQuery('.jquery-prod-tag-value').each(function() {if (jQuery(this).prop('checked')) {TagBoxValues.push(jQuery(this).val());}});
@@ -41,7 +65,10 @@ function UPCP_Filer_Results_OR() {
 		var TagBoxValues = [];
 		
 		jQuery('.upcp-clear').each(function() {jQuery(this).remove();});
-		TargetProdName = jQuery('.jquery-prod-name-text').val();
+		var TargetProdName = "";
+		jQuery('.jquery-prod-name-text').each(function(){
+				if (jQuery('.jquery-prod-name-text').val() != '' && jQuery('.jquery-prod-name-text').val() != 'Name...') {TargetProdName = jQuery('.jquery-prod-name-text').val();}
+		});
 		jQuery('.jquery-prod-cat-value').each(function() {if (jQuery(this).prop('checked')) {CatBoxValues.push(jQuery(this).val());}});
 		jQuery('.jquery-prod-sub-cat-value').each(function() {if (jQuery(this).prop('checked')) {SubBoxValues.push(jQuery(this).val());}});
 		jQuery('.jquery-prod-tag-value').each(function() {if (jQuery(this).prop('checked')) {TagBoxValues.push(jQuery(this).val());}});
@@ -83,8 +110,8 @@ function ToggleItem(Item_ID) {
 
 /* Used to track the number of times that a product is clicked in all catalogues */
 function RecordView(Item_ID) {
-		var order = 'Item_ID=' + Item_ID + '&action=record_view';
-		jQuery.post(ajaxurl, order, function(response) {});
+		var data = 'Item_ID=' + Item_ID + '&action=record_view';
+		jQuery.post(ajaxurl, data, function(response) {});
 }
 
 function ToggleView(DisplayType) {
@@ -145,3 +172,131 @@ jQuery(document).ready(function()
 		 objHeight = objHeight + 240;
      jQuery('.prod-cat-inner').height(objHeight);
 });
+
+/* Sort by price or by name */
+jQuery.fn.sortElements = (function(){
+ 
+    var sort = [].sort;
+ 
+    return function(comparator, getSortable) {
+ 
+        getSortable = getSortable || function(){return this;};
+ 
+        var placements = this.map(function(){
+ 
+            var sortElement = getSortable.call(this),
+                parentNode = sortElement.parentNode,
+ 
+                // Since the element itself will change position, we have
+                // to have some way of storing its original position in
+                // the DOM. The easiest way is to have a 'flag' node:
+                nextSibling = parentNode.insertBefore(
+                    document.createTextNode(''),
+                    sortElement.nextSibling
+                );
+ 
+            return function() {
+ 
+                if (parentNode === this) {
+                    throw new Error(
+                        "You can't sort elements if any one is a descendant of another."
+                    );
+                }
+ 
+                // Insert before flag:
+                parentNode.insertBefore(this, nextSibling);
+                // Remove flag:
+                parentNode.removeChild(nextSibling);
+ 
+            };
+ 
+        });
+ 
+        return sort.call(this, comparator).each(function(i){
+            placements[i].call(getSortable.call(this));
+        });
+ 
+    };
+ 
+})();
+
+function UPCP_Sort_By() {
+		jQuery('.prod-cat-category-label').each(function() {jQuery(this).addClass('Hide-Item');});
+		var SortBy = jQuery('#upcp-sort-by').val();
+		if (SortBy == "name_asc") {SortByNameASC();}
+		else if (SortBy == "name_desc") {SortByNameDESC();}
+		else if (SortBy == "price_asc") {SortByPriceASC();}
+		else {SortByPriceDESC();}
+}
+
+function SortByNameASC() {            
+        jQuery('.thumb-display div .prod-cat-title').sortElements(function(a, b){
+						return jQuery(a).text() > jQuery(b).text() ? 1 : -1;
+        }, function() {
+						return this.parentNode.parentNode;
+				});
+				jQuery('.list-display div .prod-cat-title').sortElements(function(a, b){
+						return jQuery(a).text() > jQuery(b).text() ? 1 : -1;
+        }, function() {
+						return this.parentNode;
+				});
+				jQuery('.detail-display div .prod-cat-title').sortElements(function(a, b){
+						return jQuery(a).text() > jQuery(b).text() ? 1 : -1;
+        }, function() {
+						return this.parentNode.parentNode;
+				});
+}
+
+function SortByNameDESC() {            
+        jQuery('.thumb-display div .prod-cat-title').sortElements(function(a, b){
+						return jQuery(a).text() < jQuery(b).text() ? 1 : -1;
+        }, function() {
+						return this.parentNode.parentNode;
+				});
+				jQuery('.list-display div .prod-cat-title').sortElements(function(a, b){
+						return jQuery(a).text() < jQuery(b).text() ? 1 : -1;
+        }, function() {
+						return this.parentNode;
+				});
+				jQuery('.detail-display div .prod-cat-title').sortElements(function(a, b){
+						return jQuery(a).text() < jQuery(b).text() ? 1 : -1;
+        }, function() {
+						return this.parentNode.parentNode;
+				});
+}
+
+function SortByPriceASC() {            
+        jQuery('.thumb-display div .prod-cat-price').sortElements(function(a, b){
+						return Number(jQuery(a).text()) > Number(jQuery(b).text()) ? 1 : -1;
+        }, function() {
+						return this.parentNode;
+				});
+				jQuery('.list-display div .prod-cat-price').sortElements(function(a, b){
+						return Number(jQuery(a).text()) > Number(jQuery(b).text()) ? 1 : -1;
+        }, function() {
+						return this.parentNode;
+				});
+				jQuery('.detail-display div .prod-cat-price').sortElements(function(a, b){
+						return Number(jQuery(a).text()) > Number(jQuery(b).text()) ? 1 : -1;
+        }, function() {
+						return this.parentNode.parentNode;
+				});
+}
+
+function SortByPriceDESC() {
+				jQuery('.thumb-display div .prod-cat-price').sortElements(function(a, b){
+						return Number(jQuery(a).text()) < Number(jQuery(b).text()) ? 1 : -1;
+        }, function() {
+						return this.parentNode;
+				});
+				jQuery('.list-display div .prod-cat-price').sortElements(function(a, b){
+						return Number(jQuery(a).text()) < Number(jQuery(b).text()) ? 1 : -1;
+        }, function() {
+						return this.parentNode;
+				});
+				jQuery('.detail-display div .prod-cat-price').sortElements(function(a, b){
+						return Number(jQuery(a).text()) < Number(jQuery(b).text()) ? 1 : -1;
+        }, function() {
+						return this.parentNode.parentNode;
+				});
+}

@@ -12,3 +12,9 @@ jQuery(document).ready(function() {
 				}
 		});
 });
+
+function RecordView(Item_ID) {
+		var data = 'Item_ID=' + Item_ID + '&action=record_view';
+		jQuery.post(ajaxurl, data, function(response) {alert(response);});
+		alert(data);
+}

@@ -56,6 +56,9 @@
 		height:1px;
 		float:left;
 }
+.upcp-mobile-menu {
+  display:none;
+}
 /*** Screen width 748px-1007px ***/
 @media only screen and (min-width: 748px) and (max-width: 1007px) {
     body{
@@ -202,30 +205,76 @@
 .prod-cat-sidebar {
   float:left;
 }
+.highlightBlue {
+  background:rgba(128,190,225, 0.5);
+	border-radius: 4px;
+}
+.hightlightBlack,
+.hightlightGrey {
+  background:rgba(225,225,225, 0.75);
+	border-radius: 4px;
+}
+.prod-cat-sidebar-category,
+.prod-cat-sidebar-subcategory,
+.prod-cat-sidebar-tag {
+  margin-bottom:2px;
+}
+.styled-input {
+   width: 190px;
+   height: 34px;
+   overflow: hidden;
+   background: #eee;
+   border: 1px solid #ccc;
+	 margin-top: 2px;
+}
+.styled-select {
+  background: url(../images/down_arrow_select.jpg) no-repeat right #eee;
+}
+.styled-input select,
+.styled-input input {
+   background: transparent;
+   width: 198px;
+   padding: 5px;
+   font-size: 14px;
+   line-height: 1;
+   border: 0;
+   border-radius: 0;
+   height: 34px;
+   -webkit-appearance: none;
+}
+.styled-input input {
+  margin-bottom:3px;
+	padding-left:8px;
+	height:26px;
+}
 .prod-cat-text-search {
+  margin-top:8px;
 }
 .prod-cat-category-div {
   padding-top:1em;
 }
 .prod-cat-category {
 }
-.prod-cat-category-title {
+.prod-cat-sidebar-category-title {
+  margin-top:8px;
 }
 .prod-cat-subcategory-div {
   padding-top:1em;
 }
 .prod-cat-subcategory {
 }
-.prod-cat-subcategory-title {
+.prod-cat-sidebar-subcategory-title {
+  margin-top:8px;
 }
 .prod-cat-tag-div {
   padding-top:1em;
 }
 .prod-cat-tag {
 }
-.prod-cat-tag-title {
-
+.prod-cat-tag-sidebar-title {
+  margin-top:8px;
 }
+
 
 /* Thumbnail Display-Specific Styles */
 .thumb-display {
@@ -548,4 +597,46 @@
 		.upcp-list-details-link {
 		  padding-left: 50px;
 		}
+}
+
+/* Mobile Display */
+@media only screen and (max-width: 480px){
+  .Blue-thumb-icon,
+	.Grey-thumb-icon,
+	.Black-thumb-icon, 
+	.Blue-list-icon,
+	.Grey-list-icon,
+	.Black-list-icon,
+	.Blue-details-icon,
+	.Grey-details-icon,
+	.Black-details-icon {
+	  display:none;
+  }
+	.upcp-mobile-menu {
+	  display:inline;
+	}
+	.mobile-search {
+	  width: 95%;
+	}
+	.upcp-thumb-item {
+	  float:none;
+		margin:0 6px;
+		margin-bottom:16px;
+		width:97% !important;
+	}
+	.upcp-thumb-image-div a {
+	  width:200px;
+	}
+	.upcp-thumb-image {
+	  max-width: 200px !important;
+	}
+	.upcp-thumb-image-div {
+	  width:97% !important;
+	}
+	.prod-cat-sidebar {
+	  display:none;
+	}
+	.prod-cat-category-label {
+	  margin-left: 4px;
+	}
 }

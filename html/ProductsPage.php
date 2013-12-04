@@ -81,6 +81,13 @@
 												<span class="sorting-indicator"></span>
 										</a>
 						</th>
+						<th scope='col' id='enabled' class='manage-column column-users sortable desc'  style="">
+									  <?php if ($_GET['OrderBy'] == "Item_Views" and $_GET['Order'] == "ASC") { echo "<a href='admin.php?page=UPCP-options&DisplayPage=Products&OrderBy=Item_Views&Order=DESC'>";}
+										 			else {echo "<a href='admin.php?page=UPCP-options&DisplayPage=Products&OrderBy=Item_Views&Order=ASC'>";} ?>
+											  <span><?php _e("# of Views", 'UPCP') ?></span>
+												<span class="sorting-indicator"></span>
+										</a>
+						</th>
 				</tr>
 		</thead>
 
@@ -122,6 +129,13 @@
 												<span class="sorting-indicator"></span>
 										</a>
 						</th>
+						<th scope='col' id='enabled' class='manage-column column-users sortable desc'  style="">
+									  <?php if ($_GET['OrderBy'] == "Item_Views" and $_GET['Order'] == "ASC") { echo "<a href='admin.php?page=UPCP-options&DisplayPage=Products&OrderBy=Item_Views&Order=DESC'>";}
+										 			else {echo "<a href='admin.php?page=UPCP-options&DisplayPage=Products&OrderBy=Item_Views&Order=ASC'>";} ?>
+											  <span><?php _e("# of Views", 'UPCP') ?></span>
+												<span class="sorting-indicator"></span>
+										</a>
+						</th>
 				</tr>
 		</tfoot>
 
@@ -156,6 +170,7 @@
 								echo "<td class='description column-price'>" . $Item->Item_Price . "</td>";
 								echo "<td class='users column-category'>" . $Item->Category_Name . "</td>";
 								echo "<td class='users column-subcategory'>" . $Item->SubCategory_Name . "</td>";
+								echo "<td class='users column-item-views'>" . $Item->Item_Views . "</td>";
 								echo "</tr>";
 						}
 				}

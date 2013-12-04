@@ -452,14 +452,20 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 		$highestColumn = $sheet->getHighestColumn();
 		$highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);	
 		for ($column = 0; $column < $highestColumnIndex; $column++) {
-				$Titles[$column] = $sheet->getCellByColumnAndRow($column, 1)->getValue();
+				$Titles[$column] = trim($sheet->getCellByColumnAndRow($column, 1)->getValue());
 		}
-		
+
 		// Make sure all columns are acceptable based on the acceptable fields above
 		foreach ($Titles as $Title) {
-				if (!array_key_exists($Title, $Allowed_Fields)) {
+				if ($Title != "" and !array_key_exists($Title, $Allowed_Fields)) {
 					  $Error = __("You have a column which is not recognized: ", 'UPCP') . $Title . __(". <br>Please make sure that the column names match the product field labels exactly.", 'UPCP');
-						return $Error;
+						$user_update = array("Message_Type" => "Error", "Message" => $Error);
+						return $user_update;
+				}
+				if ($Title == "") {
+					  $Error = __("You have a blank column that has been edited.<br>Please delete that column and re-upload your spreadsheet.", 'UPCP');
+						$user_update = array("Message_Type" => "Error", "Message" => $Error);
+						return $user_update;
 				}
 		}
 		
@@ -470,7 +476,7 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 						$Data[$row][$column] = $sheet->getCellByColumnAndRow($column, $row)->getValue();
 				}
 		}
-		
+
 		// Create an array of the categories currently in the UPCP database, 
 		// with Category_Name as the key and Category_ID as the value
 		$Categories_From_DB = $wpdb->get_results("SELECT * FROM $categories_table_name");
@@ -484,7 +490,7 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 		foreach ($SubCategories_From_DB as $SubCategory) {
 				$SubCategories[$SubCategory->SubCategory_Name] = $SubCategory->SubCategory_ID;
 		}
-		
+
 		// Creates an array of the field names which are going to be inserted into the database
 		// and then turns that array into a string so that it can be used in the query
 		for ($column = 0; $column < $highestColumnIndex; $column++) {
@@ -493,7 +499,7 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 				if ($Allowed_Fields[$Titles[$column]] == "SubCategory_Name") {$SubCategory_Column = $column; $Fields[] = "SubCategory_ID";}
 		}
 		$FieldsString = implode(",", $Fields);
-		
+
 		// Create the query to insert the products one at a time into the database and then run it
 		foreach ($Data as $Product) {
 				
@@ -518,7 +524,9 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 
 				unset($Values);
 				unset($ValuesString);
+				echo "Goal post 6";
 		}
+
 		return __("Products added successfully.", 'UPCP');
 }
 
@@ -590,11 +598,15 @@ function Delete_Product_Image() {
 
 /* Updates the main plugin options in the WordPress database */
 function Update_UPCP_Options() {
+		global $Full_Version;
+		$InstallVersion = get_option("UPCP_First_Install_Version");
+		
 		update_option('UPCP_Color_Scheme', $_POST['color_scheme']);
 		update_option('UPCP_Product_Links', $_POST['product_links']);
 		update_option('UPCP_Tag_Logic', $_POST['tag_logic']);
 		update_option("UPCP_Read_More", $_POST['read_more']);
-		update_option("UPCP_Pretty_Links", $_POST['pretty_links']);
+		if ($InstallVersion <= 2.0 or $Full_Version == "Yes") {update_option("UPCP_Pretty_Links", $_POST['pretty_links']);}
+		if ($Full_Version == "Yes") {update_option("UPCP_Mobile_SS", $_POST['mobile_styles']);}
 		
 		if ($_POST['Pretty_Links'] == "Yes") {
 			 update_option("UPCP_Update_RR_Rules", "Yes");

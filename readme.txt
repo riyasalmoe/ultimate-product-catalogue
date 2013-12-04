@@ -1,12 +1,12 @@
 === Plugin Name ===
 Contributors: Rustaurius 
-Tags: product catalogue, restaurant menu, responsive, customizable CSS, SEO friendly, affiliate links
+Tags: product catalogue, product catalog, restaurant menu, responsive, customizable CSS, SEO friendly, affiliate links
 Requires at least: 3.5.0
-Tested up to: 3.6.1
+Tested up to: 3.7
 License: GPLv3
 License URI:http://www.gnu.org/licenses/gpl-3.0.html
 
-Displays a product catalogue or menu for your store, restaurant, group, etc. Has three default responsive layouts and can accept custom CSS.
+Displays a product catalog(ue) or menu for your store, restaurant, group, etc. Has three default responsive layouts and can accept custom CSS.
 
 == Description ==
 
@@ -83,6 +83,13 @@ You need to have some kind of pretty permalinks already enabled on your blog for
 5. The admin area
 
 == Changelog ==
+= 2.1 =
+- Implemented view counting for products, based on clicks on title or image links
+- Added mobile stylesheet (v1) and product sorting for premium users
+- Increased compatibility for uploaded product spreadsheets (more forgiving of small errors in column names, better error reporting)
+- Attempted to make tables compatible with MySQL strict mode
+- Fixed an error where SEO friendly URL's stopped working shortly after being setup
+
 = 2.0.1 =
 - Added in the WordPress Uploader for product images
 - SEO friendly single product URLs are now an option

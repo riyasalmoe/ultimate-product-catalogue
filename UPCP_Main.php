@@ -6,7 +6,7 @@ Description: Plugin to create a customizable product catalogue for businesses, r
 Author: Tim Ruse
 Author URI: http://www.EtoileWebDesign.com/
 Text Domain: UPCP
-Version: 2.0.1
+Version: 2.1
 */
 
 global $UPCP_db_version;
@@ -22,7 +22,10 @@ $catalogues_table_name = $wpdb->prefix . "UPCP_Catalogues";
 $catalogue_items_table_name = $wpdb->prefix . "UPCP_Catalogue_Items";
 $tags_table_name = $wpdb->prefix . "UPCP_Tags";
 $tagged_items_table_name = $wpdb->prefix . "UPCP_Tagged_Items";
-$UPCP_db_version = "2.0.1.2";
+$UPCP_db_version = "2.1.1";
+
+/*define('WP_DEBUG', true);
+$wpdb->show_errors();*/
 
 /* When plugin is activated */
 register_activation_hook(__FILE__,'Install_UPCP_DB');
@@ -90,6 +93,10 @@ add_action( 'wp_enqueue_scripts', 'UPCP_Add_Stylesheet' );
 function UPCP_Add_Stylesheet() {
     wp_register_style( 'catalogue-style', plugins_url('css/catalogue-style.css', __FILE__) );
     wp_enqueue_style( 'catalogue-style' );
+		if (is_rtl()) {
+			  wp_register_style( 'upcp-rtl-style', plugins_url('css/rtl-style.css', __FILE__) );
+    		wp_enqueue_style( 'upcp-rtl-style' );
+		}
 }
 
 add_action( 'wp_enqueue_scripts', 'Add_UPCP_FrontEnd_Scripts' );
@@ -130,14 +137,17 @@ include "Functions/Shortcodes.php";
 include "Functions/Full_Upgrade.php";
 include "Functions/Version_Upgrade.php";
 include "Functions/Rewrite_Rules.php";
+include "Functions/Update_Tables.php";
+include "Functions/FrontEndAjaxUrl.php";
 
 // Updates the UPCP database when required
 if (get_option('UPCP_DB_Version') != $UPCP_db_version) {
-	  UpdateItemsTable();
+	  UpdateTables();
 		update_option('UPCP_DB_Version', $UPCP_db_version);
 }
 
-if (get_option("UPCP_Update_RR_Rules") == "Yes") {
+$rules = get_option('rewrite_rules');
+if (!isset($rules['"(.?.+?)/([^&]+)/?$"'])) {
 	  add_filter( 'query_vars', 'add_query_vars_filter' );
 		add_filter('init', 'UPCP_Rewrite_Rules');
 		update_option("UPCP_Update_RR_Rules", "No");

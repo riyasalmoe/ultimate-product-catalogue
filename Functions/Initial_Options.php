@@ -6,4 +6,6 @@ function Initial_UPCP_Options() {
 		update_option("UPCP_Tag_Logic", "AND");
 		update_option("UPCP_Read_More", "Yes");
 		update_option("UPCP_Pretty_Links", "No");
+		update_option("UPCP_Mobile_SS", "No");
+		update_option("UPCP_Install_Flag", "Yes");
 }

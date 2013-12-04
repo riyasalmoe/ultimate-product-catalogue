@@ -4,6 +4,8 @@
 		$Tags = get_option("UPCP_Tag_Logic");
 		$ReadMore = get_option("UPCP_Read_More");
 		$PrettyLinks = get_option("UPCP_Pretty_Links");
+		$MobileStyle = get_option("UPCP_Mobile_SS");
+		$InstallVersion = get_option("UPCP_First_Install_Version");
 ?>
 <div class="wrap">
 <div id="icon-options-general" class="icon32"><br /></div><h2>Settings</h2>
@@ -30,6 +32,7 @@
 	</fieldset>
 </td>
 </tr>
+<?php if ($InstallVersion <= 2.0) { ?>
 <tr>
 <th scope="row">Pretty Permalinks</th>
 <td>
@@ -39,6 +42,7 @@
 	</fieldset>
 </td>
 </tr>
+<?php } ?>
 <tr>
 <th scope="row">Read More</th>
 <td>
@@ -57,6 +61,30 @@
 	</fieldset>
 </td>
 </tr>
+</table>
+<h3>Premium Options</h3>
+<?php if ($InstallVersion >= 2.1) { ?>
+<table class="form-table">
+<tr>
+<th scope="row">Pretty Permalinks</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span>Use Pretty Permalinks for Product Pages</span></legend>
+	<label title='Yes'><input type='radio' name='pretty_links' value='Yes' <?php if($PrettyLinks == "Yes") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span>Yes</span></label><br />
+	<label title='No'><input type='radio' name='pretty_links' value='No' <?php if($PrettyLinks == "No") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span>No</span></label><br />
+	</fieldset>
+</td>
+</tr>
+<?php } ?>
+<tr>
+<th scope="row">Mobile Stylesheet</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span>Use Mobile Stylesheet (for screens under 480 pixels)</span></legend>
+	<label title='Yes'><input type='radio' name='mobile_styles' value='Yes' <?php if($MobileStyle == "Yes") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span>Yes</span></label><br />
+	<label title='No'><input type='radio' name='mobile_styles' value='No' <?php if($MobileStyle == "No") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span>No</span></label><br />
+	</fieldset>
+</td>
+</tr>
+
 </table>
 
 

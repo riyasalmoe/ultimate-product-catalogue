@@ -18,14 +18,17 @@ add_action('wp_ajax_catalogue_update_order', 'Catalogue_Save_Order');
 
 // Records the number of times a product has been viewed
 function Record_Item_View() {
-		global $catalogue_items_table_name;
+		global $items_table_name;
 		$Path = ABSPATH . 'wp-load.php';
 		include_once($Path);
 		global $wpdb;
 		
-		$Item_ID = $GET['Item_ID'];
-		$wpdb->query("UPDATE $items_table_name SET Item_Views=Item_Views+1 WHERE Item_ID=" . $Item_ID);
+		$Item_ID = $_POST['Item_ID'];
+		$Item = $wpdb->get_row("SELECT Item_Views FROM $items_table_name WHERE Item_ID=" . $Item_ID);
+		if ($Item->Item_Views == "") {$wpdb->query("UPDATE $items_table_name SET Item_Views=1 WHERE Item_ID=" . $Item_ID);}
+		else {$wpdb->query("UPDATE $items_table_name SET Item_Views=Item_Views+1 WHERE Item_ID=" . $Item_ID);}
 }
+add_action('wp_ajax_record_view', 'Record_Item_View');
 
 // Updates sub-categories drop-down box on the products pages, based on the product's category
 function Get_UPCP_SubCategories() {
