@@ -21,13 +21,14 @@
 <?php/* echo get_option('plugin_error');*/?>
 <?php if (get_option("UPCP_Update_Flag") == "Yes" or get_option("UPCP_Install_Flag") == "Yes") {
 				  update_option('UPCP_Update_Flag', "No");
-					update_option('UPCP_Initial_Install', "No"); 
+					update_option('UPCP_Install_Flag', "No"); 
 				?>
 					<div id="side-sortables" class="metabox-holder ">
 							<div id="upcp_pro" class="postbox " >
 							<div class="handlediv" title="Click to toggle"></div><h3 class='hndle'><span><?php _e("Thank You!", 'UPCP') ?></span></h3>
 							 		<div class="inside">
-											<ul><li><?php _e("Thanks for upgrading to version 2.1!", "UPCP"); ?><br> <a href='http://www.facebook.com/EtoileWebDesign'><?php _e("Follow us on Facebook", "UPCP"); ?></a> <?php _e("to suggest new features or hear about upcoming ones!", "UPCP");?> </li>
+											<?php if (get_option("UPCP_Install_Flag") == "Yes") { ?><ul><li><?php _e("Thanks for installing the Ultimate Product Catalogue Plugin.", "UPCP"); ?><br> <a href='http://www.facebook.com/EtoileWebDesign'><?php _e("Follow us on Facebook", "UPCP"); ?></a> <?php _e("to suggest new features or hear about upcoming ones!", "UPCP");?> </li></ul>
+											<?php } else { ?><ul><li><?php _e("Thanks for upgrading to version 2.1!", "UPCP"); ?><br> <a href='http://www.facebook.com/EtoileWebDesign'><?php _e("Follow us on Facebook", "UPCP"); ?></a> <?php _e("to suggest new features or hear about upcoming ones!", "UPCP");?> </li></ul><?php } ?>
 									</div>
 							</div>
 							</div>
