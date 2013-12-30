@@ -118,6 +118,5 @@ function UpdateTables() {
 		DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;";
    	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
    	dbDelta($sql);
-		update_option('UPCP_First_Install_Version', 2);
 }
 ?>

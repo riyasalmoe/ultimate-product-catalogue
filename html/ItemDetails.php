@@ -2,7 +2,7 @@
 <!-- The details of a specific product for editing, based on the product ID -->
 <?php if ($_GET['Selected'] == "Product") { ?>
 		
-		<?php $Product = $wpdb->get_row("SELECT * FROM $items_table_name WHERE Item_ID =" . $_GET['Item_ID']); ?>
+		<?php $Product = $wpdb->get_row($wpdb->prepare("SELECT * FROM $items_table_name WHERE Item_ID ='%d'", $_GET['Item_ID'])); ?>
 		
 		<div class="OptionTab ActiveTab" id="EditProduct">
 				<div class="form-wrap ItemDetail">
@@ -133,7 +133,7 @@
 <!-- The details of a specific category for editing, based on the product ID -->		
 <?php } elseif ($_GET['Selected'] == "Category") { ?>
 		
-		<?php $Category = $wpdb->get_row("SELECT * FROM $categories_table_name WHERE Category_ID =" . $_GET['Category_ID']); ?>
+		<?php $Category = $wpdb->get_row($wpdb->prepare("SELECT * FROM $categories_table_name WHERE Category_ID ='%d'", $_GET['Category_ID'])); ?>
 		
 		<div class="OptionTab ActiveTab" id="EditCategory">
 				
@@ -146,7 +146,7 @@
 
 				<div id="tabs-panel-posttype-page-most-recent" class="tabs-panel tabs-panel-active">
 				<ul id="pagechecklist-most-recent" class="categorychecklist form-no-clear">
-				<?php $Products = $wpdb->get_results("SELECT Item_ID, Item_Name FROM $items_table_name WHERE Category_ID=" . $_GET['Category_ID']);
+				<?php $Products = $wpdb->get_results($wpdb->prepare("SELECT Item_ID, Item_Name FROM $items_table_name WHERE Category_ID='%d'", $_GET['Category_ID']));
 							foreach ($Products as $Product) {
 									echo "<li><label class='menu-item-title'><a href='admin.php?page=UPCP-options&Action=Item_Details&Selected=Product&Item_ID=" . $Product->Item_ID . "'>" . $Product->Item_Name . "</a></label></li>";
 							}
@@ -196,7 +196,7 @@
 <!-- The details of a specific sub-category for editing, based on the product ID -->		
 <?php } elseif ($_GET['Selected'] == "SubCategory") { ?>
 		
-		<?php $SubCategory = $wpdb->get_row("SELECT * FROM $subcategories_table_name WHERE SubCategory_ID =" . $_GET['SubCategory_ID']); ?>
+		<?php $SubCategory = $wpdb->get_row($wpdb->prepare("SELECT * FROM $subcategories_table_name WHERE SubCategory_ID ='%d'", $_GET['SubCategory_ID'])); ?>
 		
 		<div class="OptionTab ActiveTab" id="EditSubCategory">
 				
@@ -209,7 +209,7 @@
 
 				<div id="tabs-panel-posttype-page-most-recent" class="tabs-panel tabs-panel-active">
 				<ul id="pagechecklist-most-recent" class="categorychecklist form-no-clear">
-				<?php $Products = $wpdb->get_results("SELECT Item_ID, Item_Name FROM $items_table_name WHERE SubCategory_ID=" . $_GET['SubCategory_ID']);
+				<?php $Products = $wpdb->get_results($wpdb->prepare("SELECT Item_ID, Item_Name FROM $items_table_name WHERE SubCategory_ID='%d'", $_GET['SubCategory_ID']));
 							foreach ($Products as $Product) {
 									echo "<li><label class='menu-item-title'><a href='admin.php?page=UPCP-options&Action=Item_Details&Selected=Product&Item_ID=" . $Product->Item_ID . "'>" . $Product->Item_Name . "</a></label></li>";
 							}
@@ -266,7 +266,7 @@
 <!-- The details of a specific tag for editing, based on the product ID -->		
 <?php } elseif ($_GET['Selected'] == "Tag") { ?>
 		
-		<?php $Tag = $wpdb->get_row("SELECT * FROM $tags_table_name WHERE Tag_ID =" . $_GET['Tag_ID']); ?>
+		<?php $Tag = $wpdb->get_row($wpdb->prepare("SELECT * FROM $tags_table_name WHERE Tag_ID ='%d'", $_GET['Tag_ID'])); ?>
 		
 		<div class="OptionTab ActiveTab" id="EditTag">
 				
@@ -279,7 +279,7 @@
 
 				<div id="tabs-panel-posttype-page-most-recent" class="tabs-panel tabs-panel-active">
 				<ul id="pagechecklist-most-recent" class="categorychecklist form-no-clear">
-				<?php $Tagged_Items = $wpdb->get_results("SELECT Item_ID FROM $tagged_items_table_name WHERE Tag_ID=" . $_GET['Tag_ID']);
+				<?php $Tagged_Items = $wpdb->get_results($wpdb->prepare("SELECT Item_ID FROM $tagged_items_table_name WHERE Tag_ID='%d'", $_GET['Tag_ID']));
 							foreach ($Tagged_Items as $Tagged_Item) {
 									$Product = $wpdb->get_row("SELECT Item_ID, Item_Name FROM $items_table_name WHERE Item_ID=" . $Tagged_Item->Item_ID);
 									echo "<li><label class='menu-item-title'><a href='admin.php?page=UPCP-options&Action=Item_Details&Selected=Product&Item_ID=" . $Product->Item_ID . "'>" . $Product->Item_Name . "</a></label></li>";

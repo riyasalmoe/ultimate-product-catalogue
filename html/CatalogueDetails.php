@@ -1,7 +1,8 @@
 <!-- If there are new products or categories to add to the catalogue, do that -->
 <?php if (isset($_POST['products'])) {Add_Products_Catalogue();} ?>
 <?php if (isset($_POST['categories'])) {Add_Categories_Catalogue();} ?>
-<?php $Catalogue = $wpdb->get_row("SELECT * FROM $catalogues_table_name WHERE Catalogue_ID =" . $_GET['Catalogue_ID']); ?>
+<?php $Query = $wpdb->prepare("SELECT * FROM $catalogues_table_name WHERE Catalogue_ID ='%d'", $_GET['Catalogue_ID']);
+$Catalogue = $wpdb->get_row($Query); ?>
 		
 		<!-- Create the form to edit the basic catalogue details -->
 		<div class="OptionTab ActiveTab" id="EditCatalogue">
@@ -170,7 +171,7 @@
 											<th><?php _e("Type of Catalogue Item", 'UPCP') ?></th>
 									</tr>
 							</tfoot>
-							<?php $CatalogueItems = $wpdb->get_results("SELECT * FROM $catalogue_items_table_name WHERE Catalogue_ID='" . $_GET['Catalogue_ID'] . "' ORDER BY Position");
+							<?php $CatalogueItems = $wpdb->get_results($wpdb->prepare("SELECT * FROM $catalogue_items_table_name WHERE Catalogue_ID='%d' ORDER BY Position", $_GET['Catalogue_ID']));
 										foreach ($CatalogueItems as $CatalogueItem) { 
 												if (isset($CatalogueItem->Item_ID)) {$CatalogueItemType = "Product"; $CatalogueItemName = $wpdb->get_var("SELECT Item_Name from $items_table_name WHERE Item_ID=" . $CatalogueItem->Item_ID);}
 												elseif (isset($CatalogueItem->Category_ID)) {$CatalogueItemType = "Category"; $CatalogueItemName = $wpdb->get_var("SELECT Category_Name from $categories_table_name WHERE Category_ID=" . $CatalogueItem->Category_ID);}

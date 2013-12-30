@@ -6,7 +6,7 @@ Description: Plugin to create a customizable product catalogue for businesses, r
 Author: Tim Ruse
 Author URI: http://www.EtoileWebDesign.com/
 Text Domain: UPCP
-Version: 2.1
+Version: 2.1.1
 */
 
 global $UPCP_db_version;
@@ -147,7 +147,8 @@ if (get_option('UPCP_DB_Version') != $UPCP_db_version) {
 }
 
 $rules = get_option('rewrite_rules');
-if (!isset($rules['"(.?.+?)/([^&]+)/?$"'])) {
+$PrettyLinks = get_option("UPCP_Pretty_Links");
+if (!isset($rules['"(.?.+?)/([^&]+)/?$"']) and $PrettyLinks == "Yes") {
 	  add_filter( 'query_vars', 'add_query_vars_filter' );
 		add_filter('init', 'UPCP_Rewrite_Rules');
 		update_option("UPCP_Update_RR_Rules", "No");
