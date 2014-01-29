@@ -83,6 +83,11 @@ You need to have some kind of pretty permalinks already enabled on your blog for
 5. The admin area
 
 == Changelog ==
+= 2.1.2 =
+- Beta AJAX catalogue filtering as an option
+- Number of characters in a product's "details" view description added as an option
+- Fixed a small catalogue detail's page bug
+
 = 2.1 =
 - Implemented view counting for products, based on clicks on title or image links
 - Added mobile stylesheet (v1) and product sorting for premium users
@@ -123,6 +128,6 @@ Initial Version.
 
 == Upgrade Notice ==
 
-= 2.0.1 = 
+= 2.1.1 = 
 
-- UTF8 support for the UPCP tables, WordPress Uploader for product images, SEO friendly URLs as an option 
+- Small bug fixes plus beta AJAX catalogue filtering has been added. It will allow for pagination of the catalogue in the next large update.

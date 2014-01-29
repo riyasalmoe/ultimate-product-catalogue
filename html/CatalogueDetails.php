@@ -173,8 +173,8 @@ $Catalogue = $wpdb->get_row($Query); ?>
 							</tfoot>
 							<?php $CatalogueItems = $wpdb->get_results($wpdb->prepare("SELECT * FROM $catalogue_items_table_name WHERE Catalogue_ID='%d' ORDER BY Position", $_GET['Catalogue_ID']));
 										foreach ($CatalogueItems as $CatalogueItem) { 
-												if (isset($CatalogueItem->Item_ID)) {$CatalogueItemType = "Product"; $CatalogueItemName = $wpdb->get_var("SELECT Item_Name from $items_table_name WHERE Item_ID=" . $CatalogueItem->Item_ID);}
-												elseif (isset($CatalogueItem->Category_ID)) {$CatalogueItemType = "Category"; $CatalogueItemName = $wpdb->get_var("SELECT Category_Name from $categories_table_name WHERE Category_ID=" . $CatalogueItem->Category_ID);}
+												if ($CatalogueItem->Item_ID != "" and $CatalogueItem->Item_ID != 0) {$CatalogueItemType = "Product"; $CatalogueItemName = $wpdb->get_var("SELECT Item_Name from $items_table_name WHERE Item_ID=" . $CatalogueItem->Item_ID);}
+												if ($CatalogueItem->Category_ID != "" and $CatalogueItem->Category_ID != 0) {$CatalogueItemType = "Category"; $CatalogueItemName = $wpdb->get_var("SELECT Category_Name from $categories_table_name WHERE Category_ID=" . $CatalogueItem->Category_ID);}
 										?>
 												<tr id="list-item-<?php echo $CatalogueItem->Catalogue_Item_ID; ?>" class="list-item">
 																		<td class="item-delete"><a href="admin.php?page=UPCP-options&Action=DeleteCatalogueItem&DisplayPage=Catalogue&Catalogue_Item_ID=<?php echo $CatalogueItem->Catalogue_Item_ID; ?>"><?php _e("Delete", 'UPCP') ?></a></td>

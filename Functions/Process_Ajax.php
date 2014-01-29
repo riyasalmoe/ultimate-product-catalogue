@@ -29,6 +29,28 @@ function Record_Item_View() {
 		else {$wpdb->query("UPDATE $items_table_name SET Item_Views=Item_Views+1 WHERE Item_ID=" . $Item_ID);}
 }
 add_action('wp_ajax_record_view', 'Record_Item_View');
+add_action( 'wp_ajax_nopriv_record_view', 'Record_Item_View' );
+
+// Records the number of times a product has been viewed
+function UPCP_Filter_Catalogue() {
+		$Path = ABSPATH . 'wp-load.php';
+		include_once($Path);
+		
+		$id = $_POST['id'];
+		$sidebar = $_POST['sidebar'];
+		$start_layout = $_POST['start_layout'];
+		$excluded_layouts = $_POST['excluded_layouts'];
+		
+		if ($_POST['Prod_Name'] != "Name...") {$Prod_Name = $_POST['Prod_Name'];}
+		else {$Prod_Name = "";}
+		$Category = $_POST['Category'];
+		$SubCategory = $_POST['SubCategory'];
+		$Tags = $_POST['Tags'];
+		
+		echo do_shortcode("[product-catalogue id='" . $id . "' only_inner='Yes' starting_layout='" . $start_layout . "' excluded_layouts='" . $exclude_layouts . "' category='" . $Category . "' subcategory='" . $SubCategory . "' tags='" . $Tags . "' prod_name='" . $Prod_Name . "']");
+}
+add_action('wp_ajax_update_catalogue', 'UPCP_Filter_Catalogue');
+add_action( 'wp_ajax_nopriv_update_catalogue', 'UPCP_Filter_Catalogue');
 
 // Updates sub-categories drop-down box on the products pages, based on the product's category
 function Get_UPCP_SubCategories() {

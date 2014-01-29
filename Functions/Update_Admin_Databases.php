@@ -604,7 +604,9 @@ function Update_UPCP_Options() {
 		update_option('UPCP_Color_Scheme', $_POST['color_scheme']);
 		update_option('UPCP_Product_Links', $_POST['product_links']);
 		update_option('UPCP_Tag_Logic', $_POST['tag_logic']);
+		update_option('UPCP_Filter_Type', $_POST['filter_type']);
 		update_option("UPCP_Read_More", $_POST['read_more']);
+		update_option("UPCP_Desc_Chars", $_POST['desc_count']);
 		if ($InstallVersion <= 2.0 or $Full_Version == "Yes") {update_option("UPCP_Pretty_Links", $_POST['pretty_links']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_Mobile_SS", $_POST['mobile_styles']);}
 		

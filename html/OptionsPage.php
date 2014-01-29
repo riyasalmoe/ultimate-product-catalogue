@@ -2,7 +2,9 @@
 		$Color = get_option("UPCP_Color_Scheme");
 		$Links = get_option("UPCP_Product_Links");
 		$Tags = get_option("UPCP_Tag_Logic");
+		$Filter = get_option("UPCP_Filter_Type");
 		$ReadMore = get_option("UPCP_Read_More");
+		$Detail_Desc_Chars = get_option("UPCP_Desc_Chars");
 		$PrettyLinks = get_option("UPCP_Pretty_Links");
 		$MobileStyle = get_option("UPCP_Mobile_SS");
 		$InstallVersion = get_option("UPCP_First_Install_Version");
@@ -53,9 +55,26 @@
 </td>
 </tr>
 <tr>
-<th scope="row">Tag Logic</th>
+<th scope="row">Characters in Details Description</th>
 <td>
-	<fieldset><legend class="screen-reader-text"><span>Tag Logic</span></legend>
+	<fieldset><legend class="screen-reader-text"><span>Characters in "Details" Description</span></legend>
+	<input type='text' name='desc_count' value='<?php echo $Detail_Desc_Chars; ?>'/>
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row">Filtering Type</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span>Filtering Type</span></legend>
+	<label title='Javascript'><input type='radio' name='filter_type' value='Javascript' <?php if($Filter == "Javascript") {echo "checked='checked'";} ?> /> <span>Javascript Filtering</span></label><br />
+	<label title='AJAX'><input type='radio' name='filter_type' value='AJAX' <?php if($Filter == "AJAX") {echo "checked='checked'";} ?> /> <span>AJAX Filtering</span></label><br />
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row">Tag Logic (for javascript filtering)</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span>Tag LogicTag Logic (for javascript filtering)</span></legend>
 	<label title='AND'><input type='radio' name='tag_logic' value='AND' <?php if($Tags == "AND") {echo "checked='checked'";} ?> /> <span>Selected Tags use 'AND'</span></label><br />
 	<label title='OR'><input type='radio' name='tag_logic' value='OR' <?php if($Tags == "OR") {echo "checked='checked'";} ?> /> <span>Selected Tags use 'OR'</span></label><br />
 	</fieldset>
