@@ -16,8 +16,6 @@ function TransferInAfterUpgrade() {
 		if (is_dir($from)) { 
 			  RemoveDir($from);
 		} 
-		update_option("UPCP_Desc_Chars", 240);
-		update_option("UPCP_Filter_Type", "Javascript");
 }
 
 function CopyFile($source, $dest) { 

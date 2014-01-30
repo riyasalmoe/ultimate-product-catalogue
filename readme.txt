@@ -83,6 +83,10 @@ You need to have some kind of pretty permalinks already enabled on your blog for
 5. The admin area
 
 == Changelog ==
+= 2.1.3 =
+- Small fix for "Tags" functionality with new AJAX filtering
+- Small optimizations to return catalogue quicker after users filter the catalogue
+
 = 2.1.2 =
 - Beta AJAX catalogue filtering as an option
 - Number of characters in a product's "details" view description added as an option
@@ -128,6 +132,6 @@ Initial Version.
 
 == Upgrade Notice ==
 
-= 2.1.1 = 
+= 2.1.3 = 
 
-- Small bug fixes plus beta AJAX catalogue filtering has been added. It will allow for pagination of the catalogue in the next large update.
+- Small fix for "Tags" functionality with new AJAX filtering, optimizations to return catalogue quicker after users filter the catalogue

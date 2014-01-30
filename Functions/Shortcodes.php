@@ -95,16 +95,16 @@ function Insert_Product_Catalog($atts) {
 				// If the item is a product, then simply call the AddProduct function to add it to the code
 				if ($CatalogueItem->Item_ID != "" and $CatalogueItem->Item_ID != 0) {
 					  $Product = $wpdb->get_row("SELECT * FROM $items_table_name WHERE Item_ID=" . $CatalogueItem->Item_ID);
-						$ProdTag = $wpdb->get_results("SELECT Tag_ID FROM $tagged_items_table_name WHERE Item_ID=" . $CatalogueItem->Item_ID);
-						$ProdTag = ObjectToArray($ProdTag);
+						$ProdTagObj = $wpdb->get_results("SELECT Tag_ID FROM $tagged_items_table_name WHERE Item_ID=" . $CatalogueItem->Item_ID);
+						$ProdTag = ObjectToArray($ProdTagObj);
 						if ($category == "" or $category == $Product->Category_ID) {
 						if ($subcategory == "" or $subcategory == $Product->SubCategory_ID) {
 						if (sizeOf($tags) == 0 or count(array_intersect($tags, $ProdTag)) == count($tags)) {
 						if ($prod_name == "" or strpos($Product->Item_Name, $prod_name) !== false) {
 						$HeaderBar .= "<a id='hidden_FB_link-" . $CatalogueItem->Item_ID . "' class='fancybox' href='#prod-cat-addt-details-" . $CatalogueItem->Item_ID . "'></a>";
-						$ProdThumbString .= AddProduct("Thumbnail", $CatalogueItem->Item_ID, $Product);
-						$ProdListString .= AddProduct("List", $CatalogueItem->Item_ID, $Product);
-						$ProdDetailString .= AddProduct("Detail", $CatalogueItem->Item_ID, $Product);
+						if (!in_array("Thumbnail", $ExcludedLayouts)) {$ProdThumbString .= AddProduct("Thumbnail", $CatalogueItem->Item_ID, $Product, $ProdTagObj);}
+						if (!in_array("List", $ExcludedLayouts)) {$ProdListString .= AddProduct("List", $CatalogueItem->Item_ID, $Product, $ProdTagObj);}
+						if (!in_array("Detail", $ExcludedLayouts)) {$ProdDetailString .= AddProduct("Detail", $CatalogueItem->Item_ID, $Product, $ProdTagObj);}
 						$Product_Count++;
 						}}}}
 				}
@@ -113,30 +113,47 @@ function Insert_Product_Catalog($atts) {
 				// for each individual product in the category
 				if ($CatalogueItem->Category_ID != "" and $CatalogueItem->Category_ID != 0) {
 				if ($category == "" or $category == $CatalogueItem->Category_ID) {						
+						$CatProdCount = 0;
 						$Category = $wpdb->get_row("SELECT Category_Name FROM $categories_table_name WHERE Category_ID=" . $CatalogueItem->Category_ID);
 						
 						$ProdThumbString .= "<div id='prod-cat-category-" . $CatalogueItem->Category_ID . "' class='prod-cat-category upcp-thumb-category'>\n";
 						$ProdListString .= "<div id='prod-cat-category-" . $CatalogueItem->Category_ID . "' class='prod-cat-category upcp-list-category'>\n";
 						$ProdDetailString .= "<div id='prod-cat-category-" . $CatalogueItem->Category_ID . "' class='prod-cat-category upcp-detail-category'>\n";
 						
-						$ProdThumbString .= "<div id='prod-cat-category-label-" . $CatalogueItem->Category_ID . "' class='prod-cat-category-label upcp-thumb-category-label'>" . $Category->Category_Name ."</div>\n";
-						$ProdListString .= "<div id='prod-cat-category-label-" . $CatalogueItem->Category_ID . "' class='prod-cat-category-label upcp-list-category-label'>" . $Category->Category_Name ."</div>\n";
-						$ProdDetailString .= "<div id='prod-cat-category-label-" . $CatalogueItem->Category_ID . "' class='prod-cat-category-label upcp-detail-category-label'>" . $Category->Category_Name ."</div>\n";
+						$ProdThumbString .= "%Category_Label%";
+						$ProdListString .= "%Category_Label%";
+						$ProdDetailString .= "%Category_Label%";
+						
+						$CatThumbHead = "<div id='prod-cat-category-label-" . $CatalogueItem->Category_ID . "' class='prod-cat-category-label upcp-thumb-category-label'>" . $Category->Category_Name ."</div>\n";
+						$CatListHead = "<div id='prod-cat-category-label-" . $CatalogueItem->Category_ID . "' class='prod-cat-category-label upcp-list-category-label'>" . $Category->Category_Name ."</div>\n";
+						$CatDetailHead = "<div id='prod-cat-category-label-" . $CatalogueItem->Category_ID . "' class='prod-cat-category-label upcp-detail-category-label'>" . $Category->Category_Name ."</div>\n";
 						
 						$Products = $wpdb->get_results("SELECT * FROM $items_table_name WHERE Category_ID=" . $CatalogueItem->Category_ID);
 						
 						foreach ($Products as $Product) {
-								$ProdTag = $wpdb->get_results("SELECT Tag_ID FROM $tagged_items_table_name WHERE Item_ID=" . $Product->Item_ID);
-								$ProdTag = ObjectToArray($ProdTag);
+								$ProdTagObj = $wpdb->get_results("SELECT Tag_ID FROM $tagged_items_table_name WHERE Item_ID=" . $Product->Item_ID);
+								$ProdTag = ObjectToArray($ProdTagObj);
 								if ($subcategory == "" or $subcategory == $Product->SubCategory_ID) {
 								if (sizeOf($tags) == 0 or count(array_intersect($tags, $ProdTag)) == count($tags)) {
 								if ($prod_name == "" or strpos($Product->Item_Name, $prod_name) !== false) {
 								$HeaderBar .= "<a id='hidden_FB_link-" . $Product->Item_ID . "' class='fancybox' href='#prod-cat-addt-details-" . $Product->Item_ID . "'></a>";
-								$ProdThumbString .= AddProduct("Thumbnail", $Product->Item_ID, $Product);
-								$ProdListString .= AddProduct("List", $Product->Item_ID, $Product);
-								$ProdDetailString .= AddProduct("Detail", $Product->Item_ID, $Product);
+								if (!in_array("Thumbnail", $ExcludedLayouts)) {$ProdThumbString .= AddProduct("Thumbnail", $Product->Item_ID, $Product, $ProdTagObj);}
+								if (!in_array("List", $ExcludedLayouts)) {$ProdListString .= AddProduct("List", $Product->Item_ID, $Product, $ProdTagObj);}
+								if (!in_array("Detail", $ExcludedLayouts)) {$ProdDetailString .= AddProduct("Detail", $Product->Item_ID, $Product, $ProdTagObj);}
 								$Product_Count++;
+								$CatProdCount++;
 								}}}
+						}
+						
+						if ($CatProdCount > 0) {
+							 	$ProdThumbString =  str_replace("%Category_Label%", $CatThumbHead, $ProdThumbString);
+								$ProdListString = str_replace("%Category_Label%", $CatListHead, $ProdListString);
+								$ProdDetailString = str_replace("%Category_Label%", $CatDetailHead, $ProdDetailString);
+						}
+						else {
+								$ProdThumbString = str_replace("%Category_Label%", "", $ProdThumbString);
+								$ProdListString = str_replace("%Category_Label%", "", $ProdListString);
+								$ProdDetailString = str_replace("%Category_Label%", "", $ProdDetailString);
 						}
 						
 						$ProdThumbString .= "</div>";
@@ -151,15 +168,15 @@ function Insert_Product_Catalog($atts) {
 						$Products = $wpdb->get_results("SELECT * FROM $items_table_name WHERE SubCategory_ID=" . $CatalogueItem->SubCategory_ID);
 						
 						foreach ($Products as $Product) {
-								$ProdTag = $wpdb->get_results("SELECT Tag_ID FROM $tagged_items_table_name WHERE Item_ID=" . $Product->Item_ID);
-								$ProdTag = ObjectToArray($ProdTag);
+								$ProdTagObj = $wpdb->get_results("SELECT Tag_ID FROM $tagged_items_table_name WHERE Item_ID=" . $Product->Item_ID);
+								$ProdTag = ObjectToArray($ProdTagObj);
 								if ($category == "" or $subcategory == $Product->Category_ID) {
 								if (sizeOf($tags) == 0 or count(array_intersect($tags, $ProdTag)) == count($tags)) {
 								if ($prod_name == "" or strpos($Product->Item_Name, $prod_name) !== false) {
 								$HeaderBar .= "<a id='hidden_FB_link-" . $Product->Item_ID . "' class='fancybox' href='#prod-cat-addt-details-" . $Product->Item_ID . "'></a>";
-								$ProdThumbString .= AddProduct("Thumbnail", $Product->Item_ID, $Product);
-								$ProdListString .= AddProduct("List", $Product->Item_ID, $Product);
-								$ProdDetailString .= AddProduct("Detail", $Product->Item_ID, $Product);
+								if (!in_array("Thumbnail", $ExcludedLayouts)) {$ProdThumbString .= AddProduct("Thumbnail", $Product->Item_ID, $Product, $ProdTagObj);}
+								if (!in_array("List", $ExcludedLayouts)) {$ProdListString .= AddProduct("List", $Product->Item_ID, $Product, $ProdTagObj);}
+								if (!in_array("Detail", $ExcludedLayouts)) {$ProdDetailString .= AddProduct("Detail", $Product->Item_ID, $Product, $ProdTagObj);}
 								$Product_Count++;
 								}}}
 						}
@@ -228,9 +245,9 @@ function Insert_Product_Catalog($atts) {
 						$SidebarString .= "<div id='prod-cat-sidebar-category-title-" . $id . "' class='prod-cat-sidebar-category-title'><h3>" . __("Categories:", 'UPCP') . "</h3></div>\n";
 						foreach ($Categories as $Category) {
 								$SidebarString .= "<div id='prod-cat-sidebar-category-" . $Category->Category_ID . "' class='prod-cat-sidebar-category'>\n";
-								if ($Filter  == "Javascript" and $Tag_Logic == "OR") {$SidebarString .= "<input type='checkbox' class='jquery-prod-cat-value' name='Category" . $Category->Category_ID . "' value='" . $Category->Category_ID . "' onclick='UPCP_Filer_Results_OR(); UPCPHighlight(this, \"" . $Color . "\");'>" . $Category->Category_Name . " (" . $ProdCats[$Category->Category_ID]/3 . ")\n";}
-								elseif ($Filter  == "Javascript") {$SidebarString .= "<input type='checkbox' class='jquery-prod-cat-value' name='Category" . $Category->Category_ID . "' value='" . $Category->Category_ID . "' onclick='UPCP_Filer_Results(); UPCPHighlight(this, \"" . $Color . "\");'>" . $Category->Category_Name . " (" . $ProdCats[$Category->Category_ID]/3 . ")\n";}
-								else {$SidebarString .= "<input type='checkbox' class='jquery-prod-cat-value' name='Category" . $Category->Category_ID . "' value='" . $Category->Category_ID . "' onclick='UPCP_Ajax_Filter(); UPCPHighlight(this, \"" . $Color . "\");'>" . $Category->Category_Name . " (" . $ProdCats[$Category->Category_ID]/3 . ")\n";}
+								if ($Filter  == "Javascript" and $Tag_Logic == "OR") {$SidebarString .= "<input type='checkbox' class='jquery-prod-cat-value' name='Category" . $Category->Category_ID . "' value='" . $Category->Category_ID . "' onclick='UPCP_Filer_Results_OR(); UPCPHighlight(this, \"" . $Color . "\");'>" . $Category->Category_Name . " (" . $ProdCats[$Category->Category_ID]/(3-sizeOf($ExcludedLayouts)) . ")\n";}
+								elseif ($Filter  == "Javascript") {$SidebarString .= "<input type='checkbox' class='jquery-prod-cat-value' name='Category" . $Category->Category_ID . "' value='" . $Category->Category_ID . "' onclick='UPCP_Filer_Results(); UPCPHighlight(this, \"" . $Color . "\");'>" . $Category->Category_Name . " (" . $ProdCats[$Category->Category_ID]/(3-sizeOf($ExcludedLayouts)) . ")\n";}
+								else {$SidebarString .= "<input type='checkbox' class='jquery-prod-cat-value' name='Category" . $Category->Category_ID . "' value='" . $Category->Category_ID . "' onclick='UPCP_Ajax_Filter(); UPCPHighlight(this, \"" . $Color . "\");'>" . $Category->Category_Name . " (" . $ProdCats[$Category->Category_ID]/(3-sizeOf($ExcludedLayouts)) . ")\n";}
 								$SidebarString .= "</div>\n";
 						}
 						$SidebarString .= "</div>\n";
@@ -242,9 +259,9 @@ function Insert_Product_Catalog($atts) {
 						$SidebarString .= "<div id='prod-cat-sidebar-subcategory-title-" . $id . "' class='prod-cat-sidebar-subcategory-title'><h3>" . __("Sub-Categories:", 'UPCP') . "</h3></div>\n";
 						foreach ($SubCategories as $SubCategory) {
 								$SidebarString .= "<div id='prod-cat-sidebar-subcategory-" . $SubCategory->SubCategory_ID . "' class='prod-cat-sidebar-subcategory'>\n";
-								if ($Filter  == "Javascript" and $Tag_Logic == "OR") {$SidebarString .= "<input type='checkbox' class='jquery-prod-sub-cat-value' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_Filer_Results_OR(); UPCPHighlight(this, \"" . $Color . "\");'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID]/3 . ")\n";}
-								elseif ($Filter  == "Javascript") {$SidebarString .= "<input type='checkbox' class='jquery-prod-sub-cat-value' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_Filer_Results(); UPCPHighlight(this, \"" . $Color . "\");'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID]/3 . ")\n";}
-								else {$SidebarString .= "<input type='checkbox' class='jquery-prod-sub-cat-value' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_Ajax_Filter(); UPCPHighlight(this, \"" . $Color . "\");'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID]/3 . ")\n";}
+								if ($Filter  == "Javascript" and $Tag_Logic == "OR") {$SidebarString .= "<input type='checkbox' class='jquery-prod-sub-cat-value' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_Filer_Results_OR(); UPCPHighlight(this, \"" . $Color . "\");'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID]/(3-sizeOf($ExcludedLayouts)) . ")\n";}
+								elseif ($Filter  == "Javascript") {$SidebarString .= "<input type='checkbox' class='jquery-prod-sub-cat-value' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_Filer_Results(); UPCPHighlight(this, \"" . $Color . "\");'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID]/(3-sizeOf($ExcludedLayouts)) . ")\n";}
+								else {$SidebarString .= "<input type='checkbox' class='jquery-prod-sub-cat-value' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_Ajax_Filter(); UPCPHighlight(this, \"" . $Color . "\");'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID]/(3-sizeOf($ExcludedLayouts)) . ")\n";}
 								$SidebarString .= "</div>\n";
 						}
 						$SidebarString .= "</div>\n";
@@ -313,7 +330,7 @@ function Insert_Product_Catalog($atts) {
 }
 
 /* Function to add the HTML for an individual product to the catalog */
-function AddProduct($format, $Item_ID, $Product) {
+function AddProduct($format, $Item_ID, $Product, $Tags) {
 		// Add the required global variables
 		global $wpdb, $categories_table_name, $subcategories_table_name, $tags_table_name, $tagged_items_table_name, $catalogues_table_name, $catalogue_items_table_name, $items_table_name, $item_images_table_name;
 		global $ProdCats, $ProdSubCats, $ProdTags, $ReturnString;
@@ -326,7 +343,6 @@ function AddProduct($format, $Item_ID, $Product) {
 		else {$NewWindow = false;}
 		
 		//Select the product info, tags and images for the product
-		$Tags = $wpdb->get_results("SELECT Tag_ID FROM $tagged_items_table_name WHERE Item_ID=" . $Item_ID);
 		$Item_Images = $wpdb->get_results("SELECT Item_Image_URL, Item_Image_ID FROM $item_images_table_name WHERE Item_ID=" . $Item_ID);
 		$TagsString = "";
 		
@@ -527,26 +543,14 @@ function SingleProductPage() {
 		return $ProductString;
 }
 
-function ObjectToArray($d) {
-		if (is_object($d)) {
-			// Gets the properties of the given object
-			// with get_object_vars function
-			$d = get_object_vars($d);
+function ObjectToArray($Obj) {
+		$TagsArray = array();
+		foreach ($Obj as $Tag) {
+				$TagsArray[] = $Tag->Tag_ID;
 		}
- 
-		if (is_array($d)) {
-			/*
-			* Return array converted to object
-			* Using __FUNCTION__ (Magic constant)
-			* for recursive call
-			*/
-			return array_map(__FUNCTION__, $d);
-		}
-		else {
-			// Return array
-			return $d;
-		}
-	}
+		
+		return $TagsArray;
+}
 add_shortcode("product-catalogue", "Insert_Product_Catalog");
 
  ?>
