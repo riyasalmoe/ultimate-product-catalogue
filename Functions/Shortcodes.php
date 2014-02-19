@@ -31,13 +31,14 @@ function Insert_Product_Catalog($atts) {
 												);
 		
 		if (get_query_var('single_product') != "" or $_GET['SingleProduct'] != "") {$ReturnString = SingleProductPage(); return $ReturnString;}
-											
+						
 		$Catalogue_ID = $id;
 		$Catalogue_Sidebar = $sidebar;
 		$Starting_Layout = ucfirst($starting_layout);
-		$Excluded_Layouts = explode(",", $excluded_layouts);
+		if ($excluded_layouts != "None") {$Excluded_Layouts = explode(",", $excluded_layouts);}
+		else {$Excluded_Layouts = array();}
 		if ($tags == "") {$tags = array();}
-		else {$tags = explode(",", $tags);}
+		else {$tags = explode(",", $tags);}		
 		
 		$ReturnString .= "<div class='Hide-Item' id='upcp-shortcode-atts'>";
 		$ReturnString .= "<div class='shortcode-attr' id='upcp-catalogue-id'>" . $id . "</div>";
@@ -46,7 +47,8 @@ function Insert_Product_Catalog($atts) {
 		$ReturnString .= "<div class='shortcode-attr' id='upcp-exclude-layouts'>" . $excluded_layouts . "</div>";
 		$ReturnString .= "</div>";
 		
-		for ($i=0; $i<sizeOf($Excluded_Layouts); $i++) {$ExcludedLayouts[$i] = ucfirst(trim($Excluded_Layouts[$i]));}
+		if (sizeOf($Excluded_Layouts)>0) {for ($i=0; $i<sizeOf($Excluded_Layouts); $i++) {$ExcludedLayouts[$i] = ucfirst(trim($Excluded_Layouts[$i]));}}
+		else {$ExcludedLayouts = array();}
 		
 		if ($Starting_Layout == "") {
 			  if (!in_array("Thumbnail", $Excluded_Layouts)) {$Starting_Layout = "Thumbnail";}
@@ -379,7 +381,7 @@ function AddProduct($format, $Item_ID, $Product, $Tags) {
 				if ($FancyBoxClass and !$NewWindow) {$ProductString .= "fancybox";}
 				$ProductString .= "' ";
 				if ($NewWindow) {$ProductString .= "target='_blank'";}
-				$ProductString .= "href='" . $ItemLink . "' onclick='RecordView(" . $Product->Item_ID . ");'>";
+				$ProductString .= " href='" . $ItemLink . "' onclick='RecordView(" . $Product->Item_ID . ");'>";
 				$ProductString .= "<img src='" . $PhotoURL . "' alt='" . $Product->Item_Name . " Image' id='prod-cat-thumb-" . $Product->Item_ID . "' class='prod-cat-thumb-image upcp-thumb-image'>";
 				$ProductString .= "</a>";	
 				$ProductString .= "</div>\n";
@@ -387,7 +389,7 @@ function AddProduct($format, $Item_ID, $Product, $Tags) {
 				if ($FancyBoxClass and !$NewWindow) {$ProductString .= "fancybox";}
 				$ProductString .= " no-underline'";
 				if ($NewWindow) {$ProductString .= "target='_blank'";}
-				$ProductString .= "href='" . $ItemLink . "' onclick='RecordView(" . $Product->Item_ID . ");'>";
+				$ProductString .= " href='" . $ItemLink . "' onclick='RecordView(" . $Product->Item_ID . ");'>";
 				$ProductString .= "<div id='prod-cat-title-" . $Product->Item_ID . "' class='prod-cat-title upcp-thumb-title'>" . $Product->Item_Name . "</div>\n";
 				$ProductString .= "</a>";
 				$ProductString .= "<div id='prod-cat-price-" . $Product->Item_ID . "' class='prod-cat-price upcp-thumb-price'>" . $Product->Item_Price . "</div>\n";
@@ -395,7 +397,7 @@ function AddProduct($format, $Item_ID, $Product, $Tags) {
 				if ($FancyBoxClass and !$NewWindow) {$ProductString .= "fancybox";}
 				$ProductString .= "' ";
 				if ($NewWindow) {$ProductString .= "target='_blank'";}
-				$ProductString .= "href='" . $ItemLink . "' onclick='RecordView(" . $Product->Item_ID . ");'>";
+				$ProductString .= " href='" . $ItemLink . "' onclick='RecordView(" . $Product->Item_ID . ");'>";
 				$ProductString .= "<div id='prod-cat-details-link-" . $Product->Item_ID . "' class='prod-cat-details-link upcp-thumb-details-link'>" . __("Details", 'UPCP') . "</div>\n";
 				$ProductString .= "</a>";
 		}
@@ -410,7 +412,7 @@ function AddProduct($format, $Item_ID, $Product, $Tags) {
 						if ($FancyBoxClass and !$NewWindow) {$ProductString .= "fancybox";}
 						$ProductString .= "' ";
 				if ($NewWindow) {$ProductString .= "target='_blank'";}
-				$ProductString .= "href='" . $ItemLink . "' onclick='RecordView(" . $Product->Item_ID . ");'>";
+				$ProductString .= " href='" . $ItemLink . "' onclick='RecordView(" . $Product->Item_ID . ");'>";
 						$ProductString .= "<img src='" . $PhotoURL . "' alt='" . $Product->Item_Name . " Image' id='prod-cat-thumb-" . $Product->Item_ID . "' class='prod-cat-list-image upcp-list-image'>";
 						$ProductString .= "</a>";
 						$ProductString .= "</div>\n";
@@ -419,7 +421,7 @@ function AddProduct($format, $Item_ID, $Product, $Tags) {
 						if ($FancyBoxClass and !$NewWindow) {$ProductString .= "fancybox";}
 						$ProductString .= "' ";
 				if ($NewWindow) {$ProductString .= "target='_blank'";}
-				$ProductString .= "href='" . $ItemLink . "' onclick='RecordView(" . $Product->Item_ID . ");'>";
+				$ProductString .= " href='" . $ItemLink . "' onclick='RecordView(" . $Product->Item_ID . ");'>";
 						$ProductString .= "<div id='prod-cat-details-link-" . $Product->Item_ID . "' class='prod-cat-details-link upcp-list-details-link'>" . __("Images", 'UPCP') . "</div>\n";
 						$ProductString .= "</a>";
 				$ProductString .= "</div>";
@@ -432,7 +434,7 @@ function AddProduct($format, $Item_ID, $Product, $Tags) {
 				if ($FancyBoxClass and !$NewWindow) {$ProductString .= "fancybox";}
 				$ProductString .= "' ";
 				if ($NewWindow) {$ProductString .= "target='_blank'";}
-				$ProductString .= "href='" . $ItemLink . "' onclick='RecordView(" . $Product->Item_ID . ");'>";
+				$ProductString .= " href='" . $ItemLink . "' onclick='RecordView(" . $Product->Item_ID . ");'>";
 				$ProductString .= "<img src='" . $PhotoURL . "' alt='" . $Product->Item_Name . " Image' id='prod-cat-detail-" . $Product->Item_ID . "' class='prod-cat-thumb-image upcp-thumb-image'>";
 				$ProductString .= "</a>";	
 				$ProductString .= "</div>\n";
@@ -457,7 +459,7 @@ function AddProduct($format, $Item_ID, $Product, $Tags) {
 				if ($FancyBoxClass and !$NewWindow) {$ProductString .= "fancybox";}
 				$ProductString .= "' ";
 				if ($NewWindow) {$ProductString .= "target='_blank'";}
-				$ProductString .= "href='" . $ItemLink . "' onclick='RecordView(" . $Product->Item_ID . ");'>";
+				$ProductString .= " href='" . $ItemLink . "' onclick='RecordView(" . $Product->Item_ID . ");'>";
 				$ProductString .= "<div id='prod-cat-details-link-" . $Product->Item_ID . "' class='prod-cat-details-link upcp-detail-details-link'>" . __("Details", 'UPCP') . "</div>\n";
 				$ProductString .= "</a>";
 				$ProductString .= "</div>";

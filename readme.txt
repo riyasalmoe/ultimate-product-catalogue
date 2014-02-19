@@ -83,6 +83,9 @@ You need to have some kind of pretty permalinks already enabled on your blog for
 5. The admin area
 
 == Changelog ==
+= 2.1.4 =
+- Three small fixes for the front-end and product page
+
 = 2.1.3 =
 - Small fix for "Tags" functionality with new AJAX filtering
 - Small optimizations to return catalogue quicker after users filter the catalogue
@@ -132,6 +135,6 @@ Initial Version.
 
 == Upgrade Notice ==
 
-= 2.1.3 = 
+= 2.1.4 = 
 
-- Small fix for "Tags" functionality with new AJAX filtering, optimizations to return catalogue quicker after users filter the catalogue
+- Three small fixes for the front-end and product page

@@ -266,11 +266,13 @@
 	<label for="Item_SubCategory"><?php _e("Sub-Category:", 'UPCP') ?></label>
 	<select name="SubCategory_ID" id="Item_SubCategory">
 	<option value=""></option>
-	<?php $SubCategories = $wpdb->get_results("SELECT * FROM $subcategories_table_name WHERE Category_ID=" . $Product->Category_ID . " ORDER BY SubCategory_Name"); ?>
-	<?php foreach ($SubCategories as $SubCategory) {
-						echo "<option value='" . $SubCategory->SubCategory_ID . "' ";
-						if ($SubCategory->SubCategory_ID == $Product->SubCategory_ID) {echo "selected='selected'";}
-						echo " >" . $SubCategory->SubCategory_Name . "</option>";
+	<?php if ($Product->Category_ID != "") {
+					  $SubCategories = $wpdb->get_results("SELECT * FROM $subcategories_table_name WHERE Category_ID=" . $Product->Category_ID . " ORDER BY SubCategory_Name");
+						foreach ($SubCategories as $SubCategory) {
+								echo "<option value='" . $SubCategory->SubCategory_ID . "' ";
+								if ($SubCategory->SubCategory_ID == $Product->SubCategory_ID) {echo "selected='selected'";}
+								echo " >" . $SubCategory->SubCategory_Name . "</option>";
+						} 
 				} ?>
 	</select>
 	<p><?php _e("What sub-category is this product in? Sub-categories help to organize your product catalogues and help your customers to find what they're looking for.", 'UPCP') ?></p>
