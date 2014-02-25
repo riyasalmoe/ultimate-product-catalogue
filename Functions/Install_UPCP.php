@@ -45,7 +45,7 @@ function Install_UPCP_DB() {
 		Category_Name text,
 		Global_Item_ID mediumint(9) DEFAULT 0,
 		Item_Special_Attr text,
-		SubCategory_ID mediumint(9 DEFAULT 0),
+		SubCategory_ID mediumint(9) DEFAULT 0,
 		SubCategory_Name text,
 		Item_Date_Created datetime NOT NULL,
 		Item_Views mediumint(9) DEFAULT 0,

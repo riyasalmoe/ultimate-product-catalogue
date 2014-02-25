@@ -30,6 +30,10 @@ Key Features:
 To get the most out of the Ultimate Product Catalogue Plugin, FancyBox for WordPress is required (http://wordpress.org/plugins/fancybox-for-wordpress/).
 If FancyBox for WordPress isn't installed, individual products will be displayed on their own pages.
 
+Additional Languages:
+- Brazilian Portugese (thanks to <a href='http://wordpress.org/support/profile/tito_cadallora'>Tito_Cadallora</a>);
+- Lithuanian (thanks to <a href='http://wordpress.org/support/profile/adart'>AdArt</a>);
+
 == Installation ==
 
 1. Upload the `ultimate-product-catalogue` folder to the `/wp-content/plugins/` directory
@@ -83,6 +87,10 @@ You need to have some kind of pretty permalinks already enabled on your blog for
 5. The admin area
 
 == Changelog ==
+= 2.1.5 =
+- Small bug fix
+- Some language files added
+
 = 2.1.4 =
 - Three small fixes for the front-end and product page
 
