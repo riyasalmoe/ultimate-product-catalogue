@@ -529,6 +529,9 @@
 .prod-cat-addt-details-title {
   padding: 5px 0px 10px 40px;
 }
+.prod-cat-addt-details-price {
+  padding:0px 0px 10px 40px;
+}
 .upcp-product-url-icon {
 	margin-left:20px;
 }

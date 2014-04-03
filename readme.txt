@@ -15,6 +15,8 @@ Displays a product catalogue or menu for your store, restaurant, group, etc. Has
 You can use categories, sub-categories and tags to make your products easy to sort through for your visitors.
 You can also use categories and sub-categories in your catalogue(s) to make it easy to keep them up to date. 
 
+[youtube http://www.youtube.com/watch?v=z6XL7whjY1Q]
+
 Key Features:
 
 * 3 default layout formats, users can tab between them
@@ -29,6 +31,8 @@ Key Features:
 
 To get the most out of the Ultimate Product Catalogue Plugin, FancyBox for WordPress is required (http://wordpress.org/plugins/fancybox-for-wordpress/).
 If FancyBox for WordPress isn't installed, individual products will be displayed on their own pages.
+
+Tutorial videos available in the FAQ section.
 
 Additional Languages:
 - Brazilian Portugese (thanks to <a href='http://wordpress.org/support/profile/tito_cadallora'>Tito_Cadallora</a>);
@@ -78,6 +82,17 @@ The premium version allows you to add more than 100 products to the plugin, to u
 
 You need to have some kind of pretty permalinks already enabled on your blog for them to work on the plugin. 
 
+Videos
+
+Tutorial Part 1
+[youtube http://www.youtube.com/watch?v=9sdHtGGZpKU]
+
+Tutorial Part 2
+[youtube http://www.youtube.com/watch?v=KBhdiNCtLvM]
+
+Premium Features
+[youtube http://www.youtube.com/watch?v=l9mWNqOIB_w]
+
 == Screenshots ==
 
 1. The "detail" catalogue view
@@ -87,6 +102,15 @@ You need to have some kind of pretty permalinks already enabled on your blog for
 5. The admin area
 
 == Changelog ==
+= 2.2 =
+- New Premium feature: Custom Fields!
+- Custom fields let you add fields to your products, that can be included in the description of your products via shortcode, so that you can have a common product template
+- New feature: Non-displayed products
+- Non-displayed products let you temporarily remove a product from all catalogues (ex: if it's out of stock)
+- Tags can now be imported via spreadsheet
+- Catalogue height now adjusts depending on the size of the current layout
+- Tutorial videos are available in the FAQ section
+
 = 2.1.5 =
 - Small bug fix
 - Some language files added

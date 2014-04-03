@@ -5,6 +5,7 @@
 		$Filter = get_option("UPCP_Filter_Type");
 		$ReadMore = get_option("UPCP_Read_More");
 		$Detail_Desc_Chars = get_option("UPCP_Desc_Chars");
+		$Single_Page_Price = get_option("UPCP_Single_Page_Price");
 		$PrettyLinks = get_option("UPCP_Pretty_Links");
 		$MobileStyle = get_option("UPCP_Mobile_SS");
 		$InstallVersion = get_option("UPCP_First_Install_Version");
@@ -51,6 +52,15 @@
 	<fieldset><legend class="screen-reader-text"><span>"Read More" for Details view</span></legend>
 	<label title='Yes'><input type='radio' name='read_more' value='Yes' <?php if($ReadMore == "Yes") {echo "checked='checked'";} ?> /> <span>Yes</span></label><br />
 	<label title='No'><input type='radio' name='read_more' value='No' <?php if($ReadMore == "No") {echo "checked='checked'";} ?> /> <span>No</span></label><br />
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row">Product Page Price</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span>Put Prices on the Single Product Pages</span></legend>
+	<label title='Yes'><input type='radio' name='single_page_price' value='Yes' <?php if($Single_Page_Price == "Yes") {echo "checked='checked'";} ?> /> <span>Yes</span></label><br />
+	<label title='No'><input type='radio' name='single_page_price' value='No' <?php if($Single_Page_Price == "No") {echo "checked='checked'";} ?> /> <span>No</span></label><br />
 	</fieldset>
 </td>
 </tr>

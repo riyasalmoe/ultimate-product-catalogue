@@ -72,6 +72,16 @@ if (isset($_GET['Action'])) {
 						case "DeleteTaggedItem":
 								$message = Delete_Products_Tags();
 								break;
+						case "EditCustomField":
+						case "AddCustomField":
+        				$message = Add_Edit_Custom_Field();
+								break;
+						case "DeleteCustomField":
+								$message = Delete_UPCP_Custom_Field($_GET['Field_ID']);
+								break;
+						case "MassDeleteCustomFields":
+								$message = Mass_Delete_UPCP_Custom_Fields();
+								break;		
 						case "UpdateOptions":
 								$message = Update_UPCP_Options();
 								break;

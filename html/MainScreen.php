@@ -6,6 +6,7 @@
 						 <a id="Categories_Menu" class="MenuTab nav-tab <?php if ($Display_Page == 'Categories') {echo 'nav-tab-active';}?>" onclick="ShowTab('Categories');">Categories</a>
 				 		 <a id="SubCategories_Menu" class="MenuTab nav-tab <?php if ($Display_Page == 'SubCategories') {echo 'nav-tab-active';}?>" onclick="ShowTab('SubCategories');">Sub-Categories</a>
 				 		 <a id="Tags_Menu" class="MenuTab nav-tab <?php if ($Display_Page == 'Tags') {echo 'nav-tab-active';}?>" onclick="ShowTab('Tags');">Tags</a>
+						 <a id="CustomFields_Menu" class="MenuTab nav-tab <?php if ($Display_Page == 'CustomFields') {echo 'nav-tab-active';}?>" onclick="ShowTab('CustomFields');">Custom Fields</a>
 						 <a id="Options_Menu" class="MenuTab nav-tab <?php if ($Display_Page == 'Options') {echo 'nav-tab-active';}?>" onclick="ShowTab('Options');">Options</a>
 				 </h2>
 		</div>
@@ -36,6 +37,9 @@
 		<div class="OptionTab <?php if ($Display_Page == 'Tags' or $Display_Page == 'Tag') {echo 'ActiveTab';} else {echo 'HiddenTab';} ?>" id="Tags">
 				<?php include ABSPATH . 'wp-content/plugins/ultimate-product-catalogue/html/TagsPage.php';?>
 		</div>	
+		<div class="OptionTab <?php if ($Display_Page == 'CustomFields' or $Display_Page == 'CustomField') {echo 'ActiveTab';} else {echo 'HiddenTab';} ?>" id="CustomFields">
+				<?php include ABSPATH . 'wp-content/plugins/ultimate-product-catalogue/html/CustomFieldsPage.php';?>
+		</div>
 		<div class="OptionTab <?php if ($Display_Page == 'Options' or $Display_Page == 'Option') {echo 'ActiveTab';} else {echo 'HiddenTab';} ?>" id="Options">
 				<?php include ABSPATH . 'wp-content/plugins/ultimate-product-catalogue/html/OptionsPage.php';?>
-		</div>		
+		</div>	

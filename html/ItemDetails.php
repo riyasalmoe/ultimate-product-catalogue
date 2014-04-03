@@ -7,7 +7,7 @@
 		<div class="OptionTab ActiveTab" id="EditProduct">
 				<div class="form-wrap ItemDetail">
 						<a href="admin.php?page=UPCP-options&DisplayPage=Products" class="NoUnderline">&#171; <?php _e("Back", 'UPCP') ?></a>
-						<h3>Edit <?php echo $Product->Product_Name;?></h3>
+						<h3>Edit <?php echo $Product->Item_Name;?></h3>
 						<form id="addtag" method="post" action="admin.php?page=UPCP-options&Action=EditProduct&DisplayPage=Products" class="validate" enctype="multipart/form-data">
 						<input type="hidden" name="action" value="Edit_Product" />
 						<input type="hidden" name="Item_ID" value="<?php echo $Product->Item_ID; ?>" />
@@ -44,6 +44,12 @@
 								<th><label for="Item_Link"><?php _e("Product Link", 'UPCP') ?></label></th>
 								<td><input name="Item_Link" id="Item_Link" type="text" value="<?php echo $Product->Item_Link;?>" size="60" />
 								<p><?php _e("A link that will replace the default product page. Useful if you participate in affiliate programs.", 'UPCP') ?></p></td>
+						</tr>
+						<tr>
+								<th><label for="Item_Display_Status"><?php _e("Display Status", 'UPCP') ?></label></th>
+								<td><label title='Show'><input type='radio' name='Item_Display_Status' value='Show' <?php if($Product->Item_Display_Status == "Show" or $Product->Item_Display_Status == "") {echo "checked='checked'";} ?>/> <span>Show</span></label><br />
+								<label title='Hide'><input type='radio' name='Item_Display_Status' value='Hide' <?php if($Product->Item_Display_Status == "Hide") {echo "checked='checked'";} ?>/> <span>Hide</span></label><br />
+								<p><?php _e("Should this item be displayed if it's added to a catalogue?", 'UPCP') ?></p></td>
 						</tr>
 						<tr>
 								<th><label for="Item_Category"><?php _e("Category:", 'UPCP') ?></label></th>
@@ -84,6 +90,67 @@
 								<?php } ?>
 								<p><?php _e("What tags should this product have? Tags help to describe the attributes of a product.", 'UPCP') ?></p></td>
 						</tr>
+						
+						<?php
+						
+						$Sql = "SELECT * FROM $fields_table_name ";
+						$Fields = $wpdb->get_results($Sql);
+						$MetaValues = $wpdb->get_results($wpdb->prepare("SELECT Field_ID, Meta_Value FROM $fields_meta_table_name WHERE Item_ID=%d", $_GET['Item_ID']));
+						foreach ($Fields as $Field) {
+								$Value = "";
+								if (is_array($MetaValues)) {
+									  foreach ($MetaValues as $Meta) {
+												if ($Field->Field_ID == $Meta->Field_ID) {$Value = $Meta->Meta_Value;}
+										}
+								}
+								$ReturnString .= "<tr><th><label for='" . $Field->Field_Name . "'>" . $Field->Field_Name . ":</label></th>";
+								if ($Field->Field_Type == "text" or $Field->Field_Type == "mediumint") {
+					  			  $ReturnString .= "<td><input name='" . $Field->Field_Name . "' id='upcp-input-" . $Field->Field_ID . "' class='upcp-text-input' type='text' value='" . $Value . "' /></td>";
+								}
+								elseif ($Field->Field_Type == "textarea") {
+										$ReturnString .= "<td><textarea name='" . $Field->Field_Name . "' id='upcp-input-" . $Field->Field_ID . "' class='upcp-textarea'>" . $Value . "</textarea></td>";
+								} 
+								elseif ($Field->Field_Type == "select") { 
+										$Options = explode(",", $Field->Field_Options);
+										$ReturnString .= "<td><select name='" . $Field->Field_Name . "' id='upcp-input-" . $Field->Field_ID . "' class='upcp-select'>";
+			 							foreach ($Options as $Option) {
+												$ReturnString .= "<option value='" . $Option . "' ";
+												if (trim($Option) == trim($Value)) {$ReturnString .= "selected='selected'";}
+												$ReturnString .= ">" . $Option . "</option>";
+										}
+										$ReturnString .= "</select></td>";
+								} 
+								elseif ($Field->Field_Type == "radio") {
+										$Counter = 0;
+										$Options = explode(",", $Field->Field_Options);
+										$ReturnString .= "<td>";
+										foreach ($Options as $Option) {
+												if ($Counter != 0) {$ReturnString .= "<label class='radio'></label>";}
+												$ReturnString .= "<input type='radio' name='" . $Field->Field_Name . "' value='" . $Option . "' class='upcp-radio' ";
+												if (trim($Option) == trim($Value)) {$ReturnString .= "checked";}
+												$ReturnString .= ">" . $Option;
+												$Counter++;
+										} 
+										$ReturnString .= "</td>";
+								} 
+								elseif ($Field->Field_Type == "checkbox") {
+  									$Counter = 0;
+										$Options = explode(",", $Field->Field_Options);
+										$Values = explode(",", $Value);
+										$ReturnString .= "<td>";
+										foreach ($Options as $Option) {
+												if ($Counter != 0) {$ReturnString .= "<label class='radio'></label>";}
+												$ReturnString .= "<input type='checkbox' name='" . $Field->Field_Name . "[]' value='" . $Option . "' class='upcp-checkbox' ";
+												if (in_array($Option, $Values)) {$ReturnString .= "checked";}
+												$ReturnString .= ">" . $Option . "</br>";
+												$Counter++;
+										}
+										$ReturnString .= "</td>";
+								}
+						}
+						echo $ReturnString;
+						?>
+
 						</table>
 
 						<p class="submit"><input type="submit" name="submit" id="submit" class="button-primary" value="Save Changes"  /></p>
@@ -312,6 +379,64 @@
 								<label for="Tag_Description"><?php _e("Description", 'UPCP') ?></label>
 								<textarea name="Tag_Description" id="Tag_Description" rows="5" cols="40"><?php echo $Tag->Tag_Description;?></textarea>
 								<p><?php _e("The description of the tag. What products are included in this?", 'UPCP') ?></p>
+						</div>
+
+						<p class="submit"><input type="submit" name="submit" id="submit" class="button-primary" value="<?php _e('Save Changes', 'UPCP') ?>"  /></p>
+						</form>
+				</div>
+				</div>
+				</div>
+		</div>
+		
+<?php } elseif ($_GET['Selected'] == "CustomField") { ?>
+		
+		<?php $Field = $wpdb->get_row($wpdb->prepare("SELECT * FROM $fields_table_name WHERE Field_ID ='%d'", $_GET['Field_ID'])); ?>
+		
+		<div class="OptionTab ActiveTab" id="EditCustomField">
+				
+				<div id="col-left">
+				<div class="col-wrap">
+				<div class="form-wrap TagDetail">
+						<a href="admin.php?page=UPCP-options&DisplayPage=Tags" class="NoUnderline">&#171; <?php _e("Back", 'UPCP') ?></a>
+						<h3>Edit <?php echo $Field->Field_Name;?></h3>
+						<form id="addtag" method="post" action="admin.php?page=UPCP-options&Action=EditCustomField&DisplayPage=CustomFields" class="validate" enctype="multipart/form-data">
+						<input type="hidden" name="action" value="Edit_Custom_Field" />
+						<input type="hidden" name="Field_ID" value="<?php echo $Field->Field_ID; ?>" />
+						<?php wp_nonce_field(); ?>
+						<?php wp_referer_field(); ?>
+						<div class="form-field form-required">
+								<label for="Field_Name"><?php _e("Name", 'UPCP') ?></label>
+								<input name="Field_Name" id="Field_Name" type="text" value="<?php echo $Field->Field_Name;?>" size="60" />
+								<p><?php _e("The name of the field you will see.", 'UPCP') ?></p>
+						</div>
+						<div class="form-field form-required">
+								<label for="Field_Slug"><?php _e("Slug", 'UPCP') ?></label>
+								<input name="Field_Slug" id="Field_Slug" type="text" value="<?php echo $Field->Field_Slug;?>" size="60" />
+								<p><?php _e("An all-lowercase name that will be used to insert the field.", 'UPCP') ?></p>
+						</div>
+						<div class="form-field">
+								<label for="Field_Type"><?php _e("Type", 'UPCP') ?></label>
+								<select name="Field_Type" id="Field_Type">
+										<option value='text' <?php if ($Field->Field_Type == "text") {echo "selected=selected";} ?>>Short Text</option>
+										<option value='mediumint' <?php if ($Field->Field_Type == "mediumint") {echo "selected=selected";} ?>>Integer</option>
+										<option value='select' <?php if ($Field->Field_Type == "select") {echo "selected=selected";} ?>>Select Box</option>
+										<option value='radio' <?php if ($Field->Field_Type == "radio") {echo "selected=selected";} ?>>Radio Button</option>
+										<option value='checkbox' <?php if ($Field->Field_Type == "checkbox") {echo "selected=selected";} ?>>Checkbox</option>
+										<option value='textarea' <?php if ($Field->Field_Type == "textarea") {echo "selected=selected";} ?>>Text Area</option>
+										<option value='date' <?php if ($Field->Field_Type == "date") {echo "selected=selected";} ?>>Date</option>
+										<option value='datetime' <?php if ($Field->Field_Type == "datetime") {echo "selected=selected";} ?>>Date/Time</option>
+								</select>
+								<p><?php _e("The input method for the field and type of data that the field will hold.", 'UPCP') ?></p>
+						</div>
+						<div class="form-field">
+								<label for="Field_Description"><?php _e("Description", 'UPCP') ?></label>
+								<textarea name="Field_Description" id="Field_Description" rows="2" cols="40"><?php echo $Field->Field_Description;?></textarea>
+								<p><?php _e("The description of the field, which you will see as the instruction for the field.", 'UPCP') ?></p>
+						</div>
+						<div class="form-field">
+								<label for="Field_Values"><?php _e("Input Values", 'UPCP') ?></label>
+								<input name="Field_Values" id="Field_Values" type="text" value="<?php echo $Field->Field_Values;?>"  size="60" />
+								<p><?php _e("A comma-separated list of acceptable input values for this field. These values will be the options for select, checkbox, and radio inputs. All values will be accepted if left blank.", 'UPCP') ?></p>
 						</div>
 
 						<p class="submit"><input type="submit" name="submit" id="submit" class="button-primary" value="<?php _e('Save Changes', 'UPCP') ?>"  /></p>

@@ -1,7 +1,7 @@
 <?php
 function UpdateTables() {
 		global $wpdb;
-		global $categories_table_name, $subcategories_table_name, $items_table_name, $item_images_table_name, $tagged_items_table_name, $tags_table_name, $catalogues_table_name, $catalogue_items_table_name;
+		global $categories_table_name, $subcategories_table_name, $items_table_name, $item_images_table_name, $tagged_items_table_name, $tags_table_name, $catalogues_table_name, $catalogue_items_table_name, $fields_table_name, $fields_meta_table_name;
 		
 		/* Update the categories table */  
    	$sql = "CREATE TABLE $categories_table_name (
@@ -48,6 +48,7 @@ function UpdateTables() {
 		SubCategory_Name text DEFAULT '',
 		Item_Date_Created datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
 		Item_Views mediumint(9) DEFAULT '0',
+		Item_Display_Status text DEFAULT '',
   	UNIQUE KEY id (Item_ID)
     )
 		DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;";
@@ -114,6 +115,33 @@ function UpdateTables() {
 		SubCategory_ID mediumint(9) DEFAULT '0',
 		Position mediumint(9) DEFAULT '0' NOT NULL,
   	UNIQUE KEY id (Catalogue_Item_ID)
+    )
+		DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;";
+   	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+   	dbDelta($sql);
+		
+		/* Update the custom fields table */
+		$sql = "CREATE TABLE $fields_table_name (
+  	Field_ID mediumint(9) NOT NULL AUTO_INCREMENT,
+  	Field_Name text DEFAULT '' NOT NULL,
+		Field_Slug text DEFAULT '' NOT NULL,
+		Field_Type text DEFAULT '' NOT NULL,
+		Field_Description text DEFAULT '' NOT NULL,
+		Field_Values text DEFAULT '' NOT NULL,
+		Field_Date_Created datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+  	UNIQUE KEY id (Field_ID)
+    )
+		DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;";
+   	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+   	dbDelta($sql);
+		
+		/* Update the custom fields meta table */
+		$sql = "CREATE TABLE $fields_meta_table_name (
+  	Meta_ID mediumint(9) NOT NULL AUTO_INCREMENT,
+  	Field_ID mediumint(9) DEFAULT '0',
+		Item_ID mediumint(9) DEFAULT '0',
+		Meta_Value text DEFAULT '' NOT NULL,
+  	UNIQUE KEY id (Meta_ID)
     )
 		DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;";
    	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');

@@ -10,6 +10,7 @@ function Add_Edit_Product() {
 		$Item_Description = stripslashes_deep($_POST['Item_Description']);
 		$Item_Price = $_POST['Item_Price'];
 		$Item_Link = $_POST['Item_Link'];
+		$Item_Display_Status = $_POST['Item_Display_Status'];
 		$Category_ID = $_POST['Category_ID'];
 		$Global_Item_ID = $_POST['Global_Item_ID'];
 		$Item_Special_Attr = $_POST['Item_Special_Attr'];
@@ -20,11 +21,11 @@ function Add_Edit_Product() {
 		if (!isset($error) or $error == __('No file was uploaded.', 'UPCP')) {
 				/* Pass the data to the appropriate function in Update_Admin_Databases.php to create the product */
 				if ($_POST['action'] == "Add_Product") {
-					  $user_update = Add_UPCP_Product($Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Description, $Item_Price, $Item_Link, $Category_ID, $Global_Item_ID, $Item_Special_Attr, $SubCategory_ID, $Tags);
+					  $user_update = Add_UPCP_Product($Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Description, $Item_Price, $Item_Link, $Item_Display_Status, $Category_ID, $Global_Item_ID, $Item_Special_Attr, $SubCategory_ID, $Tags);
 				}
 				/* Pass the data to the appropriate function in Update_Admin_Databases.php to edit the product */
 				else {
-						$user_update = Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Description, $Item_Price, $Item_Link, $Category_ID, $Global_Item_ID, $Item_Special_Attr, $SubCategory_ID, $Tags);
+						$user_update = Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Description, $Item_Price, $Item_Link, $Item_Display_Status, $Category_ID, $Global_Item_ID, $Item_Special_Attr, $SubCategory_ID, $Tags);
 				}
 				$user_update = array("Message_Type" => "Update", "Message" => $user_update);
 				return $user_update;
@@ -266,6 +267,49 @@ function Mass_Delete_UPCP_Tags() {
 		}
 		
 		$update = __("Tag(s) have been successfully deleted.", 'UPCP');
+		$user_update = array("Message_Type" => "Update", "Message" => $update);
+		return $user_update;
+}
+
+function Add_Edit_Custom_Field() {
+		/* Process the $_POST data where neccessary before storage */
+		$Field_Name = stripslashes_deep($_POST['Field_Name']);
+		$Field_Slug = stripslashes_deep($_POST['Field_Slug']);
+		$Field_Type = stripslashes_deep($_POST['Field_Type']);
+		$Field_Description = stripslashes_deep($_POST['Field_Description']);
+		$Field_Values = stripslashes_deep($_POST['Field_Values']);
+		$Field_ID = $_POST['Field_ID'];
+
+		if (!isset($error)) {
+				/* Pass the data to the appropriate function in Update_Admin_Databases.php to create the custom field */
+				if ($_POST['action'] == "Add_Custom_Field") {
+					  $user_update = Add_UPCP_Custom_Field($Field_Name, $Field_Slug, $Field_Type, $Field_Description, $Field_Values);
+				}
+				/* Pass the data to the appropriate function in Update_Admin_Databases.php to edit the custom field */
+				else {
+						$user_update = Edit_UPCP_Custom_Field($Field_ID, $Field_Name, $Field_Slug, $Field_Type, $Field_Description, $Field_Values);
+				}
+				$user_update = array("Message_Type" => "Update", "Message" => $user_update);
+				return $user_update;
+		}
+		else {
+				$output_error = array("Message_Type" => "Error", "Message" => $error);
+				return $output_error;
+		}
+}
+
+function Mass_Delete_UPCP_Custom_Fields() {
+		$Fields = $_POST['Fields_Bulk'];
+		
+		if (is_array($Fields)) {
+				foreach ($Fields as $Field) {
+						if ($Field != "") {
+								Delete_UPCP_Custom_Field($Field);
+						}
+				}
+		}
+		
+		$update = __("Field(s) have been successfully deleted.", 'UPCP');
 		$user_update = array("Message_Type" => "Update", "Message" => $update);
 		return $user_update;
 }

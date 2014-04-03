@@ -171,6 +171,8 @@ function ToggleView(DisplayType) {
 				setTimeout(function(){jQuery('.thumb-display').addClass('hidden-field');})
 		}
 		
+		setTimeout(function(){adjustCatalogueHeight();})
+		
 		return false;
 }
 
@@ -195,13 +197,19 @@ function OpenProduct(ProdID) {
 
 jQuery(document).ready(function() 
 {
-     var objHeight = 0;
-     jQuery.each(jQuery('.prod-cat-inner').children(), function(){
-            objHeight = Math.max(jQuery(this).height(), objHeight);
-     });
-		 objHeight = objHeight + 240;
-     jQuery('.prod-cat-inner').height(objHeight);
+     adjustCatalogueHeight();
 });
+
+function adjustCatalogueHeight() {
+ 		var objHeight = 0;
+    jQuery.each(jQuery('.prod-cat-inner').children(), function(){
+           if (!jQuery(this).hasClass('hidden-field')) {
+					 		 objHeight = Math.max(jQuery(this).height(), objHeight);
+					 }
+    });
+		objHeight = objHeight + 120;
+    jQuery('.prod-cat-inner').height(objHeight);
+}
 
 /* Sort by price or by name */
 jQuery.fn.sortElements = (function(){

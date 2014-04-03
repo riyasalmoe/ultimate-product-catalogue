@@ -103,12 +103,13 @@ function Insert_Product_Catalog($atts) {
 						if ($subcategory == "" or $subcategory == $Product->SubCategory_ID) {
 						if (sizeOf($tags) == 0 or count(array_intersect($tags, $ProdTag)) == count($tags)) {
 						if ($prod_name == "" or strpos($Product->Item_Name, $prod_name) !== false) {
+						if ($Product->Item_Display_Status != "Hide") {
 						$HeaderBar .= "<a id='hidden_FB_link-" . $CatalogueItem->Item_ID . "' class='fancybox' href='#prod-cat-addt-details-" . $CatalogueItem->Item_ID . "'></a>";
 						if (!in_array("Thumbnail", $ExcludedLayouts)) {$ProdThumbString .= AddProduct("Thumbnail", $CatalogueItem->Item_ID, $Product, $ProdTagObj);}
 						if (!in_array("List", $ExcludedLayouts)) {$ProdListString .= AddProduct("List", $CatalogueItem->Item_ID, $Product, $ProdTagObj);}
 						if (!in_array("Detail", $ExcludedLayouts)) {$ProdDetailString .= AddProduct("Detail", $CatalogueItem->Item_ID, $Product, $ProdTagObj);}
 						$Product_Count++;
-						}}}}
+						}}}}}
 				}
 				
 				// If the item is a category, then add the appropriate extra HTML and call the AddProduct function
@@ -138,13 +139,14 @@ function Insert_Product_Catalog($atts) {
 								if ($subcategory == "" or $subcategory == $Product->SubCategory_ID) {
 								if (sizeOf($tags) == 0 or count(array_intersect($tags, $ProdTag)) == count($tags)) {
 								if ($prod_name == "" or strpos($Product->Item_Name, $prod_name) !== false) {
+								if ($Product->Item_Display_Status != "Hide") {
 								$HeaderBar .= "<a id='hidden_FB_link-" . $Product->Item_ID . "' class='fancybox' href='#prod-cat-addt-details-" . $Product->Item_ID . "'></a>";
 								if (!in_array("Thumbnail", $ExcludedLayouts)) {$ProdThumbString .= AddProduct("Thumbnail", $Product->Item_ID, $Product, $ProdTagObj);}
 								if (!in_array("List", $ExcludedLayouts)) {$ProdListString .= AddProduct("List", $Product->Item_ID, $Product, $ProdTagObj);}
 								if (!in_array("Detail", $ExcludedLayouts)) {$ProdDetailString .= AddProduct("Detail", $Product->Item_ID, $Product, $ProdTagObj);}
 								$Product_Count++;
 								$CatProdCount++;
-								}}}
+								}}}}
 						}
 						
 						if ($CatProdCount > 0) {
@@ -175,12 +177,13 @@ function Insert_Product_Catalog($atts) {
 								if ($category == "" or $subcategory == $Product->Category_ID) {
 								if (sizeOf($tags) == 0 or count(array_intersect($tags, $ProdTag)) == count($tags)) {
 								if ($prod_name == "" or strpos($Product->Item_Name, $prod_name) !== false) {
+								if ($Product->Item_Display_Status != "Hide") {
 								$HeaderBar .= "<a id='hidden_FB_link-" . $Product->Item_ID . "' class='fancybox' href='#prod-cat-addt-details-" . $Product->Item_ID . "'></a>";
 								if (!in_array("Thumbnail", $ExcludedLayouts)) {$ProdThumbString .= AddProduct("Thumbnail", $Product->Item_ID, $Product, $ProdTagObj);}
 								if (!in_array("List", $ExcludedLayouts)) {$ProdListString .= AddProduct("List", $Product->Item_ID, $Product, $ProdTagObj);}
 								if (!in_array("Detail", $ExcludedLayouts)) {$ProdDetailString .= AddProduct("Detail", $Product->Item_ID, $Product, $ProdTagObj);}
 								$Product_Count++;
-								}}}
+								}}}}
 						}
 				}}
 		}
@@ -344,6 +347,8 @@ function AddProduct($format, $Item_ID, $Product, $Tags) {
 		if ($Links == "New") {$NewWindow = true;}
 		else {$NewWindow = false;}
 		
+		$Description = ConvertCustomFields($Product->Item_Description);
+		
 		//Select the product info, tags and images for the product
 		$Item_Images = $wpdb->get_results("SELECT Item_Image_URL, Item_Image_ID FROM $item_images_table_name WHERE Item_ID=" . $Item_ID);
 		$TagsString = "";
@@ -416,7 +421,7 @@ function AddProduct($format, $Item_ID, $Product, $Tags) {
 						$ProductString .= "<img src='" . $PhotoURL . "' alt='" . $Product->Item_Name . " Image' id='prod-cat-thumb-" . $Product->Item_ID . "' class='prod-cat-list-image upcp-list-image'>";
 						$ProductString .= "</a>";
 						$ProductString .= "</div>\n";
-						$ProductString .= "<div id='prod-cat-desc-" . $Product->Item_ID . "' class='prod-cat-desc upcp-list-desc'>" . $Product->Item_Description . "</div>\n";
+						$ProductString .= "<div id='prod-cat-desc-" . $Product->Item_ID . "' class='prod-cat-desc upcp-list-desc'>" . $Description . "</div>\n";
 					 	$ProductString .= "<a class='";
 						if ($FancyBoxClass and !$NewWindow) {$ProductString .= "fancybox";}
 						$ProductString .= "' ";
@@ -440,10 +445,10 @@ function AddProduct($format, $Item_ID, $Product, $Tags) {
 				$ProductString .= "</div>\n";
 				$ProductString .= "<div id='prod-cat-mid-div-" . $Product->Item_ID . "' class='prod-cat-mid-detail-div upcp-mid-detail-div'>";
 				$ProductString .= "<div id='prod-cat-title-" . $Product->Item_ID . "' class='prod-cat-title upcp-detail-title'>" . $Product->Item_Name . "</div>\n";
-				if ($ReadMore == "Yes") {$ProductString .= "<div id='prod-cat-desc-" . $Product->Item_ID . "' class='prod-cat-desc upcp-detail-desc'>" . substr($Product->Item_Description, 0, $Detail_Desc_Chars);}
-				else {$ProductString .= "<div id='prod-cat-desc-" . $Product->Item_ID . "' class='prod-cat-desc upcp-detail-desc'>" . $Product->Item_Description;}
+				if ($ReadMore == "Yes") {$ProductString .= "<div id='prod-cat-desc-" . $Product->Item_ID . "' class='prod-cat-desc upcp-detail-desc'>" . substr($Description, 0, $Detail_Desc_Chars);}
+				else {$ProductString .= "<div id='prod-cat-desc-" . $Product->Item_ID . "' class='prod-cat-desc upcp-detail-desc'>" . $Description;}
 				if ($ReadMore == "Yes") {
-					  if (strlen($Product->Item_Description) > $Detail_Desc_Chars) {
+					  if (strlen($Description) > $Detail_Desc_Chars) {
 					  	  $ProductString .= "... <a class='";
 								if ($FancyBoxClass and !$NewWindow) {$ProductString .= "fancybox";}
 								$ProductString .= "' ";
@@ -482,7 +487,7 @@ function AddProduct($format, $Item_ID, $Product, $Tags) {
 				$ProductString .= "</div>";
 				$ProductString .= "<div class='clear'></div>";
 				$ProductString .= "<div id='prod-cat-addt-details-desc-div-" . $Product->Item_ID . "' class='prod-cat-addt-details-desc-div'>";
-				$ProductString .= $Product->Item_Description . "</div>";
+				$ProductString .= $Description . "</div>";
 				$ProductString .= "</div></div></div>";
 				//$ProductString .= "</div>";
 		}
@@ -502,12 +507,14 @@ function SingleProductPage() {
 		global $wpdb, $items_table_name, $item_images_table_name;
 		
 		$Pretty_Links = get_option("UPCP_Pretty_Links");
+		$Single_Page_Price = get_option("UPCP_Single_Page_Price");
 		
 		if ($Pretty_Links == "Yes") {$Product = $wpdb->get_row("SELECT * FROM $items_table_name WHERE Item_Slug='" . get_query_var('single_product') . "'");}
 		else {$Product = $wpdb->get_row("SELECT * FROM $items_table_name WHERE Item_ID='" . $_GET['SingleProduct'] . "'");}
 		$Item_Images = $wpdb->get_results("SELECT Item_Image_URL, Item_Image_ID FROM $item_images_table_name WHERE Item_ID=" . $Product->Item_ID);
 		
 		$Links = get_option("UPCP_Product_Links");
+		$Description = ConvertCustomFields($Product->Item_Description);
 		
 		if ($Product->Item_Photo_URL != "") {$PhotoURL = htmlspecialchars($Product->Item_Photo_URL, ENT_QUOTES);}
 		else {$PhotoURL = plugins_url('ultimate-product-catalogue/images/No-Photo-Available.jpg');}
@@ -532,17 +539,39 @@ function SingleProductPage() {
 		$ProductString .= "</div>";
 		$ProductString .= "<div id='prod-cat-addt-details-right-div-" . $Product->Item_ID . "' class='prod-cat-addt-details-right-div'>";
 		$ProductString .= "<h2 class='prod-cat-addt-details-title'><a class='no-underline' href='http://" . $_SERVER['HTTP_HOST'] . $SP_Perm_URL . "'>" . $Product->Item_Name . "<img class='upcp-product-url-icon' src='" . get_bloginfo('wpurl') . "/wp-content/plugins/ultimate-product-catalogue/images/insert_link.png' /></a></h2>";
+		if ($Single_Page_Price == "Yes") {$ProductString .= "<h3 class='prod-cat-addt-details-price'>" . $Product->Item_Price . "</h3>";}
 		$ProductString .= "<div id='prod-cat-addt-details-main-div-" . $Product->Item_ID . "' class='prod-cat-addt-details-main-div'>";
 		$ProductString .= "<img src='" . $PhotoURL . "' alt='" . $Product->Item_Name . " Image' id='prod-cat-addt-details-main-" . $Product->Item_ID . "' class='prod-cat-addt-details-main'>";
 		$ProductString .= "</div>";
 		$ProductString .= "<div class='clear'></div>";
 		$ProductString .= "<div id='prod-cat-addt-details-desc-div-" . $Product->Item_ID . "' class='prod-cat-addt-details-desc-div'>";
-		$ProductString .= $Product->Item_Description . "</div>";
+		$ProductString .= $Description . "</div>";
 		$ProductString .= "<div class='clear'></div>\n";
 		$ProductString .= "</div>\n";
 		$ProductString .= "</div>\n";
 		
 		return $ProductString;
+}
+
+function ConvertCustomFields($Description) {
+		global $wpdb;
+		global $fields_table_name, $fields_meta_table_name;
+		
+		$Fields = $wpdb->get_results("SELECT Field_ID, Field_Slug FROM $fields_table_name");
+		$Metas = $wpdb->get_results("SELECT Field_ID, Meta_Value FROM $fields_meta_table_name");
+		
+		if (is_array($Fields)) {
+			  if (is_array($Metas)) {
+					  foreach ($Metas as $Meta) {
+					  		$MetaArray[$Meta->Field_ID] = $Meta->Meta_Value;
+						}
+				}
+				foreach ($Fields as $Field) {
+						$Description = str_replace("[" . $Field->Field_Slug . "]" , $MetaArray[$Field->Field_ID], $Description); 
+				}
+		}
+		
+		return $Description;
 }
 
 function ObjectToArray($Obj) {

@@ -250,6 +250,12 @@
 		<p><?php _e("A link that will replace the default product page. Useful if you participate in affiliate programs.", 'UPCP') ?></p>
 </div>
 <div class="form-field">
+	<label for="Item_Display_Status"><?php _e("Display Status", 'UPCP') ?></label>
+		<label title='Show'><input type='radio' class ='upcp-radio-input' name='Item_Display_Status' value='Show' checked='checked'/> <span>Show</span></label><br />
+	<label title='Hide'><input type='radio' class ='upcp-radio-input' name='Item_Display_Status' value='Hide' /> <span>Hide</span></label><br />
+	<p><?php _e("Should this item be displayed if it's added to a catalogue?", 'UPCP') ?></p>
+</div>
+<div class="form-field">
 	<label for="Item_Category"><?php _e("Category:", 'UPCP') ?></label>
 	<select name="Category_ID" id="Item_Category" onchange="UpdateSubCats();">
 	<option value=""></option>
@@ -287,6 +293,57 @@
 	<?php } ?>
 	<p><?php _e("What tags should this product have? Tags help to describe the attributes of a product.", 'UPCP') ?></p>
 </div>
+
+<?php
+$Sql = "SELECT * FROM $fields_table_name ";
+$Fields = $wpdb->get_results($Sql);
+$Value = "";
+foreach ($Fields as $Field) {
+		$ReturnString .= "<div class='form-field'><label for='" . $Field->Field_Name . "'>" . $Field->Field_Name . ":</label>";
+		if ($Field->Field_Type == "text" or $Field->Field_Type == "mediumint") {
+			  $ReturnString .= "<input name='" . $Field->Field_Name . "' id='upcp-input-" . $Field->Field_ID . "' class='upcp-text-input' type='text' value='" . $Value . "' />";
+		}
+		elseif ($Field->Field_Type == "textarea") {
+				$ReturnString .= "<textarea name='" . $Field->Field_Name . "' id='upcp-input-" . $Field->Field_ID . "' class='upcp-textarea'>" . $Value . "</textarea>";
+		} 
+		elseif ($Field->Field_Type == "select") { 
+				$Options = explode(",", $Field->Field_Options);
+				$ReturnString .= "<select name='" . $Field->Field_Name . "' id='upcp-input-" . $Field->Field_ID . "' class='upcp-select'>";
+				foreach ($Options as $Option) {
+						$ReturnString .= "<option value='" . $Option . "' ";
+						if (trim($Option) == trim($Value)) {$ReturnString .= "selected='selected'";}
+						$ReturnString .= ">" . $Option . "</option>";
+				}
+				$ReturnString .= "</select>";
+		} 
+		elseif ($Field->Field_Type == "radio") {
+				$Counter = 0;
+				$Options = explode(",", $Field->Field_Options);
+				foreach ($Options as $Option) {
+						if ($Counter != 0) {$ReturnString .= "<label class='radio'></label>";}
+						$ReturnString .= "<input type='radio' name='" . $Field->Field_Name . "' value='" . $Option . "' class='upcp-radio' ";
+						if (trim($Option) == trim($Value)) {$ReturnString .= "checked";}
+						$ReturnString .= ">" . $Option;
+						$Counter++;
+				}
+		} 
+		elseif ($Field->Field_Type == "checkbox") {
+  			$Counter = 0;
+				$Options = explode(",", $Field->Field_Options);
+				$Values = explode(",", $Value);
+				foreach ($Options as $Option) {
+						if ($Counter != 0) {$ReturnString .= "<label class='radio'></label>";}
+						$ReturnString .= "<input type='checkbox' name='" . $Field->Field_Name . "[]' value='" . $Option . "' class='upcp-checkbox' ";
+						if (in_array($Option, $Values)) {$ReturnString .= "checked";}
+						$ReturnString .= ">" . $Option . "</br>";
+						$Counter++;
+				}
+		}
+		$ReturnString .= " </div>";
+}
+echo $ReturnString;
+
+?>
 
 <p class="submit"><input type="submit" name="submit" id="submit" class="button-primary" value="<?php _e('Add New Product', 'UPCP') ?>"  /></p></form>
 

@@ -133,7 +133,9 @@ function Delete_UPCP_SubCategory($Sub_ID) {
 function Add_UPCP_Tag($Tag_Name, $Tag_Description) {
 		global $wpdb;
 		global $tags_table_name;
+		global $Full_Version;
 		
+		if ($Full_Version != "Yes") {exit();}
 		$wpdb->insert($tags_table_name,
 				array( 'Tag_Name' => $Tag_Name,
 							 'Tag_Description' => $Tag_Description,
@@ -147,7 +149,9 @@ function Add_UPCP_Tag($Tag_Name, $Tag_Description) {
 function Edit_UPCP_Tag($Tag_ID, $Tag_Name, $Tag_Description) {
 		global $wpdb;
 		global $tags_table_name;
+		global $Full_Version;
 		
+		if ($Full_Version != "Yes") {exit();}		
 		$wpdb->update(
 						$tags_table_name,
 						array( 'Tag_Name' => $Tag_Name,
@@ -164,7 +168,9 @@ function Delete_UPCP_Tag($Tag_ID) {
 		global $wpdb;
 		global $tags_table_name;
 		global $tagged_items_table_name;
+		global $Full_Version;
 		
+		if ($Full_Version != "Yes") {exit();}		
 		$wpdb->delete(
 						$tags_table_name,
 						array('Tag_ID' => $Tag_ID)
@@ -183,13 +189,73 @@ function Delete_UPCP_Tag($Tag_ID) {
 function Delete_Products_Tags() {
 		global $wpdb;
 		global $tagged_items_table_name;
-					
+		global $Full_Version;
+		
+		if ($Full_Version != "Yes") {exit();}					
 		$wpdb->delete(
 						$tagged_items_table_name,
 						array('Tagged_Item_ID' => $_GET['Tagged_Item_ID'])
 					);
 
 		$update = __("Tag has been successfully deleted from product.", 'UPCP');
+		return $update;
+}
+
+/* Adds a single new custom field to the UPCP database */
+function Add_UPCP_Custom_Field($Field_Name, $Field_Slug, $Field_Type, $Field_Description, $Field_Values) {
+		global $wpdb;
+		global $fields_table_name;
+		$Date = date("Y-m-d H:i:s");
+		global $Full_Version;
+		
+		if ($Full_Version != "Yes") {exit();}		
+		$wpdb->insert($fields_table_name,
+				array( 'Field_Name' => $Field_Name,
+							 'Field_Slug' => $Field_Slug,
+							 'Field_Type' => $Field_Type,
+							 'Field_Description' => $Field_Description,
+							 'Field_Values' => $Field_Values,
+							 'Field_Date_Created' => $Date)
+		);
+		$update = __("Field has been successfully created.", 'UPCP');
+		return $update;
+}
+
+/* Edits a single custom field with a given ID in the UPCP database */
+function  Edit_UPCP_Custom_Field($Field_ID, $Field_Name, $Field_Slug, $Field_Type, $Field_Description, $Field_Values) {
+		global $wpdb;
+		global $fields_table_name;
+		global $Full_Version;
+		
+		if ($Full_Version != "Yes") {exit();}		
+		$wpdb->update(
+						$fields_table_name,
+						array( 'Field_Name' => $Field_Name,
+									 'Field_Slug' => $Field_Slug,
+									 'Field_Type' => $Field_Type,
+							 		 'Field_Description' => $Field_Description,
+									 'Field_Values' => $Field_Values,),
+						array( 'Field_ID' => $Field_ID)
+		);
+		$update = __("Tag has been successfully edited.", 'UPCP');
+		return $update;
+}
+
+/* Deletes a single tag with a given ID in the UPCP database, and then eliminates 
+*  all of the occurrences of that tag from the tagged items table.  */
+function Delete_UPCP_Custom_Field($Field_ID) {
+		global $wpdb;
+		global $fields_table_name;
+		global $Full_Version;
+		
+		if ($Full_Version != "Yes") {exit();}		
+		$wpdb->delete(
+						$fields_table_name,
+						array('Field_ID' => $Field_ID)
+					);
+					
+
+		$update = __("Field has been successfully deleted.", 'UPCP');
 		return $update;
 }
 
@@ -303,13 +369,15 @@ function Delete_Products_Catalogue() {
 
 /* Adds a single new product inputted via the form on the left-hand side of the
 *  products' page to the UPCP database */
-function Add_UPCP_Product($Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Description, $Item_Price, $Item_Link, $Category_ID = "", $Global_Item_ID = "", $Item_Special_Attr = "", $SubCategory_ID = "", $Tags = array()) {
+function Add_UPCP_Product($Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Description, $Item_Price, $Item_Link, $Item_Display_Status = "", $Category_ID = "", $Global_Item_ID = "", $Item_Special_Attr = "", $SubCategory_ID = "", $Tags = array()) {
 		global $wpdb;
 		global $items_table_name;
 		global $categories_table_name;
 		global $subcategories_table_name;
 		global $tagged_items_table_name;
 		global $tags_table_name;
+		global $fields_table_name;
+		global $fields_meta_table_name;
 		global $Full_Version;
 		
 		$Prod_Count = $wpdb->get_var("SELECT COUNT(*) FROM " . $items_table_name);
@@ -333,6 +401,7 @@ function Add_UPCP_Product($Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Descrip
 						'Item_Price' => $Item_Price,
 						'Item_Link' => $Item_Link,
 						'Item_Photo_URL' => $Item_Photo_URL,
+						'Item_Display_Status' => $Item_Display_Status,
 						'Category_ID' => $Category_ID,
 						'Category_Name' => $Category_Name,
 						'Global_Item_ID' => $Global_Item_ID,
@@ -356,18 +425,34 @@ function Add_UPCP_Product($Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Descrip
 				);
 				$wpdb->query("UPDATE $tags_table_name SET Tag_Item_Count=Tag_Item_Count + 1 WHERE Tag_ID =" . $Tag);
 		}
+		
+		//Add the custom fields to the meta table
+		$Fields = $wpdb->get_results("SELECT Field_ID, Field_Name FROM $fields_table_name");
+		if (is_array($Fields)) {
+			  foreach ($Fields as $Field) {
+						if (isset($_POST[$Field->Field_Name])) {
+							  $wpdb->insert($fields_meta_table_name,
+															array( 'Field_ID' => $Field->Field_ID,
+																		 'Item_ID' => $Item_ID,
+																		 'Meta_Value' => $_POST[$Field->Field_Name])
+												);
+						}
+				}
+		}
 		$update = __("Product has been successfully created.", 'UPCP');
 		return $update;
 }
 
 /* Edits a single product in the UPCP database */
-function Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Description, $Item_Price, $Item_Link, $Category_ID = "", $Global_Item_ID = "", $Item_Special_Attr = "", $SubCategory_ID = "", $Tags = array()) {
+function Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Description, $Item_Price, $Item_Link, $Item_Display_Status = "", $Category_ID = "", $Global_Item_ID = "", $Item_Special_Attr = "", $SubCategory_ID = "", $Tags = array()) {
 		global $wpdb;
 		global $items_table_name;
 		global $categories_table_name;
 		global $subcategories_table_name;	
 		global $tagged_items_table_name;
 		global $tags_table_name;
+		global $fields_table_name;
+		global $fields_meta_table_name;
 		
 		// Delete the tagged item in the tagged items table for the given Item_ID
 		// and update the Item_Count column in the tags table in the database		
@@ -377,6 +462,12 @@ function Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Slug, $Item_Photo_URL, $I
 		}
 		$wpdb->delete(
 				$tagged_items_table_name,
+				array('Item_ID' => $Item_ID)
+		);
+		
+		// Delete the custom field values for the given Item_ID
+		$wpdb->delete(
+				$fields_meta_table_name,
 				array('Item_ID' => $Item_ID)
 		);
 		
@@ -398,6 +489,7 @@ function Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Slug, $Item_Photo_URL, $I
 						'Item_Price' => $Item_Price,
 						'Item_Link' => $Item_Link,
 						'Item_Photo_URL' => $Item_Photo_URL,
+						'Item_Display_Status' => $Item_Display_Status,
 						'Category_ID' => $Category_ID,
 						'Category_Name' => $Category_Name,
 						'Global_Item_ID' => $Global_Item_ID,
@@ -417,6 +509,20 @@ function Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Slug, $Item_Photo_URL, $I
 				$wpdb->query("UPDATE $tags_table_name SET Tag_Item_Count=Tag_Item_Count + 1 WHERE Tag_ID =" . $Tag);
 		}
 		
+		//Add the custom fields to the meta table
+		$Fields = $wpdb->get_results("SELECT Field_ID, Field_Name FROM $fields_table_name");
+		if (is_array($Fields)) {
+			  foreach ($Fields as $Field) {
+						if (isset($_POST[$Field->Field_Name])) {
+							  $wpdb->insert($fields_meta_table_name,
+															array( 'Field_ID' => $Field->Field_ID,
+																		 'Item_ID' => $Item_ID,
+																		 'Meta_Value' => $_POST[$Field->Field_Name])
+												);
+						}
+				}
+		}
+		
 		// Increase the Item_Count column for the category and sub-category tables in the database
 		if ($Category_ID != "") {$wpdb->query("UPDATE $categories_table_name SET Category_Item_Count=Category_Item_Count + 1 WHERE Category_ID =" . $Category_ID);}
 		if ($SubCategory_ID != "") {$wpdb->query("UPDATE $subcategories_table_name SET SubCategory_Item_Count=SubCategory_Item_Count + 1 WHERE SubCategory_ID =" . $SubCategory_ID);}
@@ -430,7 +536,9 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 		global $wpdb;
 		global $items_table_name;
 		global $categories_table_name;
-		global $subcategories_table_name;	
+		global $subcategories_table_name;
+		global $tags_table_name;
+		global $tagged_items_table_name;	
 		
 		$Excel_URL = '../wp-content/plugins/ultimate-product-catalogue/product-sheets/' . $Excel_File_Name;
 		
@@ -446,7 +554,7 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 		$sheet = $objWorkBook->getActiveSheet();
 		
 		//List of fields that can be accepted via upload
-		$Allowed_Fields = array ("Name" => "Item_Name", "Description" => "Item_Description", "Price" => "Item_Price", "Image" => "Item_Photo_URL", "Category" => "Category_Name", "Sub-Category" => "SubCategory_Name");
+		$Allowed_Fields = array ("Name" => "Item_Name", "Description" => "Item_Description", "Price" => "Item_Price", "Image" => "Item_Photo_URL", "Category" => "Category_Name", "Sub-Category" => "SubCategory_Name", "Tags" => "Tags_Names_String");
 		
 		// Get column names
 		$highestColumn = $sheet->getHighestColumn();
@@ -490,13 +598,21 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 		foreach ($SubCategories_From_DB as $SubCategory) {
 				$SubCategories[$SubCategory->SubCategory_Name] = $SubCategory->SubCategory_ID;
 		}
+		
+		// Create an array of the tags currently in the UPCP database, 
+		// with Tag_Name as the key and Tag_ID as the value
+		$Tags_From_DB = $wpdb->get_results("SELECT * FROM $tags_table_name");
+		foreach ($Tags_From_DB as $Tag) {
+				$Tags[$Tag->Tag_Name] = $Tag->Tag_ID;
+		}
 
 		// Creates an array of the field names which are going to be inserted into the database
 		// and then turns that array into a string so that it can be used in the query
 		for ($column = 0; $column < $highestColumnIndex; $column++) {
-				$Fields[] = $Allowed_Fields[$Titles[$column]];
+				if ($Allowed_Fields[$Titles[$column]] != "Tags_Names_String") {$Fields[] = $Allowed_Fields[$Titles[$column]];}
 				if ($Allowed_Fields[$Titles[$column]] == "Category_Name") {$Category_Column = $column; $Fields[] = "Category_ID";}
 				if ($Allowed_Fields[$Titles[$column]] == "SubCategory_Name") {$SubCategory_Column = $column; $Fields[] = "SubCategory_ID";}
+				if ($Allowed_Fields[$Titles[$column]] == "Tags_Names_String") {$Tags_Column = $column;}
 		}
 		$FieldsString = implode(",", $Fields);
 
@@ -507,7 +623,7 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 				// add in the values for Category_ID and SubCategory_ID, and increment 
 				// the category and sub-category counts when neccessary
 				foreach ($Product as $Col_Index => $Value) {
-						$Values[] = $Value;
+						if ($Tags_Column != $Col_Index) {$Values[] = $Value;}
 						if (isset($Category_Column) and $Category_Column == $Col_Index) {
 							 	$Values[] = $Categories[$Value];
 								$wpdb->query("UPDATE $categories_table_name SET Category_Item_Count=Category_Item_Count+1 WHERE Category_ID='" . $Categories[$Value] . "'");
@@ -516,15 +632,30 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 							  $Values[] = $SubCategories[$Value];
 								$wpdb->query("UPDATE $subcategories_table_name SET SubCategory_Item_Count=SubCategory_Item_Count+1 WHERE SubCategory_ID='" . $SubCategories[$Value] . "'");
 						}
+						if (isset($Tags_Column) and $Tags_Column == $Col_Index) {
+							  $Tags_Names_Array = explode(",", $Value);
+						}
 				}
 				$ValuesString = implode("','", $Values);
 				$wpdb->query(
 							$wpdb->prepare("INSERT INTO $items_table_name (" . $FieldsString . ") VALUES ('" . $ValuesString . "')")
 				);
+				
+				print_r($Tags_Names_Array);
+				if (is_array($Tags_Names_Array)) {
+					  $Item_ID = $wpdb->insert_id;
+						foreach ($Tags_Names_Array as $Tag_Name) {
+								$Trimmed_Name = trim($Tag_Name);
+								$Tag_ID = $Tags[$Trimmed_Name];
+								$wpdb->query($wpdb->prepare("INSERT INTO $tagged_items_table_name (Tag_ID, Item_ID) VALUES (%d, %d)", $Tag_ID, $Item_ID));
+								$wpdb->query($wpdb->prepare("UPDATE $tags_table_name SET Tag_Item_Count=Tag_Item_Count WHERE Tag_ID=%d", $Tag_ID));
+						}
+				}
 
 				unset($Values);
+				unset($Item_ID);
 				unset($ValuesString);
-				echo "Goal post 6";
+				unset($Tags_Name_Array);
 		}
 
 		return __("Products added successfully.", 'UPCP');
@@ -607,6 +738,7 @@ function Update_UPCP_Options() {
 		update_option('UPCP_Filter_Type', $_POST['filter_type']);
 		update_option("UPCP_Read_More", $_POST['read_more']);
 		update_option("UPCP_Desc_Chars", $_POST['desc_count']);
+		update_option("UPCP_Single_Page_Price", $_POST['single_page_price']);
 		if ($InstallVersion <= 2.0 or $Full_Version == "Yes") {update_option("UPCP_Pretty_Links", $_POST['pretty_links']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_Mobile_SS", $_POST['mobile_styles']);}
 		

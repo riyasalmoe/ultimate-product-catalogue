@@ -6,11 +6,11 @@ Description: Plugin to create a customizable product catalogue for businesses, r
 Author: Tim Ruse
 Author URI: http://www.EtoileWebDesign.com/
 Text Domain: UPCP
-Version: 2.1.5
+Version: 2.2
 */
 
 global $UPCP_db_version;
-global $categories_table_name, $subcategories_table_name, $items_table_name, $item_images_table_name, $catalogues_table_name, $catalogue_items_table_name, $tagged_items_table_name, $tags_table_name;
+global $categories_table_name, $subcategories_table_name, $items_table_name, $item_images_table_name, $catalogues_table_name, $catalogue_items_table_name, $tagged_items_table_name, $tags_table_name, $fields_table_name, $fields_meta_table_name;
 global $wpdb;
 global $message;
 global $Full_Version;
@@ -22,7 +22,9 @@ $catalogues_table_name = $wpdb->prefix . "UPCP_Catalogues";
 $catalogue_items_table_name = $wpdb->prefix . "UPCP_Catalogue_Items";
 $tags_table_name = $wpdb->prefix . "UPCP_Tags";
 $tagged_items_table_name = $wpdb->prefix . "UPCP_Tagged_Items";
-$UPCP_db_version = "2.1.1";
+$fields_table_name = $wpdb->prefix . "UPCP_Custom_Fields";
+$fields_meta_table_name = $wpdb->prefix . "UPCP_Fields_Meta";
+$UPCP_db_version = "2.2.02";
 
 /*define('WP_DEBUG', true);
 $wpdb->show_errors();*/
