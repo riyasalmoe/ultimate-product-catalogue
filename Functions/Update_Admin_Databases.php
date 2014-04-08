@@ -706,7 +706,7 @@ function Add_Product_Image($Item_ID, $Image_URL, $Image_Description = "") {
 		global $item_images_table_name;
 		
 		$wpdb->query(
-							$wpdb->prepare("INSERT INTO $item_images_table_name (Item_ID, Item_Image_URL, Item_Image_Description) VALUES ('" . $Item_ID . "','" . $Image_URL . "','" . $Item_Image_Description . "')")
+							$wpdb->prepare("INSERT INTO $item_images_table_name (Item_ID, Item_Image_URL, Item_Image_Description) VALUES (%d, %s, %s)", $Item_ID, $Image_URL, $Item_Image_Description)
 				);
 		
 		$update = __("Image has been successfully added to the product.", 'UPCP');

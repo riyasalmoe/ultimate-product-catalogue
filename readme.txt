@@ -102,6 +102,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.2.1 =
+- Two small bug fixes
+
 = 2.2 =
 - New Premium feature: Custom Fields!
 - Custom fields let you add fields to your products, that can be included in the description of your products via shortcode, so that you can have a common product template

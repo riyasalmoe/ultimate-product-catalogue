@@ -564,6 +564,7 @@
 	max-height: 180px;
 	padding: 10px 10px 10px 15px;
 	text-indent: 25px;
+	float: left;
 }
 .prod-cat-addt-details-right-div {
   float:left;
