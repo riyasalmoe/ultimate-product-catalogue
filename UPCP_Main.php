@@ -6,13 +6,13 @@ Description: Plugin to create a customizable product catalogue for businesses, r
 Author: Tim Ruse
 Author URI: http://www.EtoileWebDesign.com/
 Text Domain: UPCP
-Version: 2.2.1
+Version: 2.2.2
 */
 
 global $UPCP_db_version;
 global $categories_table_name, $subcategories_table_name, $items_table_name, $item_images_table_name, $catalogues_table_name, $catalogue_items_table_name, $tagged_items_table_name, $tags_table_name, $fields_table_name, $fields_meta_table_name;
 global $wpdb;
-global $message;
+global $upcp_message;
 global $Full_Version;
 $categories_table_name = $wpdb->prefix . "UPCP_Categories";
 $subcategories_table_name = $wpdb->prefix . "UPCP_SubCategories";
@@ -155,4 +155,5 @@ if (!isset($rules['"(.?.+?)/([^&]+)/?$"']) and $PrettyLinks == "Yes") {
 		add_filter('init', 'UPCP_Rewrite_Rules');
 		update_option("UPCP_Update_RR_Rules", "No");
 }
+
 ?>

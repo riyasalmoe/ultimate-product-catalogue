@@ -307,7 +307,7 @@ foreach ($Fields as $Field) {
 				$ReturnString .= "<textarea name='" . $Field->Field_Name . "' id='upcp-input-" . $Field->Field_ID . "' class='upcp-textarea'>" . $Value . "</textarea>";
 		} 
 		elseif ($Field->Field_Type == "select") { 
-				$Options = explode(",", $Field->Field_Options);
+				$Options = explode(",", $Field->Field_Values);
 				$ReturnString .= "<select name='" . $Field->Field_Name . "' id='upcp-input-" . $Field->Field_ID . "' class='upcp-select'>";
 				foreach ($Options as $Option) {
 						$ReturnString .= "<option value='" . $Option . "' ";
@@ -318,7 +318,7 @@ foreach ($Fields as $Field) {
 		} 
 		elseif ($Field->Field_Type == "radio") {
 				$Counter = 0;
-				$Options = explode(",", $Field->Field_Options);
+				$Options = explode(",", $Field->Field_Values);
 				foreach ($Options as $Option) {
 						if ($Counter != 0) {$ReturnString .= "<label class='radio'></label>";}
 						$ReturnString .= "<input type='radio' name='" . $Field->Field_Name . "' value='" . $Option . "' class='upcp-radio' ";
@@ -329,7 +329,7 @@ foreach ($Fields as $Field) {
 		} 
 		elseif ($Field->Field_Type == "checkbox") {
   			$Counter = 0;
-				$Options = explode(",", $Field->Field_Options);
+				$Options = explode(",", $Field->Field_Values);
 				$Values = explode(",", $Value);
 				foreach ($Options as $Option) {
 						if ($Counter != 0) {$ReturnString .= "<label class='radio'></label>";}

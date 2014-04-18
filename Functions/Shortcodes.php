@@ -348,6 +348,7 @@ function AddProduct($format, $Item_ID, $Product, $Tags) {
 		else {$NewWindow = false;}
 		
 		$Description = ConvertCustomFields($Product->Item_Description);
+		$Description = do_shortcode($Description);
 		
 		//Select the product info, tags and images for the product
 		$Item_Images = $wpdb->get_results("SELECT Item_Image_URL, Item_Image_ID FROM $item_images_table_name WHERE Item_ID=" . $Item_ID);
@@ -515,6 +516,7 @@ function SingleProductPage() {
 		
 		$Links = get_option("UPCP_Product_Links");
 		$Description = ConvertCustomFields($Product->Item_Description);
+		$Description = do_shortcode($Description);
 		
 		if ($Product->Item_Photo_URL != "") {$PhotoURL = htmlspecialchars($Product->Item_Photo_URL, ENT_QUOTES);}
 		else {$PhotoURL = plugins_url('ultimate-product-catalogue/images/No-Photo-Available.jpg');}

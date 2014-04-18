@@ -111,7 +111,7 @@
 										$ReturnString .= "<td><textarea name='" . $Field->Field_Name . "' id='upcp-input-" . $Field->Field_ID . "' class='upcp-textarea'>" . $Value . "</textarea></td>";
 								} 
 								elseif ($Field->Field_Type == "select") { 
-										$Options = explode(",", $Field->Field_Options);
+										$Options = explode(",", $Field->Field_Values);
 										$ReturnString .= "<td><select name='" . $Field->Field_Name . "' id='upcp-input-" . $Field->Field_ID . "' class='upcp-select'>";
 			 							foreach ($Options as $Option) {
 												$ReturnString .= "<option value='" . $Option . "' ";
@@ -122,7 +122,7 @@
 								} 
 								elseif ($Field->Field_Type == "radio") {
 										$Counter = 0;
-										$Options = explode(",", $Field->Field_Options);
+										$Options = explode(",", $Field->Field_Values);
 										$ReturnString .= "<td>";
 										foreach ($Options as $Option) {
 												if ($Counter != 0) {$ReturnString .= "<label class='radio'></label>";}
@@ -135,7 +135,7 @@
 								} 
 								elseif ($Field->Field_Type == "checkbox") {
   									$Counter = 0;
-										$Options = explode(",", $Field->Field_Options);
+										$Options = explode(",", $Field->Field_Values);
 										$Values = explode(",", $Value);
 										$ReturnString .= "<td>";
 										foreach ($Options as $Option) {

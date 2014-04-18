@@ -102,6 +102,10 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.2.2 =
+- Bug fixes for custom fields
+- Shortcodes can now be used in product descriptions
+
 = 2.2.1 =
 - Two small bug fixes
 

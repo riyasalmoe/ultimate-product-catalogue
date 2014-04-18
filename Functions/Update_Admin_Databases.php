@@ -237,7 +237,7 @@ function  Edit_UPCP_Custom_Field($Field_ID, $Field_Name, $Field_Slug, $Field_Typ
 									 'Field_Values' => $Field_Values,),
 						array( 'Field_ID' => $Field_ID)
 		);
-		$update = __("Tag has been successfully edited.", 'UPCP');
+		$update = __("Field has been successfully edited.", 'UPCP');
 		return $update;
 }
 
@@ -427,19 +427,29 @@ function Add_UPCP_Product($Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Descrip
 		}
 		
 		//Add the custom fields to the meta table
-		$Fields = $wpdb->get_results("SELECT Field_ID, Field_Name FROM $fields_table_name");
+		$Fields = $wpdb->get_results("SELECT Field_ID, Field_Name, Field_Values FROM $fields_table_name");
 		if (is_array($Fields)) {
 			  foreach ($Fields as $Field) {
 						if (isset($_POST[$Field->Field_Name])) {
-							  $wpdb->insert($fields_meta_table_name,
+							  $Value = trim($_POST[$Field->Field_Name]);
+								$Options = explode(",", $Field->Field_Values);
+								if (sizeOf($Options) > 0) {
+									  array_walk($Options, create_function('&$val', '$val = trim($val);'));
+										$InArray = in_array($Value, $Options);
+								}
+								if (!isset($InArray) or $InArray) {
+									  $wpdb->insert($fields_meta_table_name,
 															array( 'Field_ID' => $Field->Field_ID,
 																		 'Item_ID' => $Item_ID,
-																		 'Meta_Value' => $_POST[$Field->Field_Name])
+																		 'Meta_Value' => $Value)
 												);
+								}
+								elseif ($InArray == false) {$CustomFieldError = __(" One or more custom field values were incorrect.", 'UPCP');}
+								unset($InArray);
 						}
 				}
 		}
-		$update = __("Product has been successfully created.", 'UPCP');
+		$update = __("Product has been successfully created." . $CustomFieldError, 'UPCP');
 		return $update;
 }
 
@@ -510,15 +520,25 @@ function Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Slug, $Item_Photo_URL, $I
 		}
 		
 		//Add the custom fields to the meta table
-		$Fields = $wpdb->get_results("SELECT Field_ID, Field_Name FROM $fields_table_name");
+		$Fields = $wpdb->get_results("SELECT Field_ID, Field_Name, Field_Values FROM $fields_table_name");
 		if (is_array($Fields)) {
 			  foreach ($Fields as $Field) {
 						if (isset($_POST[$Field->Field_Name])) {
-							  $wpdb->insert($fields_meta_table_name,
+							  $Value = trim($_POST[$Field->Field_Name]);
+								$Options = explode(",", $Field->Field_Values);
+								if (sizeOf($Options) > 0) {
+									  array_walk($Options, create_function('&$val', '$val = trim($val);'));
+										$InArray = in_array($Value, $Options);
+								}
+								if (!isset($InArray) or $InArray) {
+									  $wpdb->insert($fields_meta_table_name,
 															array( 'Field_ID' => $Field->Field_ID,
 																		 'Item_ID' => $Item_ID,
-																		 'Meta_Value' => $_POST[$Field->Field_Name])
+																		 'Meta_Value' => $Value)
 												);
+								}
+								elseif ($InArray == false) {$CustomFieldError = __(" One or more custom field values were incorrect.", 'UPCP');}
+								unset($InArray);
 						}
 				}
 		}
@@ -527,7 +547,7 @@ function Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Slug, $Item_Photo_URL, $I
 		if ($Category_ID != "") {$wpdb->query("UPDATE $categories_table_name SET Category_Item_Count=Category_Item_Count + 1 WHERE Category_ID =" . $Category_ID);}
 		if ($SubCategory_ID != "") {$wpdb->query("UPDATE $subcategories_table_name SET SubCategory_Item_Count=SubCategory_Item_Count + 1 WHERE SubCategory_ID =" . $SubCategory_ID);}
 		
-		$update = __("Menu item has been successfully edited.", 'UPCP');
+		$update = __("Product has been successfully edited." . $CustomFieldError, 'UPCP');
 		return $update;
 }
 /* Adds multiple new products inputted via a spreadsheet uploaded to the top form 
