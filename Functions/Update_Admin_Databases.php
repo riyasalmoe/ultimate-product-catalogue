@@ -635,6 +635,8 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 				if ($Allowed_Fields[$Titles[$column]] == "Tags_Names_String") {$Tags_Column = $column;}
 		}
 		$FieldsString = implode(",", $Fields);
+		
+		$ShowStatus = "Show";
 
 		// Create the query to insert the products one at a time into the database and then run it
 		foreach ($Data as $Product) {
@@ -658,10 +660,9 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 				}
 				$ValuesString = implode("','", $Values);
 				$wpdb->query(
-							$wpdb->prepare("INSERT INTO $items_table_name (" . $FieldsString . ") VALUES ('" . $ValuesString . "')")
+							$wpdb->prepare("INSERT INTO $items_table_name (" . $FieldsString . ", Item_Display_Status) VALUES ('" . $ValuesString . "','%s')", $ShowStatus)
 				);
 				
-				print_r($Tags_Names_Array);
 				if (is_array($Tags_Names_Array)) {
 					  $Item_ID = $wpdb->insert_id;
 						foreach ($Tags_Names_Array as $Tag_Name) {
