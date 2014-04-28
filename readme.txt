@@ -102,6 +102,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.2.4 =
+- Added case-insensitive search for AJAX filtering
+
 = 2.2.3 =
 - Small update for uploading products from spreadsheets
 

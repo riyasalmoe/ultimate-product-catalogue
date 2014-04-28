@@ -9,6 +9,7 @@ function Initial_UPCP_Options() {
 		update_option("UPCP_Pretty_Links", "No");
 		update_option("UPCP_Mobile_SS", "No");
 		update_option("UPCP_Install_Flag", "Yes");
-		update_option("UPCP_First_Install_Version", "2.1");
+		update_option("UPCP_First_Install_Version", "2.2.4");
 		update_option("UPCP_Desc_Chars", 240);
+		update_option("UPCP_Case_Insensitive_Search", "Yes");
 }

@@ -13,6 +13,7 @@ function Insert_Product_Catalog($atts) {
 		$Links = get_option("UPCP_Product_Links");
 		$Pretty_Links = get_option("UPCP_Pretty_Links");
 		$Mobile_Style = get_option("UPCP_Mobile_SS");
+		$CaseInsensitiveSearch = get_option("UPCP_Case_Insensitive_Search");
 		
 		// Get the attributes passed by the shortcode, and store them in new variables for processing
 		extract( shortcode_atts( array(
@@ -99,10 +100,18 @@ function Insert_Product_Catalog($atts) {
 					  $Product = $wpdb->get_row("SELECT * FROM $items_table_name WHERE Item_ID=" . $CatalogueItem->Item_ID);
 						$ProdTagObj = $wpdb->get_results("SELECT Tag_ID FROM $tagged_items_table_name WHERE Item_ID=" . $CatalogueItem->Item_ID);
 						$ProdTag = ObjectToArray($ProdTagObj);
+						
+						if ($CaseInsensitiveSearch == "Yes") {
+							  if ($prod_name == "" or strpos(strtolower($Product->Item_Name), strtolower($prod_name)) !== false) {$NameSearchMatch = "Yes";}
+						}
+						else {
+								if ($prod_name == "" or strpos($Product->Item_Name, $prod_name) !== false) {$NameSearchMatch = "Yes";}
+						}
+								
 						if ($category == "" or $category == $Product->Category_ID) {
 						if ($subcategory == "" or $subcategory == $Product->SubCategory_ID) {
 						if (sizeOf($tags) == 0 or count(array_intersect($tags, $ProdTag)) == count($tags)) {
-						if ($prod_name == "" or strpos($Product->Item_Name, $prod_name) !== false) {
+						if ($NameSearchMatch == "Yes") {
 						if ($Product->Item_Display_Status != "Hide") {
 						$HeaderBar .= "<a id='hidden_FB_link-" . $CatalogueItem->Item_ID . "' class='fancybox' href='#prod-cat-addt-details-" . $CatalogueItem->Item_ID . "'></a>";
 						if (!in_array("Thumbnail", $ExcludedLayouts)) {$ProdThumbString .= AddProduct("Thumbnail", $CatalogueItem->Item_ID, $Product, $ProdTagObj);}
@@ -110,6 +119,7 @@ function Insert_Product_Catalog($atts) {
 						if (!in_array("Detail", $ExcludedLayouts)) {$ProdDetailString .= AddProduct("Detail", $CatalogueItem->Item_ID, $Product, $ProdTagObj);}
 						$Product_Count++;
 						}}}}}
+						unset($NameSearchMatch);
 				}
 				
 				// If the item is a category, then add the appropriate extra HTML and call the AddProduct function
@@ -136,9 +146,17 @@ function Insert_Product_Catalog($atts) {
 						foreach ($Products as $Product) {
 								$ProdTagObj = $wpdb->get_results("SELECT Tag_ID FROM $tagged_items_table_name WHERE Item_ID=" . $Product->Item_ID);
 								$ProdTag = ObjectToArray($ProdTagObj);
+								
+								if ($CaseInsensitiveSearch == "Yes") {
+									  if ($prod_name == "" or strpos(strtolower($Product->Item_Name), strtolower($prod_name)) !== false) {$NameSearchMatch = "Yes";}
+								}
+								else {
+										if ($prod_name == "" or strpos($Product->Item_Name, $prod_name) !== false) {$NameSearchMatch = "Yes";}
+								}
+								
 								if ($subcategory == "" or $subcategory == $Product->SubCategory_ID) {
 								if (sizeOf($tags) == 0 or count(array_intersect($tags, $ProdTag)) == count($tags)) {
-								if ($prod_name == "" or strpos($Product->Item_Name, $prod_name) !== false) {
+								if ($NameSearchMatch == "Yes") {
 								if ($Product->Item_Display_Status != "Hide") {
 								$HeaderBar .= "<a id='hidden_FB_link-" . $Product->Item_ID . "' class='fancybox' href='#prod-cat-addt-details-" . $Product->Item_ID . "'></a>";
 								if (!in_array("Thumbnail", $ExcludedLayouts)) {$ProdThumbString .= AddProduct("Thumbnail", $Product->Item_ID, $Product, $ProdTagObj);}
@@ -147,6 +165,7 @@ function Insert_Product_Catalog($atts) {
 								$Product_Count++;
 								$CatProdCount++;
 								}}}}
+								unset($NameSearchMatch);
 						}
 						
 						if ($CatProdCount > 0) {
@@ -174,9 +193,17 @@ function Insert_Product_Catalog($atts) {
 						foreach ($Products as $Product) {
 								$ProdTagObj = $wpdb->get_results("SELECT Tag_ID FROM $tagged_items_table_name WHERE Item_ID=" . $Product->Item_ID);
 								$ProdTag = ObjectToArray($ProdTagObj);
+								
+								if ($CaseInsensitiveSearch == "Yes") {
+									  if ($prod_name == "" or strpos(strtolower($Product->Item_Name), strtolower($prod_name)) !== false) {$NameSearchMatch = "Yes";}
+								}
+								else {
+										if ($prod_name == "" or strpos($Product->Item_Name, $prod_name) !== false) {$NameSearchMatch = "Yes";}
+								}
+								
 								if ($category == "" or $subcategory == $Product->Category_ID) {
 								if (sizeOf($tags) == 0 or count(array_intersect($tags, $ProdTag)) == count($tags)) {
-								if ($prod_name == "" or strpos($Product->Item_Name, $prod_name) !== false) {
+								if ($NameSearchMatch == "Yes") {
 								if ($Product->Item_Display_Status != "Hide") {
 								$HeaderBar .= "<a id='hidden_FB_link-" . $Product->Item_ID . "' class='fancybox' href='#prod-cat-addt-details-" . $Product->Item_ID . "'></a>";
 								if (!in_array("Thumbnail", $ExcludedLayouts)) {$ProdThumbString .= AddProduct("Thumbnail", $Product->Item_ID, $Product, $ProdTagObj);}
@@ -184,6 +211,7 @@ function Insert_Product_Catalog($atts) {
 								if (!in_array("Detail", $ExcludedLayouts)) {$ProdDetailString .= AddProduct("Detail", $Product->Item_ID, $Product, $ProdTagObj);}
 								$Product_Count++;
 								}}}}
+								unset($NameSearchMatch);
 						}
 				}}
 		}

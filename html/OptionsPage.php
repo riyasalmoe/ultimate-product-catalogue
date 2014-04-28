@@ -8,6 +8,7 @@
 		$Single_Page_Price = get_option("UPCP_Single_Page_Price");
 		$PrettyLinks = get_option("UPCP_Pretty_Links");
 		$MobileStyle = get_option("UPCP_Mobile_SS");
+		$CaseInsensitiveSearch = get_option("UPCP_Case_Insensitive_Search");
 		$InstallVersion = get_option("UPCP_First_Install_Version");
 ?>
 <div class="wrap">
@@ -78,6 +79,15 @@
 	<fieldset><legend class="screen-reader-text"><span>Filtering Type</span></legend>
 	<label title='Javascript'><input type='radio' name='filter_type' value='Javascript' <?php if($Filter == "Javascript") {echo "checked='checked'";} ?> /> <span>Javascript Filtering</span></label><br />
 	<label title='AJAX'><input type='radio' name='filter_type' value='AJAX' <?php if($Filter == "AJAX") {echo "checked='checked'";} ?> /> <span>AJAX Filtering</span></label><br />
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row">Case Insensitive Search (AJAX Only)</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span>Compare only the letters and not their case in AJAX search</span></legend>
+	<label title='Javascript'><input type='radio' name='case_insensitive_search' value='Yes' <?php if($CaseInsensitiveSearch == "Yes") {echo "checked='checked'";} ?> /> <span>Yes</span></label><br />
+	<label title='AJAX'><input type='radio' name='case_insensitive_search' value='No' <?php if($CaseInsensitiveSearch == "No") {echo "checked='checked'";} ?> /> <span>No</span></label><br />
 	</fieldset>
 </td>
 </tr>

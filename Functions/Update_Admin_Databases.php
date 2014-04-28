@@ -760,6 +760,7 @@ function Update_UPCP_Options() {
 		update_option("UPCP_Read_More", $_POST['read_more']);
 		update_option("UPCP_Desc_Chars", $_POST['desc_count']);
 		update_option("UPCP_Single_Page_Price", $_POST['single_page_price']);
+		update_option("UPCP_Case_Insensitive_Search", $_POST['case_insensitive_search']);
 		if ($InstallVersion <= 2.0 or $Full_Version == "Yes") {update_option("UPCP_Pretty_Links", $_POST['pretty_links']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_Mobile_SS", $_POST['mobile_styles']);}
 		
