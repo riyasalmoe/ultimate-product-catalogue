@@ -27,8 +27,10 @@
 							<div id="upcp_pro" class="postbox " >
 							<div class="handlediv" title="Click to toggle"></div><h3 class='hndle'><span><?php _e("Thank You!", 'UPCP') ?></span></h3>
 							 		<div class="inside">
-											<?php if (get_option("UPCP_Install_Flag") == "Yes") { ?><ul><li><?php _e("Thanks for installing the Ultimate Product Catalogue Plugin.", "UPCP"); ?><br> <a href='http://www.facebook.com/EtoileWebDesign'><?php _e("Follow us on Facebook", "UPCP"); ?></a> <?php _e("to suggest new features or hear about upcoming ones!", "UPCP");?> </li></ul>
-											<?php } else { ?><ul><li><?php _e("Thanks for upgrading to version 2.2.4!", "UPCP"); ?><br> <a href='http://www.facebook.com/EtoileWebDesign'><?php _e("Follow us on Facebook", "UPCP"); ?></a> <?php _e("to suggest new features or hear about upcoming ones!", "UPCP");?> </li></ul><?php } ?>
+											<?php /*if (get_option("UPCP_Install_Flag") == "Yes") { ?><ul><li><?php _e("Thanks for installing the Ultimate Product Catalogue Plugin.", "UPCP"); ?><br> <a href='http://www.facebook.com/EtoileWebDesign'><?php _e("Follow us on Facebook", "UPCP"); ?></a> <?php _e("to suggest new features or hear about upcoming ones!", "UPCP");?> </li></ul>
+											<?php } else { ?><ul><li><?php _e("Thanks for upgrading to version 2.2.4!", "UPCP"); ?><br> <a href='http://www.facebook.com/EtoileWebDesign'><?php _e("Follow us on Facebook", "UPCP"); ?></a> <?php _e("to suggest new features or hear about upcoming ones!", "UPCP");?> </li></ul><?php } */?>
+											<?php if (get_option("UPCP_Install_Flag") == "Yes") { ?><ul><li><?php _e("Thanks for installing the Ultimate Product Catalogue Plugin.", "UPCP"); ?><br> <a href='http://wordpress.org/support/view/plugin-reviews/ultimate-product-catalogue'><?php _e("Please rate our plugin", "UPCP"); ?></a> <?php _e("if you find the Ultimate Product Catalogue Plugin useful!", "UPCP");?> </li></ul>
+											<?php } else { ?><ul><li><?php _e("Thanks for upgrading to version 2.2.5!", "UPCP"); ?><br> <a href='http://wordpress.org/support/view/plugin-reviews/ultimate-product-catalogue'><?php _e("Please rate our plugin", "UPCP"); ?></a> <?php _e("if you find the Ultimate Product Catalogue Plugin useful!", "UPCP");?> </li></ul><?php } ?>
 									</div>
 							</div>
 							</div>

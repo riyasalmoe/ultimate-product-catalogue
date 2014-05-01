@@ -216,9 +216,9 @@ function Insert_Product_Catalog($atts) {
 				}}
 		}
 				
-		$ProdThumbString .= "<div class='clear'></div>\n";
-		$ProdListString .= "<div class='clear'></div>\n";
-		$ProdDetailString .= "<div class='clear'></div>\n";
+		$ProdThumbString .= "<div class='upcp-clear'></div>\n";
+		$ProdListString .= "<div class='upcp-clear'></div>\n";
+		$ProdDetailString .= "<div class='upcp-clear'></div>\n";
 		
 		$ProdThumbString .= "</div>\n";
 		$ProdListString .= "</div>\n";
@@ -338,7 +338,7 @@ function Insert_Product_Catalog($atts) {
 		if (!in_array("Detail", $ExcludedLayouts)) {
 			  $HeaderBar .= "<a href='#' onclick='ToggleView(\"" . __("Detail", 'UPCP') . "\"); return false;' title='Detail'><div class='upcp-details-toggle-icon " . $Color . "-details-icon'></div></a>";
 		}
-		$HeaderBar .= "<div class='clear'></div>";
+		$HeaderBar .= "<div class='upcp-clear'></div>";
 		$HeaderBar .= "</div>";
 		
 		if (isset($_GET['Product_ID'])) {
@@ -347,7 +347,7 @@ function Insert_Product_Catalog($atts) {
 				$JS .= "</script>";
 		}
 		
-		$InnerString .= "<div class='prod-cat-inner'>" . $ProdThumbString . "<div class='clear'></div>" . $ProdListString . "<div class='clear'></div>" . $ProdDetailString . "<div class='clear'></div></div>";
+		$InnerString .= "<div class='prod-cat-inner'>" . $ProdThumbString . "<div class='upcp-clear'></div>" . $ProdListString . "<div class='upcp-clear'></div>" . $ProdDetailString . "<div class='upcp-clear'></div></div>";
 		
 		if ($only_inner == "Yes") {return $InnerString;}
 		
@@ -357,7 +357,7 @@ function Insert_Product_Catalog($atts) {
 		$ReturnString .= $InnerString;
 		$ReturnString .= $SidebarString;
 		$ReturnString .= $JS;
-		$ReturnString .= "<div class='clear'></div></div>";
+		$ReturnString .= "<div class='upcp-clear'></div></div>";
 		
 		return $ReturnString;
 }
@@ -514,7 +514,7 @@ function AddProduct($format, $Item_ID, $Product, $Tags) {
 				$ProductString .= "<img src='" . $PhotoURL . "' alt='" . $Product->Item_Name . " Image' id='prod-cat-addt-details-main-" . $Product->Item_ID . "' class='prod-cat-addt-details-main'>";
 				$ProductString .= "</a>";
 				$ProductString .= "</div>";
-				$ProductString .= "<div class='clear'></div>";
+				$ProductString .= "<div class='upcp-clear'></div>";
 				$ProductString .= "<div id='prod-cat-addt-details-desc-div-" . $Product->Item_ID . "' class='prod-cat-addt-details-desc-div'>";
 				$ProductString .= $Description . "</div>";
 				$ProductString .= "</div></div></div>";
@@ -526,7 +526,7 @@ function AddProduct($format, $Item_ID, $Product, $Tags) {
 		$ProductString .= "<div id='prod-cat-subcategory-jquery-" . $Product->Item_ID . "' class='prod-cat-subcategory-jquery jquery-hidden'> " . $Product->SubCategory_ID . ",</div>\n";
 		$ProductString .= "<div id='prod-cat-tag-jquery-" . $Product->Item_ID . "' class='prod-cat-tag-jquery jquery-hidden'> " . $TagsString . ",</div>\n";
 		$ProductString .= "<div id='prod-cat-title-jquery-" . $Product->Item_ID . "' class='prod-cat-title-jquery jquery-hidden'> " . $Product->Item_Name . ",</div>\n";
-		$ProductString .= "<div class='clear'></div>\n";
+		$ProductString .= "<div class='upcp-clear'></div>\n";
 		$ProductString .= "</div>\n";
 				
 		return $ProductString;
@@ -573,10 +573,10 @@ function SingleProductPage() {
 		$ProductString .= "<div id='prod-cat-addt-details-main-div-" . $Product->Item_ID . "' class='prod-cat-addt-details-main-div'>";
 		$ProductString .= "<img src='" . $PhotoURL . "' alt='" . $Product->Item_Name . " Image' id='prod-cat-addt-details-main-" . $Product->Item_ID . "' class='prod-cat-addt-details-main'>";
 		$ProductString .= "</div>";
-		$ProductString .= "<div class='clear'></div>";
+		$ProductString .= "<div class='upcp-clear'></div>";
 		$ProductString .= "<div id='prod-cat-addt-details-desc-div-" . $Product->Item_ID . "' class='prod-cat-addt-details-desc-div'>";
 		$ProductString .= $Description . "</div>";
-		$ProductString .= "<div class='clear'></div>\n";
+		$ProductString .= "<div class='upcp-clear'></div>\n";
 		$ProductString .= "</div>\n";
 		$ProductString .= "</div>\n";
 		

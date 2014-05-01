@@ -102,6 +102,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.2.5 =
+- Added css support for a large number of new themes
+
 = 2.2.4 =
 - Added case-insensitive search for AJAX filtering
 
