@@ -19,6 +19,7 @@ function UPCPHighlight(Field, Color) {
 		}
 }
 
+var RequestCount = 0;
 function UPCP_Ajax_Filter() {
 		var SelectedCat = "";
 		var CatCount = 0;
@@ -36,14 +37,22 @@ function UPCP_Ajax_Filter() {
 		jQuery('.jquery-prod-tag-value').each(function() {if (jQuery(this).prop('checked')) {TagBoxValues.push(jQuery(this).val());}});
 		var SelectedProdName = jQuery('.jquery-prod-name-text').val();
 		
-		jQuery('.prod-cat-inner').html('');
+		jQuery('.prod-cat-inner').html('<h3>Updating results...</h3>');
 		
 		if (CatCount > 1 || SubCatCount > 1) {
+				
 				return false;
 		}
 		
-		var data = 'id=' + id + '&sidebar=' + sidebar + '&start_layout=' + start_layout + '&excluded_layouts=' + excluded_layouts + '&Prod_Name=' + SelectedProdName + '&Category=' + SelectedCat + '&SubCategory=' + SelectedSubCat + '&Tags=' + TagBoxValues + '&action=update_catalogue';
-		jQuery.post(ajaxurl, data, function(response) {jQuery('.prod-cat-inner').html(response);});
+		RequestCount = RequestCount + 1;
+		var data = 'id=' + id + '&sidebar=' + sidebar + '&start_layout=' + start_layout + '&excluded_layouts=' + excluded_layouts + '&Prod_Name=' + SelectedProdName + '&Category=' + SelectedCat + '&SubCategory=' + SelectedSubCat + '&Tags=' + TagBoxValues + '&request_count=' + RequestCount + '&action=update_catalogue';
+		jQuery.post(ajaxurl, data, function(response) {
+				response = response.substring(0, response.length - 1);
+				var parsed_response = jQuery.parseJSON(response);
+				if (parsed_response.request_count == RequestCount) {
+					  jQuery('.prod-cat-inner').html(parsed_response.message);
+				}
+		});
 }
 
 function UPCP_Filer_Results() {

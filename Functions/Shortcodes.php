@@ -23,6 +23,7 @@ function Insert_Product_Catalog($atts) {
 																"products_per_page" => 5000,
 																"sidebar" => "Yes",
 																"only_inner" => "No",
+																"request_count" => 0,
 																"category" => "",
 																"subcategory" => "",
 																"tags" => "",
@@ -349,7 +350,11 @@ function Insert_Product_Catalog($atts) {
 		
 		$InnerString .= "<div class='prod-cat-inner'>" . $ProdThumbString . "<div class='upcp-clear'></div>" . $ProdListString . "<div class='upcp-clear'></div>" . $ProdDetailString . "<div class='upcp-clear'></div></div>";
 		
-		if ($only_inner == "Yes") {return $InnerString;}
+		if ($only_inner == "Yes") {
+			  $ReturnArray['request_count'] = $request_count;
+				$ReturnArray['message'] = $InnerString;
+				return json_encode($ReturnArray);
+		}
 		
 		$ReturnString .= "<div class='prod-cat-container'>";
 		$ReturnString .= $HeaderBar;

@@ -36,6 +36,7 @@ Tutorial videos available in the FAQ section.
 
 Additional Languages:
 - Brazilian Portugese (thanks to <a href='http://wordpress.org/support/profile/tito_cadallora'>Tito_Cadallora</a>);
+- Canadian French (thanks to Pascale DRP)
 - Lithuanian (thanks to <a href='http://wordpress.org/support/profile/adart'>AdArt</a>);
 
 == Installation ==
@@ -102,6 +103,10 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.2.5 =
+- Added French as a supported language
+- Improved the AJAX search function
+
 = 2.2.5 =
 - Added css support for a large number of new themes
 
