@@ -433,7 +433,7 @@ function Add_UPCP_Product($Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Descrip
 						if (isset($_POST[$Field->Field_Name])) {
 							  $Value = trim($_POST[$Field->Field_Name]);
 								$Options = explode(",", $Field->Field_Values);
-								if (sizeOf($Options) > 0) {
+								if (sizeOf($Options) > 0 and $Options[0] != "") {
 									  array_walk($Options, create_function('&$val', '$val = trim($val);'));
 										$InArray = in_array($Value, $Options);
 								}
@@ -526,7 +526,7 @@ function Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Slug, $Item_Photo_URL, $I
 						if (isset($_POST[$Field->Field_Name])) {
 							  $Value = trim($_POST[$Field->Field_Name]);
 								$Options = explode(",", $Field->Field_Values);
-								if (sizeOf($Options) > 0) {
+								if (sizeOf($Options) > 0 and $Options[0] != "") {
 									  array_walk($Options, create_function('&$val', '$val = trim($val);'));
 										$InArray = in_array($Value, $Options);
 								}

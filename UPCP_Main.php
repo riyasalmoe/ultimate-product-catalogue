@@ -6,7 +6,7 @@ Description: Plugin to create a customizable product catalogue for businesses, r
 Author: Tim Ruse
 Author URI: http://www.EtoileWebDesign.com/
 Text Domain: UPCP
-Version: 2.2.6
+Version: 2.2.7
 */
 
 global $UPCP_db_version;

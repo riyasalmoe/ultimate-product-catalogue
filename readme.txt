@@ -103,7 +103,10 @@ Premium Features
 5. The admin area
 
 == Changelog ==
-= 2.2.5 =
+= 2.2.7 =
+- Fixed "custom fields" error with no validation entered
+
+= 2.2.6 =
 - Added French as a supported language
 - Improved the AJAX search function
 
