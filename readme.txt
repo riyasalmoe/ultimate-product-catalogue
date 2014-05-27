@@ -106,6 +106,7 @@ Premium Features
 = 2.2.8 =
 - Disabled the "Enter" function on the search form
 - Fixed spreadsheet upload bugs
+- Fixed FancyBoxes after AJAX search
 
 = 2.2.7 =
 - Fixed "custom fields" error with no validation entered
