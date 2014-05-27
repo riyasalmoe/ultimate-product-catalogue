@@ -247,7 +247,8 @@ function Insert_Product_Catalog($atts) {
 				else {$Tags = array();}
 				
 				$SidebarString .= "<div id='prod-cat-sidebar-" . $id . "' class='prod-cat-sidebar'>\n";
-				$SidebarString .= "<form action='#' name='Product_Catalog_Sidebar_Form'>\n";
+				//$SidebarString .= "<form action='#' name='Product_Catalog_Sidebar_Form'>\n";
+				$SidebarString .= "<form onsubmit='return false;' name='Product_Catalog_Sidebar_Form'>\n";
 				
 				//Create the 'Sort By' select box
 				if ($Full_Version == "Yes") {

@@ -645,7 +645,7 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 				// add in the values for Category_ID and SubCategory_ID, and increment 
 				// the category and sub-category counts when neccessary
 				foreach ($Product as $Col_Index => $Value) {
-						if ($Tags_Column != $Col_Index) {$Values[] = $Value;}
+						if (!isset($Tags_Column) or $Tags_Column != $Col_Index) {$Values[] = esc_sql($Value);}
 						if (isset($Category_Column) and $Category_Column == $Col_Index) {
 							 	$Values[] = $Categories[$Value];
 								$wpdb->query("UPDATE $categories_table_name SET Category_Item_Count=Category_Item_Count+1 WHERE Category_ID='" . $Categories[$Value] . "'");
@@ -655,7 +655,7 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 								$wpdb->query("UPDATE $subcategories_table_name SET SubCategory_Item_Count=SubCategory_Item_Count+1 WHERE SubCategory_ID='" . $SubCategories[$Value] . "'");
 						}
 						if (isset($Tags_Column) and $Tags_Column == $Col_Index) {
-							  $Tags_Names_Array = explode(",", $Value);
+							  $Tags_Names_Array = explode(",", esc_sql($Value));
 						}
 				}
 				$ValuesString = implode("','", $Values);

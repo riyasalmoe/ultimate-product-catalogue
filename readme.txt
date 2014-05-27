@@ -103,6 +103,10 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.2.8 =
+- Disabled the "Enter" function on the search form
+- Fixed spreadsheet upload bugs
+
 = 2.2.7 =
 - Fixed "custom fields" error with no validation entered
 
