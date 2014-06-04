@@ -38,6 +38,7 @@ Additional Languages:
 - Brazilian Portugese (thanks to <a href='http://wordpress.org/support/profile/tito_cadallora'>Tito_Cadallora</a>);
 - Canadian French (thanks to Pascale DRP)
 - Lithuanian (thanks to <a href='http://wordpress.org/support/profile/adart'>AdArt</a>);
+- Turkish (thanks to Ayhan)
 
 == Installation ==
 
@@ -107,6 +108,7 @@ Premium Features
 - Fixed the pretty permalinks rewrites to be compatible with recent WordPress updates
 - Added a "Delete All Products" button
 - Added the ability to require confirmation
+- Added Turkish as a language option
 
 = 2.2.8 =
 - Disabled the "Enter" function on the search form
