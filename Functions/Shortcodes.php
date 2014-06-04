@@ -410,7 +410,7 @@ function AddProduct($format, $Item_ID, $Product, $Tags) {
 		
 		if ($Product->Item_Link != "") {$ItemLink = $Product->Item_Link;}
 		elseif ($FancyBox_Installed) {$ItemLink = "#prod-cat-addt-details-" . $Product->Item_ID; $FancyBoxClass = true;}
-		elseif ($Pretty_Links == "Yes") {$ItemLink = $uri_parts[0] . "" . $Product->Item_Slug . "/?" . $uri_parts[1];}
+		elseif ($Pretty_Links == "Yes") {$ItemLink = $uri_parts[0] . "product/" . $Product->Item_Slug . "/?" . $uri_parts[1];}
 		else {$ItemLink = $uri_parts[0] . "?" . $uri_parts[1] . "&SingleProduct=" . $Product->Item_ID;}
 
 		//Create the listing for the thumbnail layout display
@@ -558,7 +558,7 @@ function SingleProductPage() {
 		$uri_parts = explode('?', $_SERVER['REQUEST_URI'], 2);
 		$SP_Perm_URL = $uri_parts[0] . "?" . $uri_parts[1];
 		$Return_URL = $uri_parts[0];
-		if ($Pretty_Links == "Yes") {$Return_URL = substr($uri_parts[0], 0, strrpos($uri_parts[0], "/", -2)) . "/?" . $uri_parts[1];}
+		if ($Pretty_Links == "Yes") {$Return_URL = substr($uri_parts[0], 0, strrpos($uri_parts[0], "/", -2)-8) . "/?" . $uri_parts[1];}
 		elseif ($uri_parts[0] == "/") {$Return_URL .= "?" . substr($uri_parts[1], 0, strpos($uri_parts[1], "&"));}
 		
 		if ($uri_parts[1] == "") {$SP_Perm_URL .= "Product_ID=" . $Product->Item_ID;}

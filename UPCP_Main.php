@@ -6,7 +6,7 @@ Description: Plugin to create a customizable product catalogue for businesses, r
 Author: Tim Ruse
 Author URI: http://www.EtoileWebDesign.com/
 Text Domain: UPCP
-Version: 2.2.8
+Version: 2.2.9
 */
 
 global $UPCP_db_version;
@@ -81,9 +81,13 @@ function Add_UPCP_Scripts() {
 				$url_two = plugins_url("ultimate-product-catalogue/js/sorttable.js");
 				$url_three = plugins_url("ultimate-product-catalogue/js/get_sub_cats.js");
 				$url_four = plugins_url("ultimate-product-catalogue/js/wp_upcp_uploader.js");
+				$url_five = plugins_url("ultimate-product-catalogue/js/bootstrap.min.js");
+				$url_six = plugins_url("ultimate-product-catalogue/js/jquery.confirm.min.js");
 				wp_enqueue_script('PageSwitch', $url_one, array('jquery'));
 				wp_enqueue_script('sorttable', $url_two, array('jquery'));
 				wp_enqueue_script('UpdateSubCats', $url_three, array('jquery'));
+				wp_enqueue_script('Bootstrap', $url_five, array('jquery'));
+				wp_enqueue_script('Confirm', $url_six, array('jquery'));
 				wp_enqueue_script('jquery-ui-sortable');
 				wp_enqueue_script('update-catalogue-order', plugin_dir_url(__FILE__) . '/js/update-catalogue-order.js');
 				wp_enqueue_media();
@@ -111,8 +115,10 @@ function Add_UPCP_FrontEnd_Scripts() {
 }
 
 function UPCP_Admin_Options() {
-		$url = plugins_url("ultimate-product-catalogue/css/Admin.css");
-		echo "<link rel='stylesheet' type='text/css' href='$url' />\n";
+		//$url = plugins_url("ultimate-product-catalogue/css/Admin.css");
+		//echo "<link rel='stylesheet' type='text/css' href='$url' />\n";
+		wp_enqueue_style( 'upcp-admin', plugins_url("ultimate-product-catalogue/css/Admin.css"));
+    //wp_enqueue_style( 'bootstrap', plugins_url("ultimate-product-catalogue/css/bootstrap.min.css"));
 }
 
 add_action('activated_plugin','save_error');

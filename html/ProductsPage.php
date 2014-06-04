@@ -29,6 +29,7 @@
 						<option value='delete'><?php _e("Delete", 'UPCP') ?></option>
 				</select>
 				<input type="submit" name="" id="doaction" class="button-secondary action" value="<?php _e('Apply', 'UPCP') ?>"  />
+				<a class='confirm button-secondary action' href='admin.php?page=UPCP-options&Action=DeleteAllProducts&DisplayPage=Products'>Delete All Products</a>
 		</div>
 		<div class='tablenav-pages <?php if ($Number_of_Pages == 1) {echo "one-page";} ?>'>
 				<span class="displaying-num"><?php echo $wpdb->num_rows; ?> <?php _e("items", 'UPCP') ?></span>

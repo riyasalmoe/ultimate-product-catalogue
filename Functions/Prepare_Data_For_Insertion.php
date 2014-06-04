@@ -120,6 +120,24 @@ function Mass_Delete_Products() {
 		return $user_update;
 }
 
+function Delete_All_Products() {
+		global $wpdb;
+		global $items_table_name;
+		$Products = $wpdb->get_results("SELECT Item_ID FROM $items_table_name");
+		
+		if (is_array($Products)) {
+				foreach ($Products as $Product) {
+						if ($Product->Item_ID != "") {
+								Delete_UPCP_Product($Product->Item_ID);
+						}
+				}
+		}
+		
+		$update = __("Products have been successfully deleted.", 'UPCP');
+		$user_update = array("Message_Type" => "Update", "Message" => $update);
+		return $user_update;
+}
+
 /* Prepare the data to add a new image for a product */
 function Prepare_Add_Product_Image() {
 		

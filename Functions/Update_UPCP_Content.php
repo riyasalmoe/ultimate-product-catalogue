@@ -17,6 +17,9 @@ if (isset($_GET['Action'])) {
 						case "MassDeleteProducts":
 								$upcp_message = Mass_Delete_Products();
 								break;
+						case "DeleteAllProducts":
+								$upcp_message = Delete_All_Products();
+								break;
 						case "AddProductSpreadsheet":
         				$upcp_message = Add_Products_From_Spreadsheet();
 								break;

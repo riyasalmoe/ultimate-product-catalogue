@@ -103,6 +103,11 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.2.9 =
+- Fixed the pretty permalinks rewrites to be compatible with recent WordPress updates
+- Added a "Delete All Products" button
+- Added the ability to require confirmation
+
 = 2.2.8 =
 - Disabled the "Enter" function on the search form
 - Fixed spreadsheet upload bugs
