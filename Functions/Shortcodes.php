@@ -32,7 +32,18 @@ function Insert_Product_Catalog($atts) {
 														)
 												);
 		
-		if (get_query_var('single_product') != "" or $_GET['SingleProduct'] != "") {$ReturnString = SingleProductPage(); return $ReturnString;}
+		// Add any additional CSS in-line
+		if ($Catalogue->Catalogue_Custom_CSS != "") {
+				$HeaderBar .= "<style type='text/css'>";
+				$HeaderBar .= $Catalogue->Catalogue_Custom_CSS;
+				$HeaderBar .= "</style>";
+		}
+		
+		if (get_query_var('single_product') != "" or $_GET['SingleProduct'] != "") {
+			  $ReturnString .= $HeaderBar;
+				$ReturnString .= SingleProductPage(); 
+				return $ReturnString;
+		}
 						
 		$Catalogue_ID = $id;
 		$Catalogue_Sidebar = $sidebar;
@@ -68,13 +79,6 @@ function Insert_Product_Catalog($atts) {
 				else {$format = "Thumbnail";}
 		}
 		else {$format = $layout_format;}
-		
-		// Add any additional CSS in-line
-		if ($Catalogue->Catalogue_Custom_CSS != "") {
-				$HeaderBar .= "<style type='text/css'>";
-				$HeaderBar .= $Catalogue->Catalogue_Custom_CSS;
-				$HeaderBar .= "</style>";
-		}
 		
 		// Arrays to store what categories, sub-categories and tags are applied to the product in the catalogue
 		$ProdCats = array();

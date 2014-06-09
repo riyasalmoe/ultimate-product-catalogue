@@ -104,6 +104,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.2.10 =
+- Fixed an individual product pages bug
+
 = 2.2.9 =
 - Fixed the pretty permalinks rewrites to be compatible with recent WordPress updates
 - Added a "Delete All Products" button
