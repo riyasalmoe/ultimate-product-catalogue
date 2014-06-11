@@ -417,14 +417,14 @@
 						<div class="form-field">
 								<label for="Field_Type"><?php _e("Type", 'UPCP') ?></label>
 								<select name="Field_Type" id="Field_Type">
-										<option value='text' <?php if ($Field->Field_Type == "text") {echo "selected=selected";} ?>>Short Text</option>
-										<option value='mediumint' <?php if ($Field->Field_Type == "mediumint") {echo "selected=selected";} ?>>Integer</option>
-										<option value='select' <?php if ($Field->Field_Type == "select") {echo "selected=selected";} ?>>Select Box</option>
-										<option value='radio' <?php if ($Field->Field_Type == "radio") {echo "selected=selected";} ?>>Radio Button</option>
-										<option value='checkbox' <?php if ($Field->Field_Type == "checkbox") {echo "selected=selected";} ?>>Checkbox</option>
-										<option value='textarea' <?php if ($Field->Field_Type == "textarea") {echo "selected=selected";} ?>>Text Area</option>
-										<option value='date' <?php if ($Field->Field_Type == "date") {echo "selected=selected";} ?>>Date</option>
-										<option value='datetime' <?php if ($Field->Field_Type == "datetime") {echo "selected=selected";} ?>>Date/Time</option>
+										<option value='text' <?php if ($Field->Field_Type == "text") {echo "selected=selected";} ?>><?php _e("Short Text", 'UPCP') ?></option>
+										<option value='mediumint' <?php if ($Field->Field_Type == "mediumint") {echo "selected=selected";} ?>><?php _e("Integer", 'UPCP') ?></option>
+										<option value='select' <?php if ($Field->Field_Type == "select") {echo "selected=selected";} ?>><?php _e("Select Box", 'UPCP') ?></option>
+										<option value='radio' <?php if ($Field->Field_Type == "radio") {echo "selected=selected";} ?>><?php _e("Radio Button", 'UPCP') ?></option>
+										<option value='checkbox' <?php if ($Field->Field_Type == "checkbox") {echo "selected=selected";} ?>><?php _e("Checkbox", 'UPCP') ?></option>
+										<option value='textarea' <?php if ($Field->Field_Type == "textarea") {echo "selected=selected";} ?>><?php _e("Text Area", 'UPCP') ?></option>
+										<option value='date' <?php if ($Field->Field_Type == "date") {echo "selected=selected";} ?>><?php _e("Date", 'UPCP') ?></option>
+										<option value='datetime' <?php if ($Field->Field_Type == "datetime") {echo "selected=selected";} ?>><?php _e("Date/Time", 'UPCP') ?></option>
 								</select>
 								<p><?php _e("The input method for the field and type of data that the field will hold.", 'UPCP') ?></p>
 						</div>
@@ -437,6 +437,16 @@
 								<label for="Field_Values"><?php _e("Input Values", 'UPCP') ?></label>
 								<input name="Field_Values" id="Field_Values" type="text" value="<?php echo $Field->Field_Values;?>"  size="60" />
 								<p><?php _e("A comma-separated list of acceptable input values for this field. These values will be the options for select, checkbox, and radio inputs. All values will be accepted if left blank.", 'UPCP') ?></p>
+						</div>
+						<div class="form-field">
+								<label for="Field_Displays"><?php _e("Display?", 'UPCP') ?></label>
+								<select name="Field_Displays" id="Field_Displays">
+										<option value='none' <?php if ($Field->Field_Displays == "none") {echo "selected=selected";} ?>><?php _e("None", 'UPCP') ?></option>
+										<option value='thumbs' <?php if ($Field->Field_Displays == "thumbs") {echo "selected=selected";} ?>><?php _e("Thumbnail View", 'UPCP') ?></option>
+										<option value='details' <?php if ($Field->Field_Displays == "details") {echo "selected=selected";} ?>><?php _e("Details View", 'UPCP') ?></option>
+										<option value='both' <?php if ($Field->Field_Displays == "both") {echo "selected=selected";} ?>><?php _e("Both", 'UPCP') ?></option>
+								</select>
+								<p><?php _e("Should this field be displayed in any of the main catalogue pages?", 'UPCP') ?></p>
 						</div>
 
 						<p class="submit"><input type="submit" name="submit" id="submit" class="button-primary" value="<?php _e('Save Changes', 'UPCP') ?>"  /></p>

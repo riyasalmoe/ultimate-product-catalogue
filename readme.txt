@@ -2,7 +2,7 @@
 Contributors: Rustaurius 
 Tags: product catalogue, product catalog, restaurant menu, responsive, customizable CSS, SEO friendly, affiliate links
 Requires at least: 3.5.0
-Tested up to: 3.9
+Tested up to: 3.9.1
 License: GPLv3
 License URI:http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -104,6 +104,10 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.2.11 =
+- Major custom fields improvement: allow fields to be displayed on main catalogue pages
+- Minor css upgrades to the main catalogue pages
+
 = 2.2.10 =
 - Fixed an individual product pages bug
 

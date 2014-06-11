@@ -434,7 +434,9 @@ function AddProduct($format, $Item_ID, $Product, $Tags) {
 				$ProductString .= " no-underline'";
 				if ($NewWindow) {$ProductString .= "target='_blank'";}
 				$ProductString .= " href='" . $ItemLink . "' onclick='RecordView(" . $Product->Item_ID . ");'>";
-				$ProductString .= "<div id='prod-cat-title-" . $Product->Item_ID . "' class='prod-cat-title upcp-thumb-title'>" . $Product->Item_Name . "</div>\n";
+				$ProductString .= "<div id='prod-cat-title-" . $Product->Item_ID . "' class='prod-cat-title upcp-thumb-title'>" . $Product->Item_Name;
+				$ProductString .= AddCustomFields($Product->Item_ID, "thumbs");
+				$ProductString .= "</div>\n";
 				$ProductString .= "</a>";
 				$ProductString .= "<div id='prod-cat-price-" . $Product->Item_ID . "' class='prod-cat-price upcp-thumb-price'>" . $Product->Item_Price . "</div>\n";
 				$ProductString .= "<a class='";
@@ -495,6 +497,7 @@ function AddProduct($format, $Item_ID, $Product, $Tags) {
 								$ProductString .= " href='#prod-cat-addt-details-" . $Product->Item_ID . "' onclick='RecordView(" . $Product->Item_ID . ");'>" . __("Read More", 'UPCP') . "</a>";
 						}
 				}
+				$ProductString .= AddCustomFields($Product->Item_ID, "details");
 				$ProductString .= "</div>\n";
 				$ProductString .= "</div>";
 				$ProductString .= "<div id='prod-cat-end-div-" . $Product->Item_ID . "' class='prod-cat-end-detail-div upcp-end-detail-div'>";
@@ -612,6 +615,21 @@ function ConvertCustomFields($Description) {
 		}
 		
 		return $Description;
+}
+
+function AddCustomFields($ProductID, $Layout) {
+		global $wpdb;
+		global $fields_table_name, $fields_meta_table_name;
+		
+		$Fields = $wpdb->get_results("SELECT Field_ID, Field_Name FROM $fields_table_name WHERE Field_Displays='" . $Layout . "' OR Field_Displays='both'");
+		if (is_array($Fields)) {
+			  foreach ($Fields as $Field) {
+						$Meta = $wpdb->get_row("SELECT Meta_Value FROM $fields_meta_table_name WHERE Field_ID='" . $Field->Field_ID . "' AND Item_ID='" . $ProductID . "'");
+						$CustomFieldString .= "<br />" . $Field->Field_Name . ": " . $Meta->Meta_Value;
+				}
+		}
+		
+		return $CustomFieldString;
 }
 
 function ObjectToArray($Obj) {

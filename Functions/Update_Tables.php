@@ -128,6 +128,7 @@ function UpdateTables() {
 		Field_Type text DEFAULT '' NOT NULL,
 		Field_Description text DEFAULT '' NOT NULL,
 		Field_Values text DEFAULT '' NOT NULL,
+		Field_Displays text DEFAULT '' NOT NULL,
 		Field_Date_Created datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
   	UNIQUE KEY id (Field_ID)
     )

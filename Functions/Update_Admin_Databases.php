@@ -202,7 +202,7 @@ function Delete_Products_Tags() {
 }
 
 /* Adds a single new custom field to the UPCP database */
-function Add_UPCP_Custom_Field($Field_Name, $Field_Slug, $Field_Type, $Field_Description, $Field_Values) {
+function Add_UPCP_Custom_Field($Field_Name, $Field_Slug, $Field_Type, $Field_Description, $Field_Values, $Field_Displays) {
 		global $wpdb;
 		global $fields_table_name;
 		$Date = date("Y-m-d H:i:s");
@@ -215,6 +215,8 @@ function Add_UPCP_Custom_Field($Field_Name, $Field_Slug, $Field_Type, $Field_Des
 							 'Field_Type' => $Field_Type,
 							 'Field_Description' => $Field_Description,
 							 'Field_Values' => $Field_Values,
+							 'Field_Values' => $Field_Values,
+							 'Field_Displays' => $Field_Displays,
 							 'Field_Date_Created' => $Date)
 		);
 		$update = __("Field has been successfully created.", 'UPCP');
@@ -222,7 +224,7 @@ function Add_UPCP_Custom_Field($Field_Name, $Field_Slug, $Field_Type, $Field_Des
 }
 
 /* Edits a single custom field with a given ID in the UPCP database */
-function  Edit_UPCP_Custom_Field($Field_ID, $Field_Name, $Field_Slug, $Field_Type, $Field_Description, $Field_Values) {
+function  Edit_UPCP_Custom_Field($Field_ID, $Field_Name, $Field_Slug, $Field_Type, $Field_Description, $Field_Values, $Field_Displays) {
 		global $wpdb;
 		global $fields_table_name;
 		global $Full_Version;
@@ -234,7 +236,8 @@ function  Edit_UPCP_Custom_Field($Field_ID, $Field_Name, $Field_Slug, $Field_Typ
 									 'Field_Slug' => $Field_Slug,
 									 'Field_Type' => $Field_Type,
 							 		 'Field_Description' => $Field_Description,
-									 'Field_Values' => $Field_Values,),
+									 'Field_Values' => $Field_Values,
+									 'Field_Displays' => $Field_Displays),
 						array( 'Field_ID' => $Field_ID)
 		);
 		$update = __("Field has been successfully edited.", 'UPCP');
