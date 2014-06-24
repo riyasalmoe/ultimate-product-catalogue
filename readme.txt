@@ -1,6 +1,6 @@
 === Plugin Name ===
 Contributors: Rustaurius 
-Tags: product catalogue, product catalog, restaurant menu, responsive, customizable CSS, SEO friendly, affiliate links
+Tags: product catalogue, product catalog, restaurant menu, responsive, customizable CSS, SEO friendly, affiliate links,  attributes, blog catalog, catalog, catalogue, commerce, directory, display products, e-commerce, ecommerce, gallery, inventory, list products, manage, plugin, product, product feed, product gallery, product management, product portfolio, products, sales, sell, shipping, shop, shopping, store, wp catalog, wp catalogue
 Requires at least: 3.5.0
 Tested up to: 3.9.1
 License: GPLv3
@@ -104,6 +104,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.2.12 =
+ - Fixed a display bug for individual product pages
+
 = 2.2.11 =
 - Major custom fields improvement: allow fields to be displayed on main catalogue pages
 - Minor css upgrades to the main catalogue pages
