@@ -5,8 +5,9 @@ Plugin URI: http://www.EtoileWebDesign.com/ultimate-product-catalogue/
 Description: Plugin to create a customizable product catalogue for businesses, restaurants, real estate agents, etc.
 Author: Tim Ruse
 Author URI: http://www.EtoileWebDesign.com/
+Terms and Conditions: http://www.etoilewebdesign.com/plugin-terms-and-conditions/
 Text Domain: UPCP
-Version: 2.2.11
+Version: 2.2.12
 */
 
 global $UPCP_db_version;
@@ -83,15 +84,19 @@ function Add_UPCP_Scripts() {
 				$url_four = plugins_url("ultimate-product-catalogue/js/wp_upcp_uploader.js");
 				$url_five = plugins_url("ultimate-product-catalogue/js/bootstrap.min.js");
 				$url_six = plugins_url("ultimate-product-catalogue/js/jquery.confirm.min.js");
+				$url_seven = plugins_url("ultimate-product-catalogue/js/product-page-builder.js");
+				$url_eight = plugins_url("ultimate-product-catalogue/js/jquery.gridster.min.js");
 				wp_enqueue_script('PageSwitch', $url_one, array('jquery'));
 				wp_enqueue_script('sorttable', $url_two, array('jquery'));
 				wp_enqueue_script('UpdateSubCats', $url_three, array('jquery'));
+				wp_enqueue_script('wp_upcp_uploader', $url_four, array('jquery'));
 				wp_enqueue_script('Bootstrap', $url_five, array('jquery'));
 				wp_enqueue_script('Confirm', $url_six, array('jquery'));
+				wp_enqueue_script('Page-Builder', $url_seven, array('jquery'));
+				wp_enqueue_script('Gridster', $url_eight, array('jquery'));
 				wp_enqueue_script('jquery-ui-sortable');
 				wp_enqueue_script('update-catalogue-order', plugin_dir_url(__FILE__) . '/js/update-catalogue-order.js');
 				wp_enqueue_media();
-    		wp_enqueue_script('wp_upcp_uploader', $url_four, array('jquery'));
 		}
 }
 
@@ -103,21 +108,24 @@ function UPCP_Add_Stylesheet() {
 			  wp_register_style( 'upcp-rtl-style', plugins_url('css/rtl-style.css', __FILE__) );
     		wp_enqueue_style( 'upcp-rtl-style' );
 		}
+		if ($Full_Version == "Yes") {
+			  wp_register_style( 'upcp-gridster', plugins_url("ultimate-product-catalogue/css/jquery.gridster.css"));
+    		wp_enqueue_style( 'upcp-gridster' );
+		}
 }
 
 add_action( 'wp_enqueue_scripts', 'Add_UPCP_FrontEnd_Scripts' );
 function Add_UPCP_FrontEnd_Scripts() {
-	wp_enqueue_script(
-		'upcpjquery',
-		plugins_url( '/js/upcp-jquery-functions.js' , __FILE__ ),
-		array( 'jquery' )
-	);
+	wp_enqueue_script('upcpjquery', plugins_url( '/js/upcp-jquery-functions.js' , __FILE__ ), array( 'jquery' ));
+	wp_enqueue_script('upcp-page-builder', plugins_url( '/js/product-page-display.js' , __FILE__ ), array( 'jquery' ));
+	wp_enqueue_script('gridster', plugins_url("/js/jquery.gridster.min.js", __FILE__ ), array( 'jquery' ));
 }
 
 function UPCP_Admin_Options() {
 		//$url = plugins_url("ultimate-product-catalogue/css/Admin.css");
 		//echo "<link rel='stylesheet' type='text/css' href='$url' />\n";
 		wp_enqueue_style( 'upcp-admin', plugins_url("ultimate-product-catalogue/css/Admin.css"));
+		wp_enqueue_style( 'upcp-gridster', plugins_url("ultimate-product-catalogue/css/jquery.gridster.css"));
     //wp_enqueue_style( 'bootstrap', plugins_url("ultimate-product-catalogue/css/bootstrap.min.css"));
 }
 
