@@ -17,9 +17,11 @@ You can also use categories and sub-categories in your catalogue(s) to make it e
 
 [youtube http://www.youtube.com/watch?v=z6XL7whjY1Q]
 
-Key Features:
+**Key Features:**
 
 * 3 default layout formats, users can tab between them
+* Categories, sub-categories and tags to organize your products
+* Custom fields and custom product pages make the catalogues completely customizable
 * Fully customizable via CSS
 * SEO friendly single product pages
 * UTF8 support
@@ -29,16 +31,24 @@ Key Features:
 * Exclude one or more layouts by using the "excluded_layouts" attribute (accepts a comma-separated list)
 * Options page lets you customize a number of a options
 
-To get the most out of the Ultimate Product Catalogue Plugin, FancyBox for WordPress is required (http://wordpress.org/plugins/fancybox-for-wordpress/).
+To have Fancyboxes display in the Ultimate Product Catalogue Plugin, FancyBox for WordPress is required (http://wordpress.org/plugins/fancybox-for-wordpress/).
 If FancyBox for WordPress isn't installed, individual products will be displayed on their own pages.
 
 Tutorial videos available in the FAQ section.
 
+**Premium Features:**
+
+* Drag-and-drop product pages layout
+* Product tags
+* Custom fields that can be used to include product manuals, additional information, etc.
+* SEO friendly single product pages
+
 Additional Languages:
-- Brazilian Portugese (thanks to <a href='http://wordpress.org/support/profile/tito_cadallora'>Tito_Cadallora</a>);
-- Canadian French (thanks to Pascale DRP)
-- Lithuanian (thanks to <a href='http://wordpress.org/support/profile/adart'>AdArt</a>);
-- Turkish (thanks to Ayhan)
+* Brazilian Portugese (thanks to <a href='http://wordpress.org/support/profile/tito_cadallora'>Tito_Cadallora</a>);
+* Canadian French (thanks to Pascale DRP)
+* Italian
+* Lithuanian (thanks to <a href='http://wordpress.org/support/profile/adart'>AdArt</a>);
+* Turkish (thanks to Ayhan)
 
 == Installation ==
 
