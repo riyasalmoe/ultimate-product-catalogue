@@ -21,7 +21,7 @@
 				$Current_Page_With_Order_By = "admin.php?page=UPCP-options&DisplayPage=Products";
 				if (isset($_GET['OrderBy'])) {$Current_Page_With_Order_By .= "&OrderBy=" .$_GET['OrderBy'] . "&Order=" . $_GET['Order'];}?>
 
-<form action="admin.php?page=UPCP-options&Action=MassDeleteProducts&DisplayPage=Products" method="post">    
+<form action="admin.php?page=UPCP-options&Action=UPCP_MassDeleteProducts&DisplayPage=Products" method="post">    
 <div class="tablenav top">
 		<div class="alignleft actions">
 				<select name='action'>
@@ -29,7 +29,7 @@
 						<option value='delete'><?php _e("Delete", 'UPCP') ?></option>
 				</select>
 				<input type="submit" name="" id="doaction" class="button-secondary action" value="<?php _e('Apply', 'UPCP') ?>"  />
-				<a class='confirm button-secondary action' href='admin.php?page=UPCP-options&Action=DeleteAllProducts&DisplayPage=Products'>Delete All Products</a>
+				<a class='confirm button-secondary action' href='admin.php?page=UPCP-options&Action=UPCP_DeleteAllProducts&DisplayPage=Products'>Delete All Products</a>
 		</div>
 		<div class='tablenav-pages <?php if ($Number_of_Pages == 1) {echo "one-page";} ?>'>
 				<span class="displaying-num"><?php echo $wpdb->num_rows; ?> <?php _e("items", 'UPCP') ?></span>
@@ -151,14 +151,14 @@
 								echo "</th>";
 								echo "<td class='name column-name'>";
 								echo "<strong>";
-								echo "<a class='row-title' href='admin.php?page=UPCP-options&Action=Item_Details&Selected=Product&Item_ID=" . $Item->Item_ID ."' title='Edit " . $Item->Item_Name . "'>" . $Item->Item_Name . "</a></strong>";
+								echo "<a class='row-title' href='admin.php?page=UPCP-options&Action=UPCP_Item_Details&Selected=Product&Item_ID=" . $Item->Item_ID ."' title='Edit " . $Item->Item_Name . "'>" . $Item->Item_Name . "</a></strong>";
 								echo "<br />";
 								echo "<div class='row-actions'>";
 								/*echo "<span class='edit'>";
-								echo "<a href='admin.php?page=UPCP-options&Action=Item_Details&Selected=Product&Item_ID=" . $Item->Item_ID ."'>Edit</a>";
+								echo "<a href='admin.php?page=UPCP-options&Action=UPCP_Item_Details&Selected=Product&Item_ID=" . $Item->Item_ID ."'>Edit</a>";
 		 						echo " | </span>";*/
 								echo "<span class='delete'>";
-								echo "<a class='delete-tag' href='admin.php?page=UPCP-options&Action=DeleteProduct&DisplayPage=Products&Item_ID=" . $Item->Item_ID ."'>" . __("Delete", 'UPCP') . "</a>";
+								echo "<a class='delete-tag' href='admin.php?page=UPCP-options&Action=UPCP_DeleteProduct&DisplayPage=Products&Item_ID=" . $Item->Item_ID ."'>" . __("Delete", 'UPCP') . "</a>";
 		 						echo "</span>";
 								echo "</div>";
 								echo "<div class='hidden' id='inline_" . $Item->Item_ID ."'>";
@@ -215,7 +215,7 @@
 <h2><?php _e("Add New Products", 'UPCP') ?></h2>
 <!-- Form to create a new product -->
 <h3><?php _e("Add Product Manually", 'UPCP') ?></h3>
-<form id="addtag" method="post" action="admin.php?page=UPCP-options&Action=AddProduct&DisplayPage=Product" class="validate" enctype="multipart/form-data">
+<form id="addtag" method="post" action="admin.php?page=UPCP-options&Action=UPCP_AddProduct&DisplayPage=Product" class="validate" enctype="multipart/form-data">
 <input type="hidden" name="action" value="Add_Product" />
 <?php wp_nonce_field(); ?>
 <?php wp_referer_field(); ?>
@@ -340,6 +340,15 @@ foreach ($Fields as $Field) {
 						$Counter++;
 				}
 		}
+		elseif ($Field->Field_Type == "file") {
+				$ReturnString .= "<input name='" . $Field->Field_Name . "' class='upcp-file-input' type='file' value='' />";
+		}
+		elseif ($Field->Field_Type == "date") {
+				$ReturnString .= "<input name='" . $Field->Field_Name . "' class='upcp-date-input' type='date' value='' />";
+		} 
+		elseif ($Field->Field_Type == "datetime") {
+				$ReturnString .= "<input name='" . $Field->Field_Name . "' class='upcp-datetime-input' type='datetime-local' value='' />";
+  	}
 		$ReturnString .= " </div>";
 }
 echo $ReturnString;
@@ -349,7 +358,7 @@ echo $ReturnString;
 <p class="submit"><input type="submit" name="submit" id="submit" class="button-primary" value="<?php _e('Add New Product', 'UPCP') ?>"  /></p></form>
 
 <h3><?php _e("Add Products from Spreadsheet", 'UPCP') ?></h3>
-<form id="addtag" method="post" action="admin.php?page=UPCP-options&Action=AddProductSpreadsheet&DisplayPage=Product" class="validate" enctype="multipart/form-data">
+<form id="addtag" method="post" action="admin.php?page=UPCP-options&Action=UPCP_AddProductSpreadsheet&DisplayPage=Product" class="validate" enctype="multipart/form-data">
 <div class="form-field form-required">
 		<label for="Products_Spreadsheet"><?php _e("Spreadhseet Containing Products", 'UPCP') ?></label>
 		<input name="Products_Spreadsheet" id="Products_Spreadsheet" type="file" value=""/>

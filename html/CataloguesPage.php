@@ -20,7 +20,7 @@
 				$Current_Page_With_Order_By = "admin.php?page=UPCP-options&DisplayPage=Catalogues";
 				if (isset($_GET['OrderBy'])) {$Current_Page_With_Order_By .= "&OrderBy=" .$_GET['OrderBy'] . "&Order=" . $_GET['Order'];}?>
 
-<form action="admin.php?page=UPCP-options&Action=MassDeleteCatalogues&DisplayPage=Catalogues" method="post">    
+<form action="admin.php?page=UPCP-options&Action=UPCP_MassDeleteCatalogues&DisplayPage=Catalogues" method="post">    
 <div class="tablenav top">
 		<div class="alignleft actions">
 				<select name='action'>
@@ -98,14 +98,14 @@
 								echo "</th>";
 								echo "<td class='name column-name'>";
 								echo "<strong>";
-								echo "<a class='row-title' href='admin.php?page=UPCP-options&Action=Catalogue_Details&Selected=Catalogue&Catalogue_ID=" . $Catalogue->Catalogue_ID ."' title='Edit " . $Catalogue->Catalogue_Name . "'>" . $Catalogue->Catalogue_Name . "</a></strong>";
+								echo "<a class='row-title' href='admin.php?page=UPCP-options&Action=UPCP_Catalogue_Details&Selected=Catalogue&Catalogue_ID=" . $Catalogue->Catalogue_ID ."' title='Edit " . $Catalogue->Catalogue_Name . "'>" . $Catalogue->Catalogue_Name . "</a></strong>";
 								echo "<br />";
 								echo "<div class='row-actions'>";
 								/*echo "<span class='edit'>";
-								echo "<a href='admin.php?page=UPCP-options&Action=Catalogue_Details&Selected=Catalogue&Catalogue_ID=" . $Catalogue->Catalogue_ID ."'>Edit</a>";
+								echo "<a href='admin.php?page=UPCP-options&Action=UPCP_Catalogue_Details&Selected=Catalogue&Catalogue_ID=" . $Catalogue->Catalogue_ID ."'>Edit</a>";
 		 						echo " | </span>";*/
 								echo "<span class='delete'>";
-								echo "<a class='delete-tag' href='admin.php?page=UPCP-options&Action=DeleteCatalogue&DisplayPage=Catalogues&Catalogue_ID=" . $Catalogue->Catalogue_ID ."'>" . __("Delete", 'UPCP') . "</a>";
+								echo "<a class='delete-tag' href='admin.php?page=UPCP-options&Action=UPCP_DeleteCatalogue&DisplayPage=Catalogues&Catalogue_ID=" . $Catalogue->Catalogue_ID ."'>" . __("Delete", 'UPCP') . "</a>";
 		 						echo "</span>";
 								echo "</div>";
 								echo "<div class='hidden' id='inline_" . $Catalogue->Catalogue_ID ."'>";
@@ -154,7 +154,7 @@
 
 <div class="form-wrap">
 <h3><?php _e("Add a New Catalogue", 'UPCP') ?></h3>
-<form id="addtag" method="post" action="admin.php?page=UPCP-options&Action=AddCatalogue&DisplayPage=Catalogue" class="validate" enctype="multipart/form-data">
+<form id="addtag" method="post" action="admin.php?page=UPCP-options&Action=UPCP_AddCatalogue&DisplayPage=Catalogue" class="validate" enctype="multipart/form-data">
 <input type="hidden" name="action" value="Add_Catalogue" />
 <?php wp_nonce_field(); ?>
 <?php wp_referer_field(); ?>

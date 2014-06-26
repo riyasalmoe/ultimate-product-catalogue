@@ -28,12 +28,24 @@
 									<div class="handlediv" title="Click to toggle"></div>
 									<h3 class='hndle'><span><?php _e("Thank You!", 'UPCP') ?></span></h3>
 							 		<div class="inside">
-											<?php if (get_option("UPCP_Install_Flag") == "Yes") { ?><ul><li><?php _e("Thanks for installing the Ultimate Product Catalogue Plugin.", "UPCP"); ?><br> <a href='https://www.youtube.com/channel/UCZPuaoetCJB1vZOmpnMxJNw'><?php _e("Check out our YouTube channel ", "UPCP"); ?></a> <?php _e("for tutorial videos on this and our other plugins!", "UPCP");?> </li></ul>
-											<?php } else { ?><ul><li><?php _e("Thanks for upgrading to version 2.2.11!", "UPCP"); ?><br> <a href='https://www.youtube.com/channel/UCZPuaoetCJB1vZOmpnMxJNw'><?php _e("Check out our YouTube channel ", "UPCP"); ?></a> <?php _e("for tutorial videos on this and our other plugins!", "UPCP");?> </li></ul><?php } ?>
+											<?php /*if (get_option("UPCP_Install_Flag") == "Yes") { ?><ul><li><?php _e("Thanks for installing the Ultimate Product Catalogue Plugin.", "UPCP"); ?><br> <a href='https://www.youtube.com/channel/UCZPuaoetCJB1vZOmpnMxJNw'><?php _e("Check out our YouTube channel ", "UPCP"); ?></a> <?php _e("for tutorial videos on this and our other plugins!", "UPCP");?> </li></ul>
+											<?php } else { ?><ul><li><?php _e("Thanks for upgrading to version 2.2.12!", "UPCP"); ?><br> <a href='https://www.youtube.com/channel/UCZPuaoetCJB1vZOmpnMxJNw'><?php _e("Check out our YouTube channel ", "UPCP"); ?></a> <?php _e("for tutorial videos on this and our other plugins!", "UPCP");?> </li></ul><?php } */?>
 											<?php /*if (get_option("UPCP_Install_Flag") == "Yes") { ?><ul><li><?php _e("Thanks for installing the Ultimate Product Catalogue Plugin.", "UPCP"); ?><br> <a href='http://www.facebook.com/EtoileWebDesign'><?php _e("Follow us on Facebook", "UPCP"); ?></a> <?php _e("to suggest new features or hear about upcoming ones!", "UPCP");?> </li></ul>
 											<?php } else { ?><ul><li><?php _e("Thanks for upgrading to version 2.2.9!", "UPCP"); ?><br> <a href='http://www.facebook.com/EtoileWebDesign'><?php _e("Follow us on Facebook", "UPCP"); ?></a> <?php _e("to suggest new features or hear about upcoming ones!", "UPCP");?> </li></ul><?php } */?>
 											<?php /*if (get_option("UPCP_Install_Flag") == "Yes") { ?><ul><li><?php _e("Thanks for installing the Ultimate Product Catalogue Plugin.", "UPCP"); ?><br> <a href='http://www.facebook.com/EtoileWebDesign'><?php _e("Follow us on Facebook", "UPCP"); ?></a> <?php _e("to suggest new features or hear about upcoming ones!", "UPCP");?>  </li></ul>
 											<?php } else { ?><ul><li><?php _e("Thanks for upgrading to version 2.2.10!", "UPCP"); ?><br> <a href='http://wordpress.org/support/view/plugin-reviews/ultimate-product-catalogue'><?php _e("Please rate our plugin", "UPCP"); ?></a> <?php _e("if you find the Ultimate Product Catalogue Plugin useful!", "UPCP");?> </li></ul><?php } */?>
+											<?php if (get_option("UPCP_Install_Flag") == "Yes") { ?><ul><li><?php _e("Thanks for installing the Ultimate Product Catalogue Plugin.", "UPCP"); ?><br> <a href='https://www.youtube.com/channel/UCZPuaoetCJB1vZOmpnMxJNw'><?php _e("Check out our YouTube channel ", "UPCP"); ?></a> <?php _e("for tutorial videos on this and our other plugins!", "UPCP");?> </li></ul>
+											<?php } elseif ($Full_Version == "Yes") { ?><ul><li><?php _e("Thanks for upgrading to version 2.3!", "UPCP"); ?><br> <a href='http://www.facebook.com/EtoileWebDesign'><?php _e("Follow us on Facebook", "UPCP"); ?></a> <?php _e("to suggest new features or hear about upcoming ones!", "UPCP");?> </li></ul>
+											<?php } else { ?><ul><li><?php _e("Thanks for upgrading to version 2.3!", "UPCP"); ?><br> <?php _e("Love the plugin but don't need the premium version? Help us speed up product support and development by donating. Thanks for using the plugin!", "UPCP");?>
+																	 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+																	 <input type="hidden" name="cmd" value="_s-xclick">
+																	 <input type="hidden" name="hosted_button_id" value="AQLMJFJ62GEFJ">
+																	 <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+																	 <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+																	 </form>
+																	 </li></ul>
+											<?php } ?>
+
 									</div>
 							</div>
 					</div>
@@ -61,7 +73,7 @@
 				$Current_Page_With_Order_By = "admin.php?page=UPCP-options&DisplayPage=Dashboard";
 				if (isset($_GET['OrderBy'])) {$Current_Page_With_Order_By .= "&OrderBy=" .$_GET['OrderBy'] . "&Order=" . $_GET['Order'];}?>
 
-<form action="admin.php?page=UPCP-options&Action=MassDeleteCatalogues" method="post">    
+<form action="admin.php?page=UPCP-options&Action=UPCP_MassDeleteCatalogues" method="post">    
 <div class="tablenav top">
 		<div class="alignleft actions">
 				<select name='action'>
@@ -140,11 +152,11 @@
 								echo "</th>";
 								echo "<td class='name column-name'>";
 								echo "<strong>";
-								echo "<a class='row-title' href='admin.php?page=UPCP-options&Action=Catalogue_Details&Selected=Catalogue&Catalogue_ID=" . $Catalogue->Catalogue_ID ."' title='Edit " . $Catalogue->Catalogue_Name . "'>" . $Catalogue->Catalogue_Name . "</a></strong>";
+								echo "<a class='row-title' href='admin.php?page=UPCP-options&Action=UPCP_Catalogue_Details&Selected=Catalogue&Catalogue_ID=" . $Catalogue->Catalogue_ID ."' title='Edit " . $Catalogue->Catalogue_Name . "'>" . $Catalogue->Catalogue_Name . "</a></strong>";
 								echo "<br />";
 								echo "<div class='row-actions'>";
 								echo "<span class='delete'>";
-								echo "<a class='delete-tag' href='admin.php?page=UPCP-options&Action=DeleteCatalogue&DisplayPage=Catalogues&Catalogue_ID=" . $Catalogue->Catalogue_ID ."'>" . __("Delete", 'UPCP') . "</a>";
+								echo "<a class='delete-tag' href='admin.php?page=UPCP-options&Action=UPCP_DeleteCatalogue&DisplayPage=Catalogues&Catalogue_ID=" . $Catalogue->Catalogue_ID ."'>" . __("Delete", 'UPCP') . "</a>";
 		 						echo "</span>";
 								echo "</div>";
 								echo "<div class='hidden' id='inline_" . $Catalogue->Catalogue_ID ."'>";
@@ -208,7 +220,7 @@
 				<?php //$Products = $wpdb->get_results("SELECT Item_ID, Item_Name FROM $items_table_name ORDER BY Item_Views DESC"); 
 							$Products = $wpdb->get_results("SELECT Item_ID, Item_Name FROM $items_table_name"); 
 							foreach ($Products as $Product) {
-									echo "<li><label class='menu-item-title'><a href='/wp-admin/admin.php?page=UPCP-options&Action=Item_Details&Selected=Product&Item_ID=" . $Product->Item_ID ."'> " . $Product->Item_Name . "</a></label></li>";
+									echo "<li><label class='menu-item-title'><a href='/wp-admin/admin.php?page=UPCP-options&Action=UPCP_Item_Details&Selected=Product&Item_ID=" . $Product->Item_ID ."'> " . $Product->Item_Name . "</a></label></li>";
 							}
 				?>
 			</ul>

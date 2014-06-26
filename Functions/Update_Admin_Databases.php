@@ -387,7 +387,7 @@ function Add_UPCP_Product($Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Descrip
 		
 		
 		if (Prod_Count >= 100) {
-			  $update = __("Maximum number of products has been reached for free version. Upgrade to the premium version to continue.", 'UPCP');
+			  $update = __("Maximum number of products (100) has been reached for free version. Upgrade to the premium version to continue.", 'UPCP');
 				return $update;
 		}
 
@@ -433,22 +433,35 @@ function Add_UPCP_Product($Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Descrip
 		$Fields = $wpdb->get_results("SELECT Field_ID, Field_Name, Field_Values FROM $fields_table_name");
 		if (is_array($Fields)) {
 			  foreach ($Fields as $Field) {
-						if (isset($_POST[$Field->Field_Name])) {
-							  $Value = trim($_POST[$Field->Field_Name]);
-								$Options = explode(",", $Field->Field_Values);
-								if (sizeOf($Options) > 0 and $Options[0] != "") {
-									  array_walk($Options, create_function('&$val', '$val = trim($val);'));
-										$InArray = in_array($Value, $Options);
+						$FieldName = str_replace(" ", "_", $Field->Field_Name);
+						if (isset($_POST[$FieldName]) or isset($_FILES[$FieldName])) {
+							  // If it's a file, pass back to Prepare_Data_For_Insertion.php to upload the file and get the name
+								if ($Field->Field_Type == "file") {
+										$File_Upload_Return = UPCP_Handle_File_Upload($FieldName);
+										if ($File_Upload_Return['Success'] == "No") {return $File_Upload_Return['Data'];}
+										elseif ($File_Upload_Return['Success'] == "N/A") {$NoFile = "Yes";}
+										else {$Value = $File_Upload_Return['Data'];}
 								}
+								else {
+									  $Value = trim($_POST[$FieldName]);
+										$Options = explode(",", $Field->Field_Values);
+										if (sizeOf($Options) > 0 and $Options[0] != "") {
+									  	  array_walk($Options, create_function('&$val', '$val = trim($val);'));
+												$InArray = in_array($Value, $Options);
+										}
+								}		
 								if (!isset($InArray) or $InArray) {
-									  $wpdb->insert($fields_meta_table_name,
+									  if ($NoFile != "Yes") {
+											  $wpdb->insert($fields_meta_table_name,
 															array( 'Field_ID' => $Field->Field_ID,
 																		 'Item_ID' => $Item_ID,
 																		 'Meta_Value' => $Value)
 												);
+										}
 								}
 								elseif ($InArray == false) {$CustomFieldError = __(" One or more custom field values were incorrect.", 'UPCP');}
 								unset($InArray);
+								unset($NoFile);
 						}
 				}
 		}
@@ -523,25 +536,38 @@ function Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Slug, $Item_Photo_URL, $I
 		}
 		
 		//Add the custom fields to the meta table
-		$Fields = $wpdb->get_results("SELECT Field_ID, Field_Name, Field_Values FROM $fields_table_name");
+		$Fields = $wpdb->get_results("SELECT Field_ID, Field_Name, Field_Values, Field_Type FROM $fields_table_name");
 		if (is_array($Fields)) {
 			  foreach ($Fields as $Field) {
-						if (isset($_POST[$Field->Field_Name])) {
-							  $Value = trim($_POST[$Field->Field_Name]);
-								$Options = explode(",", $Field->Field_Values);
-								if (sizeOf($Options) > 0 and $Options[0] != "") {
-									  array_walk($Options, create_function('&$val', '$val = trim($val);'));
-										$InArray = in_array($Value, $Options);
+						$FieldName = str_replace(" ", "_", $Field->Field_Name);
+						if (isset($_POST[$FieldName]) or isset($_FILES[$FieldName])) {
+							  // If it's a file, pass back to Prepare_Data_For_Insertion.php to upload the file and get the name
+								if ($Field->Field_Type == "file") {
+										$File_Upload_Return = UPCP_Handle_File_Upload($FieldName);
+										if ($File_Upload_Return['Success'] == "No") {return $File_Upload_Return['Data'];}
+										elseif ($File_Upload_Return['Success'] == "N/A") {$NoFile = "Yes";}
+										else {$Value = $File_Upload_Return['Data'];}
+								}
+								else {
+									  $Value = trim($_POST[$FieldName]);
+										$Options = explode(",", $Field->Field_Values);
+										if (sizeOf($Options) > 0 and $Options[0] != "") {
+									  	  array_walk($Options, create_function('&$val', '$val = trim($val);'));
+												$InArray = in_array($Value, $Options);
+										}
 								}
 								if (!isset($InArray) or $InArray) {
-									  $wpdb->insert($fields_meta_table_name,
+									  if ($NoFile != "Yes") {
+											  $wpdb->insert($fields_meta_table_name,
 															array( 'Field_ID' => $Field->Field_ID,
 																		 'Item_ID' => $Item_ID,
 																		 'Meta_Value' => $Value)
 												);
+										}
 								}
 								elseif ($InArray == false) {$CustomFieldError = __(" One or more custom field values were incorrect.", 'UPCP');}
 								unset($InArray);
+								unset($NoFile);
 						}
 				}
 		}
@@ -553,6 +579,7 @@ function Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Slug, $Item_Photo_URL, $I
 		$update = __("Product has been successfully edited." . $CustomFieldError, 'UPCP');
 		return $update;
 }
+
 /* Adds multiple new products inputted via a spreadsheet uploaded to the top form 
 *  on the left-hand side of the products' page to the UPCP database */
 function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
@@ -562,6 +589,8 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 		global $subcategories_table_name;
 		global $tags_table_name;
 		global $tagged_items_table_name;	
+		global $fields_table_name;
+		global $fields_meta_table_name;
 		
 		$Excel_URL = '../wp-content/plugins/ultimate-product-catalogue/product-sheets/' . $Excel_File_Name;
 		
@@ -578,6 +607,13 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 		
 		//List of fields that can be accepted via upload
 		$Allowed_Fields = array ("Name" => "Item_Name", "Description" => "Item_Description", "Price" => "Item_Price", "Image" => "Item_Photo_URL", "Category" => "Category_Name", "Sub-Category" => "SubCategory_Name", "Tags" => "Tags_Names_String");
+		$Fields = $wpdb->get_results("SELECT Field_ID, Field_Name, Field_Values, Field_Type FROM $fields_table_name");
+		if (is_array($Fields)) {
+			  foreach ($Fields as $Field) {
+						$Allowable_Custom_Fields[$Field->Field_Name] = $Field->Field_Name;
+						$Field_IDs[$Field->Field_Name] = $Field->Field_ID;
+				}
+		}
 		
 		// Get column names
 		$highestColumn = $sheet->getHighestColumn();
@@ -587,8 +623,8 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 		}
 
 		// Make sure all columns are acceptable based on the acceptable fields above
-		foreach ($Titles as $Title) {
-				if ($Title != "" and !array_key_exists($Title, $Allowed_Fields)) {
+		foreach ($Titles as $key => $Title) {
+				if ($Title != "" and !array_key_exists($Title, $Allowed_Fields) and !array_key_exists($Title, $Allowable_Custom_Fields)) {
 					  $Error = __("You have a column which is not recognized: ", 'UPCP') . $Title . __(". <br>Please make sure that the column names match the product field labels exactly.", 'UPCP');
 						$user_update = array("Message_Type" => "Error", "Message" => $Error);
 						return $user_update;
@@ -598,6 +634,10 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 						$user_update = array("Message_Type" => "Error", "Message" => $Error);
 						return $user_update;
 				}
+				if (array_key_exists($Title, $Allowable_Custom_Fields)) {
+					  $Custom_Fields[$key] = $Title;
+						unset($Titles[$key]);
+				}
 		}
 		
 		// Put the spreadsheet data into a multi-dimensional array to facilitate processing
@@ -606,6 +646,15 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 				for ($column = 0; $column < $highestColumnIndex; $column++) {
 						$Data[$row][$column] = $sheet->getCellByColumnAndRow($column, $row)->getValue();
 				}
+		}
+		
+		$Prod_Count = $wpdb->get_var("SELECT COUNT(*) FROM " . $items_table_name);
+		$New_Product_Count = $Prod_Count + sizeOf($Data);
+		
+		if ($New_Product_Count > 100) {
+			  $Error = __("Maximum number of products (100) has been reached for free version. Upgrade to the premium version to continue.", 'UPCP');
+				$user_update = array("Message_Type" => "Error", "Message" => $Error);
+				return $user_update;
 		}
 
 		// Create an array of the categories currently in the UPCP database, 
@@ -648,7 +697,7 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 				// add in the values for Category_ID and SubCategory_ID, and increment 
 				// the category and sub-category counts when neccessary
 				foreach ($Product as $Col_Index => $Value) {
-						if (!isset($Tags_Column) or $Tags_Column != $Col_Index) {$Values[] = esc_sql($Value);}
+						if ((!isset($Tags_Column) or $Tags_Column != $Col_Index) and !array_key_exists($Col_Index, $Custom_Fields)) {$Values[] = esc_sql($Value);}
 						if (isset($Category_Column) and $Category_Column == $Col_Index) {
 							 	$Values[] = $Categories[$Value];
 								$wpdb->query("UPDATE $categories_table_name SET Category_Item_Count=Category_Item_Count+1 WHERE Category_ID='" . $Categories[$Value] . "'");
@@ -659,6 +708,9 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 						}
 						if (isset($Tags_Column) and $Tags_Column == $Col_Index) {
 							  $Tags_Names_Array = explode(",", esc_sql($Value));
+						}
+						if (array_key_exists($Col_Index, $Custom_Fields)) {
+							  $Custom_Fields_To_Insert[$Custom_Fields[$Col_Index]] = $Value;
 						}
 				}
 				$ValuesString = implode("','", $Values);
@@ -675,11 +727,21 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 								$wpdb->query($wpdb->prepare("UPDATE $tags_table_name SET Tag_Item_Count=Tag_Item_Count WHERE Tag_ID=%d", $Tag_ID));
 						}
 				}
+				
+				if (is_array($Custom_Fields_To_Insert)) {
+					  $Item_ID = $wpdb->insert_id;
+						foreach ($Custom_Fields_To_Insert as $Field => $Value) {
+								$Trimmed_Field = trim($Field);
+								$Field_ID = $Field_IDs[$Trimmed_Field];
+								$wpdb->query($wpdb->prepare("INSERT INTO $fields_meta_table_name (Field_ID, Item_ID, Meta_Value) VALUES (%d, %d, %s)", $Field_ID, $Item_ID, $Value));
+						}
+				}
 
 				unset($Values);
 				unset($Item_ID);
 				unset($ValuesString);
 				unset($Tags_Name_Array);
+				unset($Custom_Fields_To_Insert);
 		}
 
 		return __("Products added successfully.", 'UPCP');
@@ -762,6 +824,8 @@ function Update_UPCP_Options() {
 		update_option('UPCP_Filter_Type', $_POST['filter_type']);
 		update_option("UPCP_Read_More", $_POST['read_more']);
 		update_option("UPCP_Desc_Chars", $_POST['desc_count']);
+		$DetailsImageLink = Prepare_Details_Image();
+		update_option("UPCP_Details_Image", $DetailsImageLink);
 		update_option("UPCP_Single_Page_Price", $_POST['single_page_price']);
 		update_option("UPCP_Case_Insensitive_Search", $_POST['case_insensitive_search']);
 		if ($InstallVersion <= 2.0 or $Full_Version == "Yes") {update_option("UPCP_Pretty_Links", $_POST['pretty_links']);}

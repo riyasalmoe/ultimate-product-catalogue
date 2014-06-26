@@ -147,22 +147,54 @@ function Prepare_Add_Product_Image() {
 				$user_update = array("Message_Type" => "Update", "Message" => $user_update);
 				return $user_update;
 		} 
+
 		$ImageURL = $_POST['Item_Image'];
-		
 		/* Process the $_POST data where neccessary before storage */
 		$Item_ID = $_POST['Item_ID'];
 		$Item_Image_Description = $_POST['Item_Image_Description'];
 		
 		/* Pass the data to the appropriate function in Update_Admin_Databases.php to add the link to the image */
 		if (!isset($error) or $error == 'No file was uploaded.') {
-				$user_update = Add_Product_Image($Item_ID, $ImageURL, $Item_Image_Description);
-				$user_update = array("Message_Type" => "Update", "Message" => $user_update);
-				return $user_update;
+      if(is_array($ImageURL)) {
+        $ImageURL = explode(',', $ImageURL[0]);
+
+        /* Process the $_POST data where neccessary before storage */
+        $Item_ID = explode(',', $Item_ID);
+        $Item_Image_Description = explode(',', $Item_Image_Description);
+
+
+
+        $i = 0;
+        foreach($ImageURL as $image) {
+          $id = $Item_ID[$i];
+          $desc = isset($Item_Image_Description[$i]) ? $Item_Image_Description[$i] : '';
+          $user_update = Add_Product_Image($id, $image, $desc);
+          $user_update = array("Message_Type" => "Update", "Message" => $image + ' - ' + $user_update);
+        }
+        return $user_update;
+      } else {
+        $user_update = Add_Product_Image($Item_ID, $ImageURL, $Item_Image_Description);
+        $user_update = array("Message_Type" => "Update", "Message" => $user_update);
+        return $user_update;
+      }
 		}
 		else {
 				$output_error = array("Message_Type" => "Error", "Message" => $error);
 				return $output_error;
 		}
+}
+
+/* Prepare the data to add a new image for the "Details" link */
+function Prepare_Details_Image() {
+		
+		/* Double check that everything worked correctly in moving the file, return blank to erase the custom image or return the link */
+		if ($_POST['Details_Image'] == "http://" or $_POST['Details_Image'] == "") {
+			  return;
+		} 
+		else {
+				return $_POST['Details_Image'];
+		}
+		
 }
 
 /* Prepare the data to add a new category */
@@ -375,4 +407,82 @@ function Mass_Delete_Catalogues() {
 		$user_update = array("Message_Type" => "Update", "Message" => $update);
 		return $user_update;
 }
+
+function UPCP_Handle_File_Upload($Field_Name) {
+		
+		/* Test if there is an error with the uploaded file and return that error if there is */
+		if (!empty($_FILES[$Field_Name]['error']))
+		{
+				switch($_FILES[$Field_Name]['error'])
+				{
+
+				case '1':
+						$error = __('The uploaded file exceeds the upload_max_filesize directive in php.ini', 'UPCP');
+						break;
+				case '2':
+						$error = __('The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form', 'UPCP');
+						break;
+				case '3':
+						$error = __('The uploaded file was only partially uploaded', 'UPCP');
+						break;
+				case '4':
+						$error = __('No file was uploaded.', 'UPCP');
+						break;
+
+				case '6':
+						$error = __('Missing a temporary folder', 'UPCP');
+						break;
+				case '7':
+						$error = __('Failed to write file to disk', 'UPCP');
+						break;
+				case '8':
+						$error = __('File upload stopped by extension', 'UPCP');
+						break;
+				case '999':
+						default:
+						$error = __('No error code avaiable', 'UPCP');
+				}
+		}
+		/* Make sure that the file exists */ 	 	
+		elseif (empty($_FILES[$Field_Name]['tmp_name']) || $_FILES[$Field_Name]['tmp_name'] == 'none') {
+				$error = __('No file was uploaded here..', 'UPCP');
+		}
+		/* Move the file and store the URL to pass it onwards*/ 	 	
+		else {				 
+				 	  $msg .= $_FILES[$Field_Name]['name'];
+						//for security reason, we force to remove all uploaded file
+						$target_path = ABSPATH . 'wp-content/uploads/upcp-product-file-uploads/';
+						
+						//create the uploads directory if it doesn't exist
+						if (!file_exists($target_path)) {
+							  mkdir($target_path, 0777, true);
+						}
+
+						$target_path = $target_path . basename( $_FILES[$Field_Name]['name']); 
+
+						if (!move_uploaded_file($_FILES[$Field_Name]['tmp_name'], $target_path)) {
+						//if (!$upload = wp_upload_bits($_FILES["Item_Image"]["name"], null, file_get_contents($_FILES["Item_Image"]["tmp_name"]))) {
+				 			  $error .= "There was an error uploading the file, please try again!";
+						}
+						else {
+				 				$User_Upload_File_Name = basename( $_FILES[$Field_Name]['name']);
+						}	
+		}
+		
+		/* Return the file name, or the error that was generated. */
+		if (isset($error) and $error == __('No file was uploaded.', 'UPCP')) {
+			  $Return['Success'] = "N/A";
+				$Return['Data'] = __('No file was uploaded.', 'UPCP');
+		}
+		elseif (!isset($error)) {
+				$Return['Success'] = "Yes";
+				$Return['Data'] = $User_Upload_File_Name;
+		}
+		else {
+				$Return['Success'] = "No";
+				$Return['Data'] = $error;
+		}
+		return $Return;
+}
+
 ?>

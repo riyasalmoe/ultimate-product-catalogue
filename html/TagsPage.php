@@ -21,7 +21,7 @@
 				$Current_Page_With_Order_By = "admin.php?page=UPCP-options&DisplayPage=Tags";
 				if (isset($_GET['OrderBy'])) {$Current_Page_With_Order_By .= "&OrderBy=" .$_GET['OrderBy'] . "&Order=" . $_GET['Order'];}?>
 
-<form action="admin.php?page=UPCP-options&Action=MassDeleteTags&DisplayPage=Tags" method="post"> 
+<form action="admin.php?page=UPCP-options&Action=UPCP_MassDeleteTags&DisplayPage=Tags" method="post"> 
 <div class="tablenav top">
 		<div class="alignleft actions">
 				<select name='action'>
@@ -108,14 +108,14 @@
 								echo "</th>";
 								echo "<td class='name column-name'>";
 								echo "<strong>";
-								echo "<a class='row-title' href='admin.php?page=UPCP-options&Action=Tag_Details&Selected=Tag&Tag_ID=" . $Tag->Tag_ID ."' title='Edit " . $Tag->Tag_Name . "'>" . $Tag->Tag_Name . "</a></strong>";
+								echo "<a class='row-title' href='admin.php?page=UPCP-options&Action=UPCP_Tag_Details&Selected=Tag&Tag_ID=" . $Tag->Tag_ID ."' title='Edit " . $Tag->Tag_Name . "'>" . $Tag->Tag_Name . "</a></strong>";
 								echo "<br />";
 								echo "<div class='row-actions'>";
 								/*echo "<span class='edit'>";
-								echo "<a href='admin.php?page=UPCP-options&Action=Tag_Details&Selected=Tag&Tag_ID=" . $Tag->Tag_ID ."'>Edit</a>";
+								echo "<a href='admin.php?page=UPCP-options&Action=UPCP_Tag_Details&Selected=Tag&Tag_ID=" . $Tag->Tag_ID ."'>Edit</a>";
 		 						echo " | </span>";*/
 								echo "<span class='delete'>";
-								echo "<a class='delete-tag' href='admin.php?page=UPCP-options&Action=DeleteTag&DisplayPage=Tags&Tag_ID=" . $Tag->Tag_ID ."'>" . __("Delete", 'UPCP') . "</a>";
+								echo "<a class='delete-tag' href='admin.php?page=UPCP-options&Action=UPCP_DeleteTag&DisplayPage=Tags&Tag_ID=" . $Tag->Tag_ID ."'>" . __("Delete", 'UPCP') . "</a>";
 		 						echo "</span>";
 								echo "</div>";
 								echo "<div class='hidden' id='inline_" . $Tag->Tag_ID ."'>";
@@ -164,7 +164,7 @@
 
 <div class="form-wrap">
 <h3><?php _e("Add a New Tag", 'UPCP') ?></h3>
-<form id="addtag" method="post" action="admin.php?page=UPCP-options&Action=AddTag&DisplayPage=Tag" class="validate" enctype="multipart/form-data">
+<form id="addtag" method="post" action="admin.php?page=UPCP-options&Action=UPCP_AddTag&DisplayPage=Tag" class="validate" enctype="multipart/form-data">
 <input type="hidden" name="action" value="Add_Tag" />
 <?php wp_nonce_field(); ?>
 <?php wp_referer_field(); ?>

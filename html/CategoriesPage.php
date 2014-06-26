@@ -21,7 +21,7 @@
 				$Current_Page_With_Order_By = "admin.php?page=UPCP-options&DisplayPage=Categories";
 				if (isset($_GET['OrderBy'])) {$Current_Page_With_Order_By .= "&OrderBy=" .$_GET['OrderBy'] . "&Order=" . $_GET['Order'];}?>
 
-<form action="admin.php?page=UPCP-options&Action=MassDeleteCategories&DisplayPage=Categories" method="post">   
+<form action="admin.php?page=UPCP-options&Action=UPCP_MassDeleteCategories&DisplayPage=Categories" method="post">   
 <div class="tablenav top">
 		<div class="alignleft actions">
 				<select name='action'>
@@ -108,14 +108,14 @@
 								echo "</th>";
 								echo "<td class='name column-name'>";
 								echo "<strong>";
-								echo "<a class='row-title' href='admin.php?page=UPCP-options&Action=Category_Details&Selected=Category&Category_ID=" . $Category->Category_ID ."' title='Edit " . $Category->Category_Name . "'>" . $Category->Category_Name . "</a></strong>";
+								echo "<a class='row-title' href='admin.php?page=UPCP-options&Action=UPCP_Category_Details&Selected=Category&Category_ID=" . $Category->Category_ID ."' title='Edit " . $Category->Category_Name . "'>" . $Category->Category_Name . "</a></strong>";
 								echo "<br />";
 								echo "<div class='row-actions'>";
 								/*echo "<span class='edit'>";
-								echo "<a href='admin.php?page=UPCP-options&Action=Category_Details&Selected=Category&Category_ID=" . $Category->Category_ID ."'>Edit</a>";
+								echo "<a href='admin.php?page=UPCP-options&Action=UPCP_Category_Details&Selected=Category&Category_ID=" . $Category->Category_ID ."'>Edit</a>";
 		 						echo " | </span>";*/
 								echo "<span class='delete'>";
-								echo "<a class='delete-tag' href='admin.php?page=UPCP-options&Action=DeleteCategory&DisplayPage=Categories&Category_ID=" . $Category->Category_ID ."'>" . __("Delete", 'UPCP') . "</a>";
+								echo "<a class='delete-tag' href='admin.php?page=UPCP-options&Action=UPCP_DeleteCategory&DisplayPage=Categories&Category_ID=" . $Category->Category_ID ."'>" . __("Delete", 'UPCP') . "</a>";
 		 						echo "</span>";
 								echo "</div>";
 								echo "<div class='hidden' id='inline_" . $Category->Category_ID ."'>";
@@ -164,7 +164,7 @@
 
 <div class="form-wrap">
 <h3><?php _e("Add a New Category", 'UPCP') ?></h3>
-<form id="addcat" method="post" action="admin.php?page=UPCP-options&Action=AddCategory&DisplayPage=Category" class="validate" enctype="multipart/form-data">
+<form id="addcat" method="post" action="admin.php?page=UPCP-options&Action=UPCP_AddCategory&DisplayPage=Category" class="validate" enctype="multipart/form-data">
 <input type="hidden" name="action" value="Add_Category" />
 <?php wp_nonce_field(); ?>
 <?php wp_referer_field(); ?>

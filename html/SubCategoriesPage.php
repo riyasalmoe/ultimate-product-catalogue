@@ -20,7 +20,7 @@
 				$Current_Page_With_Order_By = "admin.php?page=UPCP-options&DisplayPage=SubCategories";
 				if (isset($_GET['OrderBy'])) {$Current_Page_With_Order_By .= "&OrderBy=" .$_GET['OrderBy'] . "&Order=" . $_GET['Order'];}?>
 
-<form action="admin.php?page=UPCP-options&Action=MassDeleteSubCategories&DisplayPage=SubCategories" method="post">  
+<form action="admin.php?page=UPCP-options&Action=UPCP_MassDeleteSubCategories&DisplayPage=SubCategories" method="post">  
 <div class="tablenav top">
 		<div class="alignleft actions">
 				<select name='action'>
@@ -121,14 +121,14 @@
 								echo "</th>";
 								echo "<td class='name column-name'>";
 								echo "<strong>";
-								echo "<a class='row-title' href='admin.php?page=UPCP-options&Action=SubCategory_Details&Selected=SubCategory&SubCategory_ID=" . $SubCategory->SubCategory_ID ."' title='Edit " . $SubCategory->SubCategory_Name . "'>" . $SubCategory->SubCategory_Name . "</a></strong>";
+								echo "<a class='row-title' href='admin.php?page=UPCP-options&Action=UPCP_SubCategory_Details&Selected=SubCategory&SubCategory_ID=" . $SubCategory->SubCategory_ID ."' title='Edit " . $SubCategory->SubCategory_Name . "'>" . $SubCategory->SubCategory_Name . "</a></strong>";
 								echo "<br />";
 								echo "<div class='row-actions'>";
 								/*echo "<span class='edit'>";
-								echo "<a href='admin.php?page=UPCP-options&Action=SubCategory_Details&Selected=SubCategory&SubCategory_ID=" . $SubCategory->SubCategory_ID ."'>Edit</a>";
+								echo "<a href='admin.php?page=UPCP-options&Action=UPCP_SubCategory_Details&Selected=SubCategory&SubCategory_ID=" . $SubCategory->SubCategory_ID ."'>Edit</a>";
 		 						echo " | </span>";*/
 								echo "<span class='delete'>";
-								echo "<a class='delete-tag' href='admin.php?page=UPCP-options&Action=DeleteSubCategory&DisplayPage=SubCategories&SubCategory_ID=" . $SubCategory->SubCategory_ID ."'>Delete</a>";
+								echo "<a class='delete-tag' href='admin.php?page=UPCP-options&Action=UPCP_DeleteSubCategory&DisplayPage=SubCategories&SubCategory_ID=" . $SubCategory->SubCategory_ID ."'>Delete</a>";
 		 						echo "</span>";
 								echo "</div>";
 								echo "<div class='hidden' id='inline_" . $SubCategory->SubCategory_ID ."'>";
@@ -178,7 +178,7 @@
 
 <div class="form-wrap">
 <h3><?php _e("Add a New Sub-Category", 'UPCP') ?></h3>
-<form id="addsub" method="post" action="admin.php?page=UPCP-options&Action=AddSubCategory&DisplayPage=SubCategory" class="validate" enctype="multipart/form-data">
+<form id="addsub" method="post" action="admin.php?page=UPCP-options&Action=UPCP_AddSubCategory&DisplayPage=SubCategory" class="validate" enctype="multipart/form-data">
 <input type="hidden" name="action" value="Add_SubCategory" />
 <?php wp_nonce_field(); ?>
 <?php wp_referer_field(); ?>

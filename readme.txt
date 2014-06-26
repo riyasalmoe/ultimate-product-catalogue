@@ -104,6 +104,16 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.3 =
+- New premium feature: custom product page design, let's you drag and drop product pages to change the layout in the back-end
+- Contact forms and PayPal buttons can be included on product pages with the new layout feature
+- Added the ability to add multiple additional images at once
+- Custom fields can now be uploaded with products being uploaded by spreadsheet (Limited testing, please let us know if you find any errors with this)
+- Added a new custom field type, file, so that PDF's and other files can be included with products
+- Added a "Details" image option, so that the arrow can be replaced with any image of your choosing
+- Added an italian language translation
+- Fixed a small spreadsheet error
+
 = 2.2.12 =
  - Fixed a display bug for individual product pages
 

@@ -9,12 +9,12 @@ function UPCP_Output_Options() {
 			  $Display_Page = $_GET['DisplayPage'];
 		}
 		include ABSPATH . 'wp-content/plugins/ultimate-product-catalogue/html/AdminHeader.php';
-		if ($_GET['Action'] == "Item_Details" or 
-			  $_GET['Action'] == "Category_Details" or 
-				$_GET['Action'] == "SubCategory_Details" or 
-				$_GET['Action'] == "Catalogue_Details" or 
-				$_GET['Action'] == "Tag_Details" or 
-				$_GET['Action'] == "Field_Details") {
+		if ($_GET['Action'] == "UPCP_Item_Details" or 
+			  $_GET['Action'] == "UPCP_Category_Details" or 
+				$_GET['Action'] == "UPCP_SubCategory_Details" or 
+				$_GET['Action'] == "UPCP_Catalogue_Details" or 
+				$_GET['Action'] == "UPCP_Tag_Details" or 
+				$_GET['Action'] == "UPCP_Field_Details") {
 			  include ABSPATH . 'wp-content/plugins/ultimate-product-catalogue/html/ItemDetails.php';
 		}
 		else {include ABSPATH . 'wp-content/plugins/ultimate-product-catalogue/html/MainScreen.php';}

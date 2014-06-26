@@ -14,6 +14,7 @@ function Upgrade_To_Full() {
 		else {
 				$message = array("Message_Type" => "Update", "Message" => $Response['Message']);
 				update_option("UPCP_Full_Version", "Yes");
+				update_option("UPCP_Product_Page_Serialized", $Response['ProductPage']);
 				$Full_Version = get_option("UPCP_Full_Version");
 		}
 }

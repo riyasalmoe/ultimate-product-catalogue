@@ -8,7 +8,7 @@
 				<div class="form-wrap ItemDetail">
 						<a href="admin.php?page=UPCP-options&DisplayPage=Products" class="NoUnderline">&#171; <?php _e("Back", 'UPCP') ?></a>
 						<h3>Edit <?php echo $Product->Item_Name;?></h3>
-						<form id="addtag" method="post" action="admin.php?page=UPCP-options&Action=EditProduct&DisplayPage=Products" class="validate" enctype="multipart/form-data">
+						<form id="addtag" method="post" action="admin.php?page=UPCP-options&Action=UPCP_EditProduct&DisplayPage=Products" class="validate" enctype="multipart/form-data">
 						<input type="hidden" name="action" value="Edit_Product" />
 						<input type="hidden" name="Item_ID" value="<?php echo $Product->Item_ID; ?>" />
 						<?php wp_nonce_field(); ?>
@@ -147,6 +147,15 @@
 										}
 										$ReturnString .= "</td>";
 								}
+								elseif ($Field->Field_Type == "file") {
+										$ReturnString .= "<td><input name='" . $Field->Field_Name . "' class='upcp-file-input' type='file' value='" . $Value . "' /></td>";
+								}
+								elseif ($Field->Field_Type == "date") {
+										$ReturnString .= "<td><input name='" . $Field->Field_Name . "' class='upcp-date-input' type='date' value='" . $Value . "' /></td>";
+								} 
+								elseif ($Field->Field_Type == "datetime") {
+										$ReturnString .= "<td><input name='" . $Field->Field_Name . "' class='upcp-datetime-input' type='datetime-local' value='" . $Value . "' /></td>";
+  							}
 						}
 						echo $ReturnString;
 						?>
@@ -161,7 +170,7 @@
 				<?php if ($Full_Version == "Yes") { ?>
 				<div class="form-wrap ItemImages">
 						<h3><?php _e("Add Product Images", 'UPCP') ?></h3>
-						<form id="add-image" method="post" action="admin.php?page=UPCP-options&Action=AddProductImage&DisplayPage=Products" class="validate" enctype="multipart/form-data">
+						<form id="add-image" method="post" action="admin.php?page=UPCP-options&Action=UPCP_AddProductImage&DisplayPage=Products" class="validate" enctype="multipart/form-data">
 								<input type="hidden" name="action" value="Add_Product_Image" />
 								<input type="hidden" name="Item_ID" value="<?php echo $Product->Item_ID; ?>" />
 								<?php wp_nonce_field(); ?>
@@ -169,8 +178,8 @@
 								<table class="form-table">
 										<tr>
 												<th><label for="Item_Image"><?php _e("Image", 'UPCP') ?></label></th>
-												<td><input id="Item_Image_Addt" type="text" size="36" name="Item_Image" value="http://" /> 
-  											<input id="Item_Image_Addt_button" class="button" type="button" value="Upload Image" />
+												<td><input id="Item_Image_Addt" type="text" size="36" name="Item_Image[]" value="http://" /> 
+  											<input id="Item_Image_Addt_button" class="button" type="button" value="<?php _e('Upload Image', 'UPCP');?>" />
 											 	<p><?php _e("The secondaries images that will be displayed.", 'UPCP') ?></p></td>
 										</tr>
 								</table>
@@ -182,7 +191,7 @@
 													foreach ($Images as $Image) { ?>
 													<div class="item-image">
 															<img class="PreviewImage" src="<?php echo $Image->Item_Image_URL;?>" />
-															<a href="admin.php?page=UPCP-options&Action=DeleteProductImage&DisplayPage=Products&Item_Image_ID=<?php echo $Image->Item_Image_ID; ?>"><?php _e("Delete", 'UPCP') ?></a>
+															<a href="admin.php?page=UPCP-options&Action=UPCP_DeleteProductImage&DisplayPage=Products&Item_Image_ID=<?php echo $Image->Item_Image_ID; ?>"><?php _e("Delete", 'UPCP') ?></a>
 													</div>
 										<?php } ?>
 						</div>
@@ -215,7 +224,7 @@
 				<ul id="pagechecklist-most-recent" class="categorychecklist form-no-clear">
 				<?php $Products = $wpdb->get_results($wpdb->prepare("SELECT Item_ID, Item_Name FROM $items_table_name WHERE Category_ID='%d'", $_GET['Category_ID']));
 							foreach ($Products as $Product) {
-									echo "<li><label class='menu-item-title'><a href='admin.php?page=UPCP-options&Action=Item_Details&Selected=Product&Item_ID=" . $Product->Item_ID . "'>" . $Product->Item_Name . "</a></label></li>";
+									echo "<li><label class='menu-item-title'><a href='admin.php?page=UPCP-options&Action=UPCP_Item_Details&Selected=Product&Item_ID=" . $Product->Item_ID . "'>" . $Product->Item_Name . "</a></label></li>";
 							}
 				?>
 				</ul>
@@ -231,7 +240,7 @@
 				<div class="form-wrap CategoryDetail">
 						<a href="admin.php?page=UPCP-options&DisplayPage=Categories" class="NoUnderline">&#171; <?php _e("Back", 'UPCP') ?></a>
 						<h3>Edit <?php echo $Product->Product_Name;?></h3>
-						<form id="addtag" method="post" action="admin.php?page=UPCP-options&Action=EditCategory&DisplayPage=Categories" class="validate" enctype="multipart/form-data">
+						<form id="addtag" method="post" action="admin.php?page=UPCP-options&Action=UPCP_EditCategory&DisplayPage=Categories" class="validate" enctype="multipart/form-data">
 						<input type="hidden" name="action" value="Edit_Category" />
 						<input type="hidden" name="Category_ID" value="<?php echo $Category->Category_ID; ?>" />
 						<?php wp_nonce_field(); ?>
@@ -278,7 +287,7 @@
 				<ul id="pagechecklist-most-recent" class="categorychecklist form-no-clear">
 				<?php $Products = $wpdb->get_results($wpdb->prepare("SELECT Item_ID, Item_Name FROM $items_table_name WHERE SubCategory_ID='%d'", $_GET['SubCategory_ID']));
 							foreach ($Products as $Product) {
-									echo "<li><label class='menu-item-title'><a href='admin.php?page=UPCP-options&Action=Item_Details&Selected=Product&Item_ID=" . $Product->Item_ID . "'>" . $Product->Item_Name . "</a></label></li>";
+									echo "<li><label class='menu-item-title'><a href='admin.php?page=UPCP-options&Action=UPCP_Item_Details&Selected=Product&Item_ID=" . $Product->Item_ID . "'>" . $Product->Item_Name . "</a></label></li>";
 							}
 				?>
 				</ul>
@@ -294,7 +303,7 @@
 				<div class="form-wrap SubCategoryDetail">
 						<a href="admin.php?page=UPCP-options&DisplayPage=SubCategories" class="NoUnderline">&#171; <?php _e("Back", 'UPCP')?></a>
 						<h3>Edit <?php echo $SubCategory->SubCategory_Name;?></h3>
-						<form id="addtag" method="post" action="admin.php?page=UPCP-options&Action=EditSubCategory&DisplayPage=SubCategories" class="validate" enctype="multipart/form-data">
+						<form id="addtag" method="post" action="admin.php?page=UPCP-options&Action=UPCP_EditSubCategory&DisplayPage=SubCategories" class="validate" enctype="multipart/form-data">
 						<input type="hidden" name="action" value="Edit_SubCategory" />
 						<input type="hidden" name="SubCategory_ID" value="<?php echo $SubCategory->SubCategory_ID; ?>" />
 						<?php wp_nonce_field(); ?>
@@ -349,7 +358,7 @@
 				<?php $Tagged_Items = $wpdb->get_results($wpdb->prepare("SELECT Item_ID FROM $tagged_items_table_name WHERE Tag_ID='%d'", $_GET['Tag_ID']));
 							foreach ($Tagged_Items as $Tagged_Item) {
 									$Product = $wpdb->get_row("SELECT Item_ID, Item_Name FROM $items_table_name WHERE Item_ID=" . $Tagged_Item->Item_ID);
-									echo "<li><label class='menu-item-title'><a href='admin.php?page=UPCP-options&Action=Item_Details&Selected=Product&Item_ID=" . $Product->Item_ID . "'>" . $Product->Item_Name . "</a></label></li>";
+									echo "<li><label class='menu-item-title'><a href='admin.php?page=UPCP-options&Action=UPCP_Item_Details&Selected=Product&Item_ID=" . $Product->Item_ID . "'>" . $Product->Item_Name . "</a></label></li>";
 							}
 				?>
 				</ul>
@@ -365,7 +374,7 @@
 				<div class="form-wrap TagDetail">
 						<a href="admin.php?page=UPCP-options&DisplayPage=Tags" class="NoUnderline">&#171; <?php _e("Back", 'UPCP') ?></a>
 						<h3>Edit <?php echo $Tag->Tag_Name;?></h3>
-						<form id="addtag" method="post" action="admin.php?page=UPCP-options&Action=EditTag&DisplayPage=Tags" class="validate" enctype="multipart/form-data">
+						<form id="addtag" method="post" action="admin.php?page=UPCP-options&Action=UPCP_EditTag&DisplayPage=Tags" class="validate" enctype="multipart/form-data">
 						<input type="hidden" name="action" value="Edit_Tag" />
 						<input type="hidden" name="Tag_ID" value="<?php echo $Tag->Tag_ID; ?>" />
 						<?php wp_nonce_field(); ?>
@@ -399,7 +408,7 @@
 				<div class="form-wrap TagDetail">
 						<a href="admin.php?page=UPCP-options&DisplayPage=Tags" class="NoUnderline">&#171; <?php _e("Back", 'UPCP') ?></a>
 						<h3>Edit <?php echo $Field->Field_Name;?></h3>
-						<form id="addtag" method="post" action="admin.php?page=UPCP-options&Action=EditCustomField&DisplayPage=CustomFields" class="validate" enctype="multipart/form-data">
+						<form id="addtag" method="post" action="admin.php?page=UPCP-options&Action=UPCP_EditCustomField&DisplayPage=CustomFields" class="validate" enctype="multipart/form-data">
 						<input type="hidden" name="action" value="Edit_Custom_Field" />
 						<input type="hidden" name="Field_ID" value="<?php echo $Field->Field_ID; ?>" />
 						<?php wp_nonce_field(); ?>
@@ -423,6 +432,7 @@
 										<option value='radio' <?php if ($Field->Field_Type == "radio") {echo "selected=selected";} ?>><?php _e("Radio Button", 'UPCP') ?></option>
 										<option value='checkbox' <?php if ($Field->Field_Type == "checkbox") {echo "selected=selected";} ?>><?php _e("Checkbox", 'UPCP') ?></option>
 										<option value='textarea' <?php if ($Field->Field_Type == "textarea") {echo "selected=selected";} ?>><?php _e("Text Area", 'UPCP') ?></option>
+										<option value='file' <?php if ($Field->Field_Type == "file") {echo "selected=selected";} ?>><?php _e("File", 'UPCP') ?></option>
 										<option value='date' <?php if ($Field->Field_Type == "date") {echo "selected=selected";} ?>><?php _e("Date", 'UPCP') ?></option>
 										<option value='datetime' <?php if ($Field->Field_Type == "datetime") {echo "selected=selected";} ?>><?php _e("Date/Time", 'UPCP') ?></option>
 								</select>

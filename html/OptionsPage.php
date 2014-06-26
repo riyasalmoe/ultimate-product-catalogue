@@ -7,6 +7,7 @@
 		$Detail_Desc_Chars = get_option("UPCP_Desc_Chars");
 		$Single_Page_Price = get_option("UPCP_Single_Page_Price");
 		$PrettyLinks = get_option("UPCP_Pretty_Links");
+		$Detail_Image = get_option("UPCP_Details_Image");
 		$MobileStyle = get_option("UPCP_Mobile_SS");
 		$CaseInsensitiveSearch = get_option("UPCP_Case_Insensitive_Search");
 		$InstallVersion = get_option("UPCP_First_Install_Version");
@@ -14,7 +15,7 @@
 <div class="wrap">
 <div id="icon-options-general" class="icon32"><br /></div><h2>Settings</h2>
 
-<form method="post" action="admin.php?page=UPCP-options&DisplayPage=Options&Action=UpdateOptions">
+<form method="post" action="admin.php?page=UPCP-options&DisplayPage=Options&Action=UPCP_UpdateOptions">
 <table class="form-table">
 <tr>
 <th scope="row">Catalogue Color</th>
@@ -70,6 +71,15 @@
 <td>
 	<fieldset><legend class="screen-reader-text"><span>Characters in "Details" Description</span></legend>
 	<input type='text' name='desc_count' value='<?php echo $Detail_Desc_Chars; ?>'/>
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row">Custom "Details" icon</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span>Image to use instead of "Details" (Optional)</span></legend>
+	<input id="Details_Image" type="text" size="36" name="Details_Image" value='<?php if ($Detail_Image == "") {echo "http://";} else {echo $Detail_Image;} ?>' /> 
+  <input id="Details_Image_button" class="button" type="button" value="Upload Image" />
 	</fieldset>
 </td>
 </tr>

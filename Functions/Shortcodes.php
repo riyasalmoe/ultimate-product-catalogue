@@ -11,6 +11,7 @@ function Insert_Product_Catalog($atts) {
 		$Filter = get_option("UPCP_Filter_Type");
 		$Color = get_option("UPCP_Color_Scheme");
 		$Links = get_option("UPCP_Product_Links");
+		$Detail_Image = get_option("UPCP_Details_Image");
 		$Pretty_Links = get_option("UPCP_Pretty_Links");
 		$Mobile_Style = get_option("UPCP_Mobile_SS");
 		$CaseInsensitiveSearch = get_option("UPCP_Case_Insensitive_Search");
@@ -32,10 +33,21 @@ function Insert_Product_Catalog($atts) {
 														)
 												);
 		
+		// Select the catalogue information from the database 
+		$Catalogue = $wpdb->get_row("SELECT * FROM $catalogues_table_name WHERE Catalogue_ID=" . $id);
+		$CatalogueItems = $wpdb->get_results("SELECT * FROM $catalogue_items_table_name WHERE Catalogue_ID=" . $id . " ORDER BY Position");
+		
 		// Add any additional CSS in-line
 		if ($Catalogue->Catalogue_Custom_CSS != "") {
 				$HeaderBar .= "<style type='text/css'>";
 				$HeaderBar .= $Catalogue->Catalogue_Custom_CSS;
+				$HeaderBar .= "</style>";
+		}
+		if ($Detail_Image != "") {
+			  $HeaderBar .= "<style type='text/css'>";
+				$HeaderBar .= ".upcp-thumb-details-link, .upcp-list-details-link, .upcp-detail-details-link {";
+				$HeaderBar .= "background: url('" . $Detail_Image . "');";
+				$HeaderBar .= "}";
 				$HeaderBar .= "</style>";
 		}
 		
@@ -68,10 +80,6 @@ function Insert_Product_Catalog($atts) {
 				elseif (!in_array("List", $Excluded_Layouts)) {$Starting_Layout = "List";}
 				else {$Starting_Layout = "Detail";}
 		}
-		
-		// Select the catalogue information from the database 
-		$Catalogue = $wpdb->get_row("SELECT * FROM $catalogues_table_name WHERE Catalogue_ID=" . $id);
-		$CatalogueItems = $wpdb->get_results("SELECT * FROM $catalogue_items_table_name WHERE Catalogue_ID=" . $id . " ORDER BY Position");
 				
 		// Make sure that the layout is set
 		if ($layout_format != "Thumbnail" and $layout_format != "List") {
@@ -429,15 +437,14 @@ function AddProduct($format, $Item_ID, $Product, $Tags) {
 				$ProductString .= "<img src='" . $PhotoURL . "' alt='" . $Product->Item_Name . " Image' id='prod-cat-thumb-" . $Product->Item_ID . "' class='prod-cat-thumb-image upcp-thumb-image'>";
 				$ProductString .= "</a>";	
 				$ProductString .= "</div>\n";
+				$ProductString .= "<div id='prod-cat-title-" . $Product->Item_ID . "' class='prod-cat-title upcp-thumb-title'>";
 				$ProductString .= "<a class='";
 				if ($FancyBoxClass and !$NewWindow) {$ProductString .= "fancybox";}
 				$ProductString .= " no-underline'";
 				if ($NewWindow) {$ProductString .= "target='_blank'";}
-				$ProductString .= " href='" . $ItemLink . "' onclick='RecordView(" . $Product->Item_ID . ");'>";
-				$ProductString .= "<div id='prod-cat-title-" . $Product->Item_ID . "' class='prod-cat-title upcp-thumb-title'>" . $Product->Item_Name;
+				$ProductString .= " href='" . $ItemLink . "' onclick='RecordView(" . $Product->Item_ID . ");'>" . $Product->Item_Name . "</a>";
 				$ProductString .= AddCustomFields($Product->Item_ID, "thumbs");
 				$ProductString .= "</div>\n";
-				$ProductString .= "</a>";
 				$ProductString .= "<div id='prod-cat-price-" . $Product->Item_ID . "' class='prod-cat-price upcp-thumb-price'>" . $Product->Item_Price . "</div>\n";
 				$ProductString .= "<a class='";
 				if ($FancyBoxClass and !$NewWindow) {$ProductString .= "fancybox";}
@@ -546,10 +553,12 @@ function AddProduct($format, $Item_ID, $Product, $Tags) {
 }
 
 function SingleProductPage() {
-		global $wpdb, $items_table_name, $item_images_table_name;
+		global $wpdb, $items_table_name, $item_images_table_name, $fields_table_name, $fields_meta_table_name;
 		
 		$Pretty_Links = get_option("UPCP_Pretty_Links");
 		$Single_Page_Price = get_option("UPCP_Single_Page_Price");
+		$Custom_Product_Page = get_option("UPCP_Custom_Product_Page");
+		$Product_Page_Serialized = get_option("UPCP_Product_Page_Serialized");
 		
 		if ($Pretty_Links == "Yes") {$Product = $wpdb->get_row("SELECT * FROM $items_table_name WHERE Item_Slug='" . get_query_var('single_product') . "'");}
 		else {$Product = $wpdb->get_row("SELECT * FROM $items_table_name WHERE Item_ID='" . $_GET['SingleProduct'] . "'");}
@@ -571,27 +580,122 @@ function SingleProductPage() {
 		if ($uri_parts[1] == "") {$SP_Perm_URL .= "Product_ID=" . $Product->Item_ID;}
 		else {$SP_Perm_URL .= "&Product_ID=" . $Product->Item_ID;}
 		
-		$ProductString .= "<div class='prod-cat-back-link'>";
-		$ProductString .= "<a href='" . $Return_URL . "'>&#171; Back to Catalogue</a>";
-		$ProductString .= "</div>";
+		if ($Custom_Product_Page != "Yes") {
+			  $ProductString .= "<div class='prod-cat-back-link'>";
+				$ProductString .= "<a href='" . $Return_URL . "'>&#171; Back to Catalogue</a>";
+				$ProductString .= "</div>";
 		
-		$ProductString .= "<div id='prod-cat-addt-details-" . $Product->Item_ID . "' class='prod-cat-addt-details'>";
-		$ProductString .= "<div id='prod-cat-addt-details-thumbs-div-" . $Product->Item_ID . "' class='prod-cat-addt-details-thumbs-div'>";
-		$ProductString .= "<img src='" . $PhotoURL . "' id='prod-cat-addt-details-thumb-P". $Product->Item_ID . "' class='prod-cat-addt-details-thumb' onclick='ZoomImage(\"" . $Product->Item_ID . "\", \"0\");'>";
-		foreach ($Item_Images as $Image) {$ProductString .= "<img src='" . htmlspecialchars($Image->Item_Image_URL, ENT_QUOTES) . "' id='prod-cat-addt-details-thumb-". $Image->Item_Image_ID . "' class='prod-cat-addt-details-thumb' onclick='ZoomImage(\"" . $Product->Item_ID . "\", \"" . $Image->Item_Image_ID . "\");'>";}
-		$ProductString .= "</div>";
-		$ProductString .= "<div id='prod-cat-addt-details-right-div-" . $Product->Item_ID . "' class='prod-cat-addt-details-right-div'>";
-		$ProductString .= "<h2 class='prod-cat-addt-details-title'><a class='no-underline' href='http://" . $_SERVER['HTTP_HOST'] . $SP_Perm_URL . "'>" . $Product->Item_Name . "<img class='upcp-product-url-icon' src='" . get_bloginfo('wpurl') . "/wp-content/plugins/ultimate-product-catalogue/images/insert_link.png' /></a></h2>";
-		if ($Single_Page_Price == "Yes") {$ProductString .= "<h3 class='prod-cat-addt-details-price'>" . $Product->Item_Price . "</h3>";}
-		$ProductString .= "<div id='prod-cat-addt-details-main-div-" . $Product->Item_ID . "' class='prod-cat-addt-details-main-div'>";
-		$ProductString .= "<img src='" . $PhotoURL . "' alt='" . $Product->Item_Name . " Image' id='prod-cat-addt-details-main-" . $Product->Item_ID . "' class='prod-cat-addt-details-main'>";
-		$ProductString .= "</div>";
-		$ProductString .= "<div class='upcp-clear'></div>";
-		$ProductString .= "<div id='prod-cat-addt-details-desc-div-" . $Product->Item_ID . "' class='prod-cat-addt-details-desc-div'>";
-		$ProductString .= $Description . "</div>";
-		$ProductString .= "<div class='upcp-clear'></div>\n";
-		$ProductString .= "</div>\n";
-		$ProductString .= "</div>\n";
+				$ProductString .= "<div id='prod-cat-addt-details-" . $Product->Item_ID . "' class='prod-cat-addt-details'>";
+				$ProductString .= "<div id='prod-cat-addt-details-thumbs-div-" . $Product->Item_ID . "' class='prod-cat-addt-details-thumbs-div'>";
+				$ProductString .= "<img src='" . $PhotoURL . "' id='prod-cat-addt-details-thumb-P". $Product->Item_ID . "' class='prod-cat-addt-details-thumb' onclick='ZoomImage(\"" . $Product->Item_ID . "\", \"0\");'>";
+				foreach ($Item_Images as $Image) {$ProductString .= "<img src='" . htmlspecialchars($Image->Item_Image_URL, ENT_QUOTES) . "' id='prod-cat-addt-details-thumb-". $Image->Item_Image_ID . "' class='prod-cat-addt-details-thumb' onclick='ZoomImage(\"" . $Product->Item_ID . "\", \"" . $Image->Item_Image_ID . "\");'>";}
+				$ProductString .= "</div>";
+				$ProductString .= "<div id='prod-cat-addt-details-right-div-" . $Product->Item_ID . "' class='prod-cat-addt-details-right-div'>";
+				$ProductString .= "<h2 class='prod-cat-addt-details-title'><a class='no-underline' href='http://" . $_SERVER['HTTP_HOST'] . $SP_Perm_URL . "'>" . $Product->Item_Name . "<img class='upcp-product-url-icon' src='" . get_bloginfo('wpurl') . "/wp-content/plugins/ultimate-product-catalogue/images/insert_link.png' /></a></h2>";
+				if ($Single_Page_Price == "Yes") {$ProductString .= "<h3 class='prod-cat-addt-details-price'>" . $Product->Item_Price . "</h3>";}
+				$ProductString .= "<div id='prod-cat-addt-details-main-div-" . $Product->Item_ID . "' class='prod-cat-addt-details-main-div'>";
+				$ProductString .= "<img src='" . $PhotoURL . "' alt='" . $Product->Item_Name . " Image' id='prod-cat-addt-details-main-" . $Product->Item_ID . "' class='prod-cat-addt-details-main'>";
+				$ProductString .= "</div>";
+				$ProductString .= "<div class='upcp-clear'></div>";
+				$ProductString .= "<div id='prod-cat-addt-details-desc-div-" . $Product->Item_ID . "' class='prod-cat-addt-details-desc-div'>";
+				$ProductString .= $Description . "</div>";
+				$ProductString .= "<div class='upcp-clear'></div>\n";
+				$ProductString .= "</div>\n";
+				$ProductString .= "</div>\n";
+		}
+		else {
+				$Gridster = json_decode(stripslashes($Product_Page_Serialized));
+				$ProductString .= "<div class='gridster'>";
+				$ProductString .= "<ul>";
+				foreach ($Gridster as $Element) {
+						switch ($Element->element_class) {
+								case "additional_images":
+										$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-addt-images-div gs-w' style='display: list-item; position:absolute;'>";
+										$ProductString .= "<div id='prod-cat-addt-details-thumbs-div-" . $Product->Item_ID . "' class='prod-cat-addt-details-thumbs-div'>";
+										$ProductString .= "<img src='" . $PhotoURL . "' id='prod-cat-addt-details-thumb-P". $Product->Item_ID . "' class='prod-cat-addt-details-thumb' onclick='ZoomImage(\"" . $Product->Item_ID . "\", \"0\");'>";
+										foreach ($Item_Images as $Image) {$ProductString .= "<img src='" . htmlspecialchars($Image->Item_Image_URL, ENT_QUOTES) . "' id='prod-cat-addt-details-thumb-". $Image->Item_Image_ID . "' class='prod-cat-addt-details-thumb' onclick='ZoomImage(\"" . $Product->Item_ID . "\", \"" . $Image->Item_Image_ID . "\");'>";}
+										$ProductString .= "</div>";
+										break;
+								case "back":
+										$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-back-div gs-w' style='display: list-item; position:absolute;'>";
+										$ProductString .= "<a href='" . $Return_URL . "'>&#171; " . __("Back to Catalogue", 'UPCP') . "</a>";
+										break;
+								case "blank":
+										$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-blank-div gs-w' style='display: list-item; position:absolute;'>";
+										break;
+								case "category":
+										$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-cat-div gs-w' style='display: list-item; position:absolute;'>";
+										$ProductString .= $Product->Category_Name;
+										break;
+								case "category_label":
+										$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-cat-label-div gs-w' style='display: list-item; position:absolute;'>";
+										$ProductString .= __("Category:", 'UPCP') . " ";
+										break;
+								case "description":
+										$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-description-div gs-w' style='display: list-item; position:absolute;'>";
+										$ProductString .= $Description;
+										break;
+								case "main_image":
+										$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-main-image-div gs-w' style='display: list-item; position:absolute;'>";
+										$ProductString .= "<img src='" . $PhotoURL . "' alt='" . $Product->Item_Name . " Image' id='prod-cat-addt-details-main-" . $Product->Item_ID . "' class='prod-cat-addt-details-main' />";
+										break;
+								case "price":
+										$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-price-div gs-w' style='display: list-item; position:absolute;'>";
+										$ProductString .= "<h3 class='prod-cat-addt-details-price'>" . $Product->Item_Price . "</h3>";
+										break;
+								case "price_label":
+										$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-price-label-div gs-w' style='display: list-item; position:absolute;'>";
+										$ProductString .= "Price: ";
+										break;
+								case "product_link":
+										$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-prod-link-div gs-w' style='display: list-item; position:absolute;'>";
+										$ProductString .= "<a class='no-underline' href='http://" . $_SERVER['HTTP_HOST'] . $SP_Perm_URL . "'><img class='upcp-product-url-icon' src='" . get_bloginfo('wpurl') . "/wp-content/plugins/ultimate-product-catalogue/images/insert_link.png' /></a>";
+										break;
+								case "product_name":
+										$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-prod-name-div gs-w' style='display: list-item; position:absolute;'>";
+										$ProductString .= "<h2 class='prod-cat-addt-details-title'><a class='no-underline' href='http://" . $_SERVER['HTTP_HOST'] . $SP_Perm_URL . "'>" . $Product->Item_Name . "</a></h2>";
+										break;
+								case "subcategory":
+										$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-sub-cat-div gs-w' style='display: list-item; position:absolute;'>";
+										$ProductString .= $Product->SubCategory_Name;
+										break;
+								case "subcategory_label":
+										$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-sub-cat-label-div gs-w' style='display: list-item; position:absolute;'>";
+										$ProductString .= __("Sub-Category:", 'UPCP') . " ";
+										break;
+								case "tags":
+										$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-tags-div gs-w' style='display: list-item; position:absolute;'>";
+										$ProductString .= $Tag_String;
+										break;
+								case "tags_label":
+										$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-tags-label-div gs-w' style='display: list-item; position:absolute;'>";
+										$ProductString .= __("Tags:", 'UPCP') . " ";
+										break;
+								case "text":
+										$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-tags-label-div gs-w' style='display: list-item; position:absolute;'>";
+										$ProductString .= $Element->element_id;
+										break;
+								case "custom_field":
+										$Field_Value = $wpdb->get_row("SELECT Meta_Value FROM $fields_meta_table_name WHERE Field_ID='" . $Element->element_id ."' AND Item_ID='" . $Product->Item_ID . "'");
+										$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-custom-field-div gs-w' style='display: list-item; position:absolute;'>";
+										if ($Field->Field_Type == "file") {
+											  $upload_dir = wp_upload_dir();
+												$ProductString .= "<a href='" . $upload_dir['baseurl'] . "/upcp-product-file-uploads/" . $Field_Value->Meta_Value . "' download>" . $Field_Value->Meta_Value . "</a>";
+										}
+										else {$ProductString .= $Field_Value->Meta_Value;}
+										break;
+								case "custom_label":
+										$Field = $wpdb->get_row("SELECT Field_Name FROM $fields_table_name WHERE Field_ID='" . $Element->element_id ."'");
+										$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-custom-field-label-div gs-w' style='display: list-item; position:absolute;'>";
+										$ProductString .= $Field->Field_Name . ": ";
+										break;
+						}
+						$MaxCol = max($MaxCol, $Element->col);
+						$ProductString .= "</li>";								
+				}
+				$ProductString .= "</ul>";
+				$ProductString .= "</div>";
+		}
 		
 		return $ProductString;
 }
@@ -600,7 +704,9 @@ function ConvertCustomFields($Description) {
 		global $wpdb;
 		global $fields_table_name, $fields_meta_table_name;
 		
-		$Fields = $wpdb->get_results("SELECT Field_ID, Field_Slug FROM $fields_table_name");
+		$upload_dir = wp_upload_dir();
+		
+		$Fields = $wpdb->get_results("SELECT Field_ID, Field_Slug, Field_Type FROM $fields_table_name");
 		$Metas = $wpdb->get_results("SELECT Field_ID, Meta_Value FROM $fields_meta_table_name");
 		
 		if (is_array($Fields)) {
@@ -610,7 +716,11 @@ function ConvertCustomFields($Description) {
 						}
 				}
 				foreach ($Fields as $Field) {
-						$Description = str_replace("[" . $Field->Field_Slug . "]" , $MetaArray[$Field->Field_ID], $Description); 
+						if ($Field->Field_Type == "file") {
+							  $LinkString = "<a href='" . $upload_dir['baseurl'] . "/upcp-product-file-uploads/" . $MetaArray[$Field->Field_ID] . "' download>" . $MetaArray[$Field->Field_ID] . "</a>";
+							  $Description = str_replace("[" . $Field->Field_Slug . "]" , $LinkString, $Description);
+						}
+						else {$Description = str_replace("[" . $Field->Field_Slug . "]" , $MetaArray[$Field->Field_ID], $Description);}
 				}
 		}
 		
@@ -621,11 +731,17 @@ function AddCustomFields($ProductID, $Layout) {
 		global $wpdb;
 		global $fields_table_name, $fields_meta_table_name;
 		
-		$Fields = $wpdb->get_results("SELECT Field_ID, Field_Name FROM $fields_table_name WHERE Field_Displays='" . $Layout . "' OR Field_Displays='both'");
+		$upload_dir = wp_upload_dir();
+		
+		$Fields = $wpdb->get_results("SELECT Field_ID, Field_Name, Field_Type FROM $fields_table_name WHERE Field_Displays='" . $Layout . "' OR Field_Displays='both'");
 		if (is_array($Fields)) {
 			  foreach ($Fields as $Field) {
 						$Meta = $wpdb->get_row("SELECT Meta_Value FROM $fields_meta_table_name WHERE Field_ID='" . $Field->Field_ID . "' AND Item_ID='" . $ProductID . "'");
-						$CustomFieldString .= "<br />" . $Field->Field_Name . ": " . $Meta->Meta_Value;
+						if ($Field->Field_Type == "file") {
+							  $CustomFieldString .= "<br />" . $Field->Field_Name . ": ";
+								$CustomFieldString .= "<a href='" . $upload_dir['baseurl'] . "/upcp-product-file-uploads/" .$Meta->Meta_Value . "' download>" . $Meta->Meta_Value . "</a>";
+						}
+						else {$CustomFieldString .= "<br />" . $Field->Field_Name . ": " . $Meta->Meta_Value;}
 				}
 		}
 		
