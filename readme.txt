@@ -114,6 +114,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.3.1 =
+- Fixed a product count error
+
 = 2.3 =
 - New premium feature: custom product page design, let's you drag and drop product pages to change the layout in the back-end
 - Contact forms and PayPal buttons can be included on product pages with the new layout feature

@@ -386,7 +386,7 @@ function Add_UPCP_Product($Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Descrip
 		$Prod_Count = $wpdb->get_var("SELECT COUNT(*) FROM " . $items_table_name);
 		
 		
-		if (Prod_Count >= 100) {
+		if (Prod_Count >= 100 and $Full_Version != "Yes") {
 			  $update = __("Maximum number of products (100) has been reached for free version. Upgrade to the premium version to continue.", 'UPCP');
 				return $update;
 		}
@@ -651,7 +651,7 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 		$Prod_Count = $wpdb->get_var("SELECT COUNT(*) FROM " . $items_table_name);
 		$New_Product_Count = $Prod_Count + sizeOf($Data);
 		
-		if ($New_Product_Count > 100) {
+		if ($New_Product_Count > 100 and $Full_Version != "Yes") {
 			  $Error = __("Maximum number of products (100) has been reached for free version. Upgrade to the premium version to continue.", 'UPCP');
 				$user_update = array("Message_Type" => "Error", "Message" => $Error);
 				return $user_update;
