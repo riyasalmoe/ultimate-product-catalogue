@@ -6,5 +6,5 @@ jQuery(function(){ //DOM Ready
         widget_base_dimensions: [90, 35],
 				helper: 'clone',
    	}).data('gridster');
-		gridster.disable();
+		if (gridster) {gridster.disable();}
 });

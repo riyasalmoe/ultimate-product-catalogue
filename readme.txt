@@ -114,6 +114,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.3.2 =
+- Fixed a JQuery error
+
 = 2.3.1 =
 - Fixed a product count error
 
