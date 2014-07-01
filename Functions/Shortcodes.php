@@ -24,6 +24,8 @@ function Insert_Product_Catalog($atts) {
 																"products_per_page" => 5000,
 																"sidebar" => "Yes",
 																"only_inner" => "No",
+																"ajax_reload" => "No",
+																"ajax_url" => "",
 																"request_count" => 0,
 																"category" => "",
 																"subcategory" => "",
@@ -70,6 +72,11 @@ function Insert_Product_Catalog($atts) {
 		$ReturnString .= "<div class='shortcode-attr' id='upcp-catalogue-sidebar'>" . $sidebar . "</div>";
 		$ReturnString .= "<div class='shortcode-attr' id='upcp-starting-layout'>" . $starting_layout . "</div>";
 		$ReturnString .= "<div class='shortcode-attr' id='upcp-exclude-layouts'>" . $excluded_layouts . "</div>";
+		if ($ajax_reload == "Yes") {$ReturnString .= "<div class='shortcode-attr' id='upcp-base-url'>" . $ajax_url . "</div>";}
+		else {
+				$uri_parts = explode('?', $_SERVER['REQUEST_URI'], 2);
+				$ReturnString .= "<div class='shortcode-attr' id='upcp-base-url'>" . $uri_parts[0] . "</div>";
+		}
 		$ReturnString .= "</div>";
 		
 		if (sizeOf($Excluded_Layouts)>0) {for ($i=0; $i<sizeOf($Excluded_Layouts); $i++) {$ExcludedLayouts[$i] = ucfirst(trim($Excluded_Layouts[$i]));}}
@@ -127,9 +134,9 @@ function Insert_Product_Catalog($atts) {
 						if ($NameSearchMatch == "Yes") {
 						if ($Product->Item_Display_Status != "Hide") {
 						$HeaderBar .= "<a id='hidden_FB_link-" . $CatalogueItem->Item_ID . "' class='fancybox' href='#prod-cat-addt-details-" . $CatalogueItem->Item_ID . "'></a>";
-						if (!in_array("Thumbnail", $ExcludedLayouts)) {$ProdThumbString .= AddProduct("Thumbnail", $CatalogueItem->Item_ID, $Product, $ProdTagObj);}
-						if (!in_array("List", $ExcludedLayouts)) {$ProdListString .= AddProduct("List", $CatalogueItem->Item_ID, $Product, $ProdTagObj);}
-						if (!in_array("Detail", $ExcludedLayouts)) {$ProdDetailString .= AddProduct("Detail", $CatalogueItem->Item_ID, $Product, $ProdTagObj);}
+						if (!in_array("Thumbnail", $ExcludedLayouts)) {$ProdThumbString .= AddProduct("Thumbnail", $CatalogueItem->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
+						if (!in_array("List", $ExcludedLayouts)) {$ProdListString .= AddProduct("List", $CatalogueItem->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
+						if (!in_array("Detail", $ExcludedLayouts)) {$ProdDetailString .= AddProduct("Detail", $CatalogueItem->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
 						$Product_Count++;
 						}}}}}
 						unset($NameSearchMatch);
@@ -172,9 +179,9 @@ function Insert_Product_Catalog($atts) {
 								if ($NameSearchMatch == "Yes") {
 								if ($Product->Item_Display_Status != "Hide") {
 								$HeaderBar .= "<a id='hidden_FB_link-" . $Product->Item_ID . "' class='fancybox' href='#prod-cat-addt-details-" . $Product->Item_ID . "'></a>";
-								if (!in_array("Thumbnail", $ExcludedLayouts)) {$ProdThumbString .= AddProduct("Thumbnail", $Product->Item_ID, $Product, $ProdTagObj);}
-								if (!in_array("List", $ExcludedLayouts)) {$ProdListString .= AddProduct("List", $Product->Item_ID, $Product, $ProdTagObj);}
-								if (!in_array("Detail", $ExcludedLayouts)) {$ProdDetailString .= AddProduct("Detail", $Product->Item_ID, $Product, $ProdTagObj);}
+								if (!in_array("Thumbnail", $ExcludedLayouts)) {$ProdThumbString .= AddProduct("Thumbnail", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
+								if (!in_array("List", $ExcludedLayouts)) {$ProdListString .= AddProduct("List", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
+								if (!in_array("Detail", $ExcludedLayouts)) {$ProdDetailString .= AddProduct("Detail", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
 								$Product_Count++;
 								$CatProdCount++;
 								}}}}
@@ -219,9 +226,9 @@ function Insert_Product_Catalog($atts) {
 								if ($NameSearchMatch == "Yes") {
 								if ($Product->Item_Display_Status != "Hide") {
 								$HeaderBar .= "<a id='hidden_FB_link-" . $Product->Item_ID . "' class='fancybox' href='#prod-cat-addt-details-" . $Product->Item_ID . "'></a>";
-								if (!in_array("Thumbnail", $ExcludedLayouts)) {$ProdThumbString .= AddProduct("Thumbnail", $Product->Item_ID, $Product, $ProdTagObj);}
-								if (!in_array("List", $ExcludedLayouts)) {$ProdListString .= AddProduct("List", $Product->Item_ID, $Product, $ProdTagObj);}
-								if (!in_array("Detail", $ExcludedLayouts)) {$ProdDetailString .= AddProduct("Detail", $Product->Item_ID, $Product, $ProdTagObj);}
+								if (!in_array("Thumbnail", $ExcludedLayouts)) {$ProdThumbString .= AddProduct("Thumbnail", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
+								if (!in_array("List", $ExcludedLayouts)) {$ProdListString .= AddProduct("List", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
+								if (!in_array("Detail", $ExcludedLayouts)) {$ProdDetailString .= AddProduct("Detail", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
 								$Product_Count++;
 								}}}}
 								unset($NameSearchMatch);
@@ -381,7 +388,7 @@ function Insert_Product_Catalog($atts) {
 }
 
 /* Function to add the HTML for an individual product to the catalog */
-function AddProduct($format, $Item_ID, $Product, $Tags) {
+function AddProduct($format, $Item_ID, $Product, $Tags, $AjaxReload = "No", $AjaxURL = "") {
 		// Add the required global variables
 		global $wpdb, $categories_table_name, $subcategories_table_name, $tags_table_name, $tagged_items_table_name, $catalogues_table_name, $catalogue_items_table_name, $items_table_name, $item_images_table_name;
 		global $ProdCats, $ProdSubCats, $ProdTags, $ReturnString;
@@ -420,10 +427,13 @@ function AddProduct($format, $Item_ID, $Product, $Tags) {
 		if ($uri_parts[1] == "") {$FB_Perm_URL .= "Product_ID=" . $Product->Item_ID;}
 		else {$FB_Perm_URL .= "&Product_ID=" . $Product->Item_ID;}
 		
+		if ($AjaxReload == "Yes") {$Base = $AjaxURL;}
+		else {$Base = $uri_parts[0];}
+		
 		if ($Product->Item_Link != "") {$ItemLink = $Product->Item_Link;}
 		elseif ($FancyBox_Installed) {$ItemLink = "#prod-cat-addt-details-" . $Product->Item_ID; $FancyBoxClass = true;}
-		elseif ($Pretty_Links == "Yes") {$ItemLink = $uri_parts[0] . "product/" . $Product->Item_Slug . "/?" . $uri_parts[1];}
-		else {$ItemLink = $uri_parts[0] . "?" . $uri_parts[1] . "&SingleProduct=" . $Product->Item_ID;}
+		elseif ($Pretty_Links == "Yes") {$ItemLink = $Base . "product/" . $Product->Item_Slug . "/?" . $uri_parts[1];}
+		else {$ItemLink = $Base . "?" . $uri_parts[1] . "&SingleProduct=" . $Product->Item_ID;}
 
 		//Create the listing for the thumbnail layout display
 		if ($format == "Thumbnail") {				
@@ -501,7 +511,7 @@ function AddProduct($format, $Item_ID, $Product, $Tags) {
 								if ($FancyBoxClass and !$NewWindow) {$ProductString .= "fancybox";}
 								$ProductString .= "' ";
 								if ($NewWindow) {$ProductString .= "target='_blank'";}
-								$ProductString .= " href='#prod-cat-addt-details-" . $Product->Item_ID . "' onclick='RecordView(" . $Product->Item_ID . ");'>" . __("Read More", 'UPCP') . "</a>";
+								$ProductString .= " href='" . $ItemLink . "' onclick='RecordView(" . $Product->Item_ID . ");'>" . __("Read More", 'UPCP') . "</a>";
 						}
 				}
 				$ProductString .= AddCustomFields($Product->Item_ID, "details");

@@ -114,6 +114,10 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.3.3 =
+- Fixed a permalinks error after AJAX sorting
+- Fixed a "Read more" link error
+
 = 2.3.2 =
 - Fixed a JQuery error
 
