@@ -114,6 +114,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.3.4 = 
+- Fixed a spreadsheet upload error
+
 = 2.3.3 =
 - Fixed a permalinks error after AJAX sorting
 - Fixed a "Read more" link error

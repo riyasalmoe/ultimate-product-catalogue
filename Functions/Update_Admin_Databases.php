@@ -591,6 +591,7 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 		global $tagged_items_table_name;	
 		global $fields_table_name;
 		global $fields_meta_table_name;
+		global $Full_Version;
 		
 		$Excel_URL = '../wp-content/plugins/ultimate-product-catalogue/product-sheets/' . $Excel_File_Name;
 		
