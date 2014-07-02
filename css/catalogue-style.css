@@ -14,6 +14,9 @@
 .Hide-Item {
   display:none;
 }
+.upcp-Hide-Item {
+  display:none;
+}
 .No-Clear {
   clear:none !important;
 	padding: 0 !important;

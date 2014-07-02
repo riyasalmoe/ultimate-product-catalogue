@@ -73,7 +73,7 @@ function Insert_Product_Catalog($atts) {
 		if ($tags == "") {$tags = array();}
 		else {$tags = explode(",", $tags);}		
 		
-		$ReturnString .= "<div class='Hide-Item' id='upcp-shortcode-atts'>";
+		$ReturnString .= "<div class='upcp-Hide-Item' id='upcp-shortcode-atts'>";
 		$ReturnString .= "<div class='shortcode-attr' id='upcp-catalogue-id'>" . $id . "</div>";
 		$ReturnString .= "<div class='shortcode-attr' id='upcp-catalogue-sidebar'>" . $sidebar . "</div>";
 		$ReturnString .= "<div class='shortcode-attr' id='upcp-starting-layout'>" . $starting_layout . "</div>";
