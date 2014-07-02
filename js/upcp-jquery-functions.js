@@ -21,10 +21,8 @@ function UPCPHighlight(Field, Color) {
 
 var RequestCount = 0;
 function UPCP_Ajax_Filter() {
-		var SelectedCat = "";
-		var CatCount = 0;
-		var SelectedSubCat = "";
-		var SubCatCount = 0;
+		var CatValues = [];
+		var SubCatValues = [];
 		var TagBoxValues = [];
 		
 		var id = jQuery('#upcp-catalogue-id').html();
@@ -33,20 +31,15 @@ function UPCP_Ajax_Filter() {
 		var excluded_layouts = jQuery('#upcp-excluded-layouts').html();
 		var base_url = jQuery('#upcp-base-url').html();
 		
-		jQuery('.jquery-prod-cat-value').each(function() {if (jQuery(this).prop('checked')) {SelectedCat = jQuery(this).val(); CatCount++;}});
-		jQuery('.jquery-prod-sub-cat-value').each(function() {if (jQuery(this).prop('checked')) {SelectedSubCat = jQuery(this).val(); SubCatCount++;}});
+		jQuery('.jquery-prod-cat-value').each(function() {if (jQuery(this).prop('checked')) {CatValues.push(jQuery(this).val());}});
+		jQuery('.jquery-prod-sub-cat-value').each(function() {if (jQuery(this).prop('checked')) {SubCatValues.push(jQuery(this).val());}});
 		jQuery('.jquery-prod-tag-value').each(function() {if (jQuery(this).prop('checked')) {TagBoxValues.push(jQuery(this).val());}});
 		var SelectedProdName = jQuery('.jquery-prod-name-text').val();
 		
 		jQuery('.prod-cat-inner').html('<h3>Updating results...</h3>');
 		
-		if (CatCount > 1 || SubCatCount > 1) {
-				
-				return false;
-		}
-		
 		RequestCount = RequestCount + 1;
-		var data = 'id=' + id + '&sidebar=' + sidebar + '&start_layout=' + start_layout + '&excluded_layouts=' + excluded_layouts + '&ajax_url=' + base_url + '&ajax_reload=Yes' + '&Prod_Name=' + SelectedProdName + '&Category=' + SelectedCat + '&SubCategory=' + SelectedSubCat + '&Tags=' + TagBoxValues + '&request_count=' + RequestCount + '&action=update_catalogue';
+		var data = 'id=' + id + '&sidebar=' + sidebar + '&start_layout=' + start_layout + '&excluded_layouts=' + excluded_layouts + '&ajax_url=' + base_url + '&ajax_reload=Yes' + '&Prod_Name=' + SelectedProdName + '&Category=' + CatValues + '&SubCategory=' + SubCatValues + '&Tags=' + TagBoxValues + '&request_count=' + RequestCount + '&action=update_catalogue';
 		jQuery.post(ajaxurl, data, function(response) {
 				response = response.substring(0, response.length - 1);
 				var parsed_response = jQuery.parseJSON(response);
@@ -77,15 +70,19 @@ function UPCP_Filer_Results() {
 		jQuery('.jquery-prod-tag-value').each(function() {if (jQuery(this).prop('checked')) {TagBoxValues.push(jQuery(this).val());}});
 		jQuery('.prod-cat-item').each(function() {
 				var Fail = false;
+				Any_Cat = false;
+				Any_SubCat = false;
 				var Categories = jQuery(this).children(".prod-cat-category-jquery").text();
 				var SubCats = jQuery(this).children(".prod-cat-subcategory-jquery").text();
 				var Tags = jQuery(this).children(".prod-cat-tag-jquery").text();
 				var ProdNameUp = jQuery(this).children('.prod-cat-title-jquery').text();
 				var ProdName = ProdNameUp.toLowerCase();
 				if (TargetProdName != "") {if (ProdName.indexOf(TargetProdName.toLowerCase()) == -1) {Fail = true;}}
-				jQuery.each(CatBoxValues, function(indexTwo, secondValue) {if (Categories.indexOf(" "+secondValue+",") == -1) {Fail = true;}});
-				jQuery.each(SubBoxValues, function(indexTwo, secondValue) {if (SubCats.indexOf(" "+secondValue+",") == -1) {Fail = true;}});
+				jQuery.each(CatBoxValues, function(indexTwo, secondValue) {if (Categories.indexOf(" "+secondValue+",") != -1) {Any_Cat = true;}});
+				jQuery.each(SubBoxValues, function(indexTwo, secondValue) {if (SubCats.indexOf(" "+secondValue+",") != -1) {Any_SubCat = true;}});
 				jQuery.each(TagBoxValues, function(indexTwo, secondValue) {if (Tags.indexOf(" "+secondValue+",") == -1) {Fail = true;}});
+				if (CatBoxValues.length > 0) {if (Any_Cat == false) {Fail = true;}}
+				if (SubBoxValues.length > 0) {if (Any_SubCat == false) {Fail = true;}}
 				if (Fail == true) {jQuery(this).addClass('Hide-Item');}
 				else {jQuery(this).removeClass('Hide-Item'); Counter++;}
 		});
@@ -115,6 +112,8 @@ function UPCP_Filer_Results_OR() {
 		jQuery('.jquery-prod-tag-value').each(function() {if (jQuery(this).prop('checked')) {TagBoxValues.push(jQuery(this).val());}});
 		jQuery('.prod-cat-item').each(function() {
 				Fail = false;
+				Any_Cat = false;
+				Any_SubCat = false;
 				Any_Tag = false;
 				Categories = jQuery(this).children(".prod-cat-category-jquery").text();
 				SubCats = jQuery(this).children(".prod-cat-subcategory-jquery").text();
@@ -122,9 +121,11 @@ function UPCP_Filer_Results_OR() {
 				ProdName = jQuery(this).children('.prod-cat-title-jquery').text();
 				ProdName = ProdName.toLowerCase();
 				if (TargetProdName != "") {if (ProdName.indexOf(TargetProdName.toLowerCase()) == -1) {Fail = true;}}
-				jQuery.each(CatBoxValues, function(indexTwo, secondValue) {if (Categories.indexOf(" "+secondValue+",") == -1) {Fail = true;}});
-				jQuery.each(SubBoxValues, function(indexTwo, secondValue) {if (SubCats.indexOf(" "+secondValue+",") == -1) {Fail = true;}});
+				jQuery.each(CatBoxValues, function(indexTwo, secondValue) {if (Categories.indexOf(" "+secondValue+",") != -1) {Any_Cat = true;}});
+				jQuery.each(SubBoxValues, function(indexTwo, secondValue) {if (SubCats.indexOf(" "+secondValue+",") != -1) {Any_SubCat = true;}});
 				jQuery.each(TagBoxValues, function(indexTwo, secondValue) {if (Tags.indexOf(" "+secondValue+",") != -1) {Any_Tag = true;}});
+				if (CatBoxValues.length > 0) {if (Any_Cat == false) {Fail = true;}}
+				if (SubBoxValues.length > 0) {if (Any_SubCat == false) {Fail = true;}}
 				if (TagBoxValues.length > 0) {if (Any_Tag == false) {Fail = true;}}
 				if (Fail == true) {jQuery(this).addClass('Hide-Item');}
 				else {jQuery(this).removeClass('Hide-Item'); Counter++;}

@@ -15,6 +15,7 @@ function Insert_Product_Catalog($atts) {
 		$Pretty_Links = get_option("UPCP_Pretty_Links");
 		$Mobile_Style = get_option("UPCP_Mobile_SS");
 		$CaseInsensitiveSearch = get_option("UPCP_Case_Insensitive_Search");
+		$ProductSearch = get_option("UPCP_Product_Search");
 		
 		// Get the attributes passed by the shortcode, and store them in new variables for processing
 		extract( shortcode_atts( array(
@@ -64,6 +65,11 @@ function Insert_Product_Catalog($atts) {
 		$Starting_Layout = ucfirst($starting_layout);
 		if ($excluded_layouts != "None") {$Excluded_Layouts = explode(",", $excluded_layouts);}
 		else {$Excluded_Layouts = array();}
+		
+		if ($category == "") {$category = array();}
+		else {$category = explode(",", $category);}	
+		if ($subcategory == "") {$subcategory = array();}
+		else {$subcategory = explode(",", $subcategory);}	
 		if ($tags == "") {$tags = array();}
 		else {$tags = explode(",", $tags);}		
 		
@@ -121,16 +127,11 @@ function Insert_Product_Catalog($atts) {
 						$ProdTagObj = $wpdb->get_results("SELECT Tag_ID FROM $tagged_items_table_name WHERE Item_ID=" . $CatalogueItem->Item_ID);
 						$ProdTag = ObjectToArray($ProdTagObj);
 						
-						if ($CaseInsensitiveSearch == "Yes") {
-							  if ($prod_name == "" or strpos(strtolower($Product->Item_Name), strtolower($prod_name)) !== false) {$NameSearchMatch = "Yes";}
-						}
-						else {
-								if ($prod_name == "" or strpos($Product->Item_Name, $prod_name) !== false) {$NameSearchMatch = "Yes";}
-						}
+						$NameSearchMatch = SearchProductName($Product->Item_Name, $Product->Item_Description, $prod_name, $CaseInsensitiveSearch, $ProductSearch);
 								
-						if ($category == "" or $category == $Product->Category_ID) {
-						if ($subcategory == "" or $subcategory == $Product->SubCategory_ID) {
-						if (sizeOf($tags) == 0 or count(array_intersect($tags, $ProdTag)) == count($tags)) {
+						if (sizeOf($category) == 0 or in_array($Product->Category_ID, $category)) {
+						if (sizeOf($subcategory) == 0 or in_array($Product->SubCategory_ID, $subcategory)) {
+						if (sizeOf($tags) == 0 or count(array_intersect($tags, $ProdTag)) > 0) {
 						if ($NameSearchMatch == "Yes") {
 						if ($Product->Item_Display_Status != "Hide") {
 						$HeaderBar .= "<a id='hidden_FB_link-" . $CatalogueItem->Item_ID . "' class='fancybox' href='#prod-cat-addt-details-" . $CatalogueItem->Item_ID . "'></a>";
@@ -145,7 +146,7 @@ function Insert_Product_Catalog($atts) {
 				// If the item is a category, then add the appropriate extra HTML and call the AddProduct function
 				// for each individual product in the category
 				if ($CatalogueItem->Category_ID != "" and $CatalogueItem->Category_ID != 0) {
-				if ($category == "" or $category == $CatalogueItem->Category_ID) {						
+				if (sizeOf($category) == 0 or in_array($CatalogueItem->Category_ID, $category)) {					
 						$CatProdCount = 0;
 						$Category = $wpdb->get_row("SELECT Category_Name FROM $categories_table_name WHERE Category_ID=" . $CatalogueItem->Category_ID);
 						
@@ -167,15 +168,10 @@ function Insert_Product_Catalog($atts) {
 								$ProdTagObj = $wpdb->get_results("SELECT Tag_ID FROM $tagged_items_table_name WHERE Item_ID=" . $Product->Item_ID);
 								$ProdTag = ObjectToArray($ProdTagObj);
 								
-								if ($CaseInsensitiveSearch == "Yes") {
-									  if ($prod_name == "" or strpos(strtolower($Product->Item_Name), strtolower($prod_name)) !== false) {$NameSearchMatch = "Yes";}
-								}
-								else {
-										if ($prod_name == "" or strpos($Product->Item_Name, $prod_name) !== false) {$NameSearchMatch = "Yes";}
-								}
+								$NameSearchMatch = SearchProductName($Product->Item_Name, $Product->Item_Description, $prod_name, $CaseInsensitiveSearch, $ProductSearch);
 								
-								if ($subcategory == "" or $subcategory == $Product->SubCategory_ID) {
-								if (sizeOf($tags) == 0 or count(array_intersect($tags, $ProdTag)) == count($tags)) {
+								if (sizeOf($subcategory) == 0 or in_array($Product->SubCategory_ID, $subcategory)) {
+								if (sizeOf($tags) == 0 or count(array_intersect($tags, $ProdTag)) > 0) {
 								if ($NameSearchMatch == "Yes") {
 								if ($Product->Item_Display_Status != "Hide") {
 								$HeaderBar .= "<a id='hidden_FB_link-" . $Product->Item_ID . "' class='fancybox' href='#prod-cat-addt-details-" . $Product->Item_ID . "'></a>";
@@ -207,22 +203,17 @@ function Insert_Product_Catalog($atts) {
 				// If the item is a sub-category, then add the appropriate extra HTML and call the AddProduct function
 				// for each individual product in the sub-category
 				if ($CatalogueItem->SubCategory_ID != "" and $CatalogueItem->SubCategory_ID != 0) {
-				if ($subcategory == "" or $subcategory == $CatalogueItem->SubCategory_ID) {
+				if (sizeOf($subcategory) == 0 or in_array($CatalogueItem->SubCategory_ID, $subcategory)) {
 						$Products = $wpdb->get_results("SELECT * FROM $items_table_name WHERE SubCategory_ID=" . $CatalogueItem->SubCategory_ID);
 						
 						foreach ($Products as $Product) {
 								$ProdTagObj = $wpdb->get_results("SELECT Tag_ID FROM $tagged_items_table_name WHERE Item_ID=" . $Product->Item_ID);
 								$ProdTag = ObjectToArray($ProdTagObj);
 								
-								if ($CaseInsensitiveSearch == "Yes") {
-									  if ($prod_name == "" or strpos(strtolower($Product->Item_Name), strtolower($prod_name)) !== false) {$NameSearchMatch = "Yes";}
-								}
-								else {
-										if ($prod_name == "" or strpos($Product->Item_Name, $prod_name) !== false) {$NameSearchMatch = "Yes";}
-								}
+								$NameSearchMatch = SearchProductName($Product->Item_Name, $Product->Item_Description, $prod_name, $CaseInsensitiveSearch, $ProductSearch);
 								
-								if ($category == "" or $subcategory == $Product->Category_ID) {
-								if (sizeOf($tags) == 0 or count(array_intersect($tags, $ProdTag)) == count($tags)) {
+								if (sizeOf($category) == 0 or in_array($Product->Category_ID, $category)) {
+								if (sizeOf($tags) == 0 or count(array_intersect($tags, $ProdTag)) > 0) {
 								if ($NameSearchMatch == "Yes") {
 								if ($Product->Item_Display_Status != "Hide") {
 								$HeaderBar .= "<a id='hidden_FB_link-" . $Product->Item_ID . "' class='fancybox' href='#prod-cat-addt-details-" . $Product->Item_ID . "'></a>";
@@ -286,11 +277,13 @@ function Insert_Product_Catalog($atts) {
 				}
 				
 				// Create the text search box
+				if ($ProductSearch == "namedesc") {$SearchLabel = __("Product Search:", 'UPCP'); $SearchText = __("Search", 'UPCP');}
+				else {$SearchLabel = __("Product Name:", 'UPCP'); $SearchText = __("Name", 'UPCP');}
 				$SidebarString .= "<div id='prod-cat-text-search' class='prod-cat-text-search'>\n";
-				$SidebarString .= __("Product Name:", 'UPCP') . "<br /><div class='styled-input'>";
+				$SidebarString .= $SearchLabel . "<br /><div class='styled-input'>";
 				if ($Filter  == "Javascript" and $Tag_Logic == "OR") {$SidebarString .= "<input type='text' class='jquery-prod-name-text' name='Text_Search' value='" . __('Name', 'UPCP') . "...' onfocus='FieldFocus(this);' onblur='FieldBlur(this);' onkeyup='UPCP_Filer_Results_OR();'>\n";}
 				elseif ($Filter  == "Javascript") {$SidebarString .= "<input type='text' class='jquery-prod-name-text' name='Text_Search' value='" . __('Name', 'UPCP') . "...' onfocus='FieldFocus(this);' onblur='FieldBlur(this);' onkeyup='UPCP_Filer_Results();'>\n";}
-				else {$SidebarString .= "<input type='text' class='jquery-prod-name-text' name='Text_Search' value='" . __('Name', 'UPCP') . "...' onfocus='FieldFocus(this);' onblur='FieldBlur(this);' onkeyup='UPCP_Ajax_Filter();'>\n";}
+				else {$SidebarString .= "<input type='text' class='jquery-prod-name-text' name='Text_Search' value='" . $SearchText . "...' onfocus='FieldFocus(this);' onblur='FieldBlur(this);' onkeyup='UPCP_Ajax_Filter();'>\n";}
 				$SidebarString .= "</div></div>\n";
 				
 				// Create the categories checkboxes
@@ -663,7 +656,7 @@ function SingleProductPage() {
 										break;
 								case "product_name":
 										$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-prod-name-div gs-w' style='display: list-item; position:absolute;'>";
-										$ProductString .= "<h2 class='prod-cat-addt-details-title'><a class='no-underline' href='http://" . $_SERVER['HTTP_HOST'] . $SP_Perm_URL . "'>" . $Product->Item_Name . "</a></h2>";
+										$ProductString .= "<h2 class='prod-cat-addt-details-title upcp-cpp-title'><a class='no-underline' href='http://" . $_SERVER['HTTP_HOST'] . $SP_Perm_URL . "'>" . $Product->Item_Name . "</a></h2>";
 										break;
 								case "subcategory":
 										$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-sub-cat-div gs-w' style='display: list-item; position:absolute;'>";
@@ -708,6 +701,24 @@ function SingleProductPage() {
 		}
 		
 		return $ProductString;
+}
+
+function SearchProductName($ProductName, $ProductDescription, $SearchName, $CaseInsensitive, $SearchLocation) {
+		if ($CaseInsensitive == "Yes") {
+			  $ProductName = strtolower($ProductName);
+				$ProductDescription = strtolower($ProductDescription);
+				$SearchName = strtolower($SearchName);
+		}
+		
+		if ($SearchName == ""){$NameSearchMatch = "Yes";}
+		elseif (strpos($ProductName, $SearchName) !== false) {$NameSearchMatch = "Yes";}
+		elseif (strpos($ProductDescription, $SearchName) !== false) {
+				if ($SearchLocation == "namedesc") {
+					  $NameSearchMatch = "Yes";
+				}
+		}
+		
+		return $NameSearchMatch;
 }
 
 function ConvertCustomFields($Description) {

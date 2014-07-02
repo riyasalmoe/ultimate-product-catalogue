@@ -11,6 +11,8 @@
 		$MobileStyle = get_option("UPCP_Mobile_SS");
 		$CaseInsensitiveSearch = get_option("UPCP_Case_Insensitive_Search");
 		$InstallVersion = get_option("UPCP_First_Install_Version");
+		$Custom_Product_Page = get_option("UPCP_Custom_Product_Page");
+		$Product_Search = get_option("UPCP_Product_Search");
 ?>
 <div class="wrap">
 <div id="icon-options-general" class="icon32"><br /></div><h2>Settings</h2>
@@ -110,6 +112,15 @@
 	</fieldset>
 </td>
 </tr>
+<tr>
+<th scope="row">Product Search</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span>Product Search</span></legend>
+	<label title='Name'><input type='radio' name='product_search' value='name' <?php if($Product_Search == "name") {echo "checked='checked'";} ?> /> <span>Name Only</span></label><br />
+	<label title='Name-and-Desc'><input type='radio' name='product_search' value='namedesc' <?php if($Product_Search == "namedesc") {echo "checked='checked'";} ?> /> <span>Name and Description</span></label><br />
+	</fieldset>
+</td>
+</tr>
 </table>
 <h3>Premium Options</h3>
 <?php if ($InstallVersion >= 2.1) { ?>
@@ -124,6 +135,15 @@
 </td>
 </tr>
 <?php } ?>
+<tr>
+<th scope="row">Custom Product Pages</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span>Use your custom designed page (Product Page tab) instead of the default?</span></legend>
+	<label title='Yes'><input type='radio' name='custom_product_page' value='Yes' <?php if($Custom_Product_Page == "Yes") {echo "checked='checked'";} ?> /> <span>Yes</span></label><br />
+	<label title='No'><input type='radio' name='custom_product_page' value='No' <?php if($Custom_Product_Page == "No") {echo "checked='checked'";} ?> /> <span>No</span></label><br />
+	</fieldset>
+</td>
+</tr>
 <tr>
 <th scope="row">Mobile Stylesheet</th>
 <td>

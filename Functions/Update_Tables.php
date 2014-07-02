@@ -148,5 +148,7 @@ function UpdateTables() {
    	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
    	dbDelta($sql);
 		
+		if (get_option("UPCP_Product_Search") == "") {update_option("UPCP_Product_Search", "name");}
+		if (get_option("UPCP_Custom_Product_Page") == "") {update_option("UPCP_Custom_Product_Page", "No");}
 }
 ?>

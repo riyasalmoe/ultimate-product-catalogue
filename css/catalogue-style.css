@@ -218,6 +218,8 @@
 .prod-cat-sidebar-subcategory,
 .prod-cat-sidebar-tag {
   margin-bottom:2px;
+	margin-left:-6px;
+	padding-left:6px;
 }
 .styled-input {
    width: 190px;
@@ -227,25 +229,22 @@
    border: 1px solid #ccc;
 	 margin-top: 2px;
 }
-.styled-select {
-  background: url(../images/down_arrow_select.jpg) no-repeat right #eee;
-}
+
 .styled-input select,
 .styled-input input {
-   background: transparent;
-   width: 198px;
+   background: #eee;
+	 width: 195px;
    padding: 5px;
    font-size: 14px;
    line-height: 1;
    border: 0;
    border-radius: 0;
    height: 34px;
-   -webkit-appearance: none;
 }
 .styled-input input {
   margin-bottom:3px;
 	padding-left:8px;
-	height:26px;
+	height:100%;
 }
 .prod-cat-text-search {
   margin-top:8px;
@@ -651,4 +650,9 @@
 ************************************************************/
 .gridster ul {
   list-style-type:none !important;
+}
+
+.upcp-cpp-title {
+  margin:0;
+	padding:0;
 }

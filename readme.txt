@@ -114,6 +114,12 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.3.5 = 
+- Make searching more than 1 category at a time possible
+- Added an option to search product description as well as name
+- Fixed a problem that prevented most users from using the custom product pages feature
+- Fixed a number of small CSS problems
+
 = 2.3.4 = 
 - Fixed a spreadsheet upload error
 
