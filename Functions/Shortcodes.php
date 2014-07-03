@@ -128,7 +128,7 @@ function Insert_Product_Catalog($atts) {
 						$ProdTag = ObjectToArray($ProdTagObj);
 						
 						$NameSearchMatch = SearchProductName($Product->Item_Name, $Product->Item_Description, $prod_name, $CaseInsensitiveSearch, $ProductSearch);
-								
+
 						if (sizeOf($category) == 0 or in_array($Product->Category_ID, $category)) {
 						if (sizeOf($subcategory) == 0 or in_array($Product->SubCategory_ID, $subcategory)) {
 						if (sizeOf($tags) == 0 or count(array_intersect($tags, $ProdTag)) > 0) {
