@@ -127,7 +127,7 @@ function Insert_Product_Catalog($atts) {
 						$ProdTagObj = $wpdb->get_results("SELECT Tag_ID FROM $tagged_items_table_name WHERE Item_ID=" . $CatalogueItem->Item_ID);
 						$ProdTag = ObjectToArray($ProdTagObj);
 						
-						$NameSearchMatch = SearchProductName($Product->Item_Name, $Product->Item_Description, $prod_name, $CaseInsensitiveSearch, $ProductSearch);
+						$NameSearchMatch = SearchProductName($Product->Item_ID, $Product->Item_Name, $Product->Item_Description, $prod_name, $CaseInsensitiveSearch, $ProductSearch);
 
 						if (sizeOf($category) == 0 or in_array($Product->Category_ID, $category)) {
 						if (sizeOf($subcategory) == 0 or in_array($Product->SubCategory_ID, $subcategory)) {
@@ -168,7 +168,7 @@ function Insert_Product_Catalog($atts) {
 								$ProdTagObj = $wpdb->get_results("SELECT Tag_ID FROM $tagged_items_table_name WHERE Item_ID=" . $Product->Item_ID);
 								$ProdTag = ObjectToArray($ProdTagObj);
 								
-								$NameSearchMatch = SearchProductName($Product->Item_Name, $Product->Item_Description, $prod_name, $CaseInsensitiveSearch, $ProductSearch);
+								$NameSearchMatch = SearchProductName($Product->Item_ID, $Product->Item_Name, $Product->Item_Description, $prod_name, $CaseInsensitiveSearch, $ProductSearch);
 								
 								if (sizeOf($subcategory) == 0 or in_array($Product->SubCategory_ID, $subcategory)) {
 								if (sizeOf($tags) == 0 or count(array_intersect($tags, $ProdTag)) > 0) {
@@ -210,7 +210,7 @@ function Insert_Product_Catalog($atts) {
 								$ProdTagObj = $wpdb->get_results("SELECT Tag_ID FROM $tagged_items_table_name WHERE Item_ID=" . $Product->Item_ID);
 								$ProdTag = ObjectToArray($ProdTagObj);
 								
-								$NameSearchMatch = SearchProductName($Product->Item_Name, $Product->Item_Description, $prod_name, $CaseInsensitiveSearch, $ProductSearch);
+								$NameSearchMatch = SearchProductName($Product->Item_ID, $Product->Item_Name, $Product->Item_Description, $prod_name, $CaseInsensitiveSearch, $ProductSearch);
 								
 								if (sizeOf($category) == 0 or in_array($Product->Category_ID, $category)) {
 								if (sizeOf($tags) == 0 or count(array_intersect($tags, $ProdTag)) > 0) {
@@ -277,7 +277,7 @@ function Insert_Product_Catalog($atts) {
 				}
 				
 				// Create the text search box
-				if ($ProductSearch == "namedesc") {$SearchLabel = __("Product Search:", 'UPCP'); $SearchText = __("Search", 'UPCP');}
+				if ($ProductSearch == "namedesc" or $ProductSearch == "namedesccust") {$SearchLabel = __("Product Search:", 'UPCP'); $SearchText = __("Search", 'UPCP');}
 				else {$SearchLabel = __("Product Name:", 'UPCP'); $SearchText = __("Name", 'UPCP');}
 				$SidebarString .= "<div id='prod-cat-text-search' class='prod-cat-text-search'>\n";
 				$SidebarString .= $SearchLabel . "<br /><div class='styled-input'>";
@@ -703,7 +703,10 @@ function SingleProductPage() {
 		return $ProductString;
 }
 
-function SearchProductName($ProductName, $ProductDescription, $SearchName, $CaseInsensitive, $SearchLocation) {
+function SearchProductName($Item_ID, $ProductName, $ProductDescription, $SearchName, $CaseInsensitive, $SearchLocation) {
+		global $wpdb;
+		global $fields_meta_table_name;
+		
 		if ($CaseInsensitive == "Yes") {
 			  $ProductName = strtolower($ProductName);
 				$ProductDescription = strtolower($ProductDescription);
@@ -713,9 +716,15 @@ function SearchProductName($ProductName, $ProductDescription, $SearchName, $Case
 		if ($SearchName == ""){$NameSearchMatch = "Yes";}
 		elseif (strpos($ProductName, $SearchName) !== false) {$NameSearchMatch = "Yes";}
 		elseif (strpos($ProductDescription, $SearchName) !== false) {
-				if ($SearchLocation == "namedesc") {
+				if ($SearchLocation == "namedesc" or $SearchLocation == "namedesccust") {
 					  $NameSearchMatch = "Yes";
 				}
+		}
+		
+		if ($NameSearchMatch != "Yes" and $SearchLocation == "namedesccust") {
+			  $SearchName =  "%" .  $SearchName . "%";
+				$Metas = $wpdb->get_results($wpdb->prepare("SELECT Meta_Value FROM $fields_meta_table_name WHERE Item_ID='" . $Item_ID . "' and Meta_Value LIKE %s", $SearchName));
+				if (sizeOf($Metas) > 0) {$NameSearchMatch = "Yes";}
 		}
 		
 		return $NameSearchMatch;

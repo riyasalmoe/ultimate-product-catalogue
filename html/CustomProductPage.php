@@ -72,12 +72,14 @@
         <?php $UPCP_Product_Page_Serialized = get_option("UPCP_Product_Page_Serialized");
 							if (strpos($UPCP_Product_Page_Serialized, "class=\\\\") !== FALSE){$Gridster = json_decode(stripslashes($UPCP_Product_Page_Serialized));}
 							else {$Gridster = json_decode($UPCP_Product_Page_Serialized);}
-							foreach ($Gridster as $Element) {
-									echo "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "'  data-elementclass='" . $Element->element_class . "' data-elementid='" . $Element->element_id . "' class='gs-w' style='display: list-item;'>";
-									echo substr($Element->element_type, 0, strpos($Element->element_type, '<'));
-									echo "<div class='gs-delete-handle' onclick='remove_element(this);'></div>";
-									if ($Element->element_class == "text") {echo "<textarea onkeyup='UPCP_Page_Builder_UpdateID(this);' class='upcp-pb-textarea'>" . $Element->element_id . "</textarea>";}
-									echo "</li>";
+							if (is_array($Gridster)) {
+								  foreach ($Gridster as $Element) {
+											echo "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "'  data-elementclass='" . $Element->element_class . "' data-elementid='" . $Element->element_id . "' class='gs-w' style='display: list-item;'>";
+											echo substr($Element->element_type, 0, strpos($Element->element_type, '<'));
+											echo "<div class='gs-delete-handle' onclick='remove_element(this);'></div>";
+											if ($Element->element_class == "text") {echo "<textarea onkeyup='UPCP_Page_Builder_UpdateID(this);' class='upcp-pb-textarea'>" . $Element->element_id . "</textarea>";}
+											echo "</li>";
+									}
 							}
 				?>
       </ul>

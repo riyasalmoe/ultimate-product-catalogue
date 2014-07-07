@@ -118,6 +118,7 @@
 	<fieldset><legend class="screen-reader-text"><span>Product Search</span></legend>
 	<label title='Name'><input type='radio' name='product_search' value='name' <?php if($Product_Search == "name") {echo "checked='checked'";} ?> /> <span>Name Only</span></label><br />
 	<label title='Name-and-Desc'><input type='radio' name='product_search' value='namedesc' <?php if($Product_Search == "namedesc") {echo "checked='checked'";} ?> /> <span>Name and Description</span></label><br />
+	<label title='Name-Desc-and-Cust'><input type='radio' name='product_search' value='namedesccust' <?php if($Product_Search == "namedesccust") {echo "checked='checked'";} ?> /> <span>Name, Description and Custom Fields</span></label><br />
 	</fieldset>
 </td>
 </tr>

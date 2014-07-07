@@ -43,11 +43,12 @@ Tutorial videos available in the FAQ section.
 * Custom fields that can be used to include product manuals, additional information, etc.
 * SEO friendly single product pages
 
-Additional Languages:
+**Additional Languages:**
 * Brazilian Portugese (thanks to <a href='http://wordpress.org/support/profile/tito_cadallora'>Tito_Cadallora</a>);
 * Canadian French (thanks to Pascale DRP)
 * Italian
 * Lithuanian (thanks to <a href='http://wordpress.org/support/profile/adart'>AdArt</a>);
+* Spanish (thanks to Irene L.)
 * Turkish (thanks to Ayhan)
 
 == Installation ==
@@ -114,6 +115,11 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.3.7 = 
+ - Added a new product search option
+ - Fixed an error on the "Product Page" tab
+ - Added Spanish translation files
+
 = 2.3.6 = 
 - Fixed a search error related to the new options
 
