@@ -43,6 +43,8 @@ Tutorial videos available in the FAQ section.
 * Custom fields that can be used to include product manuals, additional information, etc.
 * SEO friendly single product pages
 
+[youtube http://www.youtube.com/watch?v=uLzYkRF8UoA]
+
 **Additional Languages:**
 * Brazilian Portugese (thanks to <a href='http://wordpress.org/support/profile/tito_cadallora'>Tito_Cadallora</a>);
 * Canadian French (thanks to Pascale DRP)
