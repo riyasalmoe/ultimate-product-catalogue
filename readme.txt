@@ -115,6 +115,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.3.8 = 
+- Fixed a spreadsheet upload bug
+
 = 2.3.7 = 
  - Added a new product search option
  - Fixed an error on the "Product Page" tab

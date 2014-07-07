@@ -608,11 +608,11 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 		
 		//List of fields that can be accepted via upload
 		$Allowed_Fields = array ("Name" => "Item_Name", "Description" => "Item_Description", "Price" => "Item_Price", "Image" => "Item_Photo_URL", "Category" => "Category_Name", "Sub-Category" => "SubCategory_Name", "Tags" => "Tags_Names_String");
-		$Fields = $wpdb->get_results("SELECT Field_ID, Field_Name, Field_Values, Field_Type FROM $fields_table_name");
-		if (is_array($Fields)) {
-			  foreach ($Fields as $Field) {
-						$Allowable_Custom_Fields[$Field->Field_Name] = $Field->Field_Name;
-						$Field_IDs[$Field->Field_Name] = $Field->Field_ID;
+		$Custom_Fields_From_DB = $wpdb->get_results("SELECT Field_ID, Field_Name, Field_Values, Field_Type FROM $fields_table_name");
+		if (is_array($Custom_Fields_From_DB)) {
+			  foreach ($Custom_Fields_From_DB as $Custom_Field_From_DB) {
+						$Allowable_Custom_Fields[$Custom_Field_From_DB->Field_Name] = $Custom_Field_From_DB->Field_Name;
+						$Field_IDs[$Custom_Field_From_DB->Field_Name] = $Custom_Field_From_DB->Field_ID;
 				}
 		}
 		
@@ -640,6 +640,7 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 						unset($Titles[$key]);
 				}
 		}
+		if (!is_array($Custom_Fields)) {$Custom_Fields = array();}
 		
 		// Put the spreadsheet data into a multi-dimensional array to facilitate processing
 		$highestRow = $sheet->getHighestRow();
