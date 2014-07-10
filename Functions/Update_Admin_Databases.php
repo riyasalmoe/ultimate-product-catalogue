@@ -607,7 +607,7 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 		$sheet = $objWorkBook->getActiveSheet();
 		
 		//List of fields that can be accepted via upload
-		$Allowed_Fields = array ("Name" => "Item_Name", "Description" => "Item_Description", "Price" => "Item_Price", "Image" => "Item_Photo_URL", "Category" => "Category_Name", "Sub-Category" => "SubCategory_Name", "Tags" => "Tags_Names_String");
+		$Allowed_Fields = array ("Name" => "Item_Name", "Slug" => "Item_Slug", "Description" => "Item_Description", "Price" => "Item_Price", "Image" => "Item_Photo_URL", "Category" => "Category_Name", "Sub-Category" => "SubCategory_Name", "Tags" => "Tags_Names_String");
 		$Custom_Fields_From_DB = $wpdb->get_results("SELECT Field_ID, Field_Name, Field_Values, Field_Type FROM $fields_table_name");
 		if (is_array($Custom_Fields_From_DB)) {
 			  foreach ($Custom_Fields_From_DB as $Custom_Field_From_DB) {

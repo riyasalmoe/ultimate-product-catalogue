@@ -88,7 +88,7 @@ Add the attribute "starting_layout='LAYOUT'", where LAYOUT is replaced with the 
 
 = How do I exclude one of the layouts? =
 
-The attribute "excluded_layouts" lets you stop one or more layouts from being displayed. It accepts a comma separated list of layouts you wish to exclude. For example, "exclude_layouts='Thumbnail, List'" would make your catalogue display only the "Detail" view.
+The attribute "excluded_layouts" lets you stop one or more layouts from being displayed. It accepts a comma separated list of layouts you wish to exclude. For example, "excluded_layouts='Thumbnail, List'" would make your catalogue display only the "Detail" view.
 
 = What is enabled in the 'Premium' version? =
 
@@ -118,6 +118,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.3.10 = 
+- Made it possible to upload "slugs" from a spreadsheet
+
 = 2.3.9 = 
 - Updated CSS for single product pages for small screen devices
 - Added a advisory on the Custom Product Pages feature tab
