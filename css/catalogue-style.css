@@ -649,6 +649,55 @@
 }
 
 /************************************************************
+*  PRODUCT PAGES
+************************************************************/
+.upcp-standard-product-page-mobile {
+  display: none;
+}
+.upcp-standard-product-page {
+  width: 100%;
+}
+
+@media only screen and (max-width: 670px) {
+  .upcp-standard-product-page {
+	  display: none;
+	}
+	.upcp-standard-product-page-mobile {
+	  display: inline;
+		width: 100%;
+	}
+	.prod-cat-addt-details {
+	  min-height: auto;
+		min-width: auto;
+		overflow: hidden;
+	}
+	.prod-cat-addt-details-thumbs-div {
+	  width: 100%;
+		min-height: 0px;
+		max-height: none;
+		overflow-x: auto;
+		overflow-y: auto;
+		overflow: hidden;
+		padding: 10px 0px;
+	}
+	.prod-cat-addt-details-title {
+	  padding-left: 0px;
+	}
+	.prod-cat-addt-details-price {
+	  padding-left: 0px;
+	}
+	.prod-cat-addt-details-main-div {
+	  margin-left: 0px;
+		width:100%;
+		height:auto;
+	}
+	.prod-cat-addt-details-desc-div {
+	  padding-left: 0px;
+		text-indent: 0px;
+	}
+}
+
+/************************************************************
 *   CUSTOM PRODUCT PAGES
 ************************************************************/
 .gridster ul {

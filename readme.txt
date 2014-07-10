@@ -48,6 +48,7 @@ Tutorial videos available in the FAQ section.
 **Additional Languages:**
 * Brazilian Portugese (thanks to <a href='http://wordpress.org/support/profile/tito_cadallora'>Tito_Cadallora</a>);
 * Canadian French (thanks to Pascale DRP)
+* Dutch (Thanks to Martin S.)
 * Italian
 * Lithuanian (thanks to <a href='http://wordpress.org/support/profile/adart'>AdArt</a>);
 * Spanish (thanks to Irene L.)
@@ -117,6 +118,11 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.3.9 = 
+- Updated CSS for single product pages for small screen devices
+- Added a advisory on the Custom Product Pages feature tab
+- Added a Dutch translation
+
 = 2.3.8 = 
 - Fixed a spreadsheet upload bug
 

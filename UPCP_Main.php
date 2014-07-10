@@ -7,7 +7,7 @@ Author: Tim Ruse
 Author URI: http://www.EtoileWebDesign.com/
 Terms and Conditions: http://www.etoilewebdesign.com/plugin-terms-and-conditions/
 Text Domain: UPCP
-Version: 2.3.8
+Version: 2.3.9
 */
 
 global $UPCP_db_version;
@@ -85,7 +85,7 @@ function Add_UPCP_Scripts() {
 				$url_five = plugins_url("ultimate-product-catalogue/js/bootstrap.min.js");
 				$url_six = plugins_url("ultimate-product-catalogue/js/jquery.confirm.min.js");
 				$url_seven = plugins_url("ultimate-product-catalogue/js/product-page-builder.js");
-				$url_eight = plugins_url("ultimate-product-catalogue/js/jquery.gridster.min.js");
+				$url_eight = plugins_url("ultimate-product-catalogue/js/jquery.gridster.js");
 				wp_enqueue_script('PageSwitch', $url_one, array('jquery'));
 				wp_enqueue_script('sorttable', $url_two, array('jquery'));
 				wp_enqueue_script('UpdateSubCats', $url_three, array('jquery'));

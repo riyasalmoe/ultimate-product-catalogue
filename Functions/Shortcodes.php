@@ -584,7 +584,9 @@ function SingleProductPage() {
 		else {$SP_Perm_URL .= "&Product_ID=" . $Product->Item_ID;}
 		
 		if ($Custom_Product_Page != "Yes") {
-			  $ProductString .= "<div class='prod-cat-back-link'>";
+			  $ProductString .= "<div class='upcp-standard-product-page'>";
+				
+				$ProductString .= "<div class='prod-cat-back-link'>";
 				$ProductString .= "<a href='" . $Return_URL . "'>&#171; Back to Catalogue</a>";
 				$ProductString .= "</div>";
 		
@@ -604,6 +606,35 @@ function SingleProductPage() {
 				$ProductString .= $Description . "</div>";
 				$ProductString .= "<div class='upcp-clear'></div>\n";
 				$ProductString .= "</div>\n";
+				$ProductString .= "</div>\n";
+				
+				$ProductString .= "</div>\n";
+				
+				$ProductString .= "<div class='upcp-standard-product-page-mobile'>";
+				
+				$ProductString .= "<div class='prod-cat-back-link'>";
+				$ProductString .= "<a href='" . $Return_URL . "'>&#171; Back to Catalogue</a>";
+				$ProductString .= "</div>";
+				
+				$ProductString .= "<h2 class='prod-cat-addt-details-title'><a class='no-underline' href='http://" . $_SERVER['HTTP_HOST'] . $SP_Perm_URL . "'>" . $Product->Item_Name . "<img class='upcp-product-url-icon' src='" . get_bloginfo('wpurl') . "/wp-content/plugins/ultimate-product-catalogue/images/insert_link.png' /></a></h2>";
+				if ($Single_Page_Price == "Yes") {$ProductString .= "<h3 class='prod-cat-addt-details-price'>" . $Product->Item_Price . "</h3>";}
+				//$ProductString .= "<div id='prod-cat-addt-details-main-div-" . $Product->Item_ID . "' class='prod-cat-addt-details-main-div'>";
+				$ProductString .= "<img src='" . $PhotoURL . "' alt='" . $Product->Item_Name . " Image' id='prod-cat-addt-details-main-" . $Product->Item_ID . "' class='prod-cat-addt-details-main'>";
+				//$ProductString .= "</div>";
+				$ProductString .= "<div class='upcp-clear'></div>";
+		
+				$ProductString .= "<div id='prod-cat-addt-details-" . $Product->Item_ID . "' class='prod-cat-addt-details'>";
+				$ProductString .= "<div id='prod-cat-addt-details-thumbs-div-" . $Product->Item_ID . "' class='prod-cat-addt-details-thumbs-div'>";
+				$ProductString .= "<img src='" . $PhotoURL . "' id='prod-cat-addt-details-thumb-P". $Product->Item_ID . "' class='prod-cat-addt-details-thumb' onclick='ZoomImage(\"" . $Product->Item_ID . "\", \"0\");'>";
+				foreach ($Item_Images as $Image) {$ProductString .= "<img src='" . htmlspecialchars($Image->Item_Image_URL, ENT_QUOTES) . "' id='prod-cat-addt-details-thumb-". $Image->Item_Image_ID . "' class='prod-cat-addt-details-thumb' onclick='ZoomImage(\"" . $Product->Item_ID . "\", \"" . $Image->Item_Image_ID . "\");'>";}
+				$ProductString .= "<div class='upcp-clear'></div>";
+				$ProductString .= "</div>";
+
+				$ProductString .= "<div id='prod-cat-addt-details-desc-div-" . $Product->Item_ID . "' class='prod-cat-addt-details-desc-div'>";
+				$ProductString .= $Description . "</div>";
+				$ProductString .= "<div class='upcp-clear'></div>\n";
+				$ProductString .= "</div>\n";
+				
 				$ProductString .= "</div>\n";
 		}
 		else {

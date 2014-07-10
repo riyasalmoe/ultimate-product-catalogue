@@ -1,4 +1,13 @@
 <?php if ($Full_Version == "Yes") { ?>		
+		<div id="side-sortables" class="metabox-holder ">
+				<div id="cpp-message" class="postbox " >
+						<div class="handlediv" title="Click to toggle"></div><h3 class='hndle'><span><?php _e("Feature Update", 'UPCP') ?></span></h3>
+						<div class="inside">
+								<?php _e("Some users have reported problems using this feature with FireFox and IE browsers. No issues reported yet with Chrome.", 'UPCP'); ?>
+						</div>
+				</div>
+		</div>
+		
 		<!-- Create the form to edit the basic catalogue details -->
 		<div id="nav-menus-frame">
 	<div id="menu-settings-column" class="metabox-holder">
@@ -93,6 +102,15 @@
 		<h2><?php _e("Full Version Required!", 'UPCP') ?></h2>
 		<div class="upcp-full-version-explanation">
 				<?php _e("The full version of the Ultimate Product Catalogue Plugin is required to use tags.", "UPCP");?><a href="http://www.etoilewebdesign.com/ultimate-product-catalogue-plugin/"><?php _e(" Please upgrade to unlock this page!", 'UPCP'); ?></a>
+		</div>
+</div>
+
+<div id="side-sortables" class="metabox-holder ">
+		<div id="cpp-message" class="postbox " >
+				<div class="handlediv" title="Click to toggle"></div><h3 class='hndle'><span><?php _e("Feature Update", 'UPCP') ?></span></h3>
+				<div class="inside">
+						<?php _e("Some users have reported problems using this feature with FireFox and IE browsers. No issues reported yet with Chrome.", 'UPCP'); ?>
+				</div>
 		</div>
 </div>
 <?php } ?> 
