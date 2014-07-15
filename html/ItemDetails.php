@@ -37,7 +37,10 @@
 						</tr>
 						<tr>
 								<th><label for="Item_Description"><?php _e("Description", 'UPCP') ?></label></th>
-								<td><textarea name="Item_Description" id="Item_Description" rows="5" cols="80"><?php echo $Product->Item_Description;?></textarea>
+								<td><?php 
+												 $settings = array( //'wpautotop' => false,
+												 					 	 				'textarea_rows' => 6);																						
+												 wp_editor($Product->Item_Description, "Item_Description", $settings); ?>
 								<p><?php _e("The description of the product. What is it and what makes it worth getting?", 'UPCP') ?></p></td>
 						</tr>
 						<tr>

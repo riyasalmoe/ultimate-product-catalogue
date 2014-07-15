@@ -6,7 +6,7 @@
 
 <!-- Display a list of the catalogues which have already been created -->
 <?php 
-			if (isset($_GET['Page'])) {$Page = $_GET['Page'];}
+			if (isset($_GET['Page']) and $_GET['DisplayPage'] == "Catalogues") {$Page = $_GET['Page'];}
 			else {$Page = 1;}
 			
 			$Sql = "SELECT * FROM $catalogues_table_name ";
@@ -14,7 +14,7 @@
 				else {$Sql .= "ORDER BY Catalogue_Name ";}
 				$Sql .= "LIMIT " . ($Page - 1)*20 . ",20";
 				$myrows = $wpdb->get_results($Sql);
-				$TotalProducts = $wpdb->get_results("SELECT Catalogue_ID FROM $catalogues_table_name");
+				$TotalCatalogues = $wpdb->get_results("SELECT Catalogue_ID FROM $catalogues_table_name");
 				$num_rows = $wpdb->num_rows; 
 				$Number_of_Pages = ceil($wpdb->num_rows/20);
 				$Current_Page_With_Order_By = "admin.php?page=UPCP-options&DisplayPage=Catalogues";

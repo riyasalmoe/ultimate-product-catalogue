@@ -6,7 +6,7 @@
 <?php wp_referer_field(); ?>
 
 <?php 
-			if (isset($_GET['Page'])) {$Page = $_GET['Page'];}
+			if (isset($_GET['Page']) and $_GET['DisplayPage'] == "SubCategories") {$Page = $_GET['Page'];}
 			else {$Page = 1;}
 			
 			$Sql = "SELECT * FROM $subcategories_table_name ";

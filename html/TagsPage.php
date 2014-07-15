@@ -7,7 +7,7 @@
 <?php wp_referer_field(); ?>
 
 <?php 
-			if (isset($_GET['Page'])) {$Page = $_GET['Page'];}
+			if (isset($_GET['Page']) and $_GET['DisplayPage'] == "Tags") {$Page = $_GET['Page'];}
 			else {$Page = 1;}
 			
 			$Sql = "SELECT * FROM $tags_table_name ";

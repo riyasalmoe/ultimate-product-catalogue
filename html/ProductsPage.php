@@ -6,11 +6,11 @@
 <?php wp_referer_field(); ?>
 
 <?php 
-			if (isset($_GET['Page'])) {$Page = $_GET['Page'];}
+			if (isset($_GET['Page']) and $_GET['DisplayPage'] == "Products") {$Page = $_GET['Page'];}
 			else {$Page = 1;}
 			
 			$Sql = "SELECT * FROM $items_table_name ";
-				if (isset($_GET['OrderBy'])) {$Sql .= "ORDER BY " . $_GET['OrderBy'] . " " . $_GET['Order'] . " ";}
+				if (isset($_GET['OrderBy']) and $_GET['DisplayPage'] == "Products") {$Sql .= "ORDER BY " . $_GET['OrderBy'] . " " . $_GET['Order'] . " ";}
 				else {$Sql .= "ORDER BY Item_Date_Created ";}
 				$Sql .= "LIMIT " . ($Page - 1)*20 . ",20";
 				$myrows = $wpdb->get_results($Sql);
@@ -240,9 +240,11 @@
 	<input name="Item_Price" id="Item_Price" type="text" value="" size="60" />
 	<p><?php _e("What does this product cost?", 'UPCP') ?></p>
 </div>
-<div class="form-field">
+<div class="form-field-small-buttons">
 	<label for="Item_Description"><?php _e("Description", 'UPCP') ?></label>
-	<textarea name="Item_Description" id="Item_Description" rows="2" cols="40"></textarea>
+	<?php $settings = array( //'wpautotop' => false,
+												 	 'textarea_rows' => 6);																						
+				wp_editor("", "Item_Description", $settings); ?>
 	<p><?php _e("The description of the product. What is it and what makes it worth getting?", 'UPCP') ?></p>
 </div>
 <div>

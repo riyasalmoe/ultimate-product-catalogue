@@ -6,8 +6,9 @@ function Add_Edit_Product() {
 		$Item_ID = $_POST['Item_ID'];
 		$Item_Name = stripslashes_deep($_POST['Item_Name']);
 		$Item_Slug = $_POST['Item_Slug'];
-		$Item_Photo_URL = $_POST['Item_Image'];
+		$Item_Photo_URL = stripslashes_deep($_POST['Item_Image']);
 		$Item_Description = stripslashes_deep($_POST['Item_Description']);
+		$Item_Description = apply_filters('the_content', $Item_Description);
 		$Item_Price = $_POST['Item_Price'];
 		$Item_Link = $_POST['Item_Link'];
 		$Item_Display_Status = $_POST['Item_Display_Status'];
