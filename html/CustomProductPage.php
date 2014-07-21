@@ -1,4 +1,17 @@
-<?php if ($Full_Version == "Yes") { ?>		
+<?php if ($Full_Version == "Yes") { 
+
+$PP_Grid_Width = get_option("UPCP_PP_Grid_Width");
+$PP_Grid_Height = get_option("UPCP_PP_Grid_Height");
+$Top_Bottom_Padding = get_option("UPCP_Top_Bottom_Padding");
+$Left_Right_Padding = get_option("UPCP_Left_Right_Padding");
+
+echo "<script language='JavaScript' type='text/javascript'>";
+echo "var pp_grid_width = " . $PP_Grid_Width . ";";
+echo "var pp_grid_height = " . $PP_Grid_Height . ";";
+echo "var pp_top_bottom_padding = " . $Top_Bottom_Padding . ";";
+echo "var pp_left_right_padding = " . $Left_Right_Padding . ";";
+echo "</script>";
+?>		
 		<div id="side-sortables" class="metabox-holder ">
 				<div id="cpp-message" class="postbox " >
 						<div class="handlediv" title="Click to toggle"></div><h3 class='hndle'><span><?php _e("Feature Update", 'UPCP') ?></span></h3>
@@ -69,12 +82,12 @@
 </div>
 </div>
 </div>
+<button value='Save Grid' id='gridster-button'>Save Layout</button>
+<a class='confirm' href='admin.php?page=UPCP-options&Action=UPCP_RestoreDefaultPPLayout&DisplayPage=ProductPage'><button id='gridster-reset'>Restore Default</button></a>
 </div><!-- /#menu-settings-column -->
 			
 <!-- Show the products and categories currently in the catalogue, give the user the
      option of deleting them or switching the order around -->
-
-	<button value='Save Grid' id='gridster-button'>
 
   <div class="wrapper gridster">
       <ul>
@@ -83,10 +96,16 @@
 							else {$Gridster = json_decode($UPCP_Product_Page_Serialized);}
 							if (is_array($Gridster)) {
 								  foreach ($Gridster as $Element) {
-											echo "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "'  data-elementclass='" . $Element->element_class . "' data-elementid='" . $Element->element_id . "' class='gs-w' style='display: list-item;'>";
+											echo "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "'  data-elementclass='" . $Element->element_class . "' data-elementid='" . $Element->element_id . "' class='prod-page-div gs-w' style='display: list-item; position:absolute;'>";
 											echo substr($Element->element_type, 0, strpos($Element->element_type, '<'));
 											echo "<div class='gs-delete-handle' onclick='remove_element(this);'></div>";
 											if ($Element->element_class == "text") {echo "<textarea onkeyup='UPCP_Page_Builder_UpdateID(this);' class='upcp-pb-textarea'>" . $Element->element_id . "</textarea>";}
+											/*echo "<div>Col: " . $Element->col . "<br />";
+											echo "Row: " . $Element->row . "<br />";
+											echo "Size X: " . $Element->size_x . "<br />";
+											echo "Size Y: " . $Element->size_y . "<br />";
+											echo "Class: " . $Element->element_class . "<br />";
+											echo "ID: " . $Element->element_id . "<br /></div>";*/
 											echo "</li>";
 									}
 							}

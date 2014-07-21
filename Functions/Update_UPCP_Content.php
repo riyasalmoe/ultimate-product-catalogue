@@ -88,6 +88,9 @@ if (isset($_GET['Action'])) {
 						case "UPCP_UpdateOptions":
 								$upcp_message = Update_UPCP_Options();
 								break;
+						case "UPCP_RestoreDefaultPPLayout":
+								$upcp_message = Restore_Default_PP_Layout();
+								break;
 						default:
 								$upcp_message = __("The form has not worked correctly. Please contact the plugin developer.", 'UPCP');
 								break;

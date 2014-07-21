@@ -39,10 +39,15 @@
 
 var gridster;
 jQuery(function(){ //DOM Ready
- 
+ 		
+		if (typeof pp_top_bottom_padding === 'undefined' || pp_top_bottom_padding === null) {pp_top_bottom_padding = 10;}
+		if (typeof pp_left_right_padding === 'undefined' || pp_left_right_padding === null) {pp_left_right_padding = 10;}
+		if (typeof pp_grid_width === 'undefined' || pp_grid_width === null) {pp_grid_width = 90;}
+		if (typeof pp_grid_height === 'undefined' || pp_grid_height === null) {pp_grid_height = 35;}
+		
     gridster = jQuery(".gridster ul").gridster({
-        widget_margins: [10, 10],
-        widget_base_dimensions: [90, 35],
+        widget_margins: [pp_top_bottom_padding, pp_left_right_padding],
+        widget_base_dimensions: [pp_grid_width, pp_grid_height],
 				helper: 'clone',
 				autogrow_cols: true,
         resize: {
@@ -63,6 +68,7 @@ jQuery(function(){ //DOM Ready
 		
 		jQuery('#gridster-button').on('click', function() {
 				var serialized = gridster.serialize();
+				console.dir(serialized);
 				var data = 'serialized_product_page='+JSON.stringify(serialized)+'&action=save_serialized_product_page';
 				jQuery.post(ajaxurl, data, function(response) {
 						/*if (response) {alert("Worked");}
@@ -73,17 +79,17 @@ jQuery(function(){ //DOM Ready
 
 function UPCP_Page_Builder_UpdateID(textarea) {
 		jQuery(textarea).parent().attr("data-elementid", jQuery(textarea).val());
-		jQuery('#gridster-button').click();
+		//jQuery('#gridster-button').click();
 }
 
 function add_element(element_name, element_class, element_id, x_size, y_size) {
 		if (element_class == "text") {gridster.add_widget.apply(gridster, ["<li data-elementclass='"+element_class+"' data-elementid='"+element_id+"'>"+element_name+"<div class='gs-delete-handle' onclick='remove_element(this);'></div><textarea onkeyup='UPCP_Page_Builder_UpdateID(this);' class='upcp-pb-textarea'></textarea></li>", x_size, y_size]);}
 		else {gridster.add_widget.apply(gridster, ["<li data-elementclass='"+element_class+"' data-elementid='"+element_id+"'>"+element_name+"<div class='gs-delete-handle' onclick='remove_element(this);'></div></li>", x_size, y_size]);}
-		jQuery('#gridster-button').click();
+		//jQuery('#gridster-button').click();
 		return false;
 }
 
 function remove_element(element) {
 		gridster.remove_widget(jQuery(element).parent());
-		jQuery('#gridster-button').click();
+		//jQuery('#gridster-button').click();
 }

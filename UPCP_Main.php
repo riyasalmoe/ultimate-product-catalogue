@@ -7,7 +7,7 @@ Author: Tim Ruse
 Author URI: http://www.EtoileWebDesign.com/
 Terms and Conditions: http://www.etoilewebdesign.com/plugin-terms-and-conditions/
 Text Domain: UPCP
-Version: 2.3.11
+Version: 2.3.12
 */
 
 global $UPCP_db_version;
@@ -25,7 +25,7 @@ $tags_table_name = $wpdb->prefix . "UPCP_Tags";
 $tagged_items_table_name = $wpdb->prefix . "UPCP_Tagged_Items";
 $fields_table_name = $wpdb->prefix . "UPCP_Custom_Fields";
 $fields_meta_table_name = $wpdb->prefix . "UPCP_Fields_Meta";
-$UPCP_db_version = "2.3.0";
+$UPCP_db_version = "2.3.12";
 
 /*define('WP_DEBUG', true);
 $wpdb->show_errors();*/
@@ -92,8 +92,8 @@ function Add_UPCP_Scripts() {
 				wp_enqueue_script('wp_upcp_uploader', $url_four, array('jquery'));
 				wp_enqueue_script('Bootstrap', $url_five, array('jquery'));
 				wp_enqueue_script('Confirm', $url_six, array('jquery'));
-				wp_enqueue_script('Page-Builder', $url_seven, array('jquery'));
-				wp_enqueue_script('Gridster', $url_eight, array('jquery'));
+				wp_enqueue_script('Page-Builder', $url_seven, array('jquery'), '1.0', true);
+				wp_enqueue_script('Gridster', $url_eight, array('jquery'), '1.0', true);
 				wp_enqueue_script('jquery-ui-sortable');
 				wp_enqueue_script('update-catalogue-order', plugin_dir_url(__FILE__) . '/js/update-catalogue-order.js');
 				wp_enqueue_media();
@@ -111,14 +111,15 @@ function UPCP_Add_Stylesheet() {
 		if ($Full_Version == "Yes") {
 			  wp_register_style( 'upcp-gridster', plugins_url("ultimate-product-catalogue/css/jquery.gridster.css"));
     		wp_enqueue_style( 'upcp-gridster' );
+				//wp_enqueue_style( 'wp-admin' );
 		}
 }
 
 add_action( 'wp_enqueue_scripts', 'Add_UPCP_FrontEnd_Scripts' );
 function Add_UPCP_FrontEnd_Scripts() {
 	wp_enqueue_script('upcpjquery', plugins_url( '/js/upcp-jquery-functions.js' , __FILE__ ), array( 'jquery' ));
-	wp_enqueue_script('upcp-page-builder', plugins_url( '/js/product-page-display.js' , __FILE__ ), array( 'jquery' ));
-	wp_enqueue_script('gridster', plugins_url("/js/jquery.gridster.min.js", __FILE__ ), array( 'jquery' ));
+	wp_enqueue_script('upcp-page-builder', plugins_url( '/js/product-page-display.js' , __FILE__ ), array( 'jquery' ), '1.0', true);
+	wp_enqueue_script('gridster', plugins_url("/js/jquery.gridster.min.js", __FILE__ ), array( 'jquery' ), '1.0', true);
 }
 
 function UPCP_Admin_Options() {

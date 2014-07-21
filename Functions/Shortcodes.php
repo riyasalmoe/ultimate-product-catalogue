@@ -16,13 +16,15 @@ function Insert_Product_Catalog($atts) {
 		$Mobile_Style = get_option("UPCP_Mobile_SS");
 		$CaseInsensitiveSearch = get_option("UPCP_Case_Insensitive_Search");
 		$ProductSearch = get_option("UPCP_Product_Search");
+		$Products_Per_Page = get_option("UPCP_Products_Per_Page");
 		
 		// Get the attributes passed by the shortcode, and store them in new variables for processing
 		extract( shortcode_atts( array(
 														 		"id" => "1",
 																"excluded_layouts" => "None",
 																"starting_layout" => "",
-																"products_per_page" => 5000,
+																"products_per_page" => "",
+																"current_page" => 1,
 																"sidebar" => "Yes",
 																"only_inner" => "No",
 																"ajax_reload" => "No",
@@ -71,13 +73,16 @@ function Insert_Product_Catalog($atts) {
 		if ($subcategory == "") {$subcategory = array();}
 		else {$subcategory = explode(",", $subcategory);}	
 		if ($tags == "") {$tags = array();}
-		else {$tags = explode(",", $tags);}		
+		else {$tags = explode(",", $tags);}	
+		
+		if ($products_per_page == "") {$products_per_page = $Products_Per_Page;}
 		
 		$ReturnString .= "<div class='upcp-Hide-Item' id='upcp-shortcode-atts'>";
 		$ReturnString .= "<div class='shortcode-attr' id='upcp-catalogue-id'>" . $id . "</div>";
 		$ReturnString .= "<div class='shortcode-attr' id='upcp-catalogue-sidebar'>" . $sidebar . "</div>";
 		$ReturnString .= "<div class='shortcode-attr' id='upcp-starting-layout'>" . $starting_layout . "</div>";
 		$ReturnString .= "<div class='shortcode-attr' id='upcp-exclude-layouts'>" . $excluded_layouts . "</div>";
+		$ReturnString .= "<div class='shortcode-attr' id='upcp-current-page'>" . $current_page . "</div>";
 		if ($ajax_reload == "Yes") {$ReturnString .= "<div class='shortcode-attr' id='upcp-base-url'>" . $ajax_url . "</div>";}
 		else {
 				$uri_parts = explode('?', $_SERVER['REQUEST_URI'], 2);
@@ -101,6 +106,37 @@ function Insert_Product_Catalog($atts) {
 		}
 		else {$format = $layout_format;}
 		
+		//Deal with creating the page counter, if pagination is neccessary
+		if ($Catalogue->Catalogue_Item_Count > $products_per_page) {
+			  $Num_Pages = ceil($Catalogue->Catalogue_Item_Count / $products_per_page);
+				
+				$PrevPage = max($current_page - 1, 1);
+				$NextPage = min($current_page + 1, $Num_Pages);
+				
+				$PaginationString .= "<div class='catalogue-nav'>";
+				$PaginationString .= "<span class='displaying-num'>" . $Catalogue->Catalogue_Item_Count . __(' products', 'UPCP') . "</span>";
+				$PaginationString .= "<span class='pagination-links'>";
+				$PaginationString .= "<a class='first-page' title='Go to the first page' href='#' onclick='DisplayPage(\"1\")'>&#171;</a>";
+				$PaginationString .= "<a class='prev-page' title='Go to the previous page' href='#' onclick='DisplayPage(\"" . $PrevPage . "\")'>&#8249;</a>";
+				$PaginationString .= "<span class='paging-input'>" . $current_page . __(' of ', 'UPCP') . "<span class='total-pages'>" . $Num_Pages . "</span></span>";
+				$PaginationString .= "<a class='next-page' title='Go to the next page' href='#' onclick='DisplayPage(\"" . $NextPage . "\")'>&#8250;</a>";
+				$PaginationString .= "<a class='last-page' title='Go to the last page' href='#' onclick='DisplayPage(\"" . $Num_Pages . "\")'>&#187;</a>";
+				$PaginationString .= "</span>";
+				$PaginationString .= "</div>";
+				
+				if ($current_page == 1) {$PaginationString = str_replace("first-page", "first-page disabled", $PaginationString);}
+				if ($current_page == 1) {$PaginationString = str_replace("prev-page", "prev-page disabled", $PaginationString);}
+				if ($current_page == $Num_Pages) {$PaginationString = str_replace("next-page", "next-page disabled", $PaginationString);}
+				if ($current_page == $Num_Pages) {$PaginationString = str_replace("last-page", "last-page disabled", $PaginationString);}
+				/*if ($current_page != 1) {$PaginationString .= "<a href='#' onclick='DisplayPage(\"1\")>" . __('First', 'UPCP') . "</a>";}
+				if ($current_page != 1) {$PaginationString .= "<a href='#' onclick='DisplayPage(\"" . $current_page - 1 . "\")>" . __('Previous', 'UPCP') . "</a>";}
+				
+				$PaginationString .= "<span class='paging-input'>" . $current_page . __(' of ', 'UPCP') . "<span class='total-pages'>" . $Num_Pages . "</span></span>";
+				
+				if ($current_page != $Num_Pages) {$PaginationString .= "<a href='#' onclick='DisplayPage(\"" . $current_page + 1 . "\")>" . __('Next', 'UPCP') . "</a>";}
+				if ($current_page != $Num_Pages) {$PaginationString .= "<a href='#' onclick='DisplayPage(\"" . $Num_Pages . "\")>" . __('Last', 'UPCP') . "</a>";}*/
+		}
+		
 		// Arrays to store what categories, sub-categories and tags are applied to the product in the catalogue
 		$ProdCats = array();
 		$ProdSubCats = array();
@@ -109,14 +145,17 @@ function Insert_Product_Catalog($atts) {
 		$ProdThumbString .=  "<div id='prod-cat-" . $id . "' class='prod-cat thumb-display ";
 		if ($Starting_Layout != "Thumbnail") {$ProdThumbString .= "hidden-field";}
 		$ProdThumbString .= "'>\n";
+		$ProdThumbString .= $PaginationString;
 		
 		$ProdListString .=  "<div id='prod-cat-" . $id . "' class='prod-cat list-display ";
 		if ($Starting_Layout != "List") {$ProdListString .= "hidden-field";}
 		$ProdListString .= "'>\n";
+		$ProdListString .= $PaginationString;
 		
 		$ProdDetailString .=  "<div id='prod-cat-" . $id . "' class='prod-cat detail-display ";
 		if ($Starting_Layout != "Detail") {$ProdDetailString .= "hidden-field";} 
 		$ProdDetailString .= "'>\n";
+		$ProdDetailString .= $PaginationString;
 		
 		$Product_Count = 0;
 		foreach ($CatalogueItems as $CatalogueItem) {
@@ -128,16 +167,20 @@ function Insert_Product_Catalog($atts) {
 						$ProdTag = ObjectToArray($ProdTagObj);
 						
 						$NameSearchMatch = SearchProductName($Product->Item_ID, $Product->Item_Name, $Product->Item_Description, $prod_name, $CaseInsensitiveSearch, $ProductSearch);
-
+						if ($products_per_page < 1000000) {$Pagination_Check = CheckPagination($Product_Count, $products_per_page, $current_page);}
+						else {$Pagination_Check = "OK";}
+						
+						if ($NameSearchMatch == "Yes") {
+						if ($Product->Item_Display_Status != "Hide") {
 						if (sizeOf($category) == 0 or in_array($Product->Category_ID, $category)) {
 						if (sizeOf($subcategory) == 0 or in_array($Product->SubCategory_ID, $subcategory)) {
 						if (sizeOf($tags) == 0 or count(array_intersect($tags, $ProdTag)) > 0) {
-						if ($NameSearchMatch == "Yes") {
-						if ($Product->Item_Display_Status != "Hide") {
+						if ($Pagination_Check == "OK") {
 						$HeaderBar .= "<a id='hidden_FB_link-" . $CatalogueItem->Item_ID . "' class='fancybox' href='#prod-cat-addt-details-" . $CatalogueItem->Item_ID . "'></a>";
 						if (!in_array("Thumbnail", $ExcludedLayouts)) {$ProdThumbString .= AddProduct("Thumbnail", $CatalogueItem->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
 						if (!in_array("List", $ExcludedLayouts)) {$ProdListString .= AddProduct("List", $CatalogueItem->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
 						if (!in_array("Detail", $ExcludedLayouts)) {$ProdDetailString .= AddProduct("Detail", $CatalogueItem->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
+						}
 						$Product_Count++;
 						}}}}}
 						unset($NameSearchMatch);
@@ -169,17 +212,21 @@ function Insert_Product_Catalog($atts) {
 								$ProdTag = ObjectToArray($ProdTagObj);
 								
 								$NameSearchMatch = SearchProductName($Product->Item_ID, $Product->Item_Name, $Product->Item_Description, $prod_name, $CaseInsensitiveSearch, $ProductSearch);
+								if ($products_per_page < 1000000) {$Pagination_Check = CheckPagination($Product_Count, $products_per_page, $current_page);}
+								else {$Pagination_Check = "OK";}
 								
-								if (sizeOf($subcategory) == 0 or in_array($Product->SubCategory_ID, $subcategory)) {
-								if (sizeOf($tags) == 0 or count(array_intersect($tags, $ProdTag)) > 0) {
 								if ($NameSearchMatch == "Yes") {
 								if ($Product->Item_Display_Status != "Hide") {
+								if (sizeOf($subcategory) == 0 or in_array($Product->SubCategory_ID, $subcategory)) {
+								if (sizeOf($tags) == 0 or count(array_intersect($tags, $ProdTag)) > 0) {
+								if ($Pagination_Check == "OK") {
 								$HeaderBar .= "<a id='hidden_FB_link-" . $Product->Item_ID . "' class='fancybox' href='#prod-cat-addt-details-" . $Product->Item_ID . "'></a>";
 								if (!in_array("Thumbnail", $ExcludedLayouts)) {$ProdThumbString .= AddProduct("Thumbnail", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
 								if (!in_array("List", $ExcludedLayouts)) {$ProdListString .= AddProduct("List", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
 								if (!in_array("Detail", $ExcludedLayouts)) {$ProdDetailString .= AddProduct("Detail", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
-								$Product_Count++;
 								$CatProdCount++;
+								}
+								$Product_Count++;
 								}}}}
 								unset($NameSearchMatch);
 						}
@@ -211,20 +258,26 @@ function Insert_Product_Catalog($atts) {
 								$ProdTag = ObjectToArray($ProdTagObj);
 								
 								$NameSearchMatch = SearchProductName($Product->Item_ID, $Product->Item_Name, $Product->Item_Description, $prod_name, $CaseInsensitiveSearch, $ProductSearch);
+								if ($products_per_page < 1000000) {$Pagination_Check = CheckPagination($Product_Count, $products_per_page, $current_page);}
+								else {$Pagination_Check = "OK";}
 								
-								if (sizeOf($category) == 0 or in_array($Product->Category_ID, $category)) {
-								if (sizeOf($tags) == 0 or count(array_intersect($tags, $ProdTag)) > 0) {
 								if ($NameSearchMatch == "Yes") {
 								if ($Product->Item_Display_Status != "Hide") {
+								if (sizeOf($category) == 0 or in_array($Product->Category_ID, $category)) {
+								if (sizeOf($tags) == 0 or count(array_intersect($tags, $ProdTag)) > 0) {
+								if ($Pagination_Check == "OK") {
 								$HeaderBar .= "<a id='hidden_FB_link-" . $Product->Item_ID . "' class='fancybox' href='#prod-cat-addt-details-" . $Product->Item_ID . "'></a>";
 								if (!in_array("Thumbnail", $ExcludedLayouts)) {$ProdThumbString .= AddProduct("Thumbnail", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
 								if (!in_array("List", $ExcludedLayouts)) {$ProdListString .= AddProduct("List", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
 								if (!in_array("Detail", $ExcludedLayouts)) {$ProdDetailString .= AddProduct("Detail", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
+								}
 								$Product_Count++;
 								}}}}
 								unset($NameSearchMatch);
 						}
 				}}
+				
+				if ($Pagination_Check == "Over") {break;}
 		}
 				
 		$ProdThumbString .= "<div class='upcp-clear'></div>\n";
@@ -572,6 +625,10 @@ function SingleProductPage() {
 		$Single_Page_Price = get_option("UPCP_Single_Page_Price");
 		$Custom_Product_Page = get_option("UPCP_Custom_Product_Page");
 		$Product_Page_Serialized = get_option("UPCP_Product_Page_Serialized");
+		$PP_Grid_Width = get_option("UPCP_PP_Grid_Width");
+		$PP_Grid_Height = get_option("UPCP_PP_Grid_Height");
+		$Top_Bottom_Padding = get_option("UPCP_Top_Bottom_Padding");
+		$Left_Right_Padding = get_option("UPCP_Left_Right_Padding");
 		
 		if ($Pretty_Links == "Yes") {$Product = $wpdb->get_row("SELECT * FROM $items_table_name WHERE Item_Slug='" . get_query_var('single_product') . "'");}
 		else {$Product = $wpdb->get_row("SELECT * FROM $items_table_name WHERE Item_ID='" . $_GET['SingleProduct'] . "'");}
@@ -656,6 +713,13 @@ function SingleProductPage() {
 				$ProductString .= "</div>\n";
 		}
 		else {
+				echo "<script language='JavaScript' type='text/javascript'>";
+				echo "var pp_grid_width = " . $PP_Grid_Width . ";";
+				echo "var pp_grid_height = " . $PP_Grid_Height . ";";
+				echo "var pp_top_bottom_padding = " . $Top_Bottom_Padding . ";";
+				echo "var pp_left_right_padding = " . $Left_Right_Padding . ";";
+				echo "</script>";
+				
 				$Gridster = json_decode(stripslashes($Product_Page_Serialized));
 				$ProductString .= "<div class='gridster'>";
 				$ProductString .= "<ul>";
@@ -777,6 +841,19 @@ function SearchProductName($Item_ID, $ProductName, $ProductDescription, $SearchN
 		}
 		
 		return $NameSearchMatch;
+}
+
+function CheckPagination($Product_Count, $products_per_page, $current_page) {
+		if ($Product_Count >= ($products_per_page * ($current_page - 1))) {
+			  if ($Product_Count < ($products_per_page * $current_page)) {
+						return "OK";
+				}
+				else {
+						return "Over";
+				}
+		}
+		
+		return "Under";
 }
 
 function ConvertCustomFields($Description) {

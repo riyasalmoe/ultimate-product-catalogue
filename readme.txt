@@ -118,6 +118,12 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.3.12 =
+- Catalogue product count should now be accurate
+- Product page grid widths, heights and margins are now adjustable
+- "Restore Default" button added to the individual product pages
+- Made saving of a custom layout an explicit action instead of saving each time an action was performed
+
 = 2.3.11 =
 - It is now possible to put code into the "Image" field instead of the URL of an image (ex: to add a slideshow for a product instead of an image)
 - Added a visual editor for "Description" instead of a plain text area input

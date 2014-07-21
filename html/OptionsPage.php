@@ -12,6 +12,11 @@
 		$CaseInsensitiveSearch = get_option("UPCP_Case_Insensitive_Search");
 		$InstallVersion = get_option("UPCP_First_Install_Version");
 		$Custom_Product_Page = get_option("UPCP_Custom_Product_Page");
+		$Products_Per_Page = get_option("UPCP_Products_Per_Page");
+		$PP_Grid_Width = get_option("UPCP_PP_Grid_Width");
+		$PP_Grid_Height = get_option("UPCP_PP_Grid_Height");
+		$Top_Bottom_Padding = get_option("UPCP_Top_Bottom_Padding");
+		$Left_Right_Padding = get_option("UPCP_Left_Right_Padding");
 		$Product_Search = get_option("UPCP_Product_Search");
 ?>
 <div class="wrap">
@@ -154,6 +159,47 @@
 	</fieldset>
 </td>
 </tr>
+<!--<tr>
+<th scope="row">Products per Page</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span>How many products should be displayed on each page of the catalogue?</span></legend>
+	<input type='text' name='products_per_page' value='<?php echo $Products_Per_Page; ?>' <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/>
+	</fieldset>
+</td>
+</tr>-->
+<tr>
+<th scope="row">Product Page Grid Width</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span>How wide should each product grid be? (in pixels)</span></legend>
+	<input type='text' name='pp_grid_width' value='<?php echo $PP_Grid_Width; ?>' <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/>
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row">Product Page Grid Height</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span>How tall should each product grid be? (in pixels)</span></legend>
+	<input type='text' name='pp_grid_height' value='<?php echo $PP_Grid_Height; ?>' <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/>
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row">Top and Bottom Padding</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span>How much padding should be above and below each grid? (in pixels)</span></legend>
+	<input type='text' name='pp_top_bottom_padding' value='<?php echo $Top_Bottom_Padding; ?>' <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/>
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row">Right and Left Padding</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span>How much padding should be to the right and left of each grid? (in pixels)</span></legend>
+	<input type='text' name='pp_left_right_padding' value='<?php echo $Left_Right_Padding; ?>' <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/>
+	</fieldset>
+</td>
+</tr>
+
 
 </table>
 

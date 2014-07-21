@@ -301,8 +301,7 @@ function Add_Products_Catalogue() {
 		
 		$Catalogue_ID = $_GET['Catalogue_ID'];
 		foreach ($_POST['products'] as $Item_ID) {
-				$Result = $wpdb->query("UPDATE $catalogues_table_name SET Catalogue_Item_Count = Catalogue_Item_Count + 1 WHERE Catalogue_ID=" . $Catalogue_ID);
-				$MaxPos = $wpdb->query("SELECT MAX(Position) FROM $catalogue_items_table_name");
+				$MaxPos = $wpdb->get_var($wpdb->prepare("SELECT MAX(Position) FROM $catalogue_items_table_name WHERE Catalogue_ID='%d'", $Catalogue_ID));
 				$Position = $MaxPos + 1;
 				$wpdb->insert($catalogue_items_table_name,
 				array( 'Catalogue_ID' => $Catalogue_ID,
@@ -310,6 +309,8 @@ function Add_Products_Catalogue() {
 							 'Position' => $Position)
 				);
 		}
+		
+		Update_Catalogue_Item_Count($Catalogue_ID);
 		
 		$update = __("Products have been successfully added to the catalogue.", 'UPCP');
 		return $update;
@@ -322,8 +323,7 @@ function Add_Categories_Catalogue() {
 		
 		$Catalogue_ID = $_GET['Catalogue_ID'];
 		foreach ($_POST['categories'] as $Category_ID) {
-				$Result = $wpdb->query("UPDATE $catalogues_table_name SET Catalogue_Item_Count = Catalogue_Item_Count + 1 WHERE Catalogue_ID=" . $Catalogue_ID);
-				$MaxPos = $wpdb->query("SELECT MAX(Position) FROM $catalogue_items_table_name");
+				$MaxPos = $wpdb->get_var($wpdb->prepare("SELECT MAX(Position) FROM $catalogue_items_table_name WHERE Catalogue_ID='%d'", $Catalogue_ID));
 				$Position = $MaxPos + 1;
 				$wpdb->insert($catalogue_items_table_name,
 				array( 'Catalogue_ID' => $Catalogue_ID,
@@ -332,8 +332,36 @@ function Add_Categories_Catalogue() {
 				);
 		}
 		
+		Update_Catalogue_Item_Count($Catalogue_ID);
+		
 		$update = __("Categories have been successfully added to the catalogue.", 'UPCP');
 		return $update;
+}
+
+function Update_Catalogue_Item_Count($Catalogue_ID) {
+		global $wpdb;
+		global $catalogues_table_name;
+		global $catalogue_items_table_name;
+		global $subcategories_table_name;
+		global $categories_table_name;
+		global $items_table_name;
+		
+		$Individual_Products = $wpdb->get_results($wpdb->prepare("SELECT Catalogue_Item_ID FROM $catalogue_items_table_name WHERE Catalogue_ID='%d' AND Item_ID!='NULL' AND Item_ID!='0'", $Catalogue_ID));
+		$Total_Products = $wpdb->num_rows;
+		
+		$Categories = $wpdb->get_results($wpdb->prepare("SELECT Category_ID FROM $catalogue_items_table_name WHERE Catalogue_ID='%d' AND Category_ID!='NULL' AND Category_ID!='0'", $Catalogue_ID));
+		foreach ($Categories as $Category) {
+				$Individual_Products = $wpdb->get_results("SELECT Item_ID FROM $items_table_name WHERE Category_ID='" . $Category->Category_ID . "'");
+				$Total_Products += $wpdb->num_rows;
+		}
+		
+		$SubCategories = $wpdb->get_results($wpdb->prepare("SELECT SubCategory_ID FROM $catalogue_items_table_name WHERE Catalogue_ID='%d' AND SubCategory_ID!='NULL' AND SubCategory_ID!='0'", $Catalogue_ID));
+		foreach ($SubCategories as $SubCategory) {
+				$Individual_Products = $wpdb->get_results("SELECT Item_ID FROM $items_table_name WHERE SubCategory_ID='" . $SubCategory->SubCategory_ID . "'");
+				$Total_Products += $wpdb->num_rows;
+		}
+		
+		$Result = $wpdb->query($wpdb->prepare("UPDATE $catalogues_table_name SET Catalogue_Item_Count='" . $Total_Products . "' WHERE Catalogue_ID='%d'", $Catalogue_ID));
 }
 
 /* Deletes a single catalogue with a given ID in the UPCP database */
@@ -360,11 +388,15 @@ function Delete_Products_Catalogue() {
 		global $wpdb;
 		global $catalogues_table_name;
 		global $catalogue_items_table_name;
+		
+		$Catalogue_ID = $wpdb->get_var($wpdb->prepare("SELECT Catalogue_ID FROM $catalogue_items_table_name WHERE Catalogue_Item_ID='%d'", $_GET['Catalogue_Item_ID']));	
 					
 		$wpdb->delete(
 						$catalogue_items_table_name,
 						array('Catalogue_Item_ID' => $_GET['Catalogue_Item_ID'])
 					);
+			
+		Update_Catalogue_Item_Count($Catalogue_ID);
 
 		$update = __("Product has been successfully deleted from catalogue.", 'UPCP');
 		return $update;
@@ -654,7 +686,7 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 		$New_Product_Count = $Prod_Count + sizeOf($Data);
 		
 		if ($New_Product_Count > 100 and $Full_Version != "Yes") {
-			  $Error = __("Maximum number of products (100) has been reached for free version. Upgrade to the premium version to continue.", 'UPCP');
+			  $Error = __("Maximum number of products (100) for the free version would be exceeded with spreadhseet products. Upgrade to the premium version to continue.", 'UPCP');
 				$user_update = array("Message_Type" => "Error", "Message" => $Error);
 				return $user_update;
 		}
@@ -834,6 +866,11 @@ function Update_UPCP_Options() {
 		if ($InstallVersion <= 2.0 or $Full_Version == "Yes") {update_option("UPCP_Pretty_Links", $_POST['pretty_links']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_Mobile_SS", $_POST['mobile_styles']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_Custom_Product_Page", $_POST['custom_product_page']);}
+		if ($Full_Version == "Yes") {update_option("UPCP_Products_Per_Page", $_POST['products_per_page']);}
+		if ($Full_Version == "Yes") {update_option("UPCP_PP_Grid_Width", $_POST['pp_grid_width']);}
+		if ($Full_Version == "Yes") {update_option("UPCP_PP_Grid_Height", $_POST['pp_grid_height']);}
+		if ($Full_Version == "Yes") {update_option("UPCP_Top_Bottom_Padding", $_POST['pp_top_bottom_padding']);}
+		if ($Full_Version == "Yes") {update_option("UPCP_Left_Right_Padding", $_POST['pp_left_right_padding']);}
 		
 		if ($_POST['Pretty_Links'] == "Yes") {
 			 update_option("UPCP_Update_RR_Rules", "Yes");
@@ -841,5 +878,15 @@ function Update_UPCP_Options() {
 		
 		$update = __("Options have been succesfully updated.", 'UPCP');
 		return $update;
+}
+
+function Restore_Default_PP_Layout() {
+		$Product_Page = '[{"element_type":"Product Description<div class=\"gs-delete-handle\" onclick=\"remove_element(this);\"></div><span class=\"gs-resize-handle gs-resize-handle-both\"></span>","element_class":"description","element_id":"","col":3,"row":9,"size_x":5,"size_y":4},{"element_type":"Back Link<div class=\"gs-delete-handle\" onclick=\"remove_element(this);\"></div><span class=\"gs-resize-handle gs-resize-handle-both\"></span>","element_class":"back","element_id":"","col":1,"row":1,"size_x":2,"size_y":1},{"element_type":"Additional Images<div class=\"gs-delete-handle\" onclick=\"remove_element(this);\"></div><span class=\"gs-resize-handle gs-resize-handle-both\"></span>","element_class":"additional_images","element_id":"","col":1,"row":2,"size_x":2,"size_y":9},{"element_type":"Main Image<div class=\"gs-delete-handle\" onclick=\"remove_element(this);\"></div><span class=\"gs-resize-handle gs-resize-handle-both\"></span>","element_class":"main_image","element_id":"","col":3,"row":3,"size_x":4,"size_y":6},{"element_type":"Permalink<div class=\"gs-delete-handle\" onclick=\"remove_element(this);\"></div><span class=\"gs-resize-handle gs-resize-handle-both\"></span>","element_class":"product_link","element_id":"","col":6,"row":2,"size_x":1,"size_y":1},{"element_type":"Product Name<div class=\"gs-delete-handle\" onclick=\"remove_element(this);\"></div><span class=\"gs-resize-handle gs-resize-handle-both\"></span>","element_class":"product_name","element_id":"","col":3,"row":2,"size_x":3,"size_y":1},{"element_type":"Blank<div class=\"gs-delete-handle\" onclick=\"remove_element(this);\"></div><span class=\"gs-resize-handle gs-resize-handle-both\"></span>","element_class":"blank","element_id":"","col":7,"row":2,"size_x":1,"size_y":7},{"element_type":"Blank<div class=\"gs-delete-handle\" onclick=\"remove_element(this);\"></div><span class=\"gs-resize-handle gs-resize-handle-both\"></span>","element_class":"blank","element_id":"","col":3,"row":1,"size_x":5,"size_y":1}]';
+		
+		update_option("UPCP_Product_Page_Serialized", $Product_Page);
+		update_option("UPCP_PP_Grid_Width", 90);
+		update_option("UPCP_PP_Grid_Height", 35);
+		update_option("UPCP_Top_Bottom_Padding", 10);
+		update_option("UPCP_Left_Right_Padding", 10);
 }
 ?>

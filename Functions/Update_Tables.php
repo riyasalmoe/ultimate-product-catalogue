@@ -150,5 +150,11 @@ function UpdateTables() {
 		
 		if (get_option("UPCP_Product_Search") == "") {update_option("UPCP_Product_Search", "name");}
 		if (get_option("UPCP_Custom_Product_Page") == "") {update_option("UPCP_Custom_Product_Page", "No");}
+		
+		if (get_option("UPCP_Products_Per_Page") == "") {update_option("UPCP_Products_Per_Page", 1000000);}
+		if (get_option("UPCP_PP_Grid_Width") == "") {update_option("UPCP_PP_Grid_Width", 90);}
+		if (get_option("UPCP_PP_Grid_Height") == "") {update_option("UPCP_PP_Grid_Height", 35);}
+		if (get_option("UPCP_Top_Bottom_Padding") == "") {update_option("UPCP_Top_Bottom_Padding", 10);}
+		if (get_option("UPCP_Left_Right_Padding") == "") {update_option("UPCP_Left_Right_Padding", 10);}
 }
 ?>

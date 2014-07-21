@@ -19,6 +19,11 @@ function UPCPHighlight(Field, Color) {
 		}
 }
 
+function DisplayPage(PageNum) {
+		jQuery('#upcp-current-page').html(PageNum);
+		UPCP_Ajax_Filter();
+}
+
 var RequestCount = 0;
 function UPCP_Ajax_Filter() {
 		var CatValues = [];
@@ -29,6 +34,7 @@ function UPCP_Ajax_Filter() {
 		var sidebar = jQuery('#upcp-catalogue-sidebar').html();
 		var start_layout = jQuery('#upcp-starting-layout').html();
 		var excluded_layouts = jQuery('#upcp-excluded-layouts').html();
+		var current_page = jQuery('#upcp-current-page').html();
 		var base_url = jQuery('#upcp-base-url').html();
 		
 		jQuery('.jquery-prod-cat-value').each(function() {if (jQuery(this).prop('checked')) {CatValues.push(jQuery(this).val());}});
@@ -39,7 +45,7 @@ function UPCP_Ajax_Filter() {
 		jQuery('.prod-cat-inner').html('<h3>Updating results...</h3>');
 		
 		RequestCount = RequestCount + 1;
-		var data = 'id=' + id + '&sidebar=' + sidebar + '&start_layout=' + start_layout + '&excluded_layouts=' + excluded_layouts + '&ajax_url=' + base_url + '&ajax_reload=Yes' + '&Prod_Name=' + SelectedProdName + '&Category=' + CatValues + '&SubCategory=' + SubCatValues + '&Tags=' + TagBoxValues + '&request_count=' + RequestCount + '&action=update_catalogue';
+		var data = 'id=' + id + '&sidebar=' + sidebar + '&start_layout=' + start_layout + '&excluded_layouts=' + excluded_layouts + '&ajax_url=' + base_url + '&current_page=' + current_page + '&ajax_reload=Yes' + '&Prod_Name=' + SelectedProdName + '&Category=' + CatValues + '&SubCategory=' + SubCatValues + '&Tags=' + TagBoxValues + '&request_count=' + RequestCount + '&action=update_catalogue';
 		jQuery.post(ajaxurl, data, function(response) {
 				response = response.substring(0, response.length - 1);
 				var parsed_response = jQuery.parseJSON(response);
