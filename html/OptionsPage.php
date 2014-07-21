@@ -159,14 +159,14 @@
 	</fieldset>
 </td>
 </tr>
-<!--<tr>
+<tr>
 <th scope="row">Products per Page</th>
 <td>
 	<fieldset><legend class="screen-reader-text"><span>How many products should be displayed on each page of the catalogue?</span></legend>
 	<input type='text' name='products_per_page' value='<?php echo $Products_Per_Page; ?>' <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/>
 	</fieldset>
 </td>
-</tr>-->
+</tr>
 <tr>
 <th scope="row">Product Page Grid Width</th>
 <td>

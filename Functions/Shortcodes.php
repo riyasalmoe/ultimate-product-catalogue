@@ -75,7 +75,10 @@ function Insert_Product_Catalog($atts) {
 		if ($tags == "") {$tags = array();}
 		else {$tags = explode(",", $tags);}	
 		
+		//Pagination early work
 		if ($products_per_page == "") {$products_per_page = $Products_Per_Page;}
+		if ($category != "" or $subcategory != "" or $tags != "" or $prod_name != "") {$Filtered = "Yes";}
+		else {$Filtered = "No";}
 		
 		$ReturnString .= "<div class='upcp-Hide-Item' id='upcp-shortcode-atts'>";
 		$ReturnString .= "<div class='shortcode-attr' id='upcp-catalogue-id'>" . $id . "</div>";
@@ -106,37 +109,6 @@ function Insert_Product_Catalog($atts) {
 		}
 		else {$format = $layout_format;}
 		
-		//Deal with creating the page counter, if pagination is neccessary
-		if ($Catalogue->Catalogue_Item_Count > $products_per_page) {
-			  $Num_Pages = ceil($Catalogue->Catalogue_Item_Count / $products_per_page);
-				
-				$PrevPage = max($current_page - 1, 1);
-				$NextPage = min($current_page + 1, $Num_Pages);
-				
-				$PaginationString .= "<div class='catalogue-nav'>";
-				$PaginationString .= "<span class='displaying-num'>" . $Catalogue->Catalogue_Item_Count . __(' products', 'UPCP') . "</span>";
-				$PaginationString .= "<span class='pagination-links'>";
-				$PaginationString .= "<a class='first-page' title='Go to the first page' href='#' onclick='DisplayPage(\"1\")'>&#171;</a>";
-				$PaginationString .= "<a class='prev-page' title='Go to the previous page' href='#' onclick='DisplayPage(\"" . $PrevPage . "\")'>&#8249;</a>";
-				$PaginationString .= "<span class='paging-input'>" . $current_page . __(' of ', 'UPCP') . "<span class='total-pages'>" . $Num_Pages . "</span></span>";
-				$PaginationString .= "<a class='next-page' title='Go to the next page' href='#' onclick='DisplayPage(\"" . $NextPage . "\")'>&#8250;</a>";
-				$PaginationString .= "<a class='last-page' title='Go to the last page' href='#' onclick='DisplayPage(\"" . $Num_Pages . "\")'>&#187;</a>";
-				$PaginationString .= "</span>";
-				$PaginationString .= "</div>";
-				
-				if ($current_page == 1) {$PaginationString = str_replace("first-page", "first-page disabled", $PaginationString);}
-				if ($current_page == 1) {$PaginationString = str_replace("prev-page", "prev-page disabled", $PaginationString);}
-				if ($current_page == $Num_Pages) {$PaginationString = str_replace("next-page", "next-page disabled", $PaginationString);}
-				if ($current_page == $Num_Pages) {$PaginationString = str_replace("last-page", "last-page disabled", $PaginationString);}
-				/*if ($current_page != 1) {$PaginationString .= "<a href='#' onclick='DisplayPage(\"1\")>" . __('First', 'UPCP') . "</a>";}
-				if ($current_page != 1) {$PaginationString .= "<a href='#' onclick='DisplayPage(\"" . $current_page - 1 . "\")>" . __('Previous', 'UPCP') . "</a>";}
-				
-				$PaginationString .= "<span class='paging-input'>" . $current_page . __(' of ', 'UPCP') . "<span class='total-pages'>" . $Num_Pages . "</span></span>";
-				
-				if ($current_page != $Num_Pages) {$PaginationString .= "<a href='#' onclick='DisplayPage(\"" . $current_page + 1 . "\")>" . __('Next', 'UPCP') . "</a>";}
-				if ($current_page != $Num_Pages) {$PaginationString .= "<a href='#' onclick='DisplayPage(\"" . $Num_Pages . "\")>" . __('Last', 'UPCP') . "</a>";}*/
-		}
-		
 		// Arrays to store what categories, sub-categories and tags are applied to the product in the catalogue
 		$ProdCats = array();
 		$ProdSubCats = array();
@@ -145,17 +117,17 @@ function Insert_Product_Catalog($atts) {
 		$ProdThumbString .=  "<div id='prod-cat-" . $id . "' class='prod-cat thumb-display ";
 		if ($Starting_Layout != "Thumbnail") {$ProdThumbString .= "hidden-field";}
 		$ProdThumbString .= "'>\n";
-		$ProdThumbString .= $PaginationString;
+		$ProdThumbString .= "%upcp_pagination_placeholder%";
 		
 		$ProdListString .=  "<div id='prod-cat-" . $id . "' class='prod-cat list-display ";
 		if ($Starting_Layout != "List") {$ProdListString .= "hidden-field";}
 		$ProdListString .= "'>\n";
-		$ProdListString .= $PaginationString;
+		$ProdListString .= "%upcp_pagination_placeholder%";
 		
 		$ProdDetailString .=  "<div id='prod-cat-" . $id . "' class='prod-cat detail-display ";
 		if ($Starting_Layout != "Detail") {$ProdDetailString .= "hidden-field";} 
 		$ProdDetailString .= "'>\n";
-		$ProdDetailString .= $PaginationString;
+		$ProdDetailString .= "%upcp_pagination_placeholder%";
 		
 		$Product_Count = 0;
 		foreach ($CatalogueItems as $CatalogueItem) {
@@ -167,7 +139,7 @@ function Insert_Product_Catalog($atts) {
 						$ProdTag = ObjectToArray($ProdTagObj);
 						
 						$NameSearchMatch = SearchProductName($Product->Item_ID, $Product->Item_Name, $Product->Item_Description, $prod_name, $CaseInsensitiveSearch, $ProductSearch);
-						if ($products_per_page < 1000000) {$Pagination_Check = CheckPagination($Product_Count, $products_per_page, $current_page);}
+						if ($products_per_page < 1000000) {$Pagination_Check = CheckPagination($Product_Count, $products_per_page, $current_page, $Filtered);}
 						else {$Pagination_Check = "OK";}
 						
 						if ($NameSearchMatch == "Yes") {
@@ -212,7 +184,7 @@ function Insert_Product_Catalog($atts) {
 								$ProdTag = ObjectToArray($ProdTagObj);
 								
 								$NameSearchMatch = SearchProductName($Product->Item_ID, $Product->Item_Name, $Product->Item_Description, $prod_name, $CaseInsensitiveSearch, $ProductSearch);
-								if ($products_per_page < 1000000) {$Pagination_Check = CheckPagination($Product_Count, $products_per_page, $current_page);}
+								if ($products_per_page < 1000000) {$Pagination_Check = CheckPagination($Product_Count, $products_per_page, $current_page, $Filtered);}
 								else {$Pagination_Check = "OK";}
 								
 								if ($NameSearchMatch == "Yes") {
@@ -258,7 +230,7 @@ function Insert_Product_Catalog($atts) {
 								$ProdTag = ObjectToArray($ProdTagObj);
 								
 								$NameSearchMatch = SearchProductName($Product->Item_ID, $Product->Item_Name, $Product->Item_Description, $prod_name, $CaseInsensitiveSearch, $ProductSearch);
-								if ($products_per_page < 1000000) {$Pagination_Check = CheckPagination($Product_Count, $products_per_page, $current_page);}
+								if ($products_per_page < 1000000) {$Pagination_Check = CheckPagination($Product_Count, $products_per_page, $current_page, $Filtered);}
 								else {$Pagination_Check = "OK";}
 								
 								if ($NameSearchMatch == "Yes") {
@@ -292,6 +264,42 @@ function Insert_Product_Catalog($atts) {
 		if (in_array("List", $ExcludedLayouts)) {unset($ProdListString);}
 		if (in_array("Detail", $ExcludedLayouts)) {unset($ProdDetailString);}
 		
+		//Deal with creating the page counter, if pagination is neccessary
+		if ($Filtered == "Yes") {$Total_Products = $Product_Count;}
+		else {$Total_Products = $Catalogue->Catalogue_Item_Count;}
+		
+		if ($Total_Products > $products_per_page) {
+			  $Num_Pages = ceil($Total_Products / $products_per_page);
+				
+				$PrevPage = max($current_page - 1, 1);
+				$NextPage = min($current_page + 1, $Num_Pages);
+				
+				$PaginationString .= "<div class='catalogue-nav'>";
+				$PaginationString .= "<span class='displaying-num'>" . $Total_Products . __(' products', 'UPCP') . "</span>";
+				$PaginationString .= "<span class='pagination-links'>";
+				$PaginationString .= "<a class='first-page' title='Go to the first page' href='#' onclick='UPCP_DisplayPage(\"1\")'>&#171;</a>";
+				$PaginationString .= "<a class='prev-page' title='Go to the previous page' href='#' onclick='UPCP_DisplayPage(\"" . $PrevPage . "\")'>&#8249;</a>";
+				$PaginationString .= "<span class='paging-input'>" . $current_page . __(' of ', 'UPCP') . "<span class='total-pages'>" . $Num_Pages . "</span></span>";
+				$PaginationString .= "<a class='next-page' title='Go to the next page' href='#' onclick='UPCP_DisplayPage(\"" . $NextPage . "\")'>&#8250;</a>";
+				$PaginationString .= "<a class='last-page' title='Go to the last page' href='#' onclick='UPCP_DisplayPage(\"" . $Num_Pages . "\")'>&#187;</a>";
+				$PaginationString .= "</span>";
+				$PaginationString .= "</div>";
+				
+				if ($current_page == 1) {$PaginationString = str_replace("first-page", "first-page disabled", $PaginationString);}
+				if ($current_page == 1) {$PaginationString = str_replace("prev-page", "prev-page disabled", $PaginationString);}
+				if ($current_page == $Num_Pages) {$PaginationString = str_replace("next-page", "next-page disabled", $PaginationString);}
+				if ($current_page == $Num_Pages) {$PaginationString = str_replace("last-page", "last-page disabled", $PaginationString);}
+				/*if ($current_page != 1) {$PaginationString .= "<a href='#' onclick='UPCP_DisplayPage(\"1\")>" . __('First', 'UPCP') . "</a>";}
+				if ($current_page != 1) {$PaginationString .= "<a href='#' onclick='UPCP_DisplayPage(\"" . $current_page - 1 . "\")>" . __('Previous', 'UPCP') . "</a>";}
+				
+				$PaginationString .= "<span class='paging-input'>" . $current_page . __(' of ', 'UPCP') . "<span class='total-pages'>" . $Num_Pages . "</span></span>";
+				
+				if ($current_page != $Num_Pages) {$PaginationString .= "<a href='#' onclick='UPCP_DisplayPage(\"" . $current_page + 1 . "\")>" . __('Next', 'UPCP') . "</a>";}
+				if ($current_page != $Num_Pages) {$PaginationString .= "<a href='#' onclick='UPCP_DisplayPage(\"" . $Num_Pages . "\")>" . __('Last', 'UPCP') . "</a>";}*/
+		}		
+		$ProdThumbString = str_replace("%upcp_pagination_placeholder%", $PaginationString, $ProdThumbString);
+		$ProdListString = str_replace("%upcp_pagination_placeholder%", $PaginationString, $ProdListString);
+		$ProdDetailString = str_replace("%upcp_pagination_placeholder%", $PaginationString, $ProdDetailString);
 		
 		// Create string from the arrays, should use the implode function instead
 		foreach ($ProdCats as $key=>$value) {$ProdCatString .= $key . ",";}
@@ -336,7 +344,7 @@ function Insert_Product_Catalog($atts) {
 				$SidebarString .= $SearchLabel . "<br /><div class='styled-input'>";
 				if ($Filter  == "Javascript" and $Tag_Logic == "OR") {$SidebarString .= "<input type='text' class='jquery-prod-name-text' name='Text_Search' value='" . __('Name', 'UPCP') . "...' onfocus='FieldFocus(this);' onblur='FieldBlur(this);' onkeyup='UPCP_Filer_Results_OR();'>\n";}
 				elseif ($Filter  == "Javascript") {$SidebarString .= "<input type='text' class='jquery-prod-name-text' name='Text_Search' value='" . __('Name', 'UPCP') . "...' onfocus='FieldFocus(this);' onblur='FieldBlur(this);' onkeyup='UPCP_Filer_Results();'>\n";}
-				else {$SidebarString .= "<input type='text' class='jquery-prod-name-text' name='Text_Search' value='" . $SearchText . "...' onfocus='FieldFocus(this);' onblur='FieldBlur(this);' onkeyup='UPCP_Ajax_Filter();'>\n";}
+				else {$SidebarString .= "<input type='text' class='jquery-prod-name-text' name='Text_Search' value='" . $SearchText . "...' onfocus='FieldFocus(this);' onblur='FieldBlur(this);' onkeyup='UPCP_DisplayPage(\"1\");'>\n";}
 				$SidebarString .= "</div></div>\n";
 				
 				// Create the categories checkboxes
@@ -347,7 +355,7 @@ function Insert_Product_Catalog($atts) {
 								$SidebarString .= "<div id='prod-cat-sidebar-category-" . $Category->Category_ID . "' class='prod-cat-sidebar-category'>\n";
 								if ($Filter  == "Javascript" and $Tag_Logic == "OR") {$SidebarString .= "<input type='checkbox' class='jquery-prod-cat-value' name='Category" . $Category->Category_ID . "' value='" . $Category->Category_ID . "' onclick='UPCP_Filer_Results_OR(); UPCPHighlight(this, \"" . $Color . "\");'>" . $Category->Category_Name . " (" . $ProdCats[$Category->Category_ID]/(3-sizeOf($ExcludedLayouts)) . ")\n";}
 								elseif ($Filter  == "Javascript") {$SidebarString .= "<input type='checkbox' class='jquery-prod-cat-value' name='Category" . $Category->Category_ID . "' value='" . $Category->Category_ID . "' onclick='UPCP_Filer_Results(); UPCPHighlight(this, \"" . $Color . "\");'>" . $Category->Category_Name . " (" . $ProdCats[$Category->Category_ID]/(3-sizeOf($ExcludedLayouts)) . ")\n";}
-								else {$SidebarString .= "<input type='checkbox' class='jquery-prod-cat-value' name='Category" . $Category->Category_ID . "' value='" . $Category->Category_ID . "' onclick='UPCP_Ajax_Filter(); UPCPHighlight(this, \"" . $Color . "\");'> " . $Category->Category_Name . " (" . $ProdCats[$Category->Category_ID]/(3-sizeOf($ExcludedLayouts)) . ")\n";}
+								else {$SidebarString .= "<input type='checkbox' class='jquery-prod-cat-value' name='Category" . $Category->Category_ID . "' value='" . $Category->Category_ID . "' onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");'> " . $Category->Category_Name . " (" . $ProdCats[$Category->Category_ID]/(3-sizeOf($ExcludedLayouts)) . ")\n";}
 								$SidebarString .= "</div>\n";
 						}
 						$SidebarString .= "</div>\n";
@@ -361,7 +369,7 @@ function Insert_Product_Catalog($atts) {
 								$SidebarString .= "<div id='prod-cat-sidebar-subcategory-" . $SubCategory->SubCategory_ID . "' class='prod-cat-sidebar-subcategory'>\n";
 								if ($Filter  == "Javascript" and $Tag_Logic == "OR") {$SidebarString .= "<input type='checkbox' class='jquery-prod-sub-cat-value' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_Filer_Results_OR(); UPCPHighlight(this, \"" . $Color . "\");'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID]/(3-sizeOf($ExcludedLayouts)) . ")\n";}
 								elseif ($Filter  == "Javascript") {$SidebarString .= "<input type='checkbox' class='jquery-prod-sub-cat-value' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_Filer_Results(); UPCPHighlight(this, \"" . $Color . "\");'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID]/(3-sizeOf($ExcludedLayouts)) . ")\n";}
-								else {$SidebarString .= "<input type='checkbox' class='jquery-prod-sub-cat-value' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_Ajax_Filter(); UPCPHighlight(this, \"" . $Color . "\");'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID]/(3-sizeOf($ExcludedLayouts)) . ")\n";}
+								else {$SidebarString .= "<input type='checkbox' class='jquery-prod-sub-cat-value' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID]/(3-sizeOf($ExcludedLayouts)) . ")\n";}
 								$SidebarString .= "</div>\n";
 						}
 						$SidebarString .= "</div>\n";
@@ -375,7 +383,7 @@ function Insert_Product_Catalog($atts) {
 								$SidebarString .= "<div id='prod-cat-sidebar-tag-" . $Tag->Tag_ID . "' class='prod-cat-sidebar-tag'>\n";
 								if ($Filter  == "Javascript" and $Tag_Logic == "OR") {$SidebarString .= "<input type='checkbox' class='jquery-prod-tag-value' name='Tag[]' value='" . $Tag->Tag_ID . "'  onclick='UPCP_Filer_Results_OR(); UPCPHighlight(this, \"" . $Color . "\");'>" . $Tag->Tag_Name . "\n";}
 								elseif ($Filter  == "Javascript") {$SidebarString .= "<input type='checkbox' class='jquery-prod-tag-value' name='Tag[]' value='" . $Tag->Tag_ID . "'  onclick='UPCP_Filer_Results(); UPCPHighlight(this, \"" . $Color . "\");'> " . $Tag->Tag_Name . "\n";}
-								else {$SidebarString .= "<input type='checkbox' class='jquery-prod-tag-value' name='Tag[]' value='" . $Tag->Tag_ID . "'  onclick='UPCP_Ajax_Filter(); UPCPHighlight(this, \"" . $Color . "\");'>" . $Tag->Tag_Name . "\n";}
+								else {$SidebarString .= "<input type='checkbox' class='jquery-prod-tag-value' name='Tag[]' value='" . $Tag->Tag_ID . "'  onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");'>" . $Tag->Tag_Name . "\n";}
 								$SidebarString .= "</div>";
 						}
 				$SidebarString .= "</div>\n";
@@ -843,7 +851,7 @@ function SearchProductName($Item_ID, $ProductName, $ProductDescription, $SearchN
 		return $NameSearchMatch;
 }
 
-function CheckPagination($Product_Count, $products_per_page, $current_page) {
+function CheckPagination($Product_Count, $products_per_page, $current_page, $Filtered = "No") {
 		if ($Product_Count >= ($products_per_page * ($current_page - 1))) {
 			  if ($Product_Count < ($products_per_page * $current_page)) {
 						return "OK";
@@ -853,7 +861,8 @@ function CheckPagination($Product_Count, $products_per_page, $current_page) {
 				}
 		}
 		
-		return "Under";
+		if ($Filtered == "Yes") {return "Filtered";}
+		else {return "Under";}
 }
 
 function ConvertCustomFields($Description) {

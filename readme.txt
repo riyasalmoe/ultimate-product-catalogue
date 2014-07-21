@@ -118,6 +118,10 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4 =
+- Added pagination, allowing large catalogues to be split onto multiple pages
+- Fixed a small display error
+ 
 = 2.3.12 =
 - Catalogue product count should now be accurate
 - Product page grid widths, heights and margins are now adjustable

@@ -19,7 +19,7 @@ function UPCPHighlight(Field, Color) {
 		}
 }
 
-function DisplayPage(PageNum) {
+function UPCP_DisplayPage(PageNum) {
 		jQuery('#upcp-current-page').html(PageNum);
 		UPCP_Ajax_Filter();
 }
