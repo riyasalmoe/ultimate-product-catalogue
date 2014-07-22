@@ -83,7 +83,7 @@ echo "</script>";
 </div>
 </div>
 <button value='Save Grid' id='gridster-button'>Save Layout</button>
-<a class='confirm' href='admin.php?page=UPCP-options&Action=UPCP_RestoreDefaultPPLayout&DisplayPage=ProductPage'><button id='gridster-reset'>Restore Default</button></a>
+<a class='confirm-restore' href='admin.php?page=UPCP-options&Action=UPCP_RestoreDefaultPPLayout&DisplayPage=ProductPage'><button id='gridster-reset'>Restore Default</button></a>
 </div><!-- /#menu-settings-column -->
 			
 <!-- Show the products and categories currently in the catalogue, give the user the
