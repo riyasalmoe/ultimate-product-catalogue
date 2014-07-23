@@ -22,7 +22,7 @@
 	padding: 0 !important;
 }
 .hidden-field {
-  display:none;
+  display:none !important;
 	opacity: 0;
 }
 .upcp-no-pointer {
@@ -87,6 +87,10 @@
 		.prod-cat {
         width: 72.35%;
     }
+		.prod-cat.hidden-field {
+  			display:none;
+				opacity: 0;
+		}
 }
 /*** Screen width under 747px ***/
 @media only screen and (max-width: 747px) {
@@ -112,6 +116,10 @@
 		.prod-cat-header-padding {
 		    width:0px;
 		}
+		.prod-cat.hidden-field {
+  			display:none;
+				opacity: 0;
+		}
 }
 @media only screen and (max-width: 664px){
 		.prod-cat-inner,
@@ -124,6 +132,10 @@
 				padding-left: 0;
 				padding-right: 0;
 				width: 98%;
+		}
+		.prod-cat.hidden-field {
+  			display:none;
+				opacity: 0;
 		}
 }
 

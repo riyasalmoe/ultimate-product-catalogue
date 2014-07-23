@@ -119,6 +119,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.3 =
+- Fixed a responsive CSS error that was stopping clicks from being able to be clicked
+
 = 2.4.2 =
 - Fixed an error where multiple custom fields being uploaded from a spreadsheet would sometimes fail
 - Added a Russian translation
