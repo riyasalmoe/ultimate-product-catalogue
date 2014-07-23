@@ -715,7 +715,7 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 		// Creates an array of the field names which are going to be inserted into the database
 		// and then turns that array into a string so that it can be used in the query
 		for ($column = 0; $column < $highestColumnIndex; $column++) {
-				if ($Allowed_Fields[$Titles[$column]] != "Tags_Names_String") {$Fields[] = $Allowed_Fields[$Titles[$column]];}
+				if ($Allowed_Fields[$Titles[$column]] != "Tags_Names_String" and !array_key_exists($column, $Custom_Fields)) {$Fields[] = $Allowed_Fields[$Titles[$column]];}
 				if ($Allowed_Fields[$Titles[$column]] == "Category_Name") {$Category_Column = $column; $Fields[] = "Category_ID";}
 				if ($Allowed_Fields[$Titles[$column]] == "SubCategory_Name") {$SubCategory_Column = $column; $Fields[] = "SubCategory_ID";}
 				if ($Allowed_Fields[$Titles[$column]] == "Tags_Names_String") {$Tags_Column = $column;}

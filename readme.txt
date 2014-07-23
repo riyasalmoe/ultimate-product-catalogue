@@ -51,6 +51,7 @@ Tutorial videos available in the FAQ section.
 * Dutch (Thanks to Martin S.)
 * Italian
 * Lithuanian (thanks to <a href='http://wordpress.org/support/profile/adart'>AdArt</a>);
+* Russian (thanks to Alexander M.)
 * Spanish (thanks to Irene L.)
 * Turkish (thanks to Ayhan)
 
@@ -118,6 +119,10 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.2 =
+- Fixed an error where multiple custom fields being uploaded from a spreadsheet would sometimes fail
+- Added a Russian translation
+
 = 2.4.1 =
 - Fixed a custom fields error
 - Changed the text on the product pages restore confirmation
