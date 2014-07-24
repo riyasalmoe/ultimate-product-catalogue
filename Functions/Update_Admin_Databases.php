@@ -787,7 +787,9 @@ function Delete_UPCP_Product($Item_ID) {
 		global $items_table_name;
 		global $item_images_table_name;
 		global $categories_table_name;
-		global $subcategories_table_name;	
+		global $subcategories_table_name;
+		global $tags_table_name;
+		global $tagged_items_table_name;	
 		
 		// Delete the tagged item in the tagged items table for the given Item_ID
 		// and update the Item_Count column in the tags table in the database		

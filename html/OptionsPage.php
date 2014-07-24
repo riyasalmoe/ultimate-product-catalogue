@@ -109,9 +109,9 @@
 </td>
 </tr>
 <tr>
-<th scope="row">Tag Logic (for javascript filtering)</th>
+<th scope="row">Tag Logic</th>
 <td>
-	<fieldset><legend class="screen-reader-text"><span>Tag LogicTag Logic (for javascript filtering)</span></legend>
+	<fieldset><legend class="screen-reader-text"><span>Tag Logic</span></legend>
 	<label title='AND'><input type='radio' name='tag_logic' value='AND' <?php if($Tags == "AND") {echo "checked='checked'";} ?> /> <span>Selected Tags use 'AND'</span></label><br />
 	<label title='OR'><input type='radio' name='tag_logic' value='OR' <?php if($Tags == "OR") {echo "checked='checked'";} ?> /> <span>Selected Tags use 'OR'</span></label><br />
 	</fieldset>

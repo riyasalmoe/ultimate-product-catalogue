@@ -139,6 +139,8 @@ function Insert_Product_Catalog($atts) {
 						$ProdTag = ObjectToArray($ProdTagObj);
 						
 						$NameSearchMatch = SearchProductName($Product->Item_ID, $Product->Item_Name, $Product->Item_Description, $prod_name, $CaseInsensitiveSearch, $ProductSearch);
+						if (sizeOf($tags) == 0) {$Tag_Check = "Yes";}
+						else {$Tag_Check = CheckTags($tags, $ProdTag, $Tag_Logic);}
 						if ($products_per_page < 1000000) {$Pagination_Check = CheckPagination($Product_Count, $products_per_page, $current_page, $Filtered);}
 						else {$Pagination_Check = "OK";}
 						
@@ -146,7 +148,7 @@ function Insert_Product_Catalog($atts) {
 						if ($Product->Item_Display_Status != "Hide") {
 						if (sizeOf($category) == 0 or in_array($Product->Category_ID, $category)) {
 						if (sizeOf($subcategory) == 0 or in_array($Product->SubCategory_ID, $subcategory)) {
-						if (sizeOf($tags) == 0 or count(array_intersect($tags, $ProdTag)) > 0) {
+						if ($Tag_Check == "Yes") {
 						if ($Pagination_Check == "OK") {
 						$HeaderBar .= "<a id='hidden_FB_link-" . $CatalogueItem->Item_ID . "' class='fancybox' href='#prod-cat-addt-details-" . $CatalogueItem->Item_ID . "'></a>";
 						if (!in_array("Thumbnail", $ExcludedLayouts)) {$ProdThumbString .= AddProduct("Thumbnail", $CatalogueItem->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
@@ -184,13 +186,15 @@ function Insert_Product_Catalog($atts) {
 								$ProdTag = ObjectToArray($ProdTagObj);
 								
 								$NameSearchMatch = SearchProductName($Product->Item_ID, $Product->Item_Name, $Product->Item_Description, $prod_name, $CaseInsensitiveSearch, $ProductSearch);
+								if (sizeOf($tags) == 0) {$Tag_Check = "Yes";}
+								else {$Tag_Check = CheckTags($tags, $ProdTag, $Tag_Logic);}
 								if ($products_per_page < 1000000) {$Pagination_Check = CheckPagination($Product_Count, $products_per_page, $current_page, $Filtered);}
 								else {$Pagination_Check = "OK";}
 								
 								if ($NameSearchMatch == "Yes") {
 								if ($Product->Item_Display_Status != "Hide") {
 								if (sizeOf($subcategory) == 0 or in_array($Product->SubCategory_ID, $subcategory)) {
-								if (sizeOf($tags) == 0 or count(array_intersect($tags, $ProdTag)) > 0) {
+								if ($Tag_Check == "Yes") {
 								if ($Pagination_Check == "OK") {
 								$HeaderBar .= "<a id='hidden_FB_link-" . $Product->Item_ID . "' class='fancybox' href='#prod-cat-addt-details-" . $Product->Item_ID . "'></a>";
 								if (!in_array("Thumbnail", $ExcludedLayouts)) {$ProdThumbString .= AddProduct("Thumbnail", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
@@ -230,13 +234,15 @@ function Insert_Product_Catalog($atts) {
 								$ProdTag = ObjectToArray($ProdTagObj);
 								
 								$NameSearchMatch = SearchProductName($Product->Item_ID, $Product->Item_Name, $Product->Item_Description, $prod_name, $CaseInsensitiveSearch, $ProductSearch);
+								if (sizeOf($tags) == 0) {$Tag_Check = "Yes";}
+								else {$Tag_Check = CheckTags($tags, $ProdTag, $Tag_Logic);}
 								if ($products_per_page < 1000000) {$Pagination_Check = CheckPagination($Product_Count, $products_per_page, $current_page, $Filtered);}
 								else {$Pagination_Check = "OK";}
 								
 								if ($NameSearchMatch == "Yes") {
 								if ($Product->Item_Display_Status != "Hide") {
 								if (sizeOf($category) == 0 or in_array($Product->Category_ID, $category)) {
-								if (sizeOf($tags) == 0 or count(array_intersect($tags, $ProdTag)) > 0) {
+								if ($Tag_Check == "Yes") {
 								if ($Pagination_Check == "OK") {
 								$HeaderBar .= "<a id='hidden_FB_link-" . $Product->Item_ID . "' class='fancybox' href='#prod-cat-addt-details-" . $Product->Item_ID . "'></a>";
 								if (!in_array("Thumbnail", $ExcludedLayouts)) {$ProdThumbString .= AddProduct("Thumbnail", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
@@ -849,6 +855,17 @@ function SearchProductName($Item_ID, $ProductName, $ProductDescription, $SearchN
 		}
 		
 		return $NameSearchMatch;
+}
+
+function CheckTags($tags, $ProdTag, $Tag_Logic) {
+		if ($Tag_Logic == "OR") {
+			  if (count(array_intersect($tags, $ProdTag)) > 0) {return "Yes";}
+		}
+		else {
+				if (count(array_intersect($tags, $ProdTag)) == sizeOf($tags)) {return "Yes";}
+		}
+		
+		return "No";
 }
 
 function CheckPagination($Product_Count, $products_per_page, $current_page, $Filtered = "No") {
