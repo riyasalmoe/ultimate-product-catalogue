@@ -119,6 +119,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.4 =
+- Fixed the filtering errors with "Molbile Stylesheet"
+
 = 2.4.3 =
 - Fixed a responsive CSS error that was stopping clicks from being able to be clicked
 

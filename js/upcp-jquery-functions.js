@@ -40,10 +40,10 @@ function UPCP_Ajax_Filter() {
 		jQuery('.jquery-prod-cat-value').each(function() {if (jQuery(this).prop('checked')) {CatValues.push(jQuery(this).val());}});
 		jQuery('.jquery-prod-sub-cat-value').each(function() {if (jQuery(this).prop('checked')) {SubCatValues.push(jQuery(this).val());}});
 		jQuery('.jquery-prod-tag-value').each(function() {if (jQuery(this).prop('checked')) {TagBoxValues.push(jQuery(this).val());}});
-		var SelectedProdName = jQuery('.jquery-prod-name-text').val();
+		if (jQuery('.prod-cat-sidebar').css('display') == "none") {var SelectedProdName = jQuery('#upcp-mobile-search').val();}
+		else {var SelectedProdName = jQuery('#upcp-name-search').val();}
 		
 		jQuery('.prod-cat-inner').html('<h3>Updating results...</h3>');
-		
 		RequestCount = RequestCount + 1;
 		var data = 'id=' + id + '&sidebar=' + sidebar + '&start_layout=' + start_layout + '&excluded_layouts=' + excluded_layouts + '&ajax_url=' + base_url + '&current_page=' + current_page + '&ajax_reload=Yes' + '&Prod_Name=' + SelectedProdName + '&Category=' + CatValues + '&SubCategory=' + SubCatValues + '&Tags=' + TagBoxValues + '&request_count=' + RequestCount + '&action=update_catalogue';
 		jQuery.post(ajaxurl, data, function(response) {
