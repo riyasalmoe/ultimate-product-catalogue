@@ -119,6 +119,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.6 =
+- Fixed sorting by name error
+
 = 2.4.5 =
 - Extended "AND" logic for Tags to AJAX filtering
 - Fixed a small error with "Delete All Products"

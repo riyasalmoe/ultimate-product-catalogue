@@ -289,7 +289,7 @@ function SortByNameASC() {
         jQuery('.thumb-display div .prod-cat-title').sortElements(function(a, b){
 						return jQuery(a).text() > jQuery(b).text() ? 1 : -1;
         }, function() {
-						return this.parentNode.parentNode;
+						return this.parentNode; //here
 				});
 				jQuery('.list-display div .prod-cat-title').sortElements(function(a, b){
 						return jQuery(a).text() > jQuery(b).text() ? 1 : -1;
@@ -299,7 +299,7 @@ function SortByNameASC() {
 				jQuery('.detail-display div .prod-cat-title').sortElements(function(a, b){
 						return jQuery(a).text() > jQuery(b).text() ? 1 : -1;
         }, function() {
-						return this.parentNode.parentNode;
+						return this.parentNode.parentNode; //here
 				});
 }
 
@@ -307,17 +307,17 @@ function SortByNameDESC() {
         jQuery('.thumb-display div .prod-cat-title').sortElements(function(a, b){
 						return jQuery(a).text() < jQuery(b).text() ? 1 : -1;
         }, function() {
-						return this.parentNode.parentNode;
+						return this.parentNode; //here
 				});
 				jQuery('.list-display div .prod-cat-title').sortElements(function(a, b){
 						return jQuery(a).text() < jQuery(b).text() ? 1 : -1;
         }, function() {
-						return this.parentNode;
+						return this.parentNode; 
 				});
 				jQuery('.detail-display div .prod-cat-title').sortElements(function(a, b){
 						return jQuery(a).text() < jQuery(b).text() ? 1 : -1;
         }, function() {
-						return this.parentNode.parentNode;
+						return this.parentNode.parentNode; //here
 				});
 }
 
@@ -335,7 +335,7 @@ function SortByPriceASC() {
 				jQuery('.detail-display div .prod-cat-price').sortElements(function(a, b){
 						return Number(jQuery(a).text()) > Number(jQuery(b).text()) ? 1 : -1;
         }, function() {
-						return this.parentNode.parentNode;
+						return this.parentNode.parentNode; 
 				});
 }
 
@@ -353,7 +353,7 @@ function SortByPriceDESC() {
 				jQuery('.detail-display div .prod-cat-price').sortElements(function(a, b){
 						return Number(jQuery(a).text()) < Number(jQuery(b).text()) ? 1 : -1;
         }, function() {
-						return this.parentNode.parentNode;
+						return this.parentNode.parentNode; 
 				});
 }
 
