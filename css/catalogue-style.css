@@ -666,12 +666,14 @@
 .upcp-standard-product-page-mobile {
   display: none;
 }
-.upcp-standard-product-page {
+.upcp-standard-product-page, 
+.upcp-custom-large-product-page {
   width: 100%;
 }
 
 @media only screen and (max-width: 670px) {
-  .upcp-standard-product-page {
+  .upcp-standard-product-page,
+	.upcp-custom-large-product-page {
 	  display: none;
 	}
 	.upcp-standard-product-page-mobile {

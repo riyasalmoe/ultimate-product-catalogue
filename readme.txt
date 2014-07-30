@@ -119,6 +119,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.8 =
+- Added an option to deal with Custom product pages on mobile devices
+
 = 2.4.7 =
 - Fixed category and sub-category count when pagination is being used
 
