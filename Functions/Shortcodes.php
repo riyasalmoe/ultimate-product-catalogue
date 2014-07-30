@@ -157,6 +157,7 @@ function Insert_Product_Catalog($atts) {
 						}
 						$Product_Count++;
 						}}}}}
+						if ($ajax_reload == "No") {FilterCount($Product, $ProdTagObj);}
 						unset($NameSearchMatch);
 				}
 				
@@ -204,6 +205,7 @@ function Insert_Product_Catalog($atts) {
 								}
 								$Product_Count++;
 								}}}}
+								if ($ajax_reload == "No") {FilterCount($Product, $ProdTagObj);}
 								unset($NameSearchMatch);
 						}
 						
@@ -251,11 +253,12 @@ function Insert_Product_Catalog($atts) {
 								}
 								$Product_Count++;
 								}}}}
+								if ($ajax_reload == "No") {FilterCount($Product, $ProdTagObj);}
 								unset($NameSearchMatch);
 						}
 				}}
 				
-				if ($Pagination_Check == "Over") {break;}
+				//if ($Pagination_Check == "Over") {break;}
 		}
 				
 		$ProdThumbString .= "<div class='upcp-clear'></div>\n";
@@ -359,9 +362,9 @@ function Insert_Product_Catalog($atts) {
 						$SidebarString .= "<div id='prod-cat-sidebar-category-title-" . $id . "' class='prod-cat-sidebar-category-title'><h3>" . __("Categories:", 'UPCP') . "</h3></div>\n";
 						foreach ($Categories as $Category) {
 								$SidebarString .= "<div id='prod-cat-sidebar-category-" . $Category->Category_ID . "' class='prod-cat-sidebar-category'>\n";
-								if ($Filter  == "Javascript" and $Tag_Logic == "OR") {$SidebarString .= "<input type='checkbox' class='jquery-prod-cat-value' name='Category" . $Category->Category_ID . "' value='" . $Category->Category_ID . "' onclick='UPCP_Filer_Results_OR(); UPCPHighlight(this, \"" . $Color . "\");'>" . $Category->Category_Name . " (" . $ProdCats[$Category->Category_ID]/(3-sizeOf($ExcludedLayouts)) . ")\n";}
-								elseif ($Filter  == "Javascript") {$SidebarString .= "<input type='checkbox' class='jquery-prod-cat-value' name='Category" . $Category->Category_ID . "' value='" . $Category->Category_ID . "' onclick='UPCP_Filer_Results(); UPCPHighlight(this, \"" . $Color . "\");'>" . $Category->Category_Name . " (" . $ProdCats[$Category->Category_ID]/(3-sizeOf($ExcludedLayouts)) . ")\n";}
-								else {$SidebarString .= "<input type='checkbox' class='jquery-prod-cat-value' name='Category" . $Category->Category_ID . "' value='" . $Category->Category_ID . "' onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");'> " . $Category->Category_Name . " (" . $ProdCats[$Category->Category_ID]/(3-sizeOf($ExcludedLayouts)) . ")\n";}
+								if ($Filter  == "Javascript" and $Tag_Logic == "OR") {$SidebarString .= "<input type='checkbox' class='jquery-prod-cat-value' name='Category" . $Category->Category_ID . "' value='" . $Category->Category_ID . "' onclick='UPCP_Filer_Results_OR(); UPCPHighlight(this, \"" . $Color . "\");'>" . $Category->Category_Name . " (" . $ProdCats[$Category->Category_ID] . ")\n";}
+								elseif ($Filter  == "Javascript") {$SidebarString .= "<input type='checkbox' class='jquery-prod-cat-value' name='Category" . $Category->Category_ID . "' value='" . $Category->Category_ID . "' onclick='UPCP_Filer_Results(); UPCPHighlight(this, \"" . $Color . "\");'>" . $Category->Category_Name . " (" . $ProdCats[$Category->Category_ID] . ")\n";}
+								else {$SidebarString .= "<input type='checkbox' class='jquery-prod-cat-value' name='Category" . $Category->Category_ID . "' value='" . $Category->Category_ID . "' onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");'> " . $Category->Category_Name . " (" . $ProdCats[$Category->Category_ID] . ")\n";}
 								$SidebarString .= "</div>\n";
 						}
 						$SidebarString .= "</div>\n";
@@ -373,9 +376,9 @@ function Insert_Product_Catalog($atts) {
 						$SidebarString .= "<div id='prod-cat-sidebar-subcategory-title-" . $id . "' class='prod-cat-sidebar-subcategory-title'><h3>" . __("Sub-Categories:", 'UPCP') . "</h3></div>\n";
 						foreach ($SubCategories as $SubCategory) {
 								$SidebarString .= "<div id='prod-cat-sidebar-subcategory-" . $SubCategory->SubCategory_ID . "' class='prod-cat-sidebar-subcategory'>\n";
-								if ($Filter  == "Javascript" and $Tag_Logic == "OR") {$SidebarString .= "<input type='checkbox' class='jquery-prod-sub-cat-value' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_Filer_Results_OR(); UPCPHighlight(this, \"" . $Color . "\");'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID]/(3-sizeOf($ExcludedLayouts)) . ")\n";}
-								elseif ($Filter  == "Javascript") {$SidebarString .= "<input type='checkbox' class='jquery-prod-sub-cat-value' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_Filer_Results(); UPCPHighlight(this, \"" . $Color . "\");'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID]/(3-sizeOf($ExcludedLayouts)) . ")\n";}
-								else {$SidebarString .= "<input type='checkbox' class='jquery-prod-sub-cat-value' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID]/(3-sizeOf($ExcludedLayouts)) . ")\n";}
+								if ($Filter  == "Javascript" and $Tag_Logic == "OR") {$SidebarString .= "<input type='checkbox' class='jquery-prod-sub-cat-value' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_Filer_Results_OR(); UPCPHighlight(this, \"" . $Color . "\");'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID] . ")\n";}
+								elseif ($Filter  == "Javascript") {$SidebarString .= "<input type='checkbox' class='jquery-prod-sub-cat-value' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_Filer_Results(); UPCPHighlight(this, \"" . $Color . "\");'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID] . ")\n";}
+								else {$SidebarString .= "<input type='checkbox' class='jquery-prod-sub-cat-value' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID] . ")\n";}
 								$SidebarString .= "</div>\n";
 						}
 						$SidebarString .= "</div>\n";
@@ -479,12 +482,9 @@ function AddProduct($format, $Item_ID, $Product, $Tags, $AjaxReload = "No", $Aja
 				$PhotoURL = plugins_url('ultimate-product-catalogue/images/No-Photo-Available.jpg');
 				$PhotoCode = "<img src='" . $PhotoURL . "' alt='" . $Product->Item_Name . " Image' id='prod-cat-thumb-" . $Product->Item_ID . "' class='prod-cat-thumb-image upcp-thumb-image'>";
 		}
-						
-		// Increment the arrays keeping count of the number of products in each 
-		// category, sub-category and tag
-		$ProdCats[$Product->Category_ID]++;
-		$ProdSubCats[$Product->SubCategory_ID]++;
-		foreach ($Tags as $Tag) {$ProdTags[$Tag->Tag_ID]++; $TagsString .= $Tag->Tag_ID . ", ";}
+		
+		//Create the tag string for filtering
+		foreach ($Tags as $Tag) {$TagsString .= $Tag->Tag_ID . ", ";}
 		$TagsString = trim($TagsString, " ,");
 		
 		// Check whether the FancyBox for WordPress plugin is activated
@@ -828,6 +828,16 @@ function SingleProductPage() {
 		}
 		
 		return $ProductString;
+}
+
+function FilterCount($Product, $Tags) {
+		global $ProdCats, $ProdSubCats, $ProdTags;
+		
+		// Increment the arrays keeping count of the number of products in each 
+		// category, sub-category and tag
+		$ProdCats[$Product->Category_ID]++;
+		$ProdSubCats[$Product->SubCategory_ID]++;
+		foreach ($Tags as $Tag) {$ProdTags[$Tag->Tag_ID]++;}
 }
 
 function SearchProductName($Item_ID, $ProductName, $ProductDescription, $SearchName, $CaseInsensitive, $SearchLocation) {

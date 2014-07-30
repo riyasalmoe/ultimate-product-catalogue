@@ -119,6 +119,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.7 =
+- Fixed category and sub-category count when pagination is being used
+
 = 2.4.6 =
 - Fixed sorting by name error
 
