@@ -119,6 +119,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.9 =
+- Fixed two custom product page image bugs
+
 = 2.4.8 =
 - Added an option to deal with Custom product pages on mobile devices
 

@@ -659,10 +659,12 @@ function SingleProductPage() {
 		elseif ($Product->Item_Photo_URL != "" and strlen($Product->Item_Photo_URL) > 7) {
 				$PhotoURL = htmlspecialchars($Product->Item_Photo_URL, ENT_QUOTES);
 				$PhotoCode .= "<img src='" . $PhotoURL . "' alt='" . $Product->Item_Name . " Image' id='prod-cat-addt-details-main-" . $Product->Item_ID . "' class='prod-cat-addt-details-main'>";
+				$PhotoCodeMobile .= "<img src='" . $PhotoURL . "' alt='" . $Product->Item_Name . " Image' id='prod-cat-addt-details-main-mobile-" . $Product->Item_ID . "' class='prod-cat-addt-details-main'>";
 		}
 		else {
 				$PhotoURL = plugins_url('ultimate-product-catalogue/images/No-Photo-Available.jpg');
 				$PhotoCode .= "<img src='" . $PhotoURL . "' alt='" . $Product->Item_Name . " Image' id='prod-cat-addt-details-main-" . $Product->Item_ID . "' class='prod-cat-addt-details-main'>";
+				$PhotoCodeMobile .= "<img src='" . $PhotoURL . "' alt='" . $Product->Item_Name . " Image' id='prod-cat-addt-details-main-mobile-" . $Product->Item_ID . "' class='prod-cat-addt-details-main'>";
 		}
 		
 		$uri_parts = explode('?', $_SERVER['REQUEST_URI'], 2);
@@ -709,7 +711,7 @@ function SingleProductPage() {
 				
 				$ProductString .= "<h2 class='prod-cat-addt-details-title'><a class='no-underline' href='http://" . $_SERVER['HTTP_HOST'] . $SP_Perm_URL . "'>" . $Product->Item_Name . "<img class='upcp-product-url-icon' src='" . get_bloginfo('wpurl') . "/wp-content/plugins/ultimate-product-catalogue/images/insert_link.png' /></a></h2>";
 				if ($Single_Page_Price == "Yes") {$ProductString .= "<h3 class='prod-cat-addt-details-price'>" . $Product->Item_Price . "</h3>";}
-				$ProductString .= $PhotoCode;
+				$ProductString .= $PhotoCodeMobile;
 				$ProductString .= "<div class='upcp-clear'></div>";
 		
 				$ProductString .= "<div id='prod-cat-addt-details-" . $Product->Item_ID . "' class='prod-cat-addt-details'>";
@@ -727,7 +729,7 @@ function SingleProductPage() {
 				$ProductString .= "</div>\n";
 		}
 		else {
-				if ($Custom_Product_Page = "Large") {$ProductString .= "<div class='upcp-custom-large-product-page'>";}
+				if ($Custom_Product_Page == "Large") {$ProductString .= "<div class='upcp-custom-large-product-page'>";}
 				
 				echo "<script language='JavaScript' type='text/javascript'>";
 				echo "var pp_grid_width = " . $PP_Grid_Width . ";";
@@ -839,12 +841,12 @@ function SingleProductPage() {
 				
 						$ProductString .= "<h2 class='prod-cat-addt-details-title'><a class='no-underline' href='http://" . $_SERVER['HTTP_HOST'] . $SP_Perm_URL . "'>" . $Product->Item_Name . "<img class='upcp-product-url-icon' src='" . get_bloginfo('wpurl') . "/wp-content/plugins/ultimate-product-catalogue/images/insert_link.png' /></a></h2>";
 						if ($Single_Page_Price == "Yes") {$ProductString .= "<h3 class='prod-cat-addt-details-price'>" . $Product->Item_Price . "</h3>";}
-						$ProductString .= $PhotoCode;
+						$ProductString .= $PhotoCodeMobile;
 						$ProductString .= "<div class='upcp-clear'></div>";
 		
 						$ProductString .= "<div id='prod-cat-addt-details-" . $Product->Item_ID . "' class='prod-cat-addt-details'>";
 						$ProductString .= "<div id='prod-cat-addt-details-thumbs-div-" . $Product->Item_ID . "' class='prod-cat-addt-details-thumbs-div'>";
-						if (isset($PhotoURL)) {$ProductString .= "<img src='" . $PhotoURL . "' id='prod-cat-addt-details-thumb-P". $Product->Item_ID . "' class='prod-cat-addt-details-thumb' onclick='ZoomImage(\"" . $Product->Item_ID . "\", \"0\");'>";}
+						if (isset($PhotoURL)) {$ProductString .= "<img src='" . $PhotoURL . "' id='prod-cat-addt-details-thumb-P1-". $Product->Item_ID . "' class='prod-cat-addt-details-thumb' onclick='ZoomImage(\"" . $Product->Item_ID . "\", \"0\");'>";}
 						foreach ($Item_Images as $Image) {$ProductString .= "<img src='" . htmlspecialchars($Image->Item_Image_URL, ENT_QUOTES) . "' id='prod-cat-addt-details-thumb-". $Image->Item_Image_ID . "' class='prod-cat-addt-details-thumb' onclick='ZoomImage(\"" . $Product->Item_ID . "\", \"" . $Image->Item_Image_ID . "\");'>";}
 						$ProductString .= "<div class='upcp-clear'></div>";
 						$ProductString .= "</div>";
