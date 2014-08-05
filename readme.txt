@@ -119,6 +119,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.10 =
+- Fixed an error when custom fields and tags were uploaded in the same sheet
+
 = 2.4.9 =
 - Fixed two custom product page image bugs
 

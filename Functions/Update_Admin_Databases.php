@@ -723,7 +723,7 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 		$FieldsString = implode(",", $Fields);
 		
 		$ShowStatus = "Show";
-
+		$wpdb->show_errors();
 		// Create the query to insert the products one at a time into the database and then run it
 		foreach ($Data as $Product) {
 				
@@ -752,8 +752,8 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 							$wpdb->prepare("INSERT INTO $items_table_name (" . $FieldsString . ", Item_Display_Status) VALUES ('" . $ValuesString . "','%s')", $ShowStatus)
 				);
 				
+				$Item_ID = $wpdb->insert_id;
 				if (is_array($Tags_Names_Array)) {
-					  $Item_ID = $wpdb->insert_id;
 						foreach ($Tags_Names_Array as $Tag_Name) {
 								$Trimmed_Name = trim($Tag_Name);
 								$Tag_ID = $Tags[$Trimmed_Name];
@@ -763,7 +763,6 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 				}
 				
 				if (is_array($Custom_Fields_To_Insert)) {
-					  $Item_ID = $wpdb->insert_id;
 						foreach ($Custom_Fields_To_Insert as $Field => $Value) {
 								$Trimmed_Field = trim($Field);
 								$Field_ID = $Field_IDs[$Trimmed_Field];
