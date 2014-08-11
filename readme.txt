@@ -119,6 +119,10 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.11 =
+- Current layout is now saved when visitors switch pages using pagination
+- Fixed a height error for pagination
+
 = 2.4.10 =
 - Fixed an error when custom fields and tags were uploaded in the same sheet
 

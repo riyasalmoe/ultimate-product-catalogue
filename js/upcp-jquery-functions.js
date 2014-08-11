@@ -33,6 +33,7 @@ function UPCP_Ajax_Filter() {
 		var id = jQuery('#upcp-catalogue-id').html();
 		var sidebar = jQuery('#upcp-catalogue-sidebar').html();
 		var start_layout = jQuery('#upcp-starting-layout').html();
+		var current_layout = jQuery('#upcp-current-layout').html();
 		var excluded_layouts = jQuery('#upcp-excluded-layouts').html();
 		var current_page = jQuery('#upcp-current-page').html();
 		var base_url = jQuery('#upcp-base-url').html();
@@ -45,13 +46,14 @@ function UPCP_Ajax_Filter() {
 		
 		jQuery('.prod-cat-inner').html('<h3>Updating results...</h3>');
 		RequestCount = RequestCount + 1;
-		var data = 'id=' + id + '&sidebar=' + sidebar + '&start_layout=' + start_layout + '&excluded_layouts=' + excluded_layouts + '&ajax_url=' + base_url + '&current_page=' + current_page + '&ajax_reload=Yes' + '&Prod_Name=' + SelectedProdName + '&Category=' + CatValues + '&SubCategory=' + SubCatValues + '&Tags=' + TagBoxValues + '&request_count=' + RequestCount + '&action=update_catalogue';
+		var data = 'id=' + id + '&sidebar=' + sidebar + '&start_layout=' + current_layout + '&excluded_layouts=' + excluded_layouts + '&ajax_url=' + base_url + '&current_page=' + current_page + '&ajax_reload=Yes' + '&Prod_Name=' + SelectedProdName + '&Category=' + CatValues + '&SubCategory=' + SubCatValues + '&Tags=' + TagBoxValues + '&request_count=' + RequestCount + '&action=update_catalogue';
 		jQuery.post(ajaxurl, data, function(response) {
 				response = response.substring(0, response.length - 1);
 				var parsed_response = jQuery.parseJSON(response);
 				if (parsed_response.request_count == RequestCount) {
 					  jQuery('.prod-cat-inner').html(parsed_response.message);
 						ResetFancyBoxes();
+						adjustCatalogueHeight();
 				}
 		});
 }
@@ -169,6 +171,7 @@ function ToggleView(DisplayType) {
 				jQuery('.detail-display').animate({opacity: 0}, 500);
 				setTimeout(function(){jQuery('.thumb-display').animate({opacity: 1}, 500);})
 				jQuery('.thumb-display').removeClass('hidden-field');
+				jQuery('#upcp-current-layout').html('Thumbnail');
 				setTimeout(function(){jQuery('.list-display').addClass('hidden-field');})
 				setTimeout(function(){jQuery('.detail-display').addClass('hidden-field');})
 		}
@@ -177,6 +180,7 @@ function ToggleView(DisplayType) {
 				jQuery('.detail-display').animate({opacity: 0}, 500);
 				setTimeout(function(){jQuery('.list-display').animate({opacity: 1}, 500);})
 				jQuery('.list-display').removeClass('hidden-field');
+				jQuery('#upcp-current-layout').html('List');
 				setTimeout(function(){jQuery('.thumb-display').addClass('hidden-field');})
 				setTimeout(function(){jQuery('.detail-display').addClass('hidden-field');})
 		}
@@ -185,6 +189,7 @@ function ToggleView(DisplayType) {
 				jQuery('.thumb-display').animate({opacity: 0}, 500);
 				setTimeout(function(){jQuery('.detail-display').animate({opacity: 1}, 500);})
 				jQuery('.detail-display').removeClass('hidden-field');
+				jQuery('#upcp-current-layout').html('Detail');
 				setTimeout(function(){jQuery('.list-display').addClass('hidden-field');})
 				setTimeout(function(){jQuery('.thumb-display').addClass('hidden-field');})
 		}
