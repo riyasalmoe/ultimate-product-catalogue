@@ -119,6 +119,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.12 =
+- In the sidebar, Category, Sub-Category and Tag checkboxes should now be ordered by date created
+
 = 2.4.11 =
 - Current layout is now saved when visitors switch pages using pagination
 - Fixed a height error for pagination

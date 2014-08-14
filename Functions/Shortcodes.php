@@ -322,9 +322,9 @@ function Insert_Product_Catalog($atts) {
 		// If the sidebar is requested, add it
 		if (($sidebar == "Yes" or $sidebar == "yes" or $sidebar == "YES") and $only_inner != "Yes") {
 				// Get the categories, sub-categories and tags that apply to the products in the catalog
-				if ($ProdCatString != "") {$Categories = $wpdb->get_results("SELECT Category_ID, Category_Name FROM $categories_table_name WHERE Category_ID in (" . $ProdCatString . ")");}
-				if ($ProdSubCatString != "") {$SubCategories = $wpdb->get_results("SELECT SubCategory_ID, SubCategory_Name FROM $subcategories_table_name WHERE SubCategory_ID in (" . $ProdSubCatString . ")");}
-				if ($ProdTagString != "") {$Tags = $wpdb->get_results("SELECT Tag_ID, Tag_Name FROM $tags_table_name WHERE Tag_ID in (" . $ProdTagString . ")");}
+				if ($ProdCatString != "") {$Categories = $wpdb->get_results("SELECT Category_ID, Category_Name FROM $categories_table_name WHERE Category_ID in (" . $ProdCatString . ") ORDER BY Category_Date_Created");}
+				if ($ProdSubCatString != "") {$SubCategories = $wpdb->get_results("SELECT SubCategory_ID, SubCategory_Name FROM $subcategories_table_name WHERE SubCategory_ID in (" . $ProdSubCatString . ") ORDER BY SubCategory_Date_Created");}
+				if ($ProdTagString != "") {$Tags = $wpdb->get_results("SELECT Tag_ID, Tag_Name FROM $tags_table_name WHERE Tag_ID in (" . $ProdTagString . ") ORDER BY Tag_Date_Created");}
 				else {$Tags = array();}
 				
 				$SidebarString .= "<div id='prod-cat-sidebar-" . $id . "' class='prod-cat-sidebar'>\n";
