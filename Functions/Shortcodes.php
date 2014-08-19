@@ -68,13 +68,16 @@ function Insert_Product_Catalog($atts) {
 		if ($excluded_layouts != "None") {$Excluded_Layouts = explode(",", $excluded_layouts);}
 		else {$Excluded_Layouts = array();}
 		
-		if ($category == "") {$category = array();}
+		if (isset($_GET['categories'])) {$category = explode(",", $_GET['categories']);}	
+		elseif ($category == "") {$category = array();}
 		else {$category = explode(",", $category);}	
-		if ($subcategory == "") {$subcategory = array();}
+		if (isset($_GET['sub-categories'])) {$subcategory = explode(",", $_GET['sub-categories']);}	
+		elseif ($subcategory == "") {$subcategory = array();}
 		else {$subcategory = explode(",", $subcategory);}	
-		if ($tags == "") {$tags = array();}
+		if (isset($_GET['tags'])) {$tags = explode(",", $_GET['tags']);}	
+		elseif ($tags == "") {$tags = array();}
 		else {$tags = explode(",", $tags);}	
-		
+
 		//Pagination early work
 		if ($products_per_page == "") {$products_per_page = $Products_Per_Page;}
 		if ($category != "" or $subcategory != "" or $tags != "" or $prod_name != "") {$Filtered = "Yes";}
@@ -362,10 +365,16 @@ function Insert_Product_Catalog($atts) {
 					  $SidebarString .= "<div id='prod-cat-sidebar-category-div-" . $id . "' class='prod-cat-sidebar-category-div'>\n";
 						$SidebarString .= "<div id='prod-cat-sidebar-category-title-" . $id . "' class='prod-cat-sidebar-category-title'><h3>" . __("Categories:", 'UPCP') . "</h3></div>\n";
 						foreach ($Categories as $Category) {
-								$SidebarString .= "<div id='prod-cat-sidebar-category-" . $Category->Category_ID . "' class='prod-cat-sidebar-category'>\n";
+								$SidebarString .= "<div id='prod-cat-sidebar-category-" . $Category->Category_ID . "' class='prod-cat-sidebar-category";
+								if (in_array($Category->Category_ID, $category)) {$SidebarString .= " highlightBlue";}
+								$SidebarString .= "'>\n";
 								if ($Filter  == "Javascript" and $Tag_Logic == "OR") {$SidebarString .= "<input type='checkbox' class='jquery-prod-cat-value' name='Category" . $Category->Category_ID . "' value='" . $Category->Category_ID . "' onclick='UPCP_Filer_Results_OR(); UPCPHighlight(this, \"" . $Color . "\");'>" . $Category->Category_Name . " (" . $ProdCats[$Category->Category_ID] . ")\n";}
 								elseif ($Filter  == "Javascript") {$SidebarString .= "<input type='checkbox' class='jquery-prod-cat-value' name='Category" . $Category->Category_ID . "' value='" . $Category->Category_ID . "' onclick='UPCP_Filer_Results(); UPCPHighlight(this, \"" . $Color . "\");'>" . $Category->Category_Name . " (" . $ProdCats[$Category->Category_ID] . ")\n";}
-								else {$SidebarString .= "<input type='checkbox' class='jquery-prod-cat-value' name='Category" . $Category->Category_ID . "' value='" . $Category->Category_ID . "' onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");'> " . $Category->Category_Name . " (" . $ProdCats[$Category->Category_ID] . ")\n";}
+								else {
+										$SidebarString .= "<input type='checkbox' name='Category" . $Category->Category_ID . "' value='" . $Category->Category_ID . "' onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");' class='jquery-prod-cat-value'";
+										if (in_array($Category->Category_ID, $category)) {$SidebarString .= "checked=checked";}
+										$SidebarString .= "> " . $Category->Category_Name . " (" . $ProdCats[$Category->Category_ID] . ")\n";
+								}
 								$SidebarString .= "</div>\n";
 						}
 						$SidebarString .= "</div>\n";
@@ -376,10 +385,16 @@ function Insert_Product_Catalog($atts) {
 					  $SidebarString .= "<div id='prod-cat-sidebar-subcategory-div-" . $id . "' class='prod-cat-sidebar-subcategory-div'>\n";
 						$SidebarString .= "<div id='prod-cat-sidebar-subcategory-title-" . $id . "' class='prod-cat-sidebar-subcategory-title'><h3>" . __("Sub-Categories:", 'UPCP') . "</h3></div>\n";
 						foreach ($SubCategories as $SubCategory) {
-								$SidebarString .= "<div id='prod-cat-sidebar-subcategory-" . $SubCategory->SubCategory_ID . "' class='prod-cat-sidebar-subcategory'>\n";
+								$SidebarString .= "<div id='prod-cat-sidebar-subcategory-" . $SubCategory->SubCategory_ID . "' class='prod-cat-sidebar-subcategory";
+								if (in_array($SubCategory->SubCategory_ID, $subcategory)) {$SidebarString .= " highlightBlue";}
+								$SidebarString .= "'>\n";
 								if ($Filter  == "Javascript" and $Tag_Logic == "OR") {$SidebarString .= "<input type='checkbox' class='jquery-prod-sub-cat-value' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_Filer_Results_OR(); UPCPHighlight(this, \"" . $Color . "\");'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID] . ")\n";}
 								elseif ($Filter  == "Javascript") {$SidebarString .= "<input type='checkbox' class='jquery-prod-sub-cat-value' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_Filer_Results(); UPCPHighlight(this, \"" . $Color . "\");'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID] . ")\n";}
-								else {$SidebarString .= "<input type='checkbox' class='jquery-prod-sub-cat-value' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID] . ")\n";}
+								else {
+										$SidebarString .= "<input type='checkbox' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");' class='jquery-prod-sub-cat-value'";
+										if (in_array($SubCategory->SubCategory_ID, $subcategory)) {$SidebarString .= "checked=checked";}
+										$SidebarString .= "> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID] . ")\n";
+								}
 								$SidebarString .= "</div>\n";
 						}
 						$SidebarString .= "</div>\n";
@@ -390,10 +405,16 @@ function Insert_Product_Catalog($atts) {
 					  $SidebarString .= "<div id='prod-cat-sidebar-tag-div-" . $id . "' class='prod-cat-sidebar-tag-div'>\n";
 						$SidebarString .= "<div id='prod-cat-sidebar-tag-title-" . $id . "' class='prod-cat-tag-sidebar-title'><h3>" . __("Tags:", 'UPCP') . "</h3></div>\n";
 						foreach ($Tags as $Tag) {
-								$SidebarString .= "<div id='prod-cat-sidebar-tag-" . $Tag->Tag_ID . "' class='prod-cat-sidebar-tag'>\n";
+								$SidebarString .= "<div id='prod-cat-sidebar-tag-" . $Tag->Tag_ID . "' class='prod-cat-sidebar-tag";
+								if (in_array($Tag->Tag_ID, $tags)) {$SidebarString .= " highlightBlue";}
+								$SidebarString .= "'>\n";
 								if ($Filter  == "Javascript" and $Tag_Logic == "OR") {$SidebarString .= "<input type='checkbox' class='jquery-prod-tag-value' name='Tag[]' value='" . $Tag->Tag_ID . "'  onclick='UPCP_Filer_Results_OR(); UPCPHighlight(this, \"" . $Color . "\");'>" . $Tag->Tag_Name . "\n";}
 								elseif ($Filter  == "Javascript") {$SidebarString .= "<input type='checkbox' class='jquery-prod-tag-value' name='Tag[]' value='" . $Tag->Tag_ID . "'  onclick='UPCP_Filer_Results(); UPCPHighlight(this, \"" . $Color . "\");'> " . $Tag->Tag_Name . "\n";}
-								else {$SidebarString .= "<input type='checkbox' class='jquery-prod-tag-value' name='Tag[]' value='" . $Tag->Tag_ID . "'  onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");'>" . $Tag->Tag_Name . "\n";}
+								else {
+										$SidebarString .= "<input type='checkbox' name='Tag[]' value='" . $Tag->Tag_ID . "'  onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");' class='jquery-prod-tag-value'";
+										if (in_array($Tag->Tag_ID, $tags)) {$SidebarString .= "checked=checked";}
+										$SidebarString .= ">" . $Tag->Tag_Name . "\n";
+								}
 								$SidebarString .= "</div>";
 						}
 				$SidebarString .= "</div>\n";
@@ -634,7 +655,7 @@ function AddProduct($format, $Item_ID, $Product, $Tags, $AjaxReload = "No", $Aja
 }
 
 function SingleProductPage() {
-		global $wpdb, $items_table_name, $item_images_table_name, $fields_table_name, $fields_meta_table_name;
+		global $wpdb, $items_table_name, $item_images_table_name, $fields_table_name, $fields_meta_table_name, $tagged_items_table_name, $tags_table_name;
 		
 		$Pretty_Links = get_option("UPCP_Pretty_Links");
 		$Single_Page_Price = get_option("UPCP_Single_Page_Price");
@@ -645,13 +666,23 @@ function SingleProductPage() {
 		$Top_Bottom_Padding = get_option("UPCP_Top_Bottom_Padding");
 		$Left_Right_Padding = get_option("UPCP_Left_Right_Padding");
 		
-		if ($Pretty_Links == "Yes") {$Product = $wpdb->get_row("SELECT * FROM $items_table_name WHERE Item_Slug='" . get_query_var('single_product') . "'");}
+		if ($Pretty_Links == "Yes") {$Product = $wpdb->get_row("SELECT * FROM $items_table_name WHERE Item_Slug='" . trim(get_query_var('single_product'), "/? ") . "'");}
 		else {$Product = $wpdb->get_row("SELECT * FROM $items_table_name WHERE Item_ID='" . $_GET['SingleProduct'] . "'");}
 		$Item_Images = $wpdb->get_results("SELECT Item_Image_URL, Item_Image_ID FROM $item_images_table_name WHERE Item_ID=" . $Product->Item_ID);
 		
 		$Links = get_option("UPCP_Product_Links");
 		$Description = ConvertCustomFields($Product->Item_Description);
 		$Description = do_shortcode($Description);
+		
+		//Create the tag string for filtering
+		$Tags = $wpdb->get_results("SELECT Tag_ID FROM $tagged_items_table_name WHERE Item_ID=" . $Product->Item_ID);
+		if (is_array($Tags)) {
+			  foreach ($Tags as $Tag) {
+						$TagInfo = $wpdb->get_row("SELECT Tag_Name FROM $tags_table_name WHERE Tag_ID=" . $Tag->Tag_ID);
+						$TagsString .= $TagInfo->Tag_Name . ", ";
+				}
+		}
+		$TagsString = trim($TagsString, " ,");
 		
 		if ($Product->Item_Photo_URL != "" and strlen($Product->Item_Photo_URL) > 7 and substr($Product->Item_Photo_URL, 0, 7) != "http://") {
 			  $PhotoCode = $Product->Item_Photo_URL;
@@ -800,7 +831,7 @@ function SingleProductPage() {
 										break;
 								case "tags":
 										$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-tags-div gs-w' style='display: list-item; position:absolute;'>";
-										$ProductString .= $Tag_String;
+										$ProductString .= $TagsString;
 										break;
 								case "tags_label":
 										$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-tags-label-div gs-w' style='display: list-item; position:absolute;'>";

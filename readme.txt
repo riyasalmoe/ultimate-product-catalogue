@@ -119,6 +119,10 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.13 =
+- Tags should now display correctly on custom product pages
+- Categories, Sub-Categories and Tags can now be added as URL parameters (categories, subcategories, tags are the parameters)
+
 = 2.4.12 =
 - In the sidebar, Category, Sub-Category and Tag checkboxes should now be ordered by date created
 
