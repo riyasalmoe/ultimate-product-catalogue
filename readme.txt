@@ -119,6 +119,10 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.14 =
+- Product link can now be included in a spreadsheet upload
+- An XML sitemap of the products in a catalogue is automatically generated each time a product is created or edited
+
 = 2.4.13 =
 - Tags should now display correctly on custom product pages
 - Categories, Sub-Categories and Tags can now be added as URL parameters (categories, subcategories, tags are the parameters)

@@ -497,6 +497,9 @@ function Add_UPCP_Product($Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Descrip
 						}
 				}
 		}
+		
+		UPCP_Create_XML_Sitemap();
+		
 		$update = __("Product has been successfully created." . $CustomFieldError, 'UPCP');
 		return $update;
 }
@@ -608,6 +611,8 @@ function Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Slug, $Item_Photo_URL, $I
 		if ($Category_ID != "") {$wpdb->query("UPDATE $categories_table_name SET Category_Item_Count=Category_Item_Count + 1 WHERE Category_ID =" . $Category_ID);}
 		if ($SubCategory_ID != "") {$wpdb->query("UPDATE $subcategories_table_name SET SubCategory_Item_Count=SubCategory_Item_Count + 1 WHERE SubCategory_ID =" . $SubCategory_ID);}
 		
+		UPCP_Create_XML_Sitemap();
+		
 		$update = __("Product has been successfully edited." . $CustomFieldError, 'UPCP');
 		return $update;
 }
@@ -639,7 +644,7 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 		$sheet = $objWorkBook->getActiveSheet();
 		
 		//List of fields that can be accepted via upload
-		$Allowed_Fields = array ("Name" => "Item_Name", "Slug" => "Item_Slug", "Description" => "Item_Description", "Price" => "Item_Price", "Image" => "Item_Photo_URL", "Category" => "Category_Name", "Sub-Category" => "SubCategory_Name", "Tags" => "Tags_Names_String");
+		$Allowed_Fields = array ("Name" => "Item_Name", "Slug" => "Item_Slug", "Description" => "Item_Description", "Price" => "Item_Price", "Image" => "Item_Photo_URL", "Link" => "Item_Link", "Category" => "Category_Name", "Sub-Category" => "SubCategory_Name", "Tags" => "Tags_Names_String");
 		$Custom_Fields_From_DB = $wpdb->get_results("SELECT Field_ID, Field_Name, Field_Values, Field_Type FROM $fields_table_name");
 		if (is_array($Custom_Fields_From_DB)) {
 			  foreach ($Custom_Fields_From_DB as $Custom_Field_From_DB) {
@@ -776,7 +781,9 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 				unset($Tags_Name_Array);
 				unset($Custom_Fields_To_Insert);
 		}
-
+		
+		UPCP_Create_XML_Sitemap();
+		
 		return __("Products added successfully.", 'UPCP');
 }
 
@@ -816,7 +823,8 @@ function Delete_UPCP_Product($Item_ID) {
 						array('Item_ID' => $Item_ID)
 					);
 		
-
+		UPCP_Create_XML_Sitemap();
+		
 		$update = __("Product has been successfully deleted.", 'UPCP');
 		return $update;
 }
@@ -865,6 +873,8 @@ function Update_UPCP_Options() {
 		update_option("UPCP_Single_Page_Price", $_POST['single_page_price']);
 		update_option("UPCP_Case_Insensitive_Search", $_POST['case_insensitive_search']);
 		if ($InstallVersion <= 2.0 or $Full_Version == "Yes") {update_option("UPCP_Pretty_Links", $_POST['pretty_links']);}
+		if ($Full_Version == "Yes") {update_option("UPCP_XML_Sitemap_URL", $_POST['xml_sitemap_url']);}
+		if ($Full_Version == "Yes") {update_option("UPCP_Filter_Title", $_POST['filter_title']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_Mobile_SS", $_POST['mobile_styles']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_Custom_Product_Page", $_POST['custom_product_page']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_Products_Per_Page", $_POST['products_per_page']);}
@@ -876,6 +886,8 @@ function Update_UPCP_Options() {
 		if ($_POST['Pretty_Links'] == "Yes") {
 			 update_option("UPCP_Update_RR_Rules", "Yes");
 		}
+		
+		UPCP_Create_XML_Sitemap();
 		
 		$update = __("Options have been succesfully updated.", 'UPCP');
 		return $update;

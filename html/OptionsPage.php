@@ -7,6 +7,8 @@
 		$Detail_Desc_Chars = get_option("UPCP_Desc_Chars");
 		$Single_Page_Price = get_option("UPCP_Single_Page_Price");
 		$PrettyLinks = get_option("UPCP_Pretty_Links");
+		$XML_Sitemap_URL = get_option("UPCP_XML_Sitemap_URL");
+		$Filter_Title = get_option("UPCP_Filter_Title");
 		$Detail_Image = get_option("UPCP_Details_Image");
 		$MobileStyle = get_option("UPCP_Mobile_SS");
 		$CaseInsensitiveSearch = get_option("UPCP_Case_Insensitive_Search");
@@ -141,6 +143,22 @@
 </td>
 </tr>
 <?php } ?>
+<tr>
+<th scope="row">XML Sitemap URL</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span>What URL should be used at the base of the products sitemap?</span></legend>
+	<input type='text' name='xml_sitemap_url' value='<?php echo $XML_Sitemap_URL; ?>' <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/>
+	</fieldset>
+</td>
+</tr>
+<th scope="row">Add Product Name to Title</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span>Should the product name be added to the page title on individual product pages?</span></legend>
+	<label title='Yes'><input type='radio' name='filter_title' value='Yes' <?php if($Filter_Title == "Yes") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span>Yes</span></label><br />
+	<label title='No'><input type='radio' name='filter_title' value='No' <?php if($Filter_Title == "No") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span>No</span></label><br />
+	</fieldset>
+</td>
+</tr>
 <tr>
 <th scope="row">Custom Product Pages</th>
 <td>

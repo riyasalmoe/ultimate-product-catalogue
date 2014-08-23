@@ -7,7 +7,7 @@ Author: Tim Ruse
 Author URI: http://www.EtoileWebDesign.com/
 Terms and Conditions: http://www.etoilewebdesign.com/plugin-terms-and-conditions/
 Text Domain: UPCP
-Version: 2.4.13
+Version: 2.4.14
 */
 
 global $UPCP_db_version;
@@ -26,6 +26,9 @@ $tagged_items_table_name = $wpdb->prefix . "UPCP_Tagged_Items";
 $fields_table_name = $wpdb->prefix . "UPCP_Custom_Fields";
 $fields_meta_table_name = $wpdb->prefix . "UPCP_Fields_Meta";
 $UPCP_db_version = "2.3.12";
+
+define( 'UPCP_CD_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
+define( 'UPCP_CD_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 /*define('WP_DEBUG', true);
 $wpdb->show_errors();*/
@@ -156,6 +159,7 @@ include "Functions/Version_Upgrade.php";
 include "Functions/Rewrite_Rules.php";
 include "Functions/Update_Tables.php";
 include "Functions/FrontEndAjaxUrl.php";
+include "Functions/UPCP_Create_XML_Sitemap.php";
 
 // Updates the UPCP database when required
 if (get_option('UPCP_DB_Version') != $UPCP_db_version) {

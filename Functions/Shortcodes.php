@@ -658,6 +658,7 @@ function SingleProductPage() {
 		global $wpdb, $items_table_name, $item_images_table_name, $fields_table_name, $fields_meta_table_name, $tagged_items_table_name, $tags_table_name;
 		
 		$Pretty_Links = get_option("UPCP_Pretty_Links");
+		$Filter_Title = get_option("UPCP_Filter_Title");
 		$Single_Page_Price = get_option("UPCP_Single_Page_Price");
 		$Custom_Product_Page = get_option("UPCP_Custom_Product_Page");
 		$Product_Page_Serialized = get_option("UPCP_Product_Page_Serialized");
@@ -673,6 +674,11 @@ function SingleProductPage() {
 		$Links = get_option("UPCP_Product_Links");
 		$Description = ConvertCustomFields($Product->Item_Description);
 		$Description = do_shortcode($Description);
+		
+		//Edit the title if that option has been selected
+		if ($Filter_Title == "Yes") {
+			  add_action( 'init', 'UPCP_Filter_Title', 20, $Product->Item_Name);
+		}
 		
 		//Create the tag string for filtering
 		$Tags = $wpdb->get_results("SELECT Tag_ID FROM $tagged_items_table_name WHERE Item_ID=" . $Product->Item_ID);
@@ -1015,4 +1021,13 @@ function ObjectToArray($Obj) {
 }
 add_shortcode("product-catalogue", "Insert_Product_Catalog");
 
+function UPCP_Filter_Title($ProductName) {
+		echo $ProductName;
+		add_filter('the_title', 'UPCP_Alter_Title', 20, $ProductName);
+}
+
+function UPCP_Alter_Title($Title, $ProductName) {
+		$Title = $ProductName . " | " . $Title;
+		return $Title;
+}
  ?>
