@@ -72,7 +72,8 @@ function Get_UPCP_SubCategories() {
 add_action('wp_ajax_get_upcp_subcategories', 'Get_UPCP_SubCategories');
 
 function Save_Serialized_Product_Page() {	
-		return update_option("UPCP_Product_Page_Serialized", $_POST['serialized_product_page']);
+		if ($_POST['type'] == "mobile") {return update_option("UPCP_Product_Page_Serialized_Mobile", $_POST['serialized_product_page']);}
+		else {return update_option("UPCP_Product_Page_Serialized", $_POST['serialized_product_page']);}
 }
 add_action('wp_ajax_save_serialized_product_page', 'Save_Serialized_Product_Page');
 ?>

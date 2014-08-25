@@ -84,9 +84,27 @@ a {
 	min-width:90px;
 }
 
+#gridster-button-mobile {
+  min-height:30px;
+	min-width:90px;
+}
+
 #gridster-reset {
   min-height:30px;
 	min-width:115px;
+}
+
+#gridster-reset-mobile {
+  min-height:30px;
+	min-width:115px;
+}
+
+#pp-select {
+  margin-bottom: 10px;
+}
+
+#PP-type-select {
+  width:180px;
 }
 
 /***********************************************************

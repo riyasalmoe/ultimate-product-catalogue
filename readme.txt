@@ -119,6 +119,10 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.15 =
+- Added a second custom product display, "Mobile", that can be used for small-screen devices
+- Added options to customize the "Sort By" box so that it can be eliminated or reduced
+
 = 2.4.14 =
 - Product link can now be included in a spreadsheet upload
 - An XML sitemap of the products in a catalogue is automatically generated each time a product is created or edited

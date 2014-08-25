@@ -12,4 +12,11 @@ jQuery(function(){ //DOM Ready
 				helper: 'clone',
    	}).data('gridster');
 		if (gridster) {gridster.disable();}
+		
+		gridster_mobile = jQuery(".gridster-mobile ul").gridster({
+        widget_margins: [pp_top_bottom_padding, pp_left_right_padding],
+        widget_base_dimensions: [pp_grid_width, pp_grid_height],
+				helper: 'clone',
+   	}).data('gridster');
+		if (gridster_mobile) {gridster_mobile.disable();}
 });

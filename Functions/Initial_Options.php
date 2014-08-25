@@ -13,6 +13,8 @@ function Initial_UPCP_Options() {
 		update_option("UPCP_Desc_Chars", 240);
 		update_option("UPCP_Case_Insensitive_Search", "Yes");
 		
+		update_option("UPCP_Product_Search", "name");
+		update_option("UPCP_Custom_Product_Page", "No");
 		update_option("UPCP_Products_Per_Page", 1000000);
 		update_option("UPCP_PP_Grid_Width", 90);
 		update_option("UPCP_PP_Grid_Height", 35);

@@ -20,6 +20,7 @@
 		$Top_Bottom_Padding = get_option("UPCP_Top_Bottom_Padding");
 		$Left_Right_Padding = get_option("UPCP_Left_Right_Padding");
 		$Product_Search = get_option("UPCP_Product_Search");
+		$Product_Sort = get_option("UPCP_Product_Sort");
 ?>
 <div class="wrap">
 <div id="icon-options-general" class="icon32"><br /></div><h2>Settings</h2>
@@ -183,6 +184,17 @@
 <td>
 	<fieldset><legend class="screen-reader-text"><span>How many products should be displayed on each page of the catalogue?</span></legend>
 	<input type='text' name='products_per_page' value='<?php echo $Products_Per_Page; ?>' <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/>
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row">Product Sorting</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span>Available Sorting Options</span></legend>
+	<label title='Price and Name'><input type='radio' name='product_sort' value='Price_Name' <?php if($MobileStyle == "Price_Name") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span>Price and Name</span></label><br />
+	<label title='Price'><input type='radio' name='product_sort' value='Price' <?php if($MobileStyle == "Price") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span>Price</span></label><br />
+	<label title='Name'><input type='radio' name='product_sort' value='Name' <?php if($MobileStyle == "Name") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span>Name</span></label><br />
+	<label title='None'><input type='radio' name='product_sort' value='None' <?php if($MobileStyle == "None") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span>None</span></label><br />
 	</fieldset>
 </td>
 </tr>

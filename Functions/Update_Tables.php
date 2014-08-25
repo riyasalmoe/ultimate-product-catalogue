@@ -148,8 +148,10 @@ function UpdateTables() {
    	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
    	dbDelta($sql);
 		
+		if (get_option("UPCP_Product_Sort") == "") {update_option("UPCP_Product_Sort", "Price_Name");}
 		if (get_option("UPCP_Product_Search") == "") {update_option("UPCP_Product_Search", "name");}
 		if (get_option("UPCP_Custom_Product_Page") == "") {update_option("UPCP_Custom_Product_Page", "No");}
+		if (get_option("UPCP_Product_Page_Serialized_Mobile") == "") {update_option("UPCP_Product_Page_Serialized_Mobile", get_option("UPCP_Product_Page_Serialized"));}
 		
 		if (get_option("UPCP_Products_Per_Page") == "") {update_option("UPCP_Products_Per_Page", 1000000);}
 		if (get_option("UPCP_PP_Grid_Width") == "") {update_option("UPCP_PP_Grid_Width", 90);}

@@ -10,6 +10,9 @@ echo "var pp_grid_width = " . $PP_Grid_Width . ";";
 echo "var pp_grid_height = " . $PP_Grid_Height . ";";
 echo "var pp_top_bottom_padding = " . $Top_Bottom_Padding . ";";
 echo "var pp_left_right_padding = " . $Left_Right_Padding . ";";
+
+if ($_GET['CPP_Mobile'] == "mobile") {echo "var grid_type = 'mobile';";}
+else {echo "var grid_type = 'regular';";}
 echo "</script>";
 ?>		
 		<div id="side-sortables" class="metabox-holder ">
@@ -25,7 +28,14 @@ echo "</script>";
 		<div id="nav-menus-frame">
 	<div id="menu-settings-column" class="metabox-holder">
 			<div id="side-sortables" class="meta-box-sortables">
-
+			<div id='pp-select' class='pp-select'>
+					<h3>Selected Layout:</h3>
+					<select name='PP-type-select' id='PP-type-select' onchange='Reload_PP_Page()'>
+							<option value='regular' <?php if ($_GET['CPP_Mobile'] == "regular") {echo "selected=selected";} ?>>Regular</option>
+							<option value='mobile' <?php if ($_GET['CPP_Mobile'] == "mobile") {echo "selected=selected";} ?>>Mobile</option>
+					</select>
+			</div>
+			
 <!-- Create a box with a form that users can add products to the catalogue with -->
 <div id="add-page" class="postbox " >
 <div class="handlediv" title="Click to toggle"><br /></div><h3 class='hndle'><span><?php _e("Basic Elements", 'UPCP') ?></span></h3>
@@ -82,8 +92,13 @@ echo "</script>";
 </div>
 </div>
 </div>
+<?php if ($_GET['CPP_Mobile'] == "mobile") { ?>
+<button value='Save Grid' id='gridster-button-mobile'>Save Layout</button>
+<a class='confirm-restore' href='admin.php?page=UPCP-options&Action=UPCP_RestoreDefaultPPLayoutMobile&DisplayPage=ProductPage'><button id='gridster-reset'>Restore Default</button></a>
+<?php } else { ?>
 <button value='Save Grid' id='gridster-button'>Save Layout</button>
-<a class='confirm-restore' href='admin.php?page=UPCP-options&Action=UPCP_RestoreDefaultPPLayout&DisplayPage=ProductPage'><button id='gridster-reset'>Restore Default</button></a>
+<a class='confirm-restore' href='admin.php?page=UPCP-options&Action=UPCP_RestoreDefaultPPLayout&DisplayPage=ProductPage'><button id='gridster-reset-mobile'>Restore Default</button></a>
+<?php } ?>
 </div><!-- /#menu-settings-column -->
 			
 <!-- Show the products and categories currently in the catalogue, give the user the
@@ -91,7 +106,8 @@ echo "</script>";
 
   <div class="wrapper gridster">
       <ul>
-        <?php $UPCP_Product_Page_Serialized = get_option("UPCP_Product_Page_Serialized");
+        <?php if ($_GET['CPP_Mobile'] == "mobile") {$UPCP_Product_Page_Serialized = get_option("UPCP_Product_Page_Serialized_Mobile");}
+							else {$UPCP_Product_Page_Serialized = get_option("UPCP_Product_Page_Serialized");}
 							if (strpos($UPCP_Product_Page_Serialized, "class=\\\\") !== FALSE){$Gridster = json_decode(stripslashes($UPCP_Product_Page_Serialized));}
 							else {$Gridster = json_decode($UPCP_Product_Page_Serialized);}
 							if (is_array($Gridster)) {

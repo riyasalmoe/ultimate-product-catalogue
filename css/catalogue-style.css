@@ -718,6 +718,10 @@
   list-style-type:none !important;
 }
 
+.gridster-mobile ul {
+  list-style-type:none !important;
+}
+
 .upcp-cpp-title {
   margin:0;
 	padding:0;

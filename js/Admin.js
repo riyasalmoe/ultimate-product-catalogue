@@ -12,3 +12,8 @@ function ShowTab(TabName) {
 		});
 		jQuery("#"+TabName+"_Menu").addClass("nav-tab-active");
 }
+
+function Reload_PP_Page(Value) {
+		var Layout = jQuery('#PP-type-select').val();
+		window.location.href = "admin.php?page=UPCP-options&DisplayPage=ProductPage&CPP_Mobile=" + Layout;
+}

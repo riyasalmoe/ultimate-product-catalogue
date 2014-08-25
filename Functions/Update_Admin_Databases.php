@@ -878,6 +878,7 @@ function Update_UPCP_Options() {
 		if ($Full_Version == "Yes") {update_option("UPCP_Mobile_SS", $_POST['mobile_styles']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_Custom_Product_Page", $_POST['custom_product_page']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_Products_Per_Page", $_POST['products_per_page']);}
+		if ($Full_Version == "Yes") {update_option("UPCP_Product_Sort", $_POST['product_sort']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_PP_Grid_Width", $_POST['pp_grid_width']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_PP_Grid_Height", $_POST['pp_grid_height']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_Top_Bottom_Padding", $_POST['pp_top_bottom_padding']);}
@@ -901,5 +902,11 @@ function Restore_Default_PP_Layout() {
 		update_option("UPCP_PP_Grid_Height", 35);
 		update_option("UPCP_Top_Bottom_Padding", 10);
 		update_option("UPCP_Left_Right_Padding", 10);
+}
+
+function Restore_Default_PP_Layout_Mobile() {
+		$Product_Page = '[{"element_type":"Product Description<div class=\"gs-delete-handle\" onclick=\"remove_element(this);\"></div><span class=\"gs-resize-handle gs-resize-handle-both\"></span>","element_class":"description","element_id":"","col":3,"row":9,"size_x":5,"size_y":4},{"element_type":"Back Link<div class=\"gs-delete-handle\" onclick=\"remove_element(this);\"></div><span class=\"gs-resize-handle gs-resize-handle-both\"></span>","element_class":"back","element_id":"","col":1,"row":1,"size_x":2,"size_y":1},{"element_type":"Additional Images<div class=\"gs-delete-handle\" onclick=\"remove_element(this);\"></div><span class=\"gs-resize-handle gs-resize-handle-both\"></span>","element_class":"additional_images","element_id":"","col":1,"row":2,"size_x":2,"size_y":9},{"element_type":"Main Image<div class=\"gs-delete-handle\" onclick=\"remove_element(this);\"></div><span class=\"gs-resize-handle gs-resize-handle-both\"></span>","element_class":"main_image","element_id":"","col":3,"row":3,"size_x":4,"size_y":6},{"element_type":"Permalink<div class=\"gs-delete-handle\" onclick=\"remove_element(this);\"></div><span class=\"gs-resize-handle gs-resize-handle-both\"></span>","element_class":"product_link","element_id":"","col":6,"row":2,"size_x":1,"size_y":1},{"element_type":"Product Name<div class=\"gs-delete-handle\" onclick=\"remove_element(this);\"></div><span class=\"gs-resize-handle gs-resize-handle-both\"></span>","element_class":"product_name","element_id":"","col":3,"row":2,"size_x":3,"size_y":1},{"element_type":"Blank<div class=\"gs-delete-handle\" onclick=\"remove_element(this);\"></div><span class=\"gs-resize-handle gs-resize-handle-both\"></span>","element_class":"blank","element_id":"","col":7,"row":2,"size_x":1,"size_y":7},{"element_type":"Blank<div class=\"gs-delete-handle\" onclick=\"remove_element(this);\"></div><span class=\"gs-resize-handle gs-resize-handle-both\"></span>","element_class":"blank","element_id":"","col":3,"row":1,"size_x":5,"size_y":1}]';
+		
+		update_option("UPCP_Product_Page_Serialized_Mobile", $Product_Page);
 }
 ?>
