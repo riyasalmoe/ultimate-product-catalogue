@@ -119,6 +119,10 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.16 =
+- Fixed a product page error
+- Fixed the "Back to Catalogue" link
+
 = 2.4.15 =
 - Added a second custom product display, "Mobile", that can be used for small-screen devices
 - Added options to customize the "Sort By" box so that it can be eliminated or reduced

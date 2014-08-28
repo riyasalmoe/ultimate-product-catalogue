@@ -785,7 +785,7 @@ function SingleProductPage() {
 				$Gridster = json_decode(stripslashes($Product_Page_Serialized));
 				$ProductString .= "<div class='gridster'>";
 				$ProductString .= "<ul>";
-				$ProductString .= BuildGridster($Gridster, $Product, $Item_Images, $Description, $PhotoURL, $SP_Perm_URL, $TagsString);
+				$ProductString .= BuildGridster($Gridster, $Product, $Item_Images, $Description, $PhotoURL, $SP_Perm_URL, $Return_URL, $TagsString);
 				$ProductString .= "</ul>";
 				$ProductString .= "</div>";
 				
@@ -825,7 +825,7 @@ function SingleProductPage() {
 						$Gridster = json_decode(stripslashes($Mobile_Product_Page_Serialized));
 						$ProductString .= "<div class='gridster-mobile'>";
 						$ProductString .= "<ul>";
-						$ProductString .= BuildGridster($Gridster, $Product, $Item_Images, $Description, $PhotoURL, $SP_Perm_URL, $TagsString);
+						$ProductString .= BuildGridster($Gridster, $Product, $Item_Images, $Description, $PhotoURL, $SP_Perm_URL, $Return_URL, $TagsString);
 						$ProductString .= "</ul>";
 						$ProductString .= "</div>";
 						
@@ -836,7 +836,7 @@ function SingleProductPage() {
 		return $ProductString;
 }
 
-function BuildGridster($Gridster, $Product, $Item_Images, $Description, $PhotoURL, $SP_Perm_URL, $TagsString) {
+function BuildGridster($Gridster, $Product, $Item_Images, $Description, $PhotoURL, $SP_Perm_URL, $Return_URL, $TagsString) {
 		foreach ($Gridster as $Element) {
 				switch ($Element->element_class) {
 						case "additional_images":
