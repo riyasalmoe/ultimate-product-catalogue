@@ -119,6 +119,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.17 =
+- Fixed a product page error
+
 = 2.4.16 =
 - Fixed a product page error
 - Fixed the "Back to Catalogue" link

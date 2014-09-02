@@ -104,7 +104,6 @@ jQuery(function(){ //DOM Ready
 						var serialized = gridster.serialize();
 						console.dir(serialized);
 						var data = 'serialized_product_page='+JSON.stringify(serialized)+'&action=save_serialized_product_page&type=regular';
-						alert(data);
 						jQuery.post(ajaxurl, data, function(response) {
 								/*if (response) {alert("Worked");}
 								else {alert("Failed");}*/
