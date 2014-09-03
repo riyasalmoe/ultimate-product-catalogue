@@ -165,7 +165,7 @@
 								echo "<div class='name'>" . $Item->Item_Name . "</div>";
 								echo "</div>";
 								echo "</td>";
-								echo "<td class='description column-description'>" . substr($Item->Item_Description, 0, 60);
+								echo "<td class='description column-description'>" . strip_tags(substr($Item->Item_Description, 0, 60));
 								if (strlen($Item->Item_Description) > 60) {echo "...";}
 								echo "</td>";
 								echo "<td class='description column-price'>" . $Item->Item_Price . "</td>";

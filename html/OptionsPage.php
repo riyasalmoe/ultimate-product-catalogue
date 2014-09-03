@@ -10,7 +10,6 @@
 		$XML_Sitemap_URL = get_option("UPCP_XML_Sitemap_URL");
 		$Filter_Title = get_option("UPCP_Filter_Title");
 		$Detail_Image = get_option("UPCP_Details_Image");
-		$MobileStyle = get_option("UPCP_Mobile_SS");
 		$CaseInsensitiveSearch = get_option("UPCP_Case_Insensitive_Search");
 		$InstallVersion = get_option("UPCP_First_Install_Version");
 		$Custom_Product_Page = get_option("UPCP_Custom_Product_Page");
@@ -167,15 +166,6 @@
 	<label title='Yes'><input type='radio' name='custom_product_page' value='Yes' <?php if($Custom_Product_Page == "Yes") {echo "checked='checked'";} ?> /> <span>Yes</span></label><br />
 	<label title='Yes'><input type='radio' name='custom_product_page' value='Large' <?php if($Custom_Product_Page == "Large") {echo "checked='checked'";} ?> /> <span>Large Screen Only</span></label><br />
 	<label title='No'><input type='radio' name='custom_product_page' value='No' <?php if($Custom_Product_Page == "No") {echo "checked='checked'";} ?> /> <span>No</span></label><br />
-	</fieldset>
-</td>
-</tr>
-<tr>
-<th scope="row">Mobile Stylesheet</th>
-<td>
-	<fieldset><legend class="screen-reader-text"><span>Use Mobile Stylesheet (for screens under 480 pixels)</span></legend>
-	<label title='Yes'><input type='radio' name='mobile_styles' value='Yes' <?php if($MobileStyle == "Yes") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span>Yes</span></label><br />
-	<label title='No'><input type='radio' name='mobile_styles' value='No' <?php if($MobileStyle == "No") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span>No</span></label><br />
 	</fieldset>
 </td>
 </tr>

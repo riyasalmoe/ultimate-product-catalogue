@@ -628,6 +628,7 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 		global $tagged_items_table_name;	
 		global $fields_table_name;
 		global $fields_meta_table_name;
+		global $catalogue_items_table_name;
 		global $Full_Version;
 		
 		$Excel_URL = '../wp-content/plugins/ultimate-product-catalogue/product-sheets/' . $Excel_File_Name;
@@ -644,7 +645,7 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 		$sheet = $objWorkBook->getActiveSheet();
 		
 		//List of fields that can be accepted via upload
-		$Allowed_Fields = array ("Name" => "Item_Name", "Slug" => "Item_Slug", "Description" => "Item_Description", "Price" => "Item_Price", "Image" => "Item_Photo_URL", "Link" => "Item_Link", "Category" => "Category_Name", "Sub-Category" => "SubCategory_Name", "Tags" => "Tags_Names_String");
+		$Allowed_Fields = array ("Name" => "Item_Name", "Slug" => "Item_Slug", "Description" => "Item_Description", "Price" => "Item_Price", "Image" => "Item_Photo_URL", "Link" => "Item_Link", "Category" => "Category_Name", "Sub-Category" => "SubCategory_Name", "Tags" => "Tags_Names_String", "Catalogue ID" => "Catalogue_ID");
 		$Custom_Fields_From_DB = $wpdb->get_results("SELECT Field_ID, Field_Name, Field_Values, Field_Type FROM $fields_table_name");
 		if (is_array($Custom_Fields_From_DB)) {
 			  foreach ($Custom_Fields_From_DB as $Custom_Field_From_DB) {
@@ -720,10 +721,11 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 		// Creates an array of the field names which are going to be inserted into the database
 		// and then turns that array into a string so that it can be used in the query
 		for ($column = 0; $column < $highestColumnIndex; $column++) {
-				if ($Allowed_Fields[$Titles[$column]] != "Tags_Names_String" and !array_key_exists($column, $Custom_Fields)) {$Fields[] = $Allowed_Fields[$Titles[$column]];}
+				if ($Allowed_Fields[$Titles[$column]] != "Tags_Names_String" and $Allowed_Fields[$Titles[$column]] != "Catalogue_ID" and !array_key_exists($column, $Custom_Fields)) {$Fields[] = $Allowed_Fields[$Titles[$column]];}
 				if ($Allowed_Fields[$Titles[$column]] == "Category_Name") {$Category_Column = $column; $Fields[] = "Category_ID";}
 				if ($Allowed_Fields[$Titles[$column]] == "SubCategory_Name") {$SubCategory_Column = $column; $Fields[] = "SubCategory_ID";}
 				if ($Allowed_Fields[$Titles[$column]] == "Tags_Names_String") {$Tags_Column = $column;}
+				if ($Allowed_Fields[$Titles[$column]] == "Catalogue_ID") {$Cat_ID_Column = $column;}
 		}
 		$FieldsString = implode(",", $Fields);
 		
@@ -736,7 +738,7 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 				// add in the values for Category_ID and SubCategory_ID, and increment 
 				// the category and sub-category counts when neccessary
 				foreach ($Product as $Col_Index => $Value) {
-						if ((!isset($Tags_Column) or $Tags_Column != $Col_Index) and !array_key_exists($Col_Index, $Custom_Fields)) {$Values[] = esc_sql($Value);}
+						if ((!isset($Tags_Column) or $Tags_Column != $Col_Index) and (!isset($Cat_ID_Column) or $Cat_ID_Column != $Col_Index) and !array_key_exists($Col_Index, $Custom_Fields)) {$Values[] = esc_sql($Value);}
 						if (isset($Category_Column) and $Category_Column == $Col_Index) {
 							 	$Values[] = $Categories[$Value];
 								$wpdb->query("UPDATE $categories_table_name SET Category_Item_Count=Category_Item_Count+1 WHERE Category_ID='" . $Categories[$Value] . "'");
@@ -750,6 +752,9 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 						}
 						if (array_key_exists($Col_Index, $Custom_Fields)) {
 							  $Custom_Fields_To_Insert[$Custom_Fields[$Col_Index]] = $Value;
+						}
+						if (isset($Cat_ID_Column) and $Cat_ID_Column == $Col_Index and $Value != "") {
+							  $Cat_ID = $Value;
 						}
 				}
 				$ValuesString = implode("','", $Values);
@@ -767,6 +772,12 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 						}
 				}
 				
+				if (isset($Cat_ID)) {
+					  $wpdb->query(
+								$wpdb->prepare("INSERT INTO $catalogue_items_table_name (Catalogue_ID, Item_ID) VALUES ('%d','%d')", $Cat_ID, $Item_ID)
+						);
+				}
+				
 				if (is_array($Custom_Fields_To_Insert)) {
 						foreach ($Custom_Fields_To_Insert as $Field => $Value) {
 								$Trimmed_Field = trim($Field);
@@ -780,6 +791,7 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 				unset($ValuesString);
 				unset($Tags_Name_Array);
 				unset($Custom_Fields_To_Insert);
+				unset($Cat_ID);
 		}
 		
 		UPCP_Create_XML_Sitemap();
@@ -875,7 +887,6 @@ function Update_UPCP_Options() {
 		if ($InstallVersion <= 2.0 or $Full_Version == "Yes") {update_option("UPCP_Pretty_Links", $_POST['pretty_links']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_XML_Sitemap_URL", $_POST['xml_sitemap_url']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_Filter_Title", $_POST['filter_title']);}
-		if ($Full_Version == "Yes") {update_option("UPCP_Mobile_SS", $_POST['mobile_styles']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_Custom_Product_Page", $_POST['custom_product_page']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_Products_Per_Page", $_POST['products_per_page']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_Product_Sort", $_POST['product_sort']);}

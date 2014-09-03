@@ -119,6 +119,14 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.18 =
+- "Catalogue ID" can now be included in spreadsheet product uploads to add a product directly to a certain catalogue
+- Eliminated "Mobile Stylesheet" as an option, since there is a custom mobile layout option
+- Fixed a product page bug that didn't allow images at the start of a product description
+- Eliminated the max-width and max-height restrictions on main images on custom product pages
+- Renamed French and Spanish translation files so that they should work correctly
+- Fixed a bug where mobile layout images couldn't be swapped
+
 = 2.4.17 =
 - Fixed a product page error
 
