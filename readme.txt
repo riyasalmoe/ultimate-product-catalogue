@@ -119,6 +119,10 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.19 =
+- Fixed a "Custom Product Pages" error
+- Fixed an error where the "Product Sort" option was not displaying on the "Options" page
+
 = 2.4.18 =
 - "Catalogue ID" can now be included in spreadsheet product uploads to add a product directly to a certain catalogue
 - Eliminated "Mobile Stylesheet" as an option, since there is a custom mobile layout option

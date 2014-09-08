@@ -151,6 +151,7 @@
 	</fieldset>
 </td>
 </tr>
+<?php /*<tr>
 <th scope="row">Add Product Name to Title</th>
 <td>
 	<fieldset><legend class="screen-reader-text"><span>Should the product name be added to the page title on individual product pages?</span></legend>
@@ -158,7 +159,7 @@
 	<label title='No'><input type='radio' name='filter_title' value='No' <?php if($Filter_Title == "No") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span>No</span></label><br />
 	</fieldset>
 </td>
-</tr>
+</tr> */ ?>
 <tr>
 <th scope="row">Custom Product Pages</th>
 <td>
@@ -181,10 +182,10 @@
 <th scope="row">Product Sorting</th>
 <td>
 	<fieldset><legend class="screen-reader-text"><span>Available Sorting Options</span></legend>
-	<label title='Price and Name'><input type='radio' name='product_sort' value='Price_Name' <?php if($MobileStyle == "Price_Name") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span>Price and Name</span></label><br />
-	<label title='Price'><input type='radio' name='product_sort' value='Price' <?php if($MobileStyle == "Price") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span>Price</span></label><br />
-	<label title='Name'><input type='radio' name='product_sort' value='Name' <?php if($MobileStyle == "Name") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span>Name</span></label><br />
-	<label title='None'><input type='radio' name='product_sort' value='None' <?php if($MobileStyle == "None") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span>None</span></label><br />
+	<label title='Price and Name'><input type='radio' name='product_sort' value='Price_Name' <?php if($Product_Sort == "Price_Name") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span>Price and Name</span></label><br />
+	<label title='Price'><input type='radio' name='product_sort' value='Price' <?php if($Product_Sort == "Price") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span>Price</span></label><br />
+	<label title='Name'><input type='radio' name='product_sort' value='Name' <?php if($Product_Sort == "Name") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span>Name</span></label><br />
+	<label title='None'><input type='radio' name='product_sort' value='None' <?php if($Product_Sort == "None") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span>None</span></label><br />
 	</fieldset>
 </td>
 </tr>
