@@ -583,6 +583,10 @@ function Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Slug, $Item_Photo_URL, $I
 										elseif ($File_Upload_Return['Success'] == "N/A") {$NoFile = "Yes";}
 										else {$Value = $File_Upload_Return['Data'];}
 								}
+								elseif ($Field->Field_Type == "checkbox") {
+										foreach ($_POST[$FieldName] as $SingleValue) {$Value .= trim($SingleValue) . ",";}
+										$Value = substr($Value, 0, strlen($Value)-1);
+								}
 								else {
 									  $Value = trim($_POST[$FieldName]);
 										$Options = explode(",", $Field->Field_Values);
@@ -603,6 +607,7 @@ function Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Slug, $Item_Photo_URL, $I
 								elseif ($InArray == false) {$CustomFieldError = __(" One or more custom field values were incorrect.", 'UPCP');}
 								unset($InArray);
 								unset($NoFile);
+								unset($CombinedValue);
 						}
 				}
 		}

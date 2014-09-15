@@ -48,7 +48,7 @@
 				<tr>
 						<th scope='col' id='cb' class='manage-column column-cb check-column'  style="">
 								<input type="checkbox" /></th><th scope='col' id='field-name' class='manage-column column-name sortable desc'  style="">
-										<?php if ($_GET['OrderBy'] == "Field_Name" and $_GET['Order'] == "ASC") { echo "<a href='admin.php?page=EWD-FEUP-options&DisplayPage=CustomFields&OrderBy=Field_Name&Order=DESC'>";}
+										<?php if ($_GET['OrderBy'] == "Field_Name" and $_GET['Order'] == "ASC") { echo "<a href='admin.php?page=UPCP-options&DisplayPage=CustomFields&OrderBy=Field_Name&Order=DESC'>";}
 										 			else {echo "<a href='admin.php?page=UPCP-options&DisplayPage=CustomFields&OrderBy=Field_Name&Order=ASC'>";} ?>
 											  <span><?php _e("Field Name", 'UPCP') ?></span>
 												<span class="sorting-indicator"></span>
