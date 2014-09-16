@@ -14,6 +14,7 @@ function Insert_Product_Catalog($atts) {
 		$Detail_Image = get_option("UPCP_Details_Image");
 		$Pretty_Links = get_option("UPCP_Pretty_Links");
 		$Mobile_Style = get_option("UPCP_Mobile_SS");
+		$Pagination_Location = get_option("UPCP_Pagination_Location");
 		$CaseInsensitiveSearch = get_option("UPCP_Case_Insensitive_Search");
 		$ProductSearch = get_option("UPCP_Product_Search");
 		$Product_Sort = get_option("UPCP_Product_Sort");
@@ -122,17 +123,17 @@ function Insert_Product_Catalog($atts) {
 		$ProdThumbString .=  "<div id='prod-cat-" . $id . "' class='prod-cat thumb-display ";
 		if ($Starting_Layout != "Thumbnail") {$ProdThumbString .= "hidden-field";}
 		$ProdThumbString .= "'>\n";
-		$ProdThumbString .= "%upcp_pagination_placeholder%";
+		$ProdThumbString .= "%upcp_pagination_placeholder_top%";
 		
 		$ProdListString .=  "<div id='prod-cat-" . $id . "' class='prod-cat list-display ";
 		if ($Starting_Layout != "List") {$ProdListString .= "hidden-field";}
 		$ProdListString .= "'>\n";
-		$ProdListString .= "%upcp_pagination_placeholder%";
+		$ProdListString .= "%upcp_pagination_placeholder_top%";
 		
 		$ProdDetailString .=  "<div id='prod-cat-" . $id . "' class='prod-cat detail-display ";
 		if ($Starting_Layout != "Detail") {$ProdDetailString .= "hidden-field";} 
 		$ProdDetailString .= "'>\n";
-		$ProdDetailString .= "%upcp_pagination_placeholder%";
+		$ProdDetailString .= "%upcp_pagination_placeholder_top%";
 		
 		$Product_Count = 0;
 		foreach ($CatalogueItems as $CatalogueItem) {
@@ -270,6 +271,16 @@ function Insert_Product_Catalog($atts) {
 		$ProdListString .= "<div class='upcp-clear'></div>\n";
 		$ProdDetailString .= "<div class='upcp-clear'></div>\n";
 		
+		if ($Pagination_Location == "Bottom" or $Pagination_Location == "Both") {
+			  $ProdThumbString .= "%upcp_pagination_placeholder_bottom%";
+				$ProdListString .= "%upcp_pagination_placeholder_bottom%";
+				$ProdDetailString .= "%upcp_pagination_placeholder_bottom%";
+				
+				/*$ProdThumbString .= "<div class='upcp-clear'></div>\n";
+				$ProdListString .= "<div class='upcp-clear'></div>\n";
+				$ProdDetailString .= "<div class='upcp-clear'></div>\n";*/
+		}
+		
 		$ProdThumbString .= "</div>\n";
 		$ProdListString .= "</div>\n";
 		$ProdDetailString .= "</div>\n";
@@ -311,9 +322,23 @@ function Insert_Product_Catalog($atts) {
 				if ($current_page != $Num_Pages) {$PaginationString .= "<a href='#' onclick='UPCP_DisplayPage(\"" . $current_page + 1 . "\")>" . __('Next', 'UPCP') . "</a>";}
 				if ($current_page != $Num_Pages) {$PaginationString .= "<a href='#' onclick='UPCP_DisplayPage(\"" . $Num_Pages . "\")>" . __('Last', 'UPCP') . "</a>";}*/
 		}		
-		$ProdThumbString = str_replace("%upcp_pagination_placeholder%", $PaginationString, $ProdThumbString);
-		$ProdListString = str_replace("%upcp_pagination_placeholder%", $PaginationString, $ProdListString);
-		$ProdDetailString = str_replace("%upcp_pagination_placeholder%", $PaginationString, $ProdDetailString);
+		if ($Pagination_Location == "Bottom") {
+			  $ProdThumbString = str_replace("%upcp_pagination_placeholder_top%", "", $ProdThumbString);
+				$ProdListString = str_replace("%upcp_pagination_placeholder_top%", "", $ProdListString);
+				$ProdDetailString = str_replace("%upcp_pagination_placeholder_top%", "", $ProdDetailString);
+		}
+		if ($Pagination_Location == "Top") {
+			  $ProdThumbString = str_replace("%upcp_pagination_placeholder_bottom%", "", $ProdThumbString);
+				$ProdListString = str_replace("%upcp_pagination_placeholder_bottom%", "", $ProdListString);
+				$ProdDetailString = str_replace("%upcp_pagination_placeholder_bottom%", "", $ProdDetailString);
+		}
+				
+		$ProdThumbString = str_replace("%upcp_pagination_placeholder_top%", $PaginationString, $ProdThumbString);
+		$ProdListString = str_replace("%upcp_pagination_placeholder_top%", $PaginationString, $ProdListString);
+		$ProdDetailString = str_replace("%upcp_pagination_placeholder_top%", $PaginationString, $ProdDetailString);
+		$ProdThumbString = str_replace("%upcp_pagination_placeholder_bottom%", $PaginationString, $ProdThumbString);
+		$ProdListString = str_replace("%upcp_pagination_placeholder_bottom%", $PaginationString, $ProdListString);
+		$ProdDetailString = str_replace("%upcp_pagination_placeholder_bottom%", $PaginationString, $ProdDetailString);
 		
 		// Create string from the arrays, should use the implode function instead
 		foreach ($ProdCats as $key=>$value) {$ProdCatString .= $key . ",";}
@@ -367,7 +392,12 @@ function Insert_Product_Catalog($atts) {
 				
 				// Create the categories checkboxes
 				if (sizeof($Categories) > 0) {
-					  $SidebarString .= "<div id='prod-cat-sidebar-category-div-" . $id . "' class='prod-cat-sidebar-category-div'>\n";
+					  foreach ($Categories as $key => $row) {
+    						$ID[$key]  = $row->Category_ID;
+    						$Name[$key] = $row->Category_Name;
+						}
+						array_multisort($Name, SORT_ASC, $ID, SORT_DESC, $Categories);
+						$SidebarString .= "<div id='prod-cat-sidebar-category-div-" . $id . "' class='prod-cat-sidebar-category-div'>\n";
 						$SidebarString .= "<div id='prod-cat-sidebar-category-title-" . $id . "' class='prod-cat-sidebar-category-title'><h3>" . __("Categories:", 'UPCP') . "</h3></div>\n";
 						foreach ($Categories as $Category) {
 								$SidebarString .= "<div id='prod-cat-sidebar-category-" . $Category->Category_ID . "' class='prod-cat-sidebar-category";
@@ -387,7 +417,12 @@ function Insert_Product_Catalog($atts) {
 				
 				// Create the sub-categories checkboxes
 				if (sizeof($SubCategories) > 0) {
-					  $SidebarString .= "<div id='prod-cat-sidebar-subcategory-div-" . $id . "' class='prod-cat-sidebar-subcategory-div'>\n";
+					  foreach ($SubCategories as $key => $row) {
+    						$ID[$key]  = $row->SubCategory_ID;
+    						$Name[$key] = $row->SubCategory_Name;
+						}
+						array_multisort($Name, SORT_ASC, $ID, SORT_DESC, $SubCategories);
+						$SidebarString .= "<div id='prod-cat-sidebar-subcategory-div-" . $id . "' class='prod-cat-sidebar-subcategory-div'>\n";
 						$SidebarString .= "<div id='prod-cat-sidebar-subcategory-title-" . $id . "' class='prod-cat-sidebar-subcategory-title'><h3>" . __("Sub-Categories:", 'UPCP') . "</h3></div>\n";
 						foreach ($SubCategories as $SubCategory) {
 								$SidebarString .= "<div id='prod-cat-sidebar-subcategory-" . $SubCategory->SubCategory_ID . "' class='prod-cat-sidebar-subcategory";
@@ -407,7 +442,12 @@ function Insert_Product_Catalog($atts) {
 				
 				// Create the tags checkboxes
 				if (sizeof($Tags) > 0) {
-					  $SidebarString .= "<div id='prod-cat-sidebar-tag-div-" . $id . "' class='prod-cat-sidebar-tag-div'>\n";
+					  foreach ($Tags as $key => $row) {
+    						$ID[$key]  = $row->Tag_ID;
+    						$Name[$key] = $row->Tag_Name;
+						}
+						array_multisort($Name, SORT_ASC, $ID, SORT_DESC, $Tags);
+						$SidebarString .= "<div id='prod-cat-sidebar-tag-div-" . $id . "' class='prod-cat-sidebar-tag-div'>\n";
 						$SidebarString .= "<div id='prod-cat-sidebar-tag-title-" . $id . "' class='prod-cat-tag-sidebar-title'><h3>" . __("Tags:", 'UPCP') . "</h3></div>\n";
 						foreach ($Tags as $Tag) {
 								$SidebarString .= "<div id='prod-cat-sidebar-tag-" . $Tag->Tag_ID . "' class='prod-cat-sidebar-tag";
@@ -600,8 +640,8 @@ function AddProduct($format, $Item_ID, $Product, $Tags, $AjaxReload = "No", $Aja
 				$ProductString .= "</div>\n";
 				$ProductString .= "<div id='prod-cat-mid-div-" . $Product->Item_ID . "' class='prod-cat-mid-detail-div upcp-mid-detail-div'>";
 				$ProductString .= "<div id='prod-cat-title-" . $Product->Item_ID . "' class='prod-cat-title upcp-detail-title'>" . $Product->Item_Name . "</div>\n";
-				if ($ReadMore == "Yes") {$ProductString .= "<div id='prod-cat-desc-" . $Product->Item_ID . "' class='prod-cat-desc upcp-detail-desc'>" . substr($Description, 0, $Detail_Desc_Chars);}
-				else {$ProductString .= "<div id='prod-cat-desc-" . $Product->Item_ID . "' class='prod-cat-desc upcp-detail-desc'>" . $Description;}
+				if ($ReadMore == "Yes") {$ProductString .= "<div id='prod-cat-desc-" . $Product->Item_ID . "' class='prod-cat-desc upcp-detail-desc'>" . strip_tags(substr($Description, 0, $Detail_Desc_Chars));}
+				else {$ProductString .= "<div id='prod-cat-desc-" . $Product->Item_ID . "' class='prod-cat-desc upcp-detail-desc'>" . strip_tags($Description);}
 				if ($ReadMore == "Yes") {
 					  if (strlen($Description) > $Detail_Desc_Chars) {
 					  	  $ProductString .= "... <a class='";

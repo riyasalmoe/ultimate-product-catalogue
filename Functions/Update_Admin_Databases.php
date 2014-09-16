@@ -894,6 +894,7 @@ function Update_UPCP_Options() {
 		if ($Full_Version == "Yes") {update_option("UPCP_Filter_Title", $_POST['filter_title']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_Custom_Product_Page", $_POST['custom_product_page']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_Products_Per_Page", $_POST['products_per_page']);}
+		if ($Full_Version == "Yes") {update_option("UPCP_Pagination_Location", $_POST['pagination_location']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_Product_Sort", $_POST['product_sort']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_PP_Grid_Width", $_POST['pp_grid_width']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_PP_Grid_Height", $_POST['pp_grid_height']);}

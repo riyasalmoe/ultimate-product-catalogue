@@ -242,7 +242,7 @@
 				<div class="col-wrap">
 				<div class="form-wrap CategoryDetail">
 						<a href="admin.php?page=UPCP-options&DisplayPage=Categories" class="NoUnderline">&#171; <?php _e("Back", 'UPCP') ?></a>
-						<h3>Edit <?php echo $Product->Product_Name;?></h3>
+						<h3>Edit <?php echo $Category->Category_Name;?></h3>
 						<form id="addtag" method="post" action="admin.php?page=UPCP-options&Action=UPCP_EditCategory&DisplayPage=Categories" class="validate" enctype="multipart/form-data">
 						<input type="hidden" name="action" value="Edit_Category" />
 						<input type="hidden" name="Category_ID" value="<?php echo $Category->Category_ID; ?>" />

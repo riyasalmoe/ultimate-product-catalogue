@@ -14,6 +14,7 @@
 		$InstallVersion = get_option("UPCP_First_Install_Version");
 		$Custom_Product_Page = get_option("UPCP_Custom_Product_Page");
 		$Products_Per_Page = get_option("UPCP_Products_Per_Page");
+		$Pagination_Location = get_option("UPCP_Pagination_Location");
 		$PP_Grid_Width = get_option("UPCP_PP_Grid_Width");
 		$PP_Grid_Height = get_option("UPCP_PP_Grid_Height");
 		$Top_Bottom_Padding = get_option("UPCP_Top_Bottom_Padding");
@@ -165,7 +166,7 @@
 <td>
 	<fieldset><legend class="screen-reader-text"><span>Use your custom designed page (Product Page tab) instead of the default?</span></legend>
 	<label title='Yes'><input type='radio' name='custom_product_page' value='Yes' <?php if($Custom_Product_Page == "Yes") {echo "checked='checked'";} ?> /> <span>Yes</span></label><br />
-	<label title='Yes'><input type='radio' name='custom_product_page' value='Large' <?php if($Custom_Product_Page == "Large") {echo "checked='checked'";} ?> /> <span>Large Screen Only</span></label><br />
+	<label title='Large'><input type='radio' name='custom_product_page' value='Large' <?php if($Custom_Product_Page == "Large") {echo "checked='checked'";} ?> /> <span>Large Screen Only</span></label><br />
 	<label title='No'><input type='radio' name='custom_product_page' value='No' <?php if($Custom_Product_Page == "No") {echo "checked='checked'";} ?> /> <span>No</span></label><br />
 	</fieldset>
 </td>
@@ -175,6 +176,16 @@
 <td>
 	<fieldset><legend class="screen-reader-text"><span>How many products should be displayed on each page of the catalogue?</span></legend>
 	<input type='text' name='products_per_page' value='<?php echo $Products_Per_Page; ?>' <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/>
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row">Pagination Location</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span>Where should the pagination controls be located?</span></legend>
+	<label title='Top'><input type='radio' name='pagination_location' value='Top' <?php if($Pagination_Location == "Top") {echo "checked='checked'";} ?> /> <span>Top</span></label><br />
+	<label title='Bottom'><input type='radio' name='pagination_location' value='Bottom' <?php if($Pagination_Location == "Bottom") {echo "checked='checked'";} ?> /> <span>Bottom</span></label><br />
+	<label title='Both'><input type='radio' name='pagination_location' value='Both' <?php if($Pagination_Location == "Both") {echo "checked='checked'";} ?> /> <span>Top and Bottom</span></label><br />
 	</fieldset>
 </td>
 </tr>
