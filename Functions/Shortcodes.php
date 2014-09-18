@@ -397,6 +397,8 @@ function Insert_Product_Catalog($atts) {
     						$Name[$key] = $row->Category_Name;
 						}
 						array_multisort($Name, SORT_ASC, $ID, SORT_DESC, $Categories);
+						unset($ID);
+						unset($Name);
 						$SidebarString .= "<div id='prod-cat-sidebar-category-div-" . $id . "' class='prod-cat-sidebar-category-div'>\n";
 						$SidebarString .= "<div id='prod-cat-sidebar-category-title-" . $id . "' class='prod-cat-sidebar-category-title'><h3>" . __("Categories:", 'UPCP') . "</h3></div>\n";
 						foreach ($Categories as $Category) {
@@ -422,6 +424,8 @@ function Insert_Product_Catalog($atts) {
     						$Name[$key] = $row->SubCategory_Name;
 						}
 						array_multisort($Name, SORT_ASC, $ID, SORT_DESC, $SubCategories);
+						unset($ID);
+						unset($Name);
 						$SidebarString .= "<div id='prod-cat-sidebar-subcategory-div-" . $id . "' class='prod-cat-sidebar-subcategory-div'>\n";
 						$SidebarString .= "<div id='prod-cat-sidebar-subcategory-title-" . $id . "' class='prod-cat-sidebar-subcategory-title'><h3>" . __("Sub-Categories:", 'UPCP') . "</h3></div>\n";
 						foreach ($SubCategories as $SubCategory) {
@@ -447,6 +451,8 @@ function Insert_Product_Catalog($atts) {
     						$Name[$key] = $row->Tag_Name;
 						}
 						array_multisort($Name, SORT_ASC, $ID, SORT_DESC, $Tags);
+						unset($ID);
+						unset($Name);
 						$SidebarString .= "<div id='prod-cat-sidebar-tag-div-" . $id . "' class='prod-cat-sidebar-tag-div'>\n";
 						$SidebarString .= "<div id='prod-cat-sidebar-tag-title-" . $id . "' class='prod-cat-tag-sidebar-title'><h3>" . __("Tags:", 'UPCP') . "</h3></div>\n";
 						foreach ($Tags as $Tag) {

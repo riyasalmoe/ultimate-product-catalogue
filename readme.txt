@@ -119,6 +119,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.22 =
+- Fixed a sorting PHP warning
+
 = 2.4.21 =
 - Categories, Sub-Categories and Tags are now listed alphabetically
 - Added an option to add pagination links to the bottom of the page
