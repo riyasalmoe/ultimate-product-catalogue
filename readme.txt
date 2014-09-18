@@ -2,7 +2,7 @@
 Contributors: Rustaurius 
 Tags: product catalogue, product catalog, restaurant menu, responsive, customizable CSS, SEO friendly, affiliate links,  affiliates, attributes, blog catalog, catalog, catalogue, katalog, commerce, directory, display products, e-commerce, ecommerce, gallery, inventory, list products, manage, plugin, product, product feed, product gallery, product management, product portfolio, products, sales, sell, shipping, shop, shopping, store, wp catalog, wp catalogue
 Requires at least: 3.5.0
-Tested up to: 3.9.1
+Tested up to: 4.0
 License: GPLv3
 License URI:http://www.gnu.org/licenses/gpl-3.0.html
 
