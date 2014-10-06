@@ -119,6 +119,10 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.23 =
+- Fixed a javascript error with image zooming in FancyBox
+- Updated to the newest version of Gridster
+
 = 2.4.22 =
 - Fixed a sorting PHP warning
 

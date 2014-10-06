@@ -206,7 +206,7 @@ function ZoomImage(ProdID, ItemID) {
 		else {
 				PhotoSRC = jQuery('#prod-cat-addt-details-thumb-'+ItemID).attr('src');
 		}
-		jQuery('.prod-cat-addt-details-main').each(function() {jQuery(this).attr('src', PhotoSRC)});
+		jQuery('#prod-cat-addt-details-main-'+ProdID).each(function() {jQuery(this).attr('src', PhotoSRC)});
 		html = '<div style="width:auto;height:auto;overflow: auto;position:relative;">';
 		html += jQuery('#prod-cat-addt-details-'+ProdID).html();
 		html += "</div>";
