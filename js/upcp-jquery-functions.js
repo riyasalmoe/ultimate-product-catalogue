@@ -51,7 +51,7 @@ function UPCP_Ajax_Filter() {
 				response = response.substring(0, response.length - 1);
 				var parsed_response = jQuery.parseJSON(response);
 				if (parsed_response.request_count == RequestCount) {
-					  jQuery('.prod-cat-inner').html(parsed_response.message);
+						jQuery('.prod-cat-inner').html(parsed_response.message);
 						ResetFancyBoxes();
 						adjustCatalogueHeight();
 				}
