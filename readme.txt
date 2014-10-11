@@ -119,6 +119,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.25 =
+- Added hierarchical sub-categories as a sidebar option 
+
 = 2.4.24 =
 - Fixed a product pages CSS error
 

@@ -4,10 +4,9 @@
 function Insert_Product_Catalog($atts) {
 		// Include the required global variables, and create a few new ones
 		global $wpdb, $categories_table_name, $subcategories_table_name, $tags_table_name, $tagged_items_table_name, $catalogues_table_name, $catalogue_items_table_name, $items_table_name;
-		global $ReturnString, $ProdCats, $ProdSubCats, $ProdTags, $Catalogue_ID, $Catalogue_Layout_Format, $Catalogue_Sidebar, $Full_Version;
+		global $ReturnString, $ProdCats, $ProdSubCats, $ProdTags, $ProdCatString, $ProdSubCatString, $ProdTagString, $Catalogue_ID, $Catalogue_Layout_Format, $Catalogue_Sidebar, $Full_Version;
 
 		$ReturnString = "";
-		$Tag_Logic = get_option("UPCP_Tag_Logic");
 		$Filter = get_option("UPCP_Filter_Type");
 		$Color = get_option("UPCP_Color_Scheme");
 		$Links = get_option("UPCP_Product_Links");
@@ -16,8 +15,6 @@ function Insert_Product_Catalog($atts) {
 		$Mobile_Style = get_option("UPCP_Mobile_SS");
 		$Pagination_Location = get_option("UPCP_Pagination_Location");
 		$CaseInsensitiveSearch = get_option("UPCP_Case_Insensitive_Search");
-		$ProductSearch = get_option("UPCP_Product_Search");
-		$Product_Sort = get_option("UPCP_Product_Sort");
 		$Products_Per_Page = get_option("UPCP_Products_Per_Page");
 		
 		// Get the attributes passed by the shortcode, and store them in new variables for processing
@@ -350,128 +347,7 @@ function Insert_Product_Catalog($atts) {
 		
 		// If the sidebar is requested, add it
 		if (($sidebar == "Yes" or $sidebar == "yes" or $sidebar == "YES") and $only_inner != "Yes") {
-				// Get the categories, sub-categories and tags that apply to the products in the catalog
-				if ($ProdCatString != "") {$Categories = $wpdb->get_results("SELECT Category_ID, Category_Name FROM $categories_table_name WHERE Category_ID in (" . $ProdCatString . ") ORDER BY Category_Date_Created");}
-				if ($ProdSubCatString != "") {$SubCategories = $wpdb->get_results("SELECT SubCategory_ID, SubCategory_Name FROM $subcategories_table_name WHERE SubCategory_ID in (" . $ProdSubCatString . ") ORDER BY SubCategory_Date_Created");}
-				if ($ProdTagString != "") {$Tags = $wpdb->get_results("SELECT Tag_ID, Tag_Name FROM $tags_table_name WHERE Tag_ID in (" . $ProdTagString . ") ORDER BY Tag_Date_Created");}
-				else {$Tags = array();}
-				
-				$SidebarString .= "<div id='prod-cat-sidebar-" . $id . "' class='prod-cat-sidebar'>\n";
-				//$SidebarString .= "<form action='#' name='Product_Catalog_Sidebar_Form'>\n";
-				$SidebarString .= "<form onsubmit='return false;' name='Product_Catalog_Sidebar_Form'>\n";
-				
-				//Create the 'Sort By' select box
-				if ($Full_Version == "Yes" and $Product_Sort != "None") {
-					  $SidebarString .= "<div id='prod-cat-sort-by' class='prod-cat-sort-by'>";
-						$SidebarString .= __('Sort By:', 'UPCP') . "<br>";
-						$SidebarString .= "<div class='styled-select styled-input'>";
-						$SidebarString .= "<select name='upcp-sort-by' id='upcp-sort-by' onchange='UPCP_Sort_By();'>";
-						$SidebarString .= "<option value=''></option>";
-						if ($Product_Sort == "Price" or $Product_Sort == "Price_Name") {
-							  $SidebarString .= "<option value='price_asc'>" . __('Price (Ascending)',  'UPCP') . "</option>";
-								$SidebarString .= "<option value='price_desc'>" . __('Price (Descending)',  'UPCP') . "</option>";
-						}
-						if ($Product_Sort == "Name" or $Product_Sort == "Price_Name") {
-							  $SidebarString .= "<option value='name_asc'>" . __('Name (Ascending)',  'UPCP') . "</option>";
-								$SidebarString .= "<option value='name_desc'>" . __('Name (Descending)',  'UPCP') . "</option>";
-						}
-						$SidebarString .= "</select>";
-						$SidebarString .= "</div>";
-						$SidebarString .= "</div>";
-				}
-				
-				// Create the text search box
-				if ($ProductSearch == "namedesc" or $ProductSearch == "namedesccust") {$SearchLabel = __("Product Search:", 'UPCP'); $SearchText = __("Search", 'UPCP');}
-				else {$SearchLabel = __("Product Name:", 'UPCP'); $SearchText = __("Name", 'UPCP');}
-				$SidebarString .= "<div id='prod-cat-text-search' class='prod-cat-text-search'>\n";
-				$SidebarString .= $SearchLabel . "<br /><div class='styled-input'>";
-				if ($Filter  == "Javascript" and $Tag_Logic == "OR") {$SidebarString .= "<input type='text' id='upcp-name-search' class='jquery-prod-name-text' name='Text_Search' value='" . __('Name', 'UPCP') . "...' onfocus='FieldFocus(this);' onblur='FieldBlur(this);' onkeyup='UPCP_Filer_Results_OR();'>\n";}
-				elseif ($Filter  == "Javascript") {$SidebarString .= "<input type='text' id='upcp-name-search' class='jquery-prod-name-text' name='Text_Search' value='" . __('Name', 'UPCP') . "...' onfocus='FieldFocus(this);' onblur='FieldBlur(this);' onkeyup='UPCP_Filer_Results();'>\n";}
-				else {$SidebarString .= "<input type='text' id='upcp-name-search' class='jquery-prod-name-text' name='Text_Search' value='" . $SearchText . "...' onfocus='FieldFocus(this);' onblur='FieldBlur(this);' onkeyup='UPCP_DisplayPage(\"1\");'>\n";}
-				$SidebarString .= "</div></div>\n";
-				
-				// Create the categories checkboxes
-				if (sizeof($Categories) > 0) {
-					  foreach ($Categories as $key => $row) {
-    						$ID[$key]  = $row->Category_ID;
-    						$Name[$key] = $row->Category_Name;
-						}
-						array_multisort($Name, SORT_ASC, $ID, SORT_DESC, $Categories);
-						unset($ID);
-						unset($Name);
-						$SidebarString .= "<div id='prod-cat-sidebar-category-div-" . $id . "' class='prod-cat-sidebar-category-div'>\n";
-						$SidebarString .= "<div id='prod-cat-sidebar-category-title-" . $id . "' class='prod-cat-sidebar-category-title'><h3>" . __("Categories:", 'UPCP') . "</h3></div>\n";
-						foreach ($Categories as $Category) {
-								$SidebarString .= "<div id='prod-cat-sidebar-category-" . $Category->Category_ID . "' class='prod-cat-sidebar-category";
-								if (in_array($Category->Category_ID, $category)) {$SidebarString .= " highlightBlue";}
-								$SidebarString .= "'>\n";
-								if ($Filter  == "Javascript" and $Tag_Logic == "OR") {$SidebarString .= "<input type='checkbox' class='jquery-prod-cat-value' name='Category" . $Category->Category_ID . "' value='" . $Category->Category_ID . "' onclick='UPCP_Filer_Results_OR(); UPCPHighlight(this, \"" . $Color . "\");'>" . $Category->Category_Name . " (" . $ProdCats[$Category->Category_ID] . ")\n";}
-								elseif ($Filter  == "Javascript") {$SidebarString .= "<input type='checkbox' class='jquery-prod-cat-value' name='Category" . $Category->Category_ID . "' value='" . $Category->Category_ID . "' onclick='UPCP_Filer_Results(); UPCPHighlight(this, \"" . $Color . "\");'>" . $Category->Category_Name . " (" . $ProdCats[$Category->Category_ID] . ")\n";}
-								else {
-										$SidebarString .= "<input type='checkbox' name='Category" . $Category->Category_ID . "' value='" . $Category->Category_ID . "' onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");' class='jquery-prod-cat-value'";
-										if (in_array($Category->Category_ID, $category)) {$SidebarString .= "checked=checked";}
-										$SidebarString .= "> " . $Category->Category_Name . " (" . $ProdCats[$Category->Category_ID] . ")\n";
-								}
-								$SidebarString .= "</div>\n";
-						}
-						$SidebarString .= "</div>\n";
-				}
-				
-				// Create the sub-categories checkboxes
-				if (sizeof($SubCategories) > 0) {
-					  foreach ($SubCategories as $key => $row) {
-    						$ID[$key]  = $row->SubCategory_ID;
-    						$Name[$key] = $row->SubCategory_Name;
-						}
-						array_multisort($Name, SORT_ASC, $ID, SORT_DESC, $SubCategories);
-						unset($ID);
-						unset($Name);
-						$SidebarString .= "<div id='prod-cat-sidebar-subcategory-div-" . $id . "' class='prod-cat-sidebar-subcategory-div'>\n";
-						$SidebarString .= "<div id='prod-cat-sidebar-subcategory-title-" . $id . "' class='prod-cat-sidebar-subcategory-title'><h3>" . __("Sub-Categories:", 'UPCP') . "</h3></div>\n";
-						foreach ($SubCategories as $SubCategory) {
-								$SidebarString .= "<div id='prod-cat-sidebar-subcategory-" . $SubCategory->SubCategory_ID . "' class='prod-cat-sidebar-subcategory";
-								if (in_array($SubCategory->SubCategory_ID, $subcategory)) {$SidebarString .= " highlightBlue";}
-								$SidebarString .= "'>\n";
-								if ($Filter  == "Javascript" and $Tag_Logic == "OR") {$SidebarString .= "<input type='checkbox' class='jquery-prod-sub-cat-value' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_Filer_Results_OR(); UPCPHighlight(this, \"" . $Color . "\");'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID] . ")\n";}
-								elseif ($Filter  == "Javascript") {$SidebarString .= "<input type='checkbox' class='jquery-prod-sub-cat-value' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_Filer_Results(); UPCPHighlight(this, \"" . $Color . "\");'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID] . ")\n";}
-								else {
-										$SidebarString .= "<input type='checkbox' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");' class='jquery-prod-sub-cat-value'";
-										if (in_array($SubCategory->SubCategory_ID, $subcategory)) {$SidebarString .= "checked=checked";}
-										$SidebarString .= "> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID] . ")\n";
-								}
-								$SidebarString .= "</div>\n";
-						}
-						$SidebarString .= "</div>\n";
-				}
-				
-				// Create the tags checkboxes
-				if (sizeof($Tags) > 0) {
-					  foreach ($Tags as $key => $row) {
-    						$ID[$key]  = $row->Tag_ID;
-    						$Name[$key] = $row->Tag_Name;
-						}
-						array_multisort($Name, SORT_ASC, $ID, SORT_DESC, $Tags);
-						unset($ID);
-						unset($Name);
-						$SidebarString .= "<div id='prod-cat-sidebar-tag-div-" . $id . "' class='prod-cat-sidebar-tag-div'>\n";
-						$SidebarString .= "<div id='prod-cat-sidebar-tag-title-" . $id . "' class='prod-cat-tag-sidebar-title'><h3>" . __("Tags:", 'UPCP') . "</h3></div>\n";
-						foreach ($Tags as $Tag) {
-								$SidebarString .= "<div id='prod-cat-sidebar-tag-" . $Tag->Tag_ID . "' class='prod-cat-sidebar-tag";
-								if (in_array($Tag->Tag_ID, $tags)) {$SidebarString .= " highlightBlue";}
-								$SidebarString .= "'>\n";
-								if ($Filter  == "Javascript" and $Tag_Logic == "OR") {$SidebarString .= "<input type='checkbox' class='jquery-prod-tag-value' name='Tag[]' value='" . $Tag->Tag_ID . "'  onclick='UPCP_Filer_Results_OR(); UPCPHighlight(this, \"" . $Color . "\");'>" . $Tag->Tag_Name . "\n";}
-								elseif ($Filter  == "Javascript") {$SidebarString .= "<input type='checkbox' class='jquery-prod-tag-value' name='Tag[]' value='" . $Tag->Tag_ID . "'  onclick='UPCP_Filer_Results(); UPCPHighlight(this, \"" . $Color . "\");'> " . $Tag->Tag_Name . "\n";}
-								else {
-										$SidebarString .= "<input type='checkbox' name='Tag[]' value='" . $Tag->Tag_ID . "'  onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");' class='jquery-prod-tag-value'";
-										if (in_array($Tag->Tag_ID, $tags)) {$SidebarString .= "checked=checked";}
-										$SidebarString .= ">" . $Tag->Tag_Name . "\n";
-								}
-								$SidebarString .= "</div>";
-						}
-				$SidebarString .= "</div>\n";
-				}
-				
-				$SidebarString .= "</form>\n</div>\n";
+				$SidebarString = BuildSidebar($category, $subcategory, $tags);
 		}
 		
 		if ($Mobile_Style == "Yes") {
@@ -880,6 +756,159 @@ function SingleProductPage() {
 		}
 		
 		return $ProductString;
+}
+
+function BuildSidebar($category, $subcategory, $tags) {
+		global $wpdb, $ProdCats, $ProdSubCats, $ProdTags, $ProdCatString, $ProdSubCatString, $ProdTagString;
+		global $categories_table_name, $subcategories_table_name, $tags_table_name;
+		
+		$Tag_Logic = get_option("UPCP_Tag_Logic");
+		$ProductSearch = get_option("UPCP_Product_Search");
+		$Product_Sort = get_option("UPCP_Product_Sort");
+		$Sidebar_Order = get_option("UPCP_Sidebar_Order");
+		
+		// Get the categories, sub-categories and tags that apply to the products in the catalog
+		if ($ProdCatString != "") {$Categories = $wpdb->get_results("SELECT Category_ID, Category_Name FROM $categories_table_name WHERE Category_ID in (" . $ProdCatString . ") ORDER BY Category_Name");}
+		if ($ProdSubCatString != "") {$SubCategories = $wpdb->get_results("SELECT SubCategory_ID, SubCategory_Name, Category_ID FROM $subcategories_table_name WHERE SubCategory_ID in (" . $ProdSubCatString . ") ORDER BY SubCategory_Name");}
+		if ($ProdTagString != "") {$Tags = $wpdb->get_results("SELECT Tag_ID, Tag_Name FROM $tags_table_name WHERE Tag_ID in (" . $ProdTagString . ") ORDER BY Tag_Date_Created");}
+		else {$Tags = array();}
+				
+		$SidebarString .= "<div id='prod-cat-sidebar-" . $id . "' class='prod-cat-sidebar'>\n";
+		//$SidebarString .= "<form action='#' name='Product_Catalog_Sidebar_Form'>\n";
+		$SidebarString .= "<form onsubmit='return false;' name='Product_Catalog_Sidebar_Form'>\n";
+				
+		//Create the 'Sort By' select box
+		if ($Full_Version == "Yes" and $Product_Sort != "None") {
+				$SidebarString .= "<div id='prod-cat-sort-by' class='prod-cat-sort-by'>";
+				$SidebarString .= __('Sort By:', 'UPCP') . "<br>";
+				$SidebarString .= "<div class='styled-select styled-input'>";
+				$SidebarString .= "<select name='upcp-sort-by' id='upcp-sort-by' onchange='UPCP_Sort_By();'>";
+				$SidebarString .= "<option value=''></option>";
+				if ($Product_Sort == "Price" or $Product_Sort == "Price_Name") {
+					  $SidebarString .= "<option value='price_asc'>" . __('Price (Ascending)',  'UPCP') . "</option>";
+						$SidebarString .= "<option value='price_desc'>" . __('Price (Descending)',  'UPCP') . "</option>";
+				}
+				if ($Product_Sort == "Name" or $Product_Sort == "Price_Name") {
+					  $SidebarString .= "<option value='name_asc'>" . __('Name (Ascending)',  'UPCP') . "</option>";
+						$SidebarString .= "<option value='name_desc'>" . __('Name (Descending)',  'UPCP') . "</option>";
+				}
+				$SidebarString .= "</select>";
+				$SidebarString .= "</div>";
+				$SidebarString .= "</div>";
+		}
+				
+		// Create the text search box
+		if ($ProductSearch == "namedesc" or $ProductSearch == "namedesccust") {$SearchLabel = __("Product Search:", 'UPCP'); $SearchText = __("Search", 'UPCP');}
+		else {$SearchLabel = __("Product Name:", 'UPCP'); $SearchText = __("Name", 'UPCP');}
+		$SidebarString .= "<div id='prod-cat-text-search' class='prod-cat-text-search'>\n";
+		$SidebarString .= $SearchLabel . "<br /><div class='styled-input'>";
+		if ($Filter  == "Javascript" and $Tag_Logic == "OR") {$SidebarString .= "<input type='text' id='upcp-name-search' class='jquery-prod-name-text' name='Text_Search' value='" . __('Name', 'UPCP') . "...' onfocus='FieldFocus(this);' onblur='FieldBlur(this);' onkeyup='UPCP_Filer_Results_OR();'>\n";}
+		elseif ($Filter  == "Javascript") {$SidebarString .= "<input type='text' id='upcp-name-search' class='jquery-prod-name-text' name='Text_Search' value='" . __('Name', 'UPCP') . "...' onfocus='FieldFocus(this);' onblur='FieldBlur(this);' onkeyup='UPCP_Filer_Results();'>\n";}
+		else {$SidebarString .= "<input type='text' id='upcp-name-search' class='jquery-prod-name-text' name='Text_Search' value='" . $SearchText . "...' onfocus='FieldFocus(this);' onblur='FieldBlur(this);' onkeyup='UPCP_DisplayPage(\"1\");'>\n";}
+		$SidebarString .= "</div></div>\n";
+				
+		// Create the categories checkboxes
+		if (sizeof($Categories) > 0) {
+			  foreach ($Categories as $key => $row) {
+    				$ID[$key]  = $row->Category_ID;
+    				$Name[$key] = $row->Category_Name;
+				}
+				array_multisort($Name, SORT_ASC, $ID, SORT_DESC, $Categories);
+				unset($ID);
+				unset($Name);
+				$SidebarString .= "<div id='prod-cat-sidebar-category-div-" . $id . "' class='prod-cat-sidebar-category-div'>\n";
+				$SidebarString .= "<div id='prod-cat-sidebar-category-title-" . $id . "' class='prod-cat-sidebar-category-title'><h3>" . __("Categories:", 'UPCP') . "</h3></div>\n";
+				foreach ($Categories as $Category) {
+						$SidebarString .= "<div id='prod-cat-sidebar-category-" . $Category->Category_ID . "' class='prod-cat-sidebar-category";
+						if (in_array($Category->Category_ID, $category)) {$SidebarString .= " highlightBlue";}
+						$SidebarString .= "'>\n";
+						if ($Filter  == "Javascript" and $Tag_Logic == "OR") {$SidebarString .= "<input type='checkbox' class='jquery-prod-cat-value' name='Category" . $Category->Category_ID . "' value='" . $Category->Category_ID . "' onclick='UPCP_Filer_Results_OR(); UPCPHighlight(this, \"" . $Color . "\");'>" . $Category->Category_Name . " (" . $ProdCats[$Category->Category_ID] . ")\n";}
+						elseif ($Filter  == "Javascript") {$SidebarString .= "<input type='checkbox' class='jquery-prod-cat-value' name='Category" . $Category->Category_ID . "' value='" . $Category->Category_ID . "' onclick='UPCP_Filer_Results(); UPCPHighlight(this, \"" . $Color . "\");'>" . $Category->Category_Name . " (" . $ProdCats[$Category->Category_ID] . ")\n";}
+						else {
+								$SidebarString .= "<input type='checkbox' name='Category" . $Category->Category_ID . "' value='" . $Category->Category_ID . "' onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");' class='jquery-prod-cat-value'";
+								if (in_array($Category->Category_ID, $category)) {$SidebarString .= "checked=checked";}
+								$SidebarString .= "> " . $Category->Category_Name . " (" . $ProdCats[$Category->Category_ID] . ")\n";
+						}
+						$SidebarString .= "</div>\n";
+						
+						if ($Sidebar_Order == "Hierarchical") {
+							  foreach ($SubCategories as $SubCategory) {
+										if ($SubCategory->Category_ID == $Category->Category_ID) {
+											  $SidebarString .= "<div id='prod-cat-sidebar-subcategory-" . $SubCategory->SubCategory_ID . "' class='prod-cat-sidebar-subcategory upcp-margin-left-6 upcp-margin-top-minus-2";
+												if (in_array($SubCategory->SubCategory_ID, $subcategory)) {$SidebarString .= " highlightBlue";}
+												$SidebarString .= "'>\n";
+												if ($Filter  == "Javascript" and $Tag_Logic == "OR") {$SidebarString .= "<input type='checkbox' class='jquery-prod-sub-cat-value' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_Filer_Results_OR(); UPCPHighlight(this, \"" . $Color . "\");'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID] . ")\n";}
+												elseif ($Filter  == "Javascript") {$SidebarString .= "<input type='checkbox' class='jquery-prod-sub-cat-value' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_Filer_Results(); UPCPHighlight(this, \"" . $Color . "\");'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID] . ")\n";}
+												else {
+														$SidebarString .= "<input type='checkbox' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");' class='jquery-prod-sub-cat-value'";
+														if (in_array($SubCategory->SubCategory_ID, $subcategory)) {$SidebarString .= "checked=checked";}
+														$SidebarString .= "> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID] . ")\n";
+												}
+												$SidebarString .= "</div>\n";
+										}
+								}
+						}
+				}
+				$SidebarString .= "</div>\n";
+		}
+				
+		// Create the sub-categories checkboxes
+		if (sizeof($SubCategories) > 0 and $Sidebar_Order != "Hierarchical") {
+			  foreach ($SubCategories as $key => $row) {
+    				$ID[$key]  = $row->SubCategory_ID;
+    				$Name[$key] = $row->SubCategory_Name;
+				}
+				array_multisort($Name, SORT_ASC, $ID, SORT_DESC, $SubCategories);
+				unset($ID);
+				unset($Name);
+				$SidebarString .= "<div id='prod-cat-sidebar-subcategory-div-" . $id . "' class='prod-cat-sidebar-subcategory-div'>\n";
+				$SidebarString .= "<div id='prod-cat-sidebar-subcategory-title-" . $id . "' class='prod-cat-sidebar-subcategory-title'><h3>" . __("Sub-Categories:", 'UPCP') . "</h3></div>\n";
+				foreach ($SubCategories as $SubCategory) {
+						$SidebarString .= "<div id='prod-cat-sidebar-subcategory-" . $SubCategory->SubCategory_ID . "' class='prod-cat-sidebar-subcategory";
+						if (in_array($SubCategory->SubCategory_ID, $subcategory)) {$SidebarString .= " highlightBlue";}
+						$SidebarString .= "'>\n";
+						if ($Filter  == "Javascript" and $Tag_Logic == "OR") {$SidebarString .= "<input type='checkbox' class='jquery-prod-sub-cat-value' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_Filer_Results_OR(); UPCPHighlight(this, \"" . $Color . "\");'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID] . ")\n";}
+						elseif ($Filter  == "Javascript") {$SidebarString .= "<input type='checkbox' class='jquery-prod-sub-cat-value' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_Filer_Results(); UPCPHighlight(this, \"" . $Color . "\");'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID] . ")\n";}
+						else {
+								$SidebarString .= "<input type='checkbox' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");' class='jquery-prod-sub-cat-value'";
+								if (in_array($SubCategory->SubCategory_ID, $subcategory)) {$SidebarString .= "checked=checked";}
+								$SidebarString .= "> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID] . ")\n";
+						}
+						$SidebarString .= "</div>\n";
+				}
+				$SidebarString .= "</div>\n";
+		}
+				
+		// Create the tags checkboxes
+		if (sizeof($Tags) > 0) {
+			  foreach ($Tags as $key => $row) {
+    				$ID[$key]  = $row->Tag_ID;
+    				$Name[$key] = $row->Tag_Name;
+				}
+				array_multisort($Name, SORT_ASC, $ID, SORT_DESC, $Tags);
+				unset($ID);
+				unset($Name);
+				$SidebarString .= "<div id='prod-cat-sidebar-tag-div-" . $id . "' class='prod-cat-sidebar-tag-div'>\n";
+				$SidebarString .= "<div id='prod-cat-sidebar-tag-title-" . $id . "' class='prod-cat-tag-sidebar-title'><h3>" . __("Tags:", 'UPCP') . "</h3></div>\n";
+				foreach ($Tags as $Tag) {
+						$SidebarString .= "<div id='prod-cat-sidebar-tag-" . $Tag->Tag_ID . "' class='prod-cat-sidebar-tag";
+						if (in_array($Tag->Tag_ID, $tags)) {$SidebarString .= " highlightBlue";}
+						$SidebarString .= "'>\n";
+						if ($Filter  == "Javascript" and $Tag_Logic == "OR") {$SidebarString .= "<input type='checkbox' class='jquery-prod-tag-value' name='Tag[]' value='" . $Tag->Tag_ID . "'  onclick='UPCP_Filer_Results_OR(); UPCPHighlight(this, \"" . $Color . "\");'>" . $Tag->Tag_Name . "\n";}
+						elseif ($Filter  == "Javascript") {$SidebarString .= "<input type='checkbox' class='jquery-prod-tag-value' name='Tag[]' value='" . $Tag->Tag_ID . "'  onclick='UPCP_Filer_Results(); UPCPHighlight(this, \"" . $Color . "\");'> " . $Tag->Tag_Name . "\n";}
+						else {
+								$SidebarString .= "<input type='checkbox' name='Tag[]' value='" . $Tag->Tag_ID . "'  onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");' class='jquery-prod-tag-value'";
+								if (in_array($Tag->Tag_ID, $tags)) {$SidebarString .= "checked=checked";}
+								$SidebarString .= ">" . $Tag->Tag_Name . "\n";
+						}
+						$SidebarString .= "</div>";
+				}
+		$SidebarString .= "</div>\n";
+		}
+				
+		$SidebarString .= "</form>\n</div>\n";
+		
+		return $SidebarString;
 }
 
 function BuildGridster($Gridster, $Product, $Item_Images, $Description, $PhotoURL, $SP_Perm_URL, $Return_URL, $TagsString) {

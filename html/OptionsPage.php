@@ -5,6 +5,7 @@
 		$Filter = get_option("UPCP_Filter_Type");
 		$ReadMore = get_option("UPCP_Read_More");
 		$Detail_Desc_Chars = get_option("UPCP_Desc_Chars");
+		$Sidebar_Order = get_option("UPCP_Sidebar_Order");
 		$Single_Page_Price = get_option("UPCP_Single_Page_Price");
 		$PrettyLinks = get_option("UPCP_Pretty_Links");
 		$XML_Sitemap_URL = get_option("UPCP_XML_Sitemap_URL");
@@ -81,6 +82,15 @@
 <td>
 	<fieldset><legend class="screen-reader-text"><span>Characters in "Details" Description</span></legend>
 	<input type='text' name='desc_count' value='<?php echo $Detail_Desc_Chars; ?>'/>
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row">Sub-Category Style</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span>How Should Sub-Categories be Displayed</span></legend>
+	<label title='Normal'><input type='radio' name='sidebar_order' value='Normal' <?php if($Sidebar_Order == "Normal") {echo "checked='checked'";} ?> /> <span>Normal</span></label><br />
+	<label title='Hierarchical'><input type='radio' name='sidebar_order' value='Hierarchical' <?php if($Sidebar_Order == "Hierarchical") {echo "checked='checked'";} ?> /> <span>Hierarchical</span></label><br />
 	</fieldset>
 </td>
 </tr>

@@ -884,6 +884,7 @@ function Update_UPCP_Options() {
 		update_option('UPCP_Filter_Type', $_POST['filter_type']);
 		update_option("UPCP_Read_More", $_POST['read_more']);
 		update_option("UPCP_Desc_Chars", $_POST['desc_count']);
+		update_option("UPCP_Sidebar_Order", $_POST['sidebar_order']);
 		update_option("UPCP_Product_Search", $_POST['product_search']);
 		$DetailsImageLink = Prepare_Details_Image();
 		update_option("UPCP_Details_Image", $DetailsImageLink);
