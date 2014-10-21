@@ -7,7 +7,7 @@ Author: Tim Ruse
 Author URI: http://www.EtoileWebDesign.com/
 Terms and Conditions: http://www.etoilewebdesign.com/plugin-terms-and-conditions/
 Text Domain: UPCP
-Version: 2.4.25
+Version: 2.4.26
 */
 
 global $UPCP_db_version;
@@ -122,7 +122,7 @@ add_action( 'wp_enqueue_scripts', 'Add_UPCP_FrontEnd_Scripts' );
 function Add_UPCP_FrontEnd_Scripts() {
 	wp_enqueue_script('upcpjquery', plugins_url( '/js/upcp-jquery-functions.js' , __FILE__ ), array( 'jquery' ));
 	wp_enqueue_script('upcp-page-builder', plugins_url( '/js/product-page-display.js' , __FILE__ ), array( 'jquery' ), '1.0', true);
-	wp_enqueue_script('gridster', plugins_url("/js/jquery.gridster.min.js", __FILE__ ), array( 'jquery' ), '1.0', true);
+	wp_enqueue_script('gridster', plugins_url("/js/jquery.gridster.js", __FILE__ ), array( 'jquery' ), '1.0', true);
 }
 
 function UPCP_Admin_Options() {

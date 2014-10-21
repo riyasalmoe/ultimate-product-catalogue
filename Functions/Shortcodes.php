@@ -912,7 +912,7 @@ function BuildSidebar($category, $subcategory, $tags) {
 }
 
 function BuildGridster($Gridster, $Product, $Item_Images, $Description, $PhotoURL, $SP_Perm_URL, $Return_URL, $TagsString) {
-		global $wpdb, $fields_meta_table_name;
+		global $wpdb, $fields_meta_table_name, $fields_table_name;
 		
 		foreach ($Gridster as $Element) {
 				switch ($Element->element_class) {

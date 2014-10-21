@@ -119,6 +119,10 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.26 =
+- Custom product pages minor update
+- Fixed a fields label error
+
 = 2.4.25 =
 - Added hierarchical sub-categories as a sidebar option 
 
