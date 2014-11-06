@@ -4,7 +4,7 @@ Plugin Name: Ultimate Product Catalogue Plugin
 Plugin URI: http://www.EtoileWebDesign.com/ultimate-product-catalogue/
 Description: Plugin to create a customizable product catalogue for businesses, restaurants, real estate agents, etc.
 Author: Étoile Web Design
-Author URI: http://www.EtoileWebDesign.com/order-tracking/
+Author URI: http://www.EtoileWebDesign.com/ultimate-product-catalogue/
 Terms and Conditions: http://www.etoilewebdesign.com/plugin-terms-and-conditions/
 Text Domain: UPCP
 Version: 2.4.26
