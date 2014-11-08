@@ -249,4 +249,26 @@ button.close {
   }
 }
 
-
+/* question Mark tooltip */
+.questionMark {
+    position:relative;
+		top:-25px;
+		left:-35px;
+    height:30px; /*dimensions of our image*/
+    width:30px;
+    background:url("../images/question_mark.png") top left no-repeat;
+}
+.toolTip {
+    position:absolute;
+    left:16px; /*Moves it to the right beside the question mark*/
+    top:30px;
+    display:none;
+    /*Making it look pretty*/
+    color:#333333;
+		width:210px;
+    padding:5px;
+		border-radius:5px;
+    border:1px solid #BBBBBB;
+    background-color:#FFFFFF;
+    font:1em Arial, Helvetica, sans-serif;
+}

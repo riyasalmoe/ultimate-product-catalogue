@@ -25,12 +25,16 @@
 ?>
 <div class="wrap">
 <div id="icon-options-general" class="icon32"><br /></div><h2>Settings</h2>
+<script type="text/javascript" src="js/Tooltip.js"></script>
 
 <form method="post" action="admin.php?page=UPCP-options&DisplayPage=Options&Action=UPCP_UpdateOptions">
 <table class="form-table">
 <tr>
-<th scope="row">Catalogue Color</th>
-<td>
+<th scope="row">Catalogue Color <br/> 
+<div onMouseOver="ShowToolTip('color_scheme_exp')" onMouseOut="HideToolTip('color_scheme_exp')" class="questionMark"><br> 
+<div id="color_scheme_exp" class="toolTip" >Set the color of the image and border elements</div></div>
+</th>
+<td >
 	<fieldset><legend class="screen-reader-text"><span>Catalogue Color</span></legend>
 	<label title='Blue'><input type='radio' name='color_scheme' value='Blue' <?php if($Color == "Blue") {echo "checked='checked'";} ?> /> <span>Blue</span></label><br />
 	<label title='Black'><input type='radio' name='color_scheme' value='Black' <?php if($Color == "Black") {echo "checked='checked'";} ?> /> <span>Black</span></label><br />
@@ -39,7 +43,10 @@
 </td>
 </tr>
 <tr>
-<th scope="row">Product Links</th>
+<th scope="row">Product Links <br>
+<div onMouseOver="ShowToolTip('product_links_exp')" onMouseOut="HideToolTip('product_links_exp')" class="questionMark"><br> 
+<div id="product_links_exp" class="toolTip" >Should external product links open in a new window?</div></div>
+</th>
 <td>
 	<fieldset><legend class="screen-reader-text"><span>Product Links</span></legend>
 	<label title='Same'><input type='radio' name='product_links' value='Same' <?php if($Links == "Same") {echo "checked='checked'";} ?> /> <span>Open in Same Window</span></label><br />
@@ -50,7 +57,10 @@
 </tr>
 <?php if ($InstallVersion <= 2.0) { ?>
 <tr>
-<th scope="row">Pretty Permalinks</th>
+<th scope="row">Pretty Permalinks<br />
+<div onMouseOver="ShowToolTip('pretty_links_exp')" onMouseOut="HideToolTip('pretty_links_exp')" class="questionMark"><br> 
+<div id="pretty_links_exp" class="toolTip" >Should the plugin create SEO-friendly product page URLs?</div></div>
+</th>
 <td>
 	<fieldset><legend class="screen-reader-text"><span>Use Pretty Permalinks for Product Pages</span></legend>
 	<label title='Yes'><input type='radio' name='pretty_links' value='Yes' <?php if($PrettyLinks == "Yes") {echo "checked='checked'";} ?> /> <span>Yes</span></label><br />
@@ -60,7 +70,10 @@
 </tr>
 <?php } ?>
 <tr>
-<th scope="row">Read More</th>
+<th scope="row">Read More <br/> 
+<div onMouseOver="ShowToolTip('read_more_exp')" onMouseOut="HideToolTip('read_more_exp')" class="questionMark"><br> 
+<div id="read_more_exp" class="toolTip" >In the "Details" layout, should the product description be cutoff if it's long?</div></div>
+</th>
 <td>
 	<fieldset><legend class="screen-reader-text"><span>"Read More" for Details view</span></legend>
 	<label title='Yes'><input type='radio' name='read_more' value='Yes' <?php if($ReadMore == "Yes") {echo "checked='checked'";} ?> /> <span>Yes</span></label><br />
@@ -69,7 +82,10 @@
 </td>
 </tr>
 <tr>
-<th scope="row">Product Page Price</th>
+<th scope="row">Product Page Price <br/> 
+<div onMouseOver="ShowToolTip('single_page_price_exp')" onMouseOut="HideToolTip('single_page_price_exp')" class="questionMark"><br> 
+<div id="single_page_price_exp" class="toolTip" >Should a product's price be displayed on the default product pages?</div></div>
+</th>
 <td>
 	<fieldset><legend class="screen-reader-text"><span>Put Prices on the Single Product Pages</span></legend>
 	<label title='Yes'><input type='radio' name='single_page_price' value='Yes' <?php if($Single_Page_Price == "Yes") {echo "checked='checked'";} ?> /> <span>Yes</span></label><br />
@@ -78,7 +94,10 @@
 </td>
 </tr>
 <tr>
-<th scope="row">Characters in Details Description</th>
+<th scope="row">Characters in Details Description <br/> 
+<div onMouseOver="ShowToolTip('desc_count_exp')" onMouseOut="HideToolTip('desc_count_exp')" class="questionMark"><br> 
+<div id="desc_count_exp" class="toolTip" >Set maximum number of characters in product description in the "Details" layout</div></div>
+</th>
 <td>
 	<fieldset><legend class="screen-reader-text"><span>Characters in "Details" Description</span></legend>
 	<input type='text' name='desc_count' value='<?php echo $Detail_Desc_Chars; ?>'/>
@@ -86,7 +105,10 @@
 </td>
 </tr>
 <tr>
-<th scope="row">Sub-Category Style</th>
+<th scope="row">Sub-Category Style <br/> 
+<div onMouseOver="ShowToolTip('sidebar_order_exp')" onMouseOut="HideToolTip('sidebar_order_exp')" class="questionMark"><br> 
+<div id="sidebar_order_exp" class="toolTip" >Should categories and sub-categories be arranged hierarchically or be grouped?</div></div>
+</th>
 <td>
 	<fieldset><legend class="screen-reader-text"><span>How Should Sub-Categories be Displayed</span></legend>
 	<label title='Normal'><input type='radio' name='sidebar_order' value='Normal' <?php if($Sidebar_Order == "Normal") {echo "checked='checked'";} ?> /> <span>Normal</span></label><br />
@@ -95,7 +117,10 @@
 </td>
 </tr>
 <tr>
-<th scope="row">Custom "Details" icon</th>
+<th scope="row">Custom "Details" icon <br/> 
+<div onMouseOver="ShowToolTip('Details_Image_exp')" onMouseOut="HideToolTip('Details_Image_exp')" class="questionMark"><br> 
+<div id="Details_Image_exp" class="toolTip" >Image to use instead of "Details" (Optional)</div></div>
+</th>
 <td>
 	<fieldset><legend class="screen-reader-text"><span>Image to use instead of "Details" (Optional)</span></legend>
 	<input id="Details_Image" type="text" size="36" name="Details_Image" value='<?php if ($Detail_Image == "") {echo "http://";} else {echo $Detail_Image;} ?>' /> 
@@ -104,7 +129,10 @@
 </td>
 </tr>
 <tr>
-<th scope="row">Filtering Type</th>
+<th scope="row">Filtering Type <br/> 
+<div onMouseOver="ShowToolTip('filter_type_exp')" onMouseOut="HideToolTip('filter_type_exp')" class="questionMark"><br> 
+<div id="filter_type_exp" class="toolTip" >Should the plugin use AJAX (recommended) or Javascript (legacy support only) to filter products?</div></div>
+</th>
 <td>
 	<fieldset><legend class="screen-reader-text"><span>Filtering Type</span></legend>
 	<label title='Javascript'><input type='radio' name='filter_type' value='Javascript' <?php if($Filter == "Javascript") {echo "checked='checked'";} ?> /> <span>Javascript Filtering</span></label><br />
@@ -113,8 +141,11 @@
 </td>
 </tr>
 <tr>
-<th scope="row">Case Insensitive Search (AJAX Only)</th>
-<td>
+<th scope="row">Case Insensitive Search (AJAX Only) <br/> 
+<div onMouseOver="ShowToolTip('case_insensitive_search_exp')" onMouseOut="HideToolTip('case_insensitive_search_exp')" class="questionMark"><br> 
+<div id="case_insensitive_search_exp" class="toolTip" >Compare only the letters and not their case in AJAX search</div></div>
+</th>
+<td >
 	<fieldset><legend class="screen-reader-text"><span>Compare only the letters and not their case in AJAX search</span></legend>
 	<label title='Javascript'><input type='radio' name='case_insensitive_search' value='Yes' <?php if($CaseInsensitiveSearch == "Yes") {echo "checked='checked'";} ?> /> <span>Yes</span></label><br />
 	<label title='AJAX'><input type='radio' name='case_insensitive_search' value='No' <?php if($CaseInsensitiveSearch == "No") {echo "checked='checked'";} ?> /> <span>No</span></label><br />
@@ -122,7 +153,10 @@
 </td>
 </tr>
 <tr>
-<th scope="row">Tag Logic</th>
+<th scope="row">Tag Logic <br/> 
+<div onMouseOver="ShowToolTip('tag_logic_exp')" onMouseOut="HideToolTip('tag_logic_exp')" class="questionMark"><br> 
+<div id="tag_logic_exp" class="toolTip" >Gives users the option to use multiple tags at the same time in filtering ("OR" option)</div></div>
+</th>
 <td>
 	<fieldset><legend class="screen-reader-text"><span>Tag Logic</span></legend>
 	<label title='AND'><input type='radio' name='tag_logic' value='AND' <?php if($Tags == "AND") {echo "checked='checked'";} ?> /> <span>Selected Tags use 'AND'</span></label><br />
@@ -131,7 +165,10 @@
 </td>
 </tr>
 <tr>
-<th scope="row">Product Search</th>
+<th scope="row">Product Search <br/> 
+<div onMouseOver="ShowToolTip('product_search_exp')" onMouseOut="HideToolTip('product_search_exp')" class="questionMark"><br> 
+<div id="product_search_exp" class="toolTip" >Set the "Product Search" text box to search either product name, product name and description or product name, description and custom fields (slowest option)</div></div>
+</th>
 <td>
 	<fieldset><legend class="screen-reader-text"><span>Product Search</span></legend>
 	<label title='Name'><input type='radio' name='product_search' value='name' <?php if($Product_Search == "name") {echo "checked='checked'";} ?> /> <span>Name Only</span></label><br />
@@ -145,7 +182,10 @@
 <?php if ($InstallVersion >= 2.1) { ?>
 <table class="form-table">
 <tr>
-<th scope="row">Pretty Permalinks</th>
+<th scope="row">Pretty Permalinks <br/> 
+<div onMouseOver="ShowToolTip('pretty_links_exp')" onMouseOut="HideToolTip('pretty_links_exp')" class="questionMark"><br> 
+<div id="pretty_links_exp" class="toolTip" >Should the plugin create SEO-friendly product page URLs?</div></div>
+</th>
 <td>
 	<fieldset><legend class="screen-reader-text"><span>Use Pretty Permalinks for Product Pages</span></legend>
 	<label title='Yes'><input type='radio' name='pretty_links' value='Yes' <?php if($PrettyLinks == "Yes") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span>Yes</span></label><br />
@@ -155,7 +195,10 @@
 </tr>
 <?php } ?>
 <tr>
-<th scope="row">XML Sitemap URL</th>
+<th scope="row">XML Sitemap URL <br/> 
+<div onMouseOver="ShowToolTip('xml_sitemap_url_exp')" onMouseOut="HideToolTip('xml_sitemap_url_exp')" class="questionMark"><br> 
+<div id="xml_sitemap_url_exp" class="toolTip" >Set the base URL path of XML sitemap that the plugin creates of all products, used for SEO purposes</div></div>
+</th>
 <td>
 	<fieldset><legend class="screen-reader-text"><span>What URL should be used at the base of the products sitemap?</span></legend>
 	<input type='text' name='xml_sitemap_url' value='<?php echo $XML_Sitemap_URL; ?>' <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/>
@@ -172,7 +215,10 @@
 </td>
 </tr> */ ?>
 <tr>
-<th scope="row">Custom Product Pages</th>
+<th scope="row">Custom Product Pages <br/> 
+<div onMouseOver="ShowToolTip('custom_product_page_exp')" onMouseOut="HideToolTip('custom_product_page_exp')" class="questionMark"><br> 
+<div id="custom_product_page_exp" class="toolTip" >Should the layout created on the "Product Pages" tab be used instead of the default plugin layout?</div></div>
+</th>
 <td>
 	<fieldset><legend class="screen-reader-text"><span>Use your custom designed page (Product Page tab) instead of the default?</span></legend>
 	<label title='Yes'><input type='radio' name='custom_product_page' value='Yes' <?php if($Custom_Product_Page == "Yes") {echo "checked='checked'";} ?> /> <span>Yes</span></label><br />
@@ -182,7 +228,10 @@
 </td>
 </tr>
 <tr>
-<th scope="row">Products per Page</th>
+<th scope="row">Products per Page <br/> 
+<div onMouseOver="ShowToolTip('products_per_page_exp')" onMouseOut="HideToolTip('products_per_page_exp')" class="questionMark"><br> 
+<div id="products_per_page_exp" class="toolTip" >Set the maximum number of products per page for your catalogues</div></div>
+</th>
 <td>
 	<fieldset><legend class="screen-reader-text"><span>How many products should be displayed on each page of the catalogue?</span></legend>
 	<input type='text' name='products_per_page' value='<?php echo $Products_Per_Page; ?>' <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/>
@@ -190,7 +239,10 @@
 </td>
 </tr>
 <tr>
-<th scope="row">Pagination Location</th>
+<th scope="row">Pagination Location <br/> 
+<div onMouseOver="ShowToolTip('pagination_location_exp')" onMouseOut="HideToolTip('pagination_location_exp')" class="questionMark"><br> 
+<div id="pagination_location_exp" class="toolTip" >Set the location of pagination controls for your catalogues</div></div>
+</th>
 <td>
 	<fieldset><legend class="screen-reader-text"><span>Where should the pagination controls be located?</span></legend>
 	<label title='Top'><input type='radio' name='pagination_location' value='Top' <?php if($Pagination_Location == "Top") {echo "checked='checked'";} ?> /> <span>Top</span></label><br />
@@ -200,7 +252,10 @@
 </td>
 </tr>
 <tr>
-<th scope="row">Product Sorting</th>
+<th scope="row">Product Sorting <br/> 
+<div onMouseOver="ShowToolTip('product_sort_exp')" onMouseOut="HideToolTip('product_sort_exp')" class="questionMark"><br> 
+<div id="product_sort_exp" class="toolTip" >Select which sorting options are available in the "Sort By" box</div></div>
+</th>
 <td>
 	<fieldset><legend class="screen-reader-text"><span>Available Sorting Options</span></legend>
 	<label title='Price and Name'><input type='radio' name='product_sort' value='Price_Name' <?php if($Product_Sort == "Price_Name") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span>Price and Name</span></label><br />
@@ -211,7 +266,10 @@
 </td>
 </tr>
 <tr>
-<th scope="row">Product Page Grid Width</th>
+<th scope="row">Product Page Grid Width <br/> 
+<div onMouseOver="ShowToolTip('pp_grid_width_exp')" onMouseOut="HideToolTip('pp_grid_width_exp')" class="questionMark"><br> 
+<div id="pp_grid_width_exp" class="toolTip" >How wide should the grid elements used to build custom product pages be? (in pixels)</div></div>
+</th>
 <td>
 	<fieldset><legend class="screen-reader-text"><span>How wide should each product grid be? (in pixels)</span></legend>
 	<input type='text' name='pp_grid_width' value='<?php echo $PP_Grid_Width; ?>' <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/>
@@ -219,7 +277,10 @@
 </td>
 </tr>
 <tr>
-<th scope="row">Product Page Grid Height</th>
+<th scope="row">Product Page Grid Height <br/> 
+<div onMouseOver="ShowToolTip('pp_grid_height_exp')" onMouseOut="HideToolTip('pp_grid_height_exp')" class="questionMark"><br>  
+<div id="pp_grid_height_exp" class="toolTip" >How tall should the grid elements used to build custom product pages be? (in pixels)</div></div>
+</th>
 <td>
 	<fieldset><legend class="screen-reader-text"><span>How tall should each product grid be? (in pixels)</span></legend>
 	<input type='text' name='pp_grid_height' value='<?php echo $PP_Grid_Height; ?>' <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/>
@@ -227,7 +288,10 @@
 </td>
 </tr>
 <tr>
-<th scope="row">Top and Bottom Padding</th>
+<th scope="row">Top and Bottom Padding <br/> 
+<div onMouseOver="ShowToolTip('pp_top_bottom_padding_exp')" onMouseOut="HideToolTip('pp_top_bottom_padding_exp')" class="questionMark"><br> 
+<div id="pp_top_bottom_padding_exp" class="toolTip" >How much padding should be above and below each grid element used to build custom product? (in pixels)</div></div>
+</th>
 <td>
 	<fieldset><legend class="screen-reader-text"><span>How much padding should be above and below each grid? (in pixels)</span></legend>
 	<input type='text' name='pp_top_bottom_padding' value='<?php echo $Top_Bottom_Padding; ?>' <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/>
@@ -235,7 +299,10 @@
 </td>
 </tr>
 <tr>
-<th scope="row">Right and Left Padding</th>
+<th scope="row">Right and Left Padding <br/> 
+<div onMouseOver="ShowToolTip('pp_left_right_padding_exp')" onMouseOut="HideToolTip('pp_left_right_padding_exp')" class="questionMark"><br>  
+<div id="pp_left_right_padding_exp" class="toolTip" >How much padding should be to the right and left each grid element used to build custom product? (in pixels)</div></div>
+</th>
 <td>
 	<fieldset><legend class="screen-reader-text"><span>How much padding should be to the right and left of each grid? (in pixels)</span></legend>
 	<input type='text' name='pp_left_right_padding' value='<?php echo $Left_Right_Padding; ?>' <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/>

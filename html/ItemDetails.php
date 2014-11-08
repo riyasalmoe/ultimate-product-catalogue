@@ -7,7 +7,7 @@
 		<div class="OptionTab ActiveTab" id="EditProduct">
 				<div class="form-wrap ItemDetail">
 						<a href="admin.php?page=UPCP-options&DisplayPage=Products" class="NoUnderline">&#171; <?php _e("Back", 'UPCP') ?></a>
-						<h3>Edit <?php echo $Product->Item_Name;?></h3>
+						<h3>Edit  <?php echo $Product->Item_Name; echo"( ID:"; echo $Product->Item_ID; echo" )"; ?></h3>
 						<form id="addtag" method="post" action="admin.php?page=UPCP-options&Action=UPCP_EditProduct&DisplayPage=Products" class="validate" enctype="multipart/form-data">
 						<input type="hidden" name="action" value="Edit_Product" />
 						<input type="hidden" name="Item_ID" value="<?php echo $Product->Item_ID; ?>" />
@@ -242,7 +242,7 @@
 				<div class="col-wrap">
 				<div class="form-wrap CategoryDetail">
 						<a href="admin.php?page=UPCP-options&DisplayPage=Categories" class="NoUnderline">&#171; <?php _e("Back", 'UPCP') ?></a>
-						<h3>Edit <?php echo $Category->Category_Name;?></h3>
+						<h3>Edit <?php echo $Category->Category_Name;echo" (ID:";echo $Category->Category_ID;echo " )";?></h3>
 						<form id="addtag" method="post" action="admin.php?page=UPCP-options&Action=UPCP_EditCategory&DisplayPage=Categories" class="validate" enctype="multipart/form-data">
 						<input type="hidden" name="action" value="Edit_Category" />
 						<input type="hidden" name="Category_ID" value="<?php echo $Category->Category_ID; ?>" />
@@ -305,7 +305,7 @@
 				<div class="col-wrap">
 				<div class="form-wrap SubCategoryDetail">
 						<a href="admin.php?page=UPCP-options&DisplayPage=SubCategories" class="NoUnderline">&#171; <?php _e("Back", 'UPCP')?></a>
-						<h3>Edit <?php echo $SubCategory->SubCategory_Name;?></h3>
+						<h3>Edit  <?php echo $SubCategory->SubCategory_Name; echo "( ID: "; echo $SubCategory->SubCategory_ID; echo " )"; ?></h3>
 						<form id="addtag" method="post" action="admin.php?page=UPCP-options&Action=UPCP_EditSubCategory&DisplayPage=SubCategories" class="validate" enctype="multipart/form-data">
 						<input type="hidden" name="action" value="Edit_SubCategory" />
 						<input type="hidden" name="SubCategory_ID" value="<?php echo $SubCategory->SubCategory_ID; ?>" />
@@ -376,7 +376,7 @@
 				<div class="col-wrap">
 				<div class="form-wrap TagDetail">
 						<a href="admin.php?page=UPCP-options&DisplayPage=Tags" class="NoUnderline">&#171; <?php _e("Back", 'UPCP') ?></a>
-						<h3>Edit <?php echo $Tag->Tag_Name;?></h3>
+						<h3>Edit  <?php echo $Tag->Tag_Name; echo"( ID:"; echo $Tag->Tag_ID; echo" )";?></h3>
 						<form id="addtag" method="post" action="admin.php?page=UPCP-options&Action=UPCP_EditTag&DisplayPage=Tags" class="validate" enctype="multipart/form-data">
 						<input type="hidden" name="action" value="Edit_Tag" />
 						<input type="hidden" name="Tag_ID" value="<?php echo $Tag->Tag_ID; ?>" />
@@ -410,7 +410,7 @@
 				<div class="col-wrap">
 				<div class="form-wrap TagDetail">
 						<a href="admin.php?page=UPCP-options&DisplayPage=Tags" class="NoUnderline">&#171; <?php _e("Back", 'UPCP') ?></a>
-						<h3>Edit <?php echo $Field->Field_Name;?></h3>
+						<h3>Edit <?php echo $Field->Field_Name; echo "( ID: "; echo $Field->Field_ID; echo" )"; ?></h3>
 						<form id="addtag" method="post" action="admin.php?page=UPCP-options&Action=UPCP_EditCustomField&DisplayPage=CustomFields" class="validate" enctype="multipart/form-data">
 						<input type="hidden" name="action" value="Edit_Custom_Field" />
 						<input type="hidden" name="Field_ID" value="<?php echo $Field->Field_ID; ?>" />

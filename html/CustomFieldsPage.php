@@ -19,7 +19,7 @@
 				$num_rows = $wpdb->num_rows; 
 				$Number_of_Pages = ceil($num_rows/20);
 				echo $Number_Of_Pages;
-				$Current_Page_With_Order_By = "admin.php?page=UPCP-optionss&DisplayPage=CustomFields";
+				$Current_Page_With_Order_By = "admin.php?page=UPCP-options&DisplayPage=CustomFields";
 				if (isset($_GET['OrderBy'])) {$Current_Page_With_Order_By .= "&OrderBy=" .$_GET['OrderBy'] . "&Order=" . $_GET['Order'];}?>
 
 <form action="admin.php?page=UPCP-options&Action=UPCP_MassDeleteCustomFields&DisplayPage=CustomFields" method="post">    

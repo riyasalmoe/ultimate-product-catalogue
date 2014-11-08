@@ -17,3 +17,22 @@ function Reload_PP_Page(Value) {
 		var Layout = jQuery('#PP-type-select').val();
 		window.location.href = "admin.php?page=UPCP-options&DisplayPage=ProductPage&CPP_Mobile=" + Layout;
 }
+
+function ShowToolTip(ToolTipID) {
+		jQuery('#'+ToolTipID).css('display', 'block');
+}
+
+function HideToolTip(ToolTipID) {
+		jQuery('#'+ToolTipID).css('display', 'none');
+}
+
+// This is tooltip code for Option Page
+jQuery(document).ready(function () {
+
+
+    jQuery('a[title]').qtip();
+    jQuery('th[title]').qtip();
+
+});
+
+

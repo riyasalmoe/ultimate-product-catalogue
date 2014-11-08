@@ -812,7 +812,8 @@ function Delete_UPCP_Product($Item_ID) {
 		global $categories_table_name;
 		global $subcategories_table_name;
 		global $tags_table_name;
-		global $tagged_items_table_name;	
+		global $tagged_items_table_name;
+        global $catalogue_items_table_name;
 		
 		// Delete the tagged item in the tagged items table for the given Item_ID
 		// and update the Item_Count column in the tags table in the database		
@@ -824,6 +825,11 @@ function Delete_UPCP_Product($Item_ID) {
 				$tagged_items_table_name,
 				array('Item_ID' => $Item_ID)
 		);
+
+        $wpdb->delete(
+            $catalogue_items_table_name,
+            array('Item_ID' => $Item_ID)
+        );
 		
 		// Decrease the Item_Count column for the category and sub-category tables in the database
 		$Current_Product = $wpdb->get_row("SELECT Category_ID, SubCategory_ID FROM $items_table_name WHERE Item_ID='" . $Item_ID ."'");
