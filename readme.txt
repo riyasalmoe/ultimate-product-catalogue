@@ -119,6 +119,10 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.28 = 
+- Prices with text and currency signs will now be sorted correctly
+- Fixed sorting so that products stay sorted after selecting a category, sub-category or tag
+
 = 2.4.27 =
 - Added tooltip help for the "Options" tab
 - Made it easier to identify category, sub-category and tag IDs

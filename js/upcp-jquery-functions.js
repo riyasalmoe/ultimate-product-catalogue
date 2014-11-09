@@ -52,8 +52,9 @@ function UPCP_Ajax_Filter() {
 				var parsed_response = jQuery.parseJSON(response);
 				if (parsed_response.request_count == RequestCount) {
 						jQuery('.prod-cat-inner').html(parsed_response.message);
-						ResetFancyBoxes();
+						UPCP_Sort_By();
 						adjustCatalogueHeight();
+						ResetFancyBoxes();
 				}
 		});
 }
@@ -327,36 +328,52 @@ function SortByNameDESC() {
 }
 
 function SortByPriceASC() {            
-        jQuery('.thumb-display div .prod-cat-price').sortElements(function(a, b){
-						return Number(jQuery(a).text()) > Number(jQuery(b).text()) ? 1 : -1;
+        var first;
+				var second;
+				jQuery('.thumb-display div .prod-cat-price').sortElements(function(a, b){
+						first = jQuery(a).text().replace(/\D/g,'');
+						second = jQuery(b).text().replace(/\D/g,'');
+						return Number(first) > Number(second) ? 1 : -1;
         }, function() {
 						return this.parentNode;
 				});
 				jQuery('.list-display div .prod-cat-price').sortElements(function(a, b){
-						return Number(jQuery(a).text()) > Number(jQuery(b).text()) ? 1 : -1;
+						first = jQuery(a).text().replace(/\D/g,'');
+						second = jQuery(b).text().replace(/\D/g,'');
+						return Number(first) > Number(second) ? 1 : -1;
         }, function() {
 						return this.parentNode;
 				});
 				jQuery('.detail-display div .prod-cat-price').sortElements(function(a, b){
-						return Number(jQuery(a).text()) > Number(jQuery(b).text()) ? 1 : -1;
+						first = jQuery(a).text().replace(/\D/g,'');
+						second = jQuery(b).text().replace(/\D/g,'');
+						return Number(first) > Number(second) ? 1 : -1;
         }, function() {
 						return this.parentNode.parentNode; 
 				});
 }
 
 function SortByPriceDESC() {
+				var first;
+				var second;
 				jQuery('.thumb-display div .prod-cat-price').sortElements(function(a, b){
-						return Number(jQuery(a).text()) < Number(jQuery(b).text()) ? 1 : -1;
+						first = jQuery(a).text().replace(/\D/g,'');
+						second = jQuery(b).text().replace(/\D/g,'');
+						return Number(first) < Number(second) ? 1 : -1;
         }, function() {
 						return this.parentNode;
 				});
 				jQuery('.list-display div .prod-cat-price').sortElements(function(a, b){
-						return Number(jQuery(a).text()) < Number(jQuery(b).text()) ? 1 : -1;
+						first = jQuery(a).text().replace(/\D/g,'');
+						second = jQuery(b).text().replace(/\D/g,'');
+						return Number(first) < Number(second) ? 1 : -1;
         }, function() {
 						return this.parentNode;
 				});
 				jQuery('.detail-display div .prod-cat-price').sortElements(function(a, b){
-						return Number(jQuery(a).text()) < Number(jQuery(b).text()) ? 1 : -1;
+						first = jQuery(a).text().replace(/\D/g,'');
+						second = jQuery(b).text().replace(/\D/g,'');
+						return Number(first) < Number(second) ? 1 : -1;
         }, function() {
 						return this.parentNode.parentNode; 
 				});

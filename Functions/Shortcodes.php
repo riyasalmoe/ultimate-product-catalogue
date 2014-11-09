@@ -759,7 +759,7 @@ function SingleProductPage() {
 }
 
 function BuildSidebar($category, $subcategory, $tags) {
-		global $wpdb, $ProdCats, $ProdSubCats, $ProdTags, $ProdCatString, $ProdSubCatString, $ProdTagString;
+		global $wpdb, $Full_Version, $ProdCats, $ProdSubCats, $ProdTags, $ProdCatString, $ProdSubCatString, $ProdTagString;
 		global $categories_table_name, $subcategories_table_name, $tags_table_name;
 		
 		$Tag_Logic = get_option("UPCP_Tag_Logic");
