@@ -2,7 +2,7 @@ jQuery(document).ready(function($){
  
     var custom_uploader;
  
-    $('#Item_Image_button').click(function(e) {
+    jQuery('#Item_Image_button').click(function(e) {
  
         e.preventDefault();
  
@@ -24,7 +24,7 @@ jQuery(document).ready(function($){
         //When a file is selected, grab the URL and set it as the text field's value
         custom_uploader.on('select', function() {
             attachment = custom_uploader.state().get('selection').first().toJSON();
-            $('#Item_Image').val(attachment.url);
+            jQuery('#Item_Image').val(attachment.url);
         });
  
         //Open the uploader dialog
@@ -37,7 +37,7 @@ jQuery(document).ready(function($){
  
     var custom_uploader;
  
-    $('#Item_Image_Addt_button').click(function(e) {
+    jQuery('#Item_Image_Addt_button').click(function(e) {
  
         e.preventDefault();
  
@@ -66,7 +66,7 @@ jQuery(document).ready(function($){
             console.log(sel.models[i].toJSON());
             attachment.push(sel.models[i].toJSON().url);
           }
-          $('#Item_Image_Addt').val(attachment);
+          jQuery('#Item_Image_Addt').val(attachment);
         });
  
         //Open the uploader dialog
@@ -79,7 +79,7 @@ jQuery(document).ready(function($){
  
     var custom_uploader;
  
-    $('#Details_Image_button').click(function(e) {
+    jQuery('#Details_Image_button').click(function(e) {
  
         e.preventDefault();
  
@@ -101,7 +101,7 @@ jQuery(document).ready(function($){
         //When a file is selected, grab the URL and set it as the text field's value
         custom_uploader.on('select', function() {
             attachment = custom_uploader.state().get('selection').first().toJSON();
-            $('#Details_Image').val(attachment.url);
+            jQuery('#Details_Image').val(attachment.url);
         });
  
         //Open the uploader dialog
@@ -110,14 +110,3 @@ jQuery(document).ready(function($){
     });
 });
 
-
-
-// Create the tooltips only when document ready
-$(document).ready(function () {
-
-    // This will automatically grab the 'title' attribute and replace
-    // the regular browser tooltips for all <a> elements with a title attribute!
-    $('a[title]').qtip();
-    $('th[title]').qtip();
-
-});

@@ -119,6 +119,10 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.29=
+- Added a new .pot file with many of the missing strings
+- Fixed an error that was preventing images from being uploaded
+
 = 2.4.28 = 
 - Prices with text and currency signs will now be sorted correctly
 - Fixed sorting so that products stay sorted after selecting a category, sub-category or tag

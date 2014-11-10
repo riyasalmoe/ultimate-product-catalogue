@@ -26,13 +26,5 @@ function HideToolTip(ToolTipID) {
 		jQuery('#'+ToolTipID).css('display', 'none');
 }
 
-// This is tooltip code for Option Page
-jQuery(document).ready(function () {
-
-
-    jQuery('a[title]').qtip();
-    jQuery('th[title]').qtip();
-
-});
 
 

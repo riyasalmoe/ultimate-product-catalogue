@@ -7,7 +7,7 @@
 		<div class="OptionTab ActiveTab" id="EditProduct">
 				<div class="form-wrap ItemDetail">
 						<a href="admin.php?page=UPCP-options&DisplayPage=Products" class="NoUnderline">&#171; <?php _e("Back", 'UPCP') ?></a>
-						<h3>Edit  <?php echo $Product->Item_Name; echo"( ID:"; echo $Product->Item_ID; echo" )"; ?></h3>
+						<h3>Edit  <?php echo $Product->Item_Name . " (ID:" . $Product->Item_ID . " )"; ?></h3>
 						<form id="addtag" method="post" action="admin.php?page=UPCP-options&Action=UPCP_EditProduct&DisplayPage=Products" class="validate" enctype="multipart/form-data">
 						<input type="hidden" name="action" value="Edit_Product" />
 						<input type="hidden" name="Item_ID" value="<?php echo $Product->Item_ID; ?>" />
