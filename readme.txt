@@ -119,6 +119,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.31 =
+- Fixed the translation bug where no products would display if "Name" had been translated
+
 = 2.4.30 =
 - Fixed a spreadsheet upload warning when no custom fields existed
 

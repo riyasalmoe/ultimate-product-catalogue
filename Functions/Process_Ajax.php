@@ -41,11 +41,12 @@ function UPCP_Filter_Catalogue() {
 		$start_layout = $_POST['start_layout'];
 		$excluded_layouts = $_POST['excluded_layouts'];
 		$current_page = $_POST['current_page'];
+		$default_search_text = $_POST['default_search_text'];
 		$ajax_url = $_POST['ajax_url'];
 		$ajax_reload = $_POST['ajax_reload'];
 		$request_count = $_POST['request_count'];
 		
-		if ($_POST['Prod_Name'] != "Name..." and $_POST['Prod_Name'] != "Search...") {$Prod_Name = $_POST['Prod_Name'];}
+		if ($_POST['Prod_Name'] != default_search_text) {$Prod_Name = $_POST['Prod_Name'];}
 		else {$Prod_Name = "";}
 		$Category = $_POST['Category'];
 		$SubCategory = $_POST['SubCategory'];

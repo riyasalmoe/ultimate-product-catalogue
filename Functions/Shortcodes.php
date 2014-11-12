@@ -16,6 +16,7 @@ function Insert_Product_Catalog($atts) {
 		$Pagination_Location = get_option("UPCP_Pagination_Location");
 		$CaseInsensitiveSearch = get_option("UPCP_Case_Insensitive_Search");
 		$Products_Per_Page = get_option("UPCP_Products_Per_Page");
+		$ProductSearch = get_option("UPCP_Product_Search");
 		
 		// Get the attributes passed by the shortcode, and store them in new variables for processing
 		extract( shortcode_atts( array(
@@ -82,6 +83,9 @@ function Insert_Product_Catalog($atts) {
 		if ($category != "" or $subcategory != "" or $tags != "" or $prod_name != "") {$Filtered = "Yes";}
 		else {$Filtered = "No";}
 		
+		if ($ProductSearch == "namedesc" or $ProductSearch == "namedesccust") {$SearchText = __("Search", 'UPCP');}
+		else {$SearchText = __("Name", 'UPCP');}
+		
 		$ReturnString .= "<div class='upcp-Hide-Item' id='upcp-shortcode-atts'>";
 		$ReturnString .= "<div class='shortcode-attr' id='upcp-catalogue-id'>" . $id . "</div>";
 		$ReturnString .= "<div class='shortcode-attr' id='upcp-catalogue-sidebar'>" . $sidebar . "</div>";
@@ -89,6 +93,7 @@ function Insert_Product_Catalog($atts) {
 		$ReturnString .= "<div class='shortcode-attr' id='upcp-current-layout'>" . $starting_layout . "</div>";
 		$ReturnString .= "<div class='shortcode-attr' id='upcp-exclude-layouts'>" . $excluded_layouts . "</div>";
 		$ReturnString .= "<div class='shortcode-attr' id='upcp-current-page'>" . $current_page . "</div>";
+		$ReturnString .= "<div class='shortcode-attr' id='upcp-default-search-text'>" . $SearchText . "...</div>";
 		if ($ajax_reload == "Yes") {$ReturnString .= "<div class='shortcode-attr' id='upcp-base-url'>" . $ajax_url . "</div>";}
 		else {
 				$uri_parts = explode('?', $_SERVER['REQUEST_URI'], 2);
