@@ -119,6 +119,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.30 =
+- Fixed a spreadsheet upload warning when no custom fields existed
+
 = 2.4.29=
 - Added a new .pot file with many of the missing strings
 - Fixed an error that was preventing images from being uploaded

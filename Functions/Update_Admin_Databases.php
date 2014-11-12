@@ -678,9 +678,11 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 						$user_update = array("Message_Type" => "Error", "Message" => $Error);
 						return $user_update;
 				}
-				if (array_key_exists($Title, $Allowable_Custom_Fields)) {
-					  $Custom_Fields[$key] = $Title;
-						unset($Titles[$key]);
+				if (is_array($Allowable_Custom_Fields)) {
+					  if (array_key_exists($Title, $Allowable_Custom_Fields)) {
+					  	  $Custom_Fields[$key] = $Title;
+								unset($Titles[$key]);
+						}
 				}
 		}
 		if (!is_array($Custom_Fields)) {$Custom_Fields = array();}
