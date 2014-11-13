@@ -119,6 +119,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.32 =
+- Added support for additional shortcodes inside of descriptions
+
 = 2.4.31 =
 - Fixed the translation bug where no products would display if "Name" had been translated
 

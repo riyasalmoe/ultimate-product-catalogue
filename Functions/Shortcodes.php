@@ -418,7 +418,7 @@ function AddProduct($format, $Item_ID, $Product, $Tags, $AjaxReload = "No", $Aja
 		else {$NewWindow = false;}
 		
 		$Description = ConvertCustomFields($Product->Item_Description);
-		$Description = do_shortcode($Description);
+		//$Description = do_shortcode($Description);
 		
 		//Select the product info, tags and images for the product
 		$Item_Images = $wpdb->get_results("SELECT Item_Image_URL, Item_Image_ID FROM $item_images_table_name WHERE Item_ID=" . $Item_ID);

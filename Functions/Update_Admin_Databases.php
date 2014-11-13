@@ -898,6 +898,7 @@ function Update_UPCP_Options() {
 		update_option("UPCP_Details_Image", $DetailsImageLink);
 		update_option("UPCP_Single_Page_Price", $_POST['single_page_price']);
 		update_option("UPCP_Case_Insensitive_Search", $_POST['case_insensitive_search']);
+		update_option("UPCP_Apply_Contents_Filter", $_POST['contents_filter']);
 		if ($InstallVersion <= 2.0 or $Full_Version == "Yes") {update_option("UPCP_Pretty_Links", $_POST['pretty_links']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_XML_Sitemap_URL", $_POST['xml_sitemap_url']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_Filter_Title", $_POST['filter_title']);}

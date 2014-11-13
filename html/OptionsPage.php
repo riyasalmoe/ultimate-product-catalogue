@@ -12,6 +12,7 @@
 		$Filter_Title = get_option("UPCP_Filter_Title");
 		$Detail_Image = get_option("UPCP_Details_Image");
 		$CaseInsensitiveSearch = get_option("UPCP_Case_Insensitive_Search");
+		$Apply_Contents_Filter = get_option("UPCP_Apply_Contents_Filter");
 		$InstallVersion = get_option("UPCP_First_Install_Version");
 		$Custom_Product_Page = get_option("UPCP_Custom_Product_Page");
 		$Products_Per_Page = get_option("UPCP_Products_Per_Page");
@@ -173,6 +174,18 @@
 	<label title='Name'><input type='radio' name='product_search' value='name' <?php if($Product_Search == "name") {echo "checked='checked'";} ?> /> <span><?php _e("Name Only", 'UPCP')?></span></label><br />
 	<label title='Name-and-Desc'><input type='radio' name='product_search' value='namedesc' <?php if($Product_Search == "namedesc") {echo "checked='checked'";} ?> /> <span><?php _e("Name and Description", 'UPCP')?></span></label><br />
 	<label title='Name-Desc-and-Cust'><input type='radio' name='product_search' value='namedesccust' <?php if($Product_Search == "namedesccust") {echo "checked='checked'";} ?> /> <span><?php _e("Name, Description and Custom Fields", 'UPCP')?></span></label><br />
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row"><?php _e("Contents Filter", 'UPCP')?> <br/> 
+<div onMouseOver="ShowToolTip('contents_filter_exp')" onMouseOut="HideToolTip('contents_filter_exp')" class="questionMark"><br> 
+<div id="contents_filter_exp" class="toolTip" ><?php _e("Should the default WordPress contents filter be applied to product descriptions before they're saved in the database?", 'UPCP')?></div></div>
+</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span><?php _e("Contents Filter", 'UPCP')?></span></legend>
+	<label title='Yes'><input type='radio' name='contents_filter' value='Yes' <?php if($Apply_Contents_Filter == "Yes") {echo "checked='checked'";} ?> /> <span><?php _e("Yes", 'UPCP')?></span></label><br />
+	<label title='No'><input type='radio' name='contents_filter' value='No' <?php if($Apply_Contents_Filter == "No") {echo "checked='checked'";} ?> /> <span><?php _e("No", 'UPCP')?></span></label><br />
 	</fieldset>
 </td>
 </tr>
