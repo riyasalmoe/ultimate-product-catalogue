@@ -46,7 +46,7 @@ function UPCP_Filter_Catalogue() {
 		$ajax_reload = $_POST['ajax_reload'];
 		$request_count = $_POST['request_count'];
 		
-		if ($_POST['Prod_Name'] != default_search_text) {$Prod_Name = $_POST['Prod_Name'];}
+		if ($_POST['Prod_Name'] != $default_search_text) {$Prod_Name = $_POST['Prod_Name'];}
 		else {$Prod_Name = "";}
 		$Category = $_POST['Category'];
 		$SubCategory = $_POST['SubCategory'];

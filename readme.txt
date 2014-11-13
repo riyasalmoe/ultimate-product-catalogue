@@ -119,6 +119,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.33 =
+- Fixed a commenting error with AJAX searches
+
 = 2.4.32 =
 - Added support for additional shortcodes inside of descriptions
 

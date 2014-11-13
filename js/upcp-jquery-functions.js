@@ -37,7 +37,7 @@ function UPCP_Ajax_Filter() {
 		var excluded_layouts = jQuery('#upcp-excluded-layouts').html();
 		var current_page = jQuery('#upcp-current-page').html();
 		var base_url = jQuery('#upcp-base-url').html();
-		var default_search_text = jQuery('upcp-default-search-text').html();
+		var default_search_text = jQuery('#upcp-default-search-text').html();
 		
 		jQuery('.jquery-prod-cat-value').each(function() {if (jQuery(this).prop('checked')) {CatValues.push(jQuery(this).val());}});
 		jQuery('.jquery-prod-sub-cat-value').each(function() {if (jQuery(this).prop('checked')) {SubCatValues.push(jQuery(this).val());}});
