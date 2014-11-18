@@ -19,10 +19,7 @@
 </div>
 <?php } ?>
 <?php/* echo get_option('plugin_error');*/?>
-<?php if (get_option("UPCP_Update_Flag") == "Yes" or get_option("UPCP_Install_Flag") == "Yes") {
-				  update_option('UPCP_Update_Flag', "No");
-					update_option('UPCP_Install_Flag', "No"); 
-				?>
+<?php if (get_option("UPCP_Update_Flag") == "Yes" or get_option("UPCP_Install_Flag") == "Yes") {?>
 					<div id="side-sortables" class="metabox-holder ">
 							<div id="upcp_pro" class="postbox " >
 									<div class="handlediv" title="Click to toggle"></div>
@@ -35,7 +32,7 @@
 											<?php } else { ?><ul><li><?php _e("Thanks for upgrading to version 2.2.9!", "UPCP"); ?><br> <a href='http://www.facebook.com/EtoileWebDesign'><?php _e("Follow us on Facebook", "UPCP"); ?></a> <?php _e("to suggest new features or hear about upcoming ones!", "UPCP");?> </li></ul><?php } */?>
 											
 											<?php if (get_option("UPCP_Install_Flag") == "Yes") { ?><ul><li><?php _e("Thanks for installing the Ultimate Product Catalogue Plugin.", "UPCP"); ?><br> <a href='http://www.facebook.com/EtoileWebDesign'><?php _e("Follow us on Facebook", "UPCP"); ?></a> <?php _e("to suggest new features or hear about upcoming ones!", "UPCP");?>  </li></ul>
-											<?php } else { ?><ul><li><?php _e("Thanks for upgrading to version 2.4.33!", "UPCP"); ?><br> <a href='http://wordpress.org/support/view/plugin-reviews/ultimate-product-catalogue'><?php _e("Please rate our plugin", "UPCP"); ?></a> <?php _e("if you find the Ultimate Product Catalogue Plugin useful!", "UPCP");?> </li></ul><?php } ?>
+											<?php } else { ?><ul><li><?php _e("Thanks for upgrading to version 2.4.34!", "UPCP"); ?><br> <a href='http://wordpress.org/support/view/plugin-reviews/ultimate-product-catalogue'><?php _e("Please rate our plugin", "UPCP"); ?></a> <?php _e("if you find the Ultimate Product Catalogue Plugin useful!", "UPCP");?> </li></ul><?php } ?>
 											
 											<?php /*if (get_option("UPCP_Install_Flag") == "Yes") { ?><ul><li><?php _e("Thanks for installing the Ultimate Product Catalogue Plugin.", "UPCP"); ?><br> <a href='http://www.facebook.com/EtoileWebDesign'><?php _e("Follow us on Facebook", "UPCP"); ?></a> <?php _e("to suggest new features or hear about upcoming ones!", "UPCP");?>  </li></ul>
 											<?php } else { ?><ul><li><?php _e("Thanks for upgrading to version 2.3.9!", "UPCP"); ?><br> <a href='http://wordpress.org/support/topic/error-hunt'><?php _e("Please let us know about any small display/functionality errors. ", "UPCP"); ?></a> <?php _e("We've noticed a couple, and would like to eliminate as many as possible.", "UPCP");?> </li></ul><?php } */?>
@@ -55,7 +52,10 @@
 									</div>
 							</div>
 					</div>
-			<?php  } ?>
+		<?php 
+		update_option('UPCP_Update_Flag', "No");
+		update_option('UPCP_Install_Flag', "No");  
+		} ?>
 
 <!-- List of the catalogues which have already been created -->
 <div id="col-right">

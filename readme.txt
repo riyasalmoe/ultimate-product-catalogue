@@ -120,6 +120,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.34 =
+- Fixed a bug on the sub-category details page
+
 = 2.4.33 =
 - Fixed a commenting error with AJAX searches
 

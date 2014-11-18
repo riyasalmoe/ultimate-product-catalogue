@@ -335,7 +335,7 @@
 								<p><?php _e("The description of the sub-category. What products are included in this?", 'UPCP') ?></p>
 						</div>
 
-						<p class="submit"><input type="submit" name="submit" id="submit" class="button-primary" value="<?php e_('Save Changes', 'UPCP') ?>"  /></p>
+						<p class="submit"><input type="submit" name="submit" id="submit" class="button-primary" value="<?php _e('Save Changes', 'UPCP') ?>"  /></p>
 						</form>
 				</div>
 				</div>
