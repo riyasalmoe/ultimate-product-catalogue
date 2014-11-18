@@ -120,6 +120,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.35 =
+- Added the abilit to put [upcp-price] in a product's description, to include the product's price
+
 = 2.4.34 =
 - Fixed a bug on the sub-category details page
 
