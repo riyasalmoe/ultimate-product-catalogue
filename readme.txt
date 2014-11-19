@@ -120,6 +120,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.36 =
+- New premium feature: ability to export all products to Excel!
+
 = 2.4.35 =
 - Added the abilit to put [upcp-price] in a product's description, to include the product's price
 

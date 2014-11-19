@@ -21,7 +21,10 @@ if (isset($_GET['Action'])) {
 								$upcp_message = Delete_All_Products();
 								break;
 						case "UPCP_AddProductSpreadsheet":
-        				$upcp_message = Add_Products_From_Spreadsheet();
+        						$upcp_message = Add_Products_From_Spreadsheet();
+								break;
+						case "UPCP_ExportToExcel":
+								$upcp_message = UPCP_Export_To_Excel();
 								break;
 						case "UPCP_AddProductImage":
 								$upcp_message = Prepare_Add_Product_Image();

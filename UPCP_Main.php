@@ -7,7 +7,7 @@ Author: Etoile Web Design
 Author URI: http://www.EtoileWebDesign.com/
 Terms and Conditions: http://www.etoilewebdesign.com/plugin-terms-and-conditions/
 Text Domain: UPCP
-Version: 2.4.35
+Version: 2.4.36
 */
 
 global $UPCP_db_version;
@@ -160,6 +160,7 @@ include "Functions/Rewrite_Rules.php";
 include "Functions/Update_Tables.php";
 include "Functions/FrontEndAjaxUrl.php";
 include "Functions/UPCP_Create_XML_Sitemap.php";
+include "Functions/UPCP_Export_To_Excel.php";
 
 // Updates the UPCP database when required
 if (get_option('UPCP_DB_Version') != $UPCP_db_version) {

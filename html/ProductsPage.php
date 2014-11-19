@@ -371,6 +371,26 @@ echo $ReturnString;
 </div>
 
 <br class="clear" />
+
+<h3><?php _e("Export Products to Spreadsheet", 'UPCP') ?></h3>
+<?php if ($Full_Version == "Yes") { ?>
+	<div class="wrap">
+
+		<form method="post" action="admin.php?page=UPCP-options&Action=UPCP_ExportToExcel">
+			<p><?php _e("Downloads all products currently in the database to Excel", 'UPCP') ?></p>
+			<p class="submit"><input type="submit" name="Export_Submit" id="submit" class="button button-primary" value="Export to Excel"  /></p>
+		</form>
+	</div>
+<?php } else { ?>
+	<div class="Explanation-Div">
+		<h2><?php _e("Full Version Required!", 'UPCP') ?></h2>
+		<div class="upcp-full-version-explanation">
+			<?php _e("The full version of the Ultimate Product Catalogue Plugin is required to export products to Excel.", "UPCP");?><a href="http://www.etoilewebdesign.com/ultimate-product-catalogue-plugin/"><?php _e(" Please upgrade to unlock this feature!", 'UPCP'); ?></a>
+		</div>
+	</div>
+<?php } ?>
+
+<div class='clear'></div>
 </div>
 </div><!-- /col-left -->
 
