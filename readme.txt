@@ -120,6 +120,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.37 =
+- Fixed a potential filtering error
+
 = 2.4.36 =
 - New premium feature: ability to export all products to Excel!
 

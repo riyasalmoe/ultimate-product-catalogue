@@ -7,7 +7,7 @@ Author: Etoile Web Design
 Author URI: http://www.EtoileWebDesign.com/
 Terms and Conditions: http://www.etoilewebdesign.com/plugin-terms-and-conditions/
 Text Domain: UPCP
-Version: 2.4.36
+Version: 2.4.37
 */
 
 global $UPCP_db_version;
@@ -105,6 +105,7 @@ function Add_UPCP_Scripts() {
 
 add_action( 'wp_enqueue_scripts', 'UPCP_Add_Stylesheet' );
 function UPCP_Add_Stylesheet() {
+    global $Full_Version;
     wp_register_style( 'catalogue-style', plugins_url('css/catalogue-style.css', __FILE__) );
     wp_enqueue_style( 'catalogue-style' );
 		if (is_rtl()) {
