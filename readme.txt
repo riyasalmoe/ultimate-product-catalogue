@@ -120,6 +120,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.38 = 
+- Removes the grey background from custom product page elements
+
 = 2.4.37 =
 - Fixed a potential filtering error
 
