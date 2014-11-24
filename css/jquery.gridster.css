@@ -33,7 +33,12 @@
     -moz-transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;
     -o-transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;
     transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;
-    /*background: #CCCCCC;*/
+		background: #CCCCCC;
+}
+
+.ready .gs-w:not(.preview-holder).prod-page-front-end {
+    background:none;
+    text-indent: 0;
 }
 
 /*.ready .resize-preview-holder:hover {

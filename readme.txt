@@ -120,6 +120,10 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.39 =
+- Shortcodes can be used in "text" custom elements
+- Fixes custom product page element styles
+
 = 2.4.38 = 
 - Removes the grey background from custom product page elements
 
