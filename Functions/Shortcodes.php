@@ -919,92 +919,94 @@ function BuildSidebar($category, $subcategory, $tags) {
 function BuildGridster($Gridster, $Product, $Item_Images, $Description, $PhotoURL, $SP_Perm_URL, $Return_URL, $TagsString) {
 	global $wpdb, $fields_meta_table_name, $fields_table_name;
 		
-	foreach ($Gridster as $Element) {
-		switch ($Element->element_class) {
-			case "additional_images":
-				$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-addt-images-div gs-w' style='display: list-item; position:absolute;'>";
-				$ProductString .= "<div id='prod-cat-addt-details-thumbs-div-" . $Product->Item_ID . "' class='prod-cat-addt-details-thumbs-div'>";
-				$ProductString .= "<img src='" . $PhotoURL . "' id='prod-cat-addt-details-thumb-P". $Product->Item_ID . "' class='prod-cat-addt-details-thumb' onclick='ZoomImage(\"" . $Product->Item_ID . "\", \"0\");'>";
-				foreach ($Item_Images as $Image) {$ProductString .= "<img src='" . htmlspecialchars($Image->Item_Image_URL, ENT_QUOTES) . "' id='prod-cat-addt-details-thumb-". $Image->Item_Image_ID . "' class='prod-cat-addt-details-thumb' onclick='ZoomImage(\"" . $Product->Item_ID . "\", \"" . $Image->Item_Image_ID . "\");'>";}
-				$ProductString .= "</div>";
-				break;
-			case "back":
-				$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-back-div gs-w' style='display: list-item; position:absolute;'>";
-				$ProductString .= "<a href='" . $Return_URL . "'>&#171; " . __("Back to Catalogue", 'UPCP') . "</a>";
-				break;
-			case "blank":
-				$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-blank-div gs-w' style='display: list-item; position:absolute;'>";
-				break;
-			case "category":
-				$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-cat-div gs-w' style='display: list-item; position:absolute;'>";
-				$ProductString .= $Product->Category_Name;
-				break;
-			case "category_label":
-				$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-cat-label-div gs-w' style='display: list-item; position:absolute;'>";
-				$ProductString .= __("Category:", 'UPCP') . " ";
-				break;
-			case "description":
-				$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-description-div gs-w' style='display: list-item; position:absolute;'>";
-				$ProductString .= $Description;
-				break;
-			case "main_image":
-				$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-main-image-div gs-w' style='display: list-item; position:absolute;'>";
-				$ProductString .= "<img src='" . $PhotoURL . "' alt='" . $Product->Item_Name . " Image' id='prod-cat-addt-details-main-" . $Product->Item_ID . "' class='prod-cat-addt-details-main' />";
-				break;
-			case "price":
-				$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-price-div gs-w' style='display: list-item; position:absolute;'>";
-				$ProductString .= "<h3 class='prod-cat-addt-details-price'>" . $Product->Item_Price . "</h3>";
-				break;
-			case "price_label":
-				$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-price-label-div gs-w' style='display: list-item; position:absolute;'>";
-				$ProductString .= "Price: ";
-				break;
-			case "product_link":
-				$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-prod-link-div gs-w' style='display: list-item; position:absolute;'>";
-				$ProductString .= "<a class='no-underline' href='http://" . $_SERVER['HTTP_HOST'] . $SP_Perm_URL . "'><img class='upcp-product-url-icon' src='" . get_bloginfo('wpurl') . "/wp-content/plugins/ultimate-product-catalogue/images/insert_link.png' /></a>";
-				break;
-			case "product_name":
-				$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-prod-name-div gs-w' style='display: list-item; position:absolute;'>";
-				$ProductString .= "<h2 class='prod-cat-addt-details-title upcp-cpp-title'><a class='no-underline' href='http://" . $_SERVER['HTTP_HOST'] . $SP_Perm_URL . "'>" . $Product->Item_Name . "</a></h2>";
-				break;
-			case "subcategory":
-				$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-sub-cat-div gs-w' style='display: list-item; position:absolute;'>";
-				$ProductString .= $Product->SubCategory_Name;
-				break;
-			case "subcategory_label":
-				$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-sub-cat-label-div gs-w' style='display: list-item; position:absolute;'>";
-				$ProductString .= __("Sub-Category:", 'UPCP') . " ";
-				break;
-			case "tags":
-				$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-tags-div gs-w' style='display: list-item; position:absolute;'>";
-				$ProductString .= $TagsString;
-				break;
-			case "tags_label":
-				$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-tags-label-div gs-w' style='display: list-item; position:absolute;'>";
-				$ProductString .= __("Tags:", 'UPCP') . " ";
-				break;
-			case "text":
-				$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-tags-label-div gs-w' style='display: list-item; position:absolute;'>";
-				$ProductString .= do_shortcode($Element->element_id);
-				break;
-			case "custom_field":
-				$Field_Value = $wpdb->get_row("SELECT Meta_Value FROM $fields_meta_table_name WHERE Field_ID='" . $Element->element_id ."' AND Item_ID='" . $Product->Item_ID . "'");
-				$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-custom-field-div gs-w' style='display: list-item; position:absolute;'>";
-				if ($Field->Field_Type == "file") {
-					$upload_dir = wp_upload_dir();
-					$ProductString .= "<a href='" . $upload_dir['baseurl'] . "/upcp-product-file-uploads/" . $Field_Value->Meta_Value . "' download>" . $Field_Value->Meta_Value . "</a>";
-				}
-				else {$ProductString .= $Field_Value->Meta_Value;}
-				break;
-			case "custom_label":
-				$Field = $wpdb->get_row("SELECT Field_Name FROM $fields_table_name WHERE Field_ID='" . $Element->element_id ."'");
-				$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-custom-field-label-div gs-w' style='display: list-item; position:absolute;'>";
-				$ProductString .= $Field->Field_Name . ": ";
-				break;
+	if (is_array($Gridster)) {
+		foreach ($Gridster as $Element) {
+			switch ($Element->element_class) {
+				case "additional_images":
+					$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-addt-images-div gs-w' style='display: list-item; position:absolute;'>";
+					$ProductString .= "<div id='prod-cat-addt-details-thumbs-div-" . $Product->Item_ID . "' class='prod-cat-addt-details-thumbs-div'>";
+					$ProductString .= "<img src='" . $PhotoURL . "' id='prod-cat-addt-details-thumb-P". $Product->Item_ID . "' class='prod-cat-addt-details-thumb' onclick='ZoomImage(\"" . $Product->Item_ID . "\", \"0\");'>";
+					foreach ($Item_Images as $Image) {$ProductString .= "<img src='" . htmlspecialchars($Image->Item_Image_URL, ENT_QUOTES) . "' id='prod-cat-addt-details-thumb-". $Image->Item_Image_ID . "' class='prod-cat-addt-details-thumb' onclick='ZoomImage(\"" . $Product->Item_ID . "\", \"" . $Image->Item_Image_ID . "\");'>";}
+					$ProductString .= "</div>";
+					break;
+				case "back":
+					$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-back-div gs-w' style='display: list-item; position:absolute;'>";
+					$ProductString .= "<a href='" . $Return_URL . "'>&#171; " . __("Back to Catalogue", 'UPCP') . "</a>";
+					break;
+				case "blank":
+					$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-blank-div gs-w' style='display: list-item; position:absolute;'>";
+					break;
+				case "category":
+					$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-cat-div gs-w' style='display: list-item; position:absolute;'>";
+					$ProductString .= $Product->Category_Name;
+					break;
+				case "category_label":
+					$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-cat-label-div gs-w' style='display: list-item; position:absolute;'>";
+					$ProductString .= __("Category:", 'UPCP') . " ";
+					break;
+				case "description":
+					$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-description-div gs-w' style='display: list-item; position:absolute;'>";
+					$ProductString .= $Description;
+					break;
+				case "main_image":
+					$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-main-image-div gs-w' style='display: list-item; position:absolute;'>";
+					$ProductString .= "<img src='" . $PhotoURL . "' alt='" . $Product->Item_Name . " Image' id='prod-cat-addt-details-main-" . $Product->Item_ID . "' class='prod-cat-addt-details-main' />";
+					break;
+				case "price":
+					$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-price-div gs-w' style='display: list-item; position:absolute;'>";
+					$ProductString .= "<h3 class='prod-cat-addt-details-price'>" . $Product->Item_Price . "</h3>";
+					break;
+				case "price_label":
+					$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-price-label-div gs-w' style='display: list-item; position:absolute;'>";
+					$ProductString .= "Price: ";
+					break;
+				case "product_link":
+					$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-prod-link-div gs-w' style='display: list-item; position:absolute;'>";
+					$ProductString .= "<a class='no-underline' href='http://" . $_SERVER['HTTP_HOST'] . $SP_Perm_URL . "'><img class='upcp-product-url-icon' src='" . get_bloginfo('wpurl') . "/wp-content/plugins/ultimate-product-catalogue/images/insert_link.png' /></a>";
+					break;
+				case "product_name":
+					$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-prod-name-div gs-w' style='display: list-item; position:absolute;'>";
+					$ProductString .= "<h2 class='prod-cat-addt-details-title upcp-cpp-title'><a class='no-underline' href='http://" . $_SERVER['HTTP_HOST'] . $SP_Perm_URL . "'>" . $Product->Item_Name . "</a></h2>";
+					break;
+				case "subcategory":
+					$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-sub-cat-div gs-w' style='display: list-item; position:absolute;'>";
+					$ProductString .= $Product->SubCategory_Name;
+					break;
+				case "subcategory_label":
+					$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-sub-cat-label-div gs-w' style='display: list-item; position:absolute;'>";
+					$ProductString .= __("Sub-Category:", 'UPCP') . " ";
+					break;
+				case "tags":
+					$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-tags-div gs-w' style='display: list-item; position:absolute;'>";
+					$ProductString .= $TagsString;
+					break;
+				case "tags_label":
+					$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-tags-label-div gs-w' style='display: list-item; position:absolute;'>";
+					$ProductString .= __("Tags:", 'UPCP') . " ";
+					break;
+				case "text":
+					$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-tags-label-div gs-w' style='display: list-item; position:absolute;'>";
+					$ProductString .= do_shortcode($Element->element_id);
+					break;
+				case "custom_field":
+					$Field_Value = $wpdb->get_row("SELECT Meta_Value FROM $fields_meta_table_name WHERE Field_ID='" . $Element->element_id ."' AND Item_ID='" . $Product->Item_ID . "'");
+					$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-custom-field-div gs-w' style='display: list-item; position:absolute;'>";
+					if ($Field->Field_Type == "file") {
+						$upload_dir = wp_upload_dir();
+						$ProductString .= "<a href='" . $upload_dir['baseurl'] . "/upcp-product-file-uploads/" . $Field_Value->Meta_Value . "' download>" . $Field_Value->Meta_Value . "</a>";
+					}
+					else {$ProductString .= $Field_Value->Meta_Value;}
+					break;
+				case "custom_label":
+					$Field = $wpdb->get_row("SELECT Field_Name FROM $fields_table_name WHERE Field_ID='" . $Element->element_id ."'");
+					$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-custom-field-label-div gs-w' style='display: list-item; position:absolute;'>";
+					$ProductString .= $Field->Field_Name . ": ";
+					break;
 			}
 			$MaxCol = max($MaxCol, $Element->col);
 			$ProductString .= "</li>";								
 		}
+	}
 		
 	return $ProductString;
 }

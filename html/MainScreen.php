@@ -16,34 +16,34 @@
 		
 		<!-- Add the individual pages to the admin area, and create the active tab based on the selected page -->
 		<div class="OptionTab <?php if ($Display_Page == "" or $Display_Page == 'Dashboard') {echo 'ActiveTab';} else {echo 'HiddenTab';} ?>" id="Dashboard">
-				<?php include ABSPATH . 'wp-content/plugins/ultimate-product-catalogue/html/DashboardPage.php';?>
+				<?php include UPCP_CD_PLUGIN_PATH . '/html/DashboardPage.php';?>
 		</div>
 		
 		<div class="OptionTab <?php if ($Display_Page == 'Products' or $Display_Page == 'Product') {echo 'ActiveTab';} else {echo 'HiddenTab';} ?>" id="Products">
-				<?php include ABSPATH . 'wp-content/plugins/ultimate-product-catalogue/html/ProductsPage.php';?>
+				<?php include UPCP_CD_PLUGIN_PATH . '/html/ProductsPage.php';?>
 		</div>
 		
 		<div class="OptionTab <?php if ($Display_Page == 'Categories' or $Display_Page == 'Category') {echo 'ActiveTab';} else {echo 'HiddenTab';} ?>" id="Categories">
-				<?php include ABSPATH . 'wp-content/plugins/ultimate-product-catalogue/html/CategoriesPage.php';?>
+				<?php include UPCP_CD_PLUGIN_PATH . '/html/CategoriesPage.php';?>
 		</div>
 		
 		<div class="OptionTab <?php if ($Display_Page == 'Catalogues' or $Display_Page == 'Catalogue') {echo 'ActiveTab';} else {echo 'HiddenTab';} ?>" id="Catalogues">
-				<?php include ABSPATH . 'wp-content/plugins/ultimate-product-catalogue/html/CataloguesPage.php';?>
+				<?php include UPCP_CD_PLUGIN_PATH . '/html/CataloguesPage.php';?>
 		</div>
 		
 		<div class="OptionTab <?php if ($Display_Page == 'SubCategories' or $Display_Page == 'SubCategory') {echo 'ActiveTab';} else {echo 'HiddenTab';} ?>" id="SubCategories">
-				<?php include ABSPATH . 'wp-content/plugins/ultimate-product-catalogue/html/SubCategoriesPage.php';?>
+				<?php include UPCP_CD_PLUGIN_PATH . '/html/SubCategoriesPage.php';?>
 		</div>
 		
 		<div class="OptionTab <?php if ($Display_Page == 'Tags' or $Display_Page == 'Tag') {echo 'ActiveTab';} else {echo 'HiddenTab';} ?>" id="Tags">
-				<?php include ABSPATH . 'wp-content/plugins/ultimate-product-catalogue/html/TagsPage.php';?>
+				<?php include UPCP_CD_PLUGIN_PATH . '/html/TagsPage.php';?>
 		</div>	
 		<div class="OptionTab <?php if ($Display_Page == 'CustomFields' or $Display_Page == 'CustomField') {echo 'ActiveTab';} else {echo 'HiddenTab';} ?>" id="CustomFields">
-				<?php include ABSPATH . 'wp-content/plugins/ultimate-product-catalogue/html/CustomFieldsPage.php';?>
+				<?php include UPCP_CD_PLUGIN_PATH . '/html/CustomFieldsPage.php';?>
 		</div>
 		<div class="OptionTab <?php if ($Display_Page == 'ProductPages' or $Display_Page == 'ProductPage') {echo 'ActiveTab';} else {echo 'HiddenTab';} ?>" id="ProductPage">
-				<?php include ABSPATH . 'wp-content/plugins/ultimate-product-catalogue/html/CustomProductPage.php';?>
+				<?php include UPCP_CD_PLUGIN_PATH . '/html/CustomProductPage.php';?>
 		</div>
 		<div class="OptionTab <?php if ($Display_Page == 'Options' or $Display_Page == 'Option') {echo 'ActiveTab';} else {echo 'HiddenTab';} ?>" id="Options">
-				<?php include ABSPATH . 'wp-content/plugins/ultimate-product-catalogue/html/OptionsPage.php';?>
+				<?php include UPCP_CD_PLUGIN_PATH . '/html/OptionsPage.php';?>
 		</div>	

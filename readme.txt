@@ -120,6 +120,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.40 =
+- Fixed two potential admin display issues
+
 = 2.4.39 =
 - Shortcodes can be used in "text" custom elements
 - Fixes custom product page element styles
