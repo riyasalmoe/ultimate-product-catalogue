@@ -1107,6 +1107,7 @@ function AddCustomFields($ProductID, $Layout) {
 		
 	$Fields = $wpdb->get_results("SELECT Field_ID, Field_Name, Field_Type FROM $fields_table_name WHERE Field_Displays='" . $Layout . "' OR Field_Displays='both'");
 	if (is_array($Fields)) {
+		$CustomFieldString .= "<div class='upcp-prod-desc-custom-fields'>";
 		foreach ($Fields as $Field) {
 			$Meta = $wpdb->get_row("SELECT Meta_Value FROM $fields_meta_table_name WHERE Field_ID='" . $Field->Field_ID . "' AND Item_ID='" . $ProductID . "'");
 			if ($Field->Field_Type == "file") {
@@ -1115,6 +1116,7 @@ function AddCustomFields($ProductID, $Layout) {
 			}
 			else {$CustomFieldString .= "<br />" . $Field->Field_Name . ": " . $Meta->Meta_Value;}
 		}
+		$CustomFieldString .= "</div>";
 	}
 		
 	return $CustomFieldString;

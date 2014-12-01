@@ -720,12 +720,16 @@
 /************************************************************
 *   CUSTOM PRODUCT PAGES
 ************************************************************/
-.gridster ul {
+.gridster ul li {
   list-style-type:none !important;
 }
 
-.gridster-mobile ul {
+.gridster-mobile ul li{
   list-style-type:none !important;
+}
+
+.prod-page-div {
+ list-style-type:none !important;
 }
 
 .upcp-cpp-title {
