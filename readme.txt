@@ -120,6 +120,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.4.42 =
+- Fixed a mobile custom product page bug
+
 = 2.4.41 =
 - Made the selector for custom product page list elements more selective
 - Added a div around custom fields in the thumbnail and details layouts, so that they can displayed or hidden

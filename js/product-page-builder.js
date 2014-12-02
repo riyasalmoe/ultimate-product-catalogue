@@ -41,8 +41,8 @@ var gridster;
 var gridster_mobile;
 jQuery(function(){ //DOM Ready
  		
-		var grid_type = (grid_type === undefined) ? "regular" : grid_type;
-		
+		if (typeof grid_type === 'undefined' || grid_type === null) {grid_type = 'regular';}
+
 		if (typeof pp_top_bottom_padding === 'undefined' || pp_top_bottom_padding === null) {pp_top_bottom_padding = 10;}
 		if (typeof pp_left_right_padding === 'undefined' || pp_left_right_padding === null) {pp_left_right_padding = 10;}
 		if (typeof pp_grid_width === 'undefined' || pp_grid_width === null) {pp_grid_width = 90;}
