@@ -23,6 +23,14 @@
 		$Left_Right_Padding = get_option("UPCP_Left_Right_Padding");
 		$Product_Search = get_option("UPCP_Product_Search");
 		$Product_Sort = get_option("UPCP_Product_Sort");
+
+		$Categories_Label = get_option("UPCP_Categories_Label");
+		$SubCategories_Label = get_option("UPCP_SubCategories_Label");
+		$Tags_Label = get_option("UPCP_Tags_Label");
+		$Details_Label = get_option("UPCP_Details_Label");
+		$Sort_By_Label = get_option("UPCP_Sort_By_Label");
+		$Product_Name_Search_Label = get_option("UPCP_Product_Name_Search_Label");
+		$Products_Pagination_Label = get_option("UPCP_Products_Pagination_Label");
 ?>
 <div class="wrap">
 <div id="icon-options-general" class="icon32"><br /></div><h2>Settings</h2>
@@ -322,6 +330,84 @@
 </td>
 </tr>
 
+<h3>Labelling Options</h3>
+<tr>
+<th scope="row"><?php _e("Categories Label", 'UPCP')?> <br/> 
+<div onMouseOver="ShowToolTip('categories_label_exp')" onMouseOut="HideToolTip('categories_label_exp')" class="questionMark"><br>  
+<div id="categories_label_exp" class="toolTip" ><?php _e("Text that should replace 'Categories' on your catalogue pages", 'UPCP')?></div></div>
+</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span><?php _e("Text that should replace 'Categories' on your catalogue pages", 'UPCP')?></span></legend>
+	<input type='text' name='categories_label' value='<?php echo $Categories_Label; ?>' <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/>
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row"><?php _e("Sub-Categories Label", 'UPCP')?> <br/> 
+<div onMouseOver="ShowToolTip('subcategories_label_exp')" onMouseOut="HideToolTip('subcategories_label_exp')" class="questionMark"><br>  
+<div id="subcategories_label_exp" class="toolTip" ><?php _e("Text that should replace 'Sub-Categories' on your catalogue pages", 'UPCP')?></div></div>
+</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span><?php _e("Text that should replace 'Sub-Categories' on your catalogue pages", 'UPCP')?></span></legend>
+	<input type='text' name='subcategories_label' value='<?php echo $SubCategories_Label; ?>' <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/>
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row"><?php _e("Tags Label", 'UPCP')?> <br/> 
+<div onMouseOver="ShowToolTip('tags_label_exp')" onMouseOut="HideToolTip('tags_label_exp')" class="questionMark"><br>  
+<div id="tags_label_exp" class="toolTip" ><?php _e("Text that should replace 'Tags' on your catalogue pages", 'UPCP')?></div></div>
+</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span><?php _e("Text that should replace 'Tags' on your catalogue pages", 'UPCP')?></span></legend>
+	<input type='text' name='tags_label' value='<?php echo $Tags_Label; ?>' <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/>
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row"><?php _e("Details Label", 'UPCP')?> <br/> 
+<div onMouseOver="ShowToolTip('details_label_exp')" onMouseOut="HideToolTip('details_label_exp')" class="questionMark"><br>  
+<div id="details_label_exp" class="toolTip" ><?php _e("Text that should replace 'Details' on your catalogue pages", 'UPCP')?></div></div>
+</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span><?php _e("Text that should replace 'Details' on your catalogue pages", 'UPCP')?></span></legend>
+	<input type='text' name='details_label' value='<?php echo $Details_Label; ?>' <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/>
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row"><?php _e("Sort By Label", 'UPCP')?> <br/> 
+<div onMouseOver="ShowToolTip('sort_by_label_exp')" onMouseOut="HideToolTip('sort_by_label_exp')" class="questionMark"><br>  
+<div id="sort_by_label_exp" class="toolTip" ><?php _e("Text that should replace 'Sort By' on your catalogue pages", 'UPCP')?></div></div>
+</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span><?php _e("Text that should replace 'Sort By' on your catalogue pages", 'UPCP')?></span></legend>
+	<input type='text' name='sort_by_label' value='<?php echo $Sort_By_Label; ?>' <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/>
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row"><?php _e("Product Name Label", 'UPCP')?> <br/> 
+<div onMouseOver="ShowToolTip('product_name_search_label_exp')" onMouseOut="HideToolTip('product_name_search_label_exp')" class="questionMark"><br>  
+<div id="product_name_search_label_exp" class="toolTip" ><?php _e("Text that should replace 'Product Name' on your catalogue pages", 'UPCP')?></div></div>
+</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span><?php _e("Text that should replace 'Product Name' on your catalogue pages", 'UPCP')?></span></legend>
+	<input type='text' name='product_name_search_label' value='<?php echo $Product_Name_Search_Label; ?>' <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/>
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row"><?php _e("Products (pagination) Label", 'UPCP')?> <br/> 
+<div onMouseOver="ShowToolTip('products_pagination_label_exp')" onMouseOut="HideToolTip('products_pagination_label_exp')" class="questionMark"><br>  
+<div id="products_pagination_label_exp" class="toolTip" ><?php _e("Text that should replace 'products' for pagination on your catalogue pages", 'UPCP')?></div></div>
+</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span><?php _e("Text that should replace 'products' for pagination on your catalogue pages", 'UPCP')?></span></legend>
+	<input type='text' name='products_pagination_label' value='<?php echo $Products_Pagination_Label; ?>' <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/>
+	</fieldset>
+</td>
+</tr>
 
 </table>
 

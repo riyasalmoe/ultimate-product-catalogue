@@ -17,6 +17,10 @@ function Insert_Product_Catalog($atts) {
 	$CaseInsensitiveSearch = get_option("UPCP_Case_Insensitive_Search");
 	$Products_Per_Page = get_option("UPCP_Products_Per_Page");
 	$ProductSearch = get_option("UPCP_Product_Search");
+
+	$Products_Pagination_Label = get_option("UPCP_Products_Pagination_Label");
+	if ($Products_Pagination_Label != "") {$Products_Pagination_Text = $Products_Pagination_Label;}
+	else {$Products_Pagination_Text = __(' products', 'UPCP');}
 		
 	// Get the attributes passed by the shortcode, and store them in new variables for processing
 	extract( shortcode_atts( array(
@@ -302,7 +306,7 @@ function Insert_Product_Catalog($atts) {
 		$NextPage = min($current_page + 1, $Num_Pages);
 				
 		$PaginationString .= "<div class='catalogue-nav'>";
-		$PaginationString .= "<span class='displaying-num'>" . $Total_Products . __(' products', 'UPCP') . "</span>";
+		$PaginationString .= "<span class='displaying-num'>" . $Total_Products . $Products_Pagination_Text . "</span>";
 		$PaginationString .= "<span class='pagination-links'>";
 		$PaginationString .= "<a class='first-page' title='Go to the first page' href='#' onclick='UPCP_DisplayPage(\"1\")'>&#171;</a>";
 		$PaginationString .= "<a class='prev-page' title='Go to the previous page' href='#' onclick='UPCP_DisplayPage(\"" . $PrevPage . "\")'>&#8249;</a>";
@@ -414,6 +418,11 @@ function AddProduct($format, $Item_ID, $Product, $Tags, $AjaxReload = "No", $Aja
 	$Links = get_option("UPCP_Product_Links");
 	$Pretty_Links = get_option("UPCP_Pretty_Links");
 	$Detail_Desc_Chars = get_option("UPCP_Desc_Chars");
+
+	$Details_Label = get_option("UPCP_Details_Label");
+	if ($Details_Label != "") {$Details_Text = $Details_Label;}
+	else {$Details_Text = __("Details", 'UPCP');}
+
 	if ($Links == "New") {$NewWindow = true;}
 	else {$NewWindow = false;}
 		
@@ -485,7 +494,7 @@ function AddProduct($format, $Item_ID, $Product, $Tags, $AjaxReload = "No", $Aja
 		$ProductString .= "' ";
 		if ($NewWindow) {$ProductString .= "target='_blank'";}
 		$ProductString .= " href='" . $ItemLink . "' onclick='RecordView(" . $Product->Item_ID . ");'>";
-		$ProductString .= "<div id='prod-cat-details-link-" . $Product->Item_ID . "' class='prod-cat-details-link upcp-thumb-details-link'>" . __("Details", 'UPCP') . "</div>\n";
+		$ProductString .= "<div id='prod-cat-details-link-" . $Product->Item_ID . "' class='prod-cat-details-link upcp-thumb-details-link'>" . $Details_Text . "</div>\n";
 		$ProductString .= "</a>";
 	}
 	//Create the listing for the list layout display
@@ -548,7 +557,7 @@ function AddProduct($format, $Item_ID, $Product, $Tags, $AjaxReload = "No", $Aja
 		$ProductString .= "' ";
 		if ($NewWindow) {$ProductString .= "target='_blank'";}
 		$ProductString .= " href='" . $ItemLink . "' onclick='RecordView(" . $Product->Item_ID . ");'>";
-		$ProductString .= "<div id='prod-cat-details-link-" . $Product->Item_ID . "' class='prod-cat-details-link upcp-detail-details-link'>" . __("Details", 'UPCP') . "</div>\n";
+		$ProductString .= "<div id='prod-cat-details-link-" . $Product->Item_ID . "' class='prod-cat-details-link upcp-detail-details-link'>" . $Details_Text . "</div>\n";
 		$ProductString .= "</a>";
 		$ProductString .= "</div>";
 	}
@@ -771,6 +780,29 @@ function BuildSidebar($category, $subcategory, $tags) {
 	$ProductSearch = get_option("UPCP_Product_Search");
 	$Product_Sort = get_option("UPCP_Product_Sort");
 	$Sidebar_Order = get_option("UPCP_Sidebar_Order");
+
+	$Categories_Label = get_option("UPCP_Categories_Label");
+	$SubCategories_Label = get_option("UPCP_SubCategories_Label");
+	$Tags_Label = get_option("UPCP_Tags_Label");
+	$Sort_By_Label = get_option("UPCP_Sort_By_Label");
+	$Product_Name_Search_Label = get_option("UPCP_Product_Name_Search_Label");
+
+	if ($Categories_Label != "") {$Categories_Text = $Categories_Label;}
+	else {$Categories_Text = __("Categories:", 'UPCP');}
+	if ($SubCategories_Label != "") {$SubCategories_Text = $SubCategories_Label;}
+	else {$SubCategories_Text = __("Sub-Categories:", 'UPCP');}
+	if ($Tags_Label != "") {$Tags_Text = $Tags_Label;}
+	else {$Tags_Text = __("Tags:", 'UPCP');}
+	if ($Sort_By_Label != "") {$Sort_Text = $Sort_By_Label;}
+	else {$Sort_Text = __('Sort By:', 'UPCP');}
+	if ($Product_Name_Search_Label != "") {
+		$Product_Name_Text = $Product_Name_Search_Label;
+		$SearchLabel = $Product_Name_Search_Label;
+	}
+	else {
+		if ($ProductSearch == "namedesc" or $ProductSearch == "namedesccust") {$SearchLabel = __("Product Search:", 'UPCP'); $Product_Name_Text = __("Search", 'UPCP');}
+		else {$SearchLabel = __("Product Name:", 'UPCP'); $Product_Name_Text = __("Name", 'UPCP');}
+	}
 	
 	// Get the categories, sub-categories and tags that apply to the products in the catalog
 	if ($ProdCatString != "") {$Categories = $wpdb->get_results("SELECT Category_ID, Category_Name FROM $categories_table_name WHERE Category_ID in (" . $ProdCatString . ") ORDER BY Category_Name");}
@@ -785,7 +817,7 @@ function BuildSidebar($category, $subcategory, $tags) {
 	//Create the 'Sort By' select box
 	if ($Full_Version == "Yes" and $Product_Sort != "None") {
 		$SidebarString .= "<div id='prod-cat-sort-by' class='prod-cat-sort-by'>";
-		$SidebarString .= __('Sort By:', 'UPCP') . "<br>";
+		$SidebarString .= $Sort_Text . "<br>";
 		$SidebarString .= "<div class='styled-select styled-input'>";
 		$SidebarString .= "<select name='upcp-sort-by' id='upcp-sort-by' onchange='UPCP_Sort_By();'>";
 		$SidebarString .= "<option value=''></option>";
@@ -803,13 +835,11 @@ function BuildSidebar($category, $subcategory, $tags) {
 	}
 				
 	// Create the text search box
-	if ($ProductSearch == "namedesc" or $ProductSearch == "namedesccust") {$SearchLabel = __("Product Search:", 'UPCP'); $SearchText = __("Search", 'UPCP');}
-	else {$SearchLabel = __("Product Name:", 'UPCP'); $SearchText = __("Name", 'UPCP');}
 	$SidebarString .= "<div id='prod-cat-text-search' class='prod-cat-text-search'>\n";
 	$SidebarString .= $SearchLabel . "<br /><div class='styled-input'>";
-	if ($Filter  == "Javascript" and $Tag_Logic == "OR") {$SidebarString .= "<input type='text' id='upcp-name-search' class='jquery-prod-name-text' name='Text_Search' value='" . __('Name', 'UPCP') . "...' onfocus='FieldFocus(this);' onblur='FieldBlur(this);' onkeyup='UPCP_Filer_Results_OR();'>\n";}
-	elseif ($Filter  == "Javascript") {$SidebarString .= "<input type='text' id='upcp-name-search' class='jquery-prod-name-text' name='Text_Search' value='" . __('Name', 'UPCP') . "...' onfocus='FieldFocus(this);' onblur='FieldBlur(this);' onkeyup='UPCP_Filer_Results();'>\n";}
-	else {$SidebarString .= "<input type='text' id='upcp-name-search' class='jquery-prod-name-text' name='Text_Search' value='" . $SearchText . "...' onfocus='FieldFocus(this);' onblur='FieldBlur(this);' onkeyup='UPCP_DisplayPage(\"1\");'>\n";}
+	if ($Filter  == "Javascript" and $Tag_Logic == "OR") {$SidebarString .= "<input type='text' id='upcp-name-search' class='jquery-prod-name-text' name='Text_Search' value='" . $Product_Name_Text . "...' onfocus='FieldFocus(this);' onblur='FieldBlur(this);' onkeyup='UPCP_Filer_Results_OR();'>\n";}
+	elseif ($Filter  == "Javascript") {$SidebarString .= "<input type='text' id='upcp-name-search' class='jquery-prod-name-text' name='Text_Search' value='" . $Product_Name_Text . "...' onfocus='FieldFocus(this);' onblur='FieldBlur(this);' onkeyup='UPCP_Filer_Results();'>\n";}
+	else {$SidebarString .= "<input type='text' id='upcp-name-search' class='jquery-prod-name-text' name='Text_Search' value='" . $Product_Name_Text . "...' onfocus='FieldFocus(this);' onblur='FieldBlur(this);' onkeyup='UPCP_DisplayPage(\"1\");'>\n";}
 	$SidebarString .= "</div></div>\n";
 				
 	// Create the categories checkboxes
@@ -822,7 +852,7 @@ function BuildSidebar($category, $subcategory, $tags) {
 		unset($ID);
 		unset($Name);
 		$SidebarString .= "<div id='prod-cat-sidebar-category-div-" . $id . "' class='prod-cat-sidebar-category-div'>\n";
-		$SidebarString .= "<div id='prod-cat-sidebar-category-title-" . $id . "' class='prod-cat-sidebar-category-title'><h3>" . __("Categories:", 'UPCP') . "</h3></div>\n";
+		$SidebarString .= "<div id='prod-cat-sidebar-category-title-" . $id . "' class='prod-cat-sidebar-category-title'><h3>" . $Categories_Text . "</h3></div>\n";
 		foreach ($Categories as $Category) {
 			$SidebarString .= "<div id='prod-cat-sidebar-category-" . $Category->Category_ID . "' class='prod-cat-sidebar-category";
 			if (in_array($Category->Category_ID, $category)) {$SidebarString .= " highlightBlue";}
@@ -867,7 +897,7 @@ function BuildSidebar($category, $subcategory, $tags) {
 		unset($ID);
 		unset($Name);
 		$SidebarString .= "<div id='prod-cat-sidebar-subcategory-div-" . $id . "' class='prod-cat-sidebar-subcategory-div'>\n";
-		$SidebarString .= "<div id='prod-cat-sidebar-subcategory-title-" . $id . "' class='prod-cat-sidebar-subcategory-title'><h3>" . __("Sub-Categories:", 'UPCP') . "</h3></div>\n";
+		$SidebarString .= "<div id='prod-cat-sidebar-subcategory-title-" . $id . "' class='prod-cat-sidebar-subcategory-title'><h3>" . $SubCategories_Text . "</h3></div>\n";
 		foreach ($SubCategories as $SubCategory) {
 			$SidebarString .= "<div id='prod-cat-sidebar-subcategory-" . $SubCategory->SubCategory_ID . "' class='prod-cat-sidebar-subcategory";
 			if (in_array($SubCategory->SubCategory_ID, $subcategory)) {$SidebarString .= " highlightBlue";}
@@ -894,7 +924,7 @@ function BuildSidebar($category, $subcategory, $tags) {
 		unset($ID);
 		unset($Name);
 		$SidebarString .= "<div id='prod-cat-sidebar-tag-div-" . $id . "' class='prod-cat-sidebar-tag-div'>\n";
-		$SidebarString .= "<div id='prod-cat-sidebar-tag-title-" . $id . "' class='prod-cat-tag-sidebar-title'><h3>" . __("Tags:", 'UPCP') . "</h3></div>\n";
+		$SidebarString .= "<div id='prod-cat-sidebar-tag-title-" . $id . "' class='prod-cat-tag-sidebar-title'><h3>" . $Tags_Text . "</h3></div>\n";
 		foreach ($Tags as $Tag) {
 			$SidebarString .= "<div id='prod-cat-sidebar-tag-" . $Tag->Tag_ID . "' class='prod-cat-sidebar-tag";
 			if (in_array($Tag->Tag_ID, $tags)) {$SidebarString .= " highlightBlue";}

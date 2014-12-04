@@ -120,6 +120,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.5 =
+- Allows relabelling of some front-end text, the first in a series of major new features being rolled out over the next few weeks
+
 = 2.4.43 =
 - Fixes an image switching error with mobile product pages
 - Support for FancyBox for WP is being dropped. We believe the plugins will still work together to create a FancyBox for each product, but we're no longer actively supporting that feature.

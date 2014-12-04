@@ -910,6 +910,14 @@ function Update_UPCP_Options() {
 		if ($Full_Version == "Yes") {update_option("UPCP_PP_Grid_Height", $_POST['pp_grid_height']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_Top_Bottom_Padding", $_POST['pp_top_bottom_padding']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_Left_Right_Padding", $_POST['pp_left_right_padding']);}
+
+		if ($Full_Version == "Yes") {update_option("UPCP_Categories_Label", $_POST['categories_label']);}
+		if ($Full_Version == "Yes") {update_option("UPCP_SubCategories_Label", $_POST['subcategories_label']);}
+		if ($Full_Version == "Yes") {update_option("UPCP_Tags_Label", $_POST['tags_label']);}
+		if ($Full_Version == "Yes") {update_option("UPCP_Details_Label", $_POST['details_label']);}
+		if ($Full_Version == "Yes") {update_option("UPCP_Sort_By_Label", $_POST['sort_by_label']);}
+		if ($Full_Version == "Yes") {update_option("UPCP_Product_Name_Search_Label", $_POST['product_name_search_label']);}
+		if ($Full_Version == "Yes") {update_option("UPCP_Products_Pagination_Label", $_POST['products_pagination_label']);}
 		
 		if ($_POST['Pretty_Links'] == "Yes") {
 			 update_option("UPCP_Update_RR_Rules", "Yes");
