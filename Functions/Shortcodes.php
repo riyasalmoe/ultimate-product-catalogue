@@ -578,7 +578,9 @@ function AddProduct($format, $Item_ID, $Product, $Tags, $AjaxReload = "No", $Aja
 		$ProductString .= "</div>";
 		$ProductString .= "<div class='upcp-clear'></div>";
 		$ProductString .= "<div id='prod-cat-addt-details-desc-div-" . $Product->Item_ID . "' class='prod-cat-addt-details-desc-div'>";
-		$ProductString .= $Description . "</div>";
+		$ProductString .= $Description; 
+		$ProductString .= AddCustomFields($Product->Item_ID, "details");
+		$ProductString .= "</div>";
 		$ProductString .= "</div></div></div>";
 		//$ProductString .= "</div>";
 	}

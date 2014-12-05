@@ -120,6 +120,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.5.1 =
+- Added custom fields to Fancyboxes
+
 = 2.5 =
 - Allows relabelling of some front-end text, the first in a series of major new features being rolled out over the next few weeks
 
