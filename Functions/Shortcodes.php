@@ -19,8 +19,17 @@ function Insert_Product_Catalog($atts) {
 	$ProductSearch = get_option("UPCP_Product_Search");
 
 	$Products_Pagination_Label = get_option("UPCP_Products_Pagination_Label");
+	$Product_Name_Search_Label = get_option("UPCP_Product_Name_Search_Label");
 	if ($Products_Pagination_Label != "") {$Products_Pagination_Text = $Products_Pagination_Label;}
 	else {$Products_Pagination_Text = __(' products', 'UPCP');}
+	if ($Product_Name_Search_Label != "") {
+		$Product_Name_Text = $Product_Name_Search_Label;
+		$SearchLabel = $Product_Name_Search_Label;
+	}
+	else {
+		if ($ProductSearch == "namedesc" or $ProductSearch == "namedesccust") {$SearchLabel = __("Product Search:", 'UPCP'); $Product_Name_Text = __("Search", 'UPCP');}
+		else {$SearchLabel = __("Product Name:", 'UPCP'); $Product_Name_Text = __("Name", 'UPCP');}
+	}	
 		
 	// Get the attributes passed by the shortcode, and store them in new variables for processing
 	extract( shortcode_atts( array(
@@ -86,9 +95,7 @@ function Insert_Product_Catalog($atts) {
 	if ($products_per_page == "") {$products_per_page = $Products_Per_Page;}
 	if ($category != "" or $subcategory != "" or $tags != "" or $prod_name != "") {$Filtered = "Yes";}
 	else {$Filtered = "No";}
-		
-	if ($ProductSearch == "namedesc" or $ProductSearch == "namedesccust") {$SearchText = __("Search", 'UPCP');}
-	else {$SearchText = __("Name", 'UPCP');}
+	
 		
 	$ReturnString .= "<div class='upcp-Hide-Item' id='upcp-shortcode-atts'>";
 	$ReturnString .= "<div class='shortcode-attr' id='upcp-catalogue-id'>" . $id . "</div>";
@@ -97,7 +104,7 @@ function Insert_Product_Catalog($atts) {
 	$ReturnString .= "<div class='shortcode-attr' id='upcp-current-layout'>" . $starting_layout . "</div>";
 	$ReturnString .= "<div class='shortcode-attr' id='upcp-exclude-layouts'>" . $excluded_layouts . "</div>";
 	$ReturnString .= "<div class='shortcode-attr' id='upcp-current-page'>" . $current_page . "</div>";
-	$ReturnString .= "<div class='shortcode-attr' id='upcp-default-search-text'>" . $SearchText . "...</div>";
+	$ReturnString .= "<div class='shortcode-attr' id='upcp-default-search-text'>" . $Product_Name_Text . "...</div>";
 	if ($ajax_reload == "Yes") {$ReturnString .= "<div class='shortcode-attr' id='upcp-base-url'>" . $ajax_url . "</div>";}
 	else {
 		$uri_parts = explode('?', $_SERVER['REQUEST_URI'], 2);
@@ -778,6 +785,7 @@ function BuildSidebar($category, $subcategory, $tags) {
 	global $wpdb, $Full_Version, $ProdCats, $ProdSubCats, $ProdTags, $ProdCatString, $ProdSubCatString, $ProdTagString;
 	global $categories_table_name, $subcategories_table_name, $tags_table_name;
 		
+	$Color = get_option("UPCP_Color_Scheme");
 	$Tag_Logic = get_option("UPCP_Tag_Logic");
 	$ProductSearch = get_option("UPCP_Product_Search");
 	$Product_Sort = get_option("UPCP_Product_Sort");

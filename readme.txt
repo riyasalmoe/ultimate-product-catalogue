@@ -120,6 +120,10 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.5.2 =
+- Fixed a bug that didn't allow catalogues to be displayed on home pages
+- Fixed a labelling search bug
+
 = 2.5.1 =
 - Added custom fields to Fancyboxes
 
