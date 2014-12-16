@@ -30,6 +30,8 @@
 		$Details_Label = get_option("UPCP_Details_Label");
 		$Sort_By_Label = get_option("UPCP_Sort_By_Label");
 		$Product_Name_Search_Label = get_option("UPCP_Product_Name_Search_Label");
+		$Product_Search_Text_Label = get_option("UPCP_Product_Name_Text_Label");
+		$No_Results_Found_Label = get_option("UPCP_No_Results_Found_Label");
 		$Products_Pagination_Label = get_option("UPCP_Products_Pagination_Label");
 ?>
 <div class="wrap">
@@ -394,6 +396,28 @@
 <td>
 	<fieldset><legend class="screen-reader-text"><span><?php _e("Text that should replace 'Product Name' on your catalogue pages", 'UPCP')?></span></legend>
 	<input type='text' name='product_name_search_label' value='<?php echo $Product_Name_Search_Label; ?>' <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/>
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row"><?php _e("Placeholder Label", 'UPCP')?> <br/> 
+<div onMouseOver="ShowToolTip('product_name_text_label_exp')" onMouseOut="HideToolTip('product_name_text_label_exp')" class="questionMark"><br>  
+<div id="product_name_text_label_exp" class="toolTip" ><?php _e("Text that should replace the placeholder text on your catalogue pages", 'UPCP')?></div></div>
+</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span><?php _e("Text that should replace the placeholder text on your catalogue pages", 'UPCP')?></span></legend>
+	<input type='text' name='product_name_text_label' value='<?php echo $Product_Search_Text_Label; ?>' <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/>
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row"><?php _e("No Products Found Label", 'UPCP')?> <br/> 
+<div onMouseOver="ShowToolTip('no_results_found_label_exp')" onMouseOut="HideToolTip('no_results_found_label_exp')" class="questionMark"><br>  
+<div id="no_results_found_label_exp" class="toolTip" ><?php _e("Text that should display when no products are found", 'UPCP')?></div></div>
+</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span><?php _e("Text that should display when no products are found", 'UPCP')?></span></legend>
+	<input type='text' name='no_results_found_label' value='<?php echo $No_Results_Found_Label; ?>' <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/>
 	</fieldset>
 </td>
 </tr>

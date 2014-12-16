@@ -1,3 +1,35 @@
+jQuery(document).ready(function(){
+	addClickHandlers();
+	jQuery(".jquery-prod-cat-value").change(function(){
+		var CatValues = [];
+		jQuery('.jquery-prod-cat-value').each(function() {if (jQuery(this).prop('checked')) {CatValues.push(jQuery(this).val());}});
+		jQuery('#upcp-selected-categories').val(CatValues);
+	});
+	jQuery(".jquery-prod-sub-cat-value").change(function(){
+		var SubCatValues = [];
+		jQuery('.jquery-prod-sub-cat-value').each(function() {if (jQuery(this).prop('checked')) {SubCatValues.push(jQuery(this).val());}});
+		jQuery('#upcp-selected-subcategories').val(SubCatValues);
+	});
+	jQuery(".jquery-prod-tag-value").change(function(){
+		var TagValues = [];
+		jQuery('.jquery-prod-tag-value').each(function() {if (jQuery(this).prop('checked')) {TagValues.push(jQuery(this).val());}});
+		jQuery('#upcp-selected-tags').val(TagValues);
+	});
+	jQuery(".jquery-prod-name-text").keyup(function(){
+		var prod_name = jQuery(this).val();
+		jQuery('#upcp-selected-prod-name').val(prod_name);
+	});
+});
+
+function addClickHandlers() {
+	jQuery(".upcp-catalogue-link").click(function(event){
+		event.preventDefault();
+    	var link = jQuery(this).attr('href');
+    	jQuery("#upcp-hidden-filtering-form").attr('action', link);
+    	jQuery("#upcp-hidden-filtering-form").submit();
+	});
+}
+
 function FieldFocus (Field) {
 		if (Field.value == Field.defaultValue){
 			  Field.value = '';
@@ -55,6 +87,7 @@ function UPCP_Ajax_Filter() {
 						jQuery('.prod-cat-inner').html(parsed_response.message);
 						UPCP_Sort_By();
 						adjustCatalogueHeight();
+						addClickHandlers();
 						ResetFancyBoxes();
 				}
 		});

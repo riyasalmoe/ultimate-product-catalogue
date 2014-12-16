@@ -120,6 +120,11 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.5.4 =
+- Filtering settings are preserved when using the "Back to Catalogue" link
+- Added an option to display a message when no products are found 
+- Added a label for the placeholder text in the text search field
+
 = 2.5.3 =
 - Fixed a checkboxes error with custom fields
 - Additional fix for products not displaying on homepage

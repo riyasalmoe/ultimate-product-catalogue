@@ -923,6 +923,8 @@ function Update_UPCP_Options() {
 		if ($Full_Version == "Yes") {update_option("UPCP_Details_Label", $_POST['details_label']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_Sort_By_Label", $_POST['sort_by_label']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_Product_Name_Search_Label", $_POST['product_name_search_label']);}
+		if ($Full_Version == "Yes") {update_option("UPCP_Product_Name_Text_Label", $_POST['product_name_text_label']);}
+		if ($Full_Version == "Yes") {update_option("UPCP_No_Results_Found_Label", $_POST['no_results_found_label']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_Products_Pagination_Label", $_POST['products_pagination_label']);}
 		
 		if ($_POST['Pretty_Links'] == "Yes") {

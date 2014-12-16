@@ -20,15 +20,13 @@ function Insert_Product_Catalog($atts) {
 
 	$Products_Pagination_Label = get_option("UPCP_Products_Pagination_Label");
 	$Product_Name_Search_Label = get_option("UPCP_Product_Name_Search_Label");
+	$No_Results_Found_Label = get_option("UPCP_No_Results_Found_Label");
 	if ($Products_Pagination_Label != "") {$Products_Pagination_Text = $Products_Pagination_Label;}
 	else {$Products_Pagination_Text = __(' products', 'UPCP');}
-	if ($Product_Name_Search_Label != "") {
-		$Product_Name_Text = $Product_Name_Search_Label;
-		$SearchLabel = $Product_Name_Search_Label;
-	}
+	if ($Product_Search_Text_Label != "") {$Product_Name_Text = $Product_Name_Search_Label;}
 	else {
-		if ($ProductSearch == "namedesc" or $ProductSearch == "namedesccust") {$SearchLabel = __("Product Search:", 'UPCP'); $Product_Name_Text = __("Search", 'UPCP');}
-		else {$SearchLabel = __("Product Name:", 'UPCP'); $Product_Name_Text = __("Name", 'UPCP');}
+		if ($ProductSearch == "namedesc" or $ProductSearch == "namedesccust") {$Product_Name_Text = __("Search...", 'UPCP');}
+		else {$Product_Name_Text = __("Name...", 'UPCP');}
 	}	
 		
 	// Get the attributes passed by the shortcode, and store them in new variables for processing
@@ -68,6 +66,13 @@ function Insert_Product_Catalog($atts) {
 		$HeaderBar .= "}";
 		$HeaderBar .= "</style>";
 	}
+
+	$HeaderBar .= "<form id='upcp-hidden-filtering-form' method='post'>";
+	$HeaderBar .= "<input type='hidden' id='upcp-selected-categories' name='categories' value='" . $_POST['categories'] . "' />";
+	$HeaderBar .= "<input type='hidden' id='upcp-selected-subcategories' name='subcategories' value='" . $_POST['subcategories'] . "' />";
+	$HeaderBar .= "<input type='hidden' id='upcp-selected-tags' name='tags' value='" . $_POST['tags'] . "' />";
+	$HeaderBar .= "<input type='hidden' id='upcp-selected-prod-name' name='prod_name' value='" . $_POST['prod_name'] . "' />";
+	$HeaderBar .= "</form>";
 		
 	if (get_query_var('single_product') != "" or $_GET['SingleProduct'] != "") {
 		$ReturnString .= $HeaderBar;
@@ -81,15 +86,20 @@ function Insert_Product_Catalog($atts) {
 	if ($excluded_layouts != "None") {$Excluded_Layouts = explode(",", $excluded_layouts);}
 	else {$Excluded_Layouts = array();}
 		
-	if (isset($_GET['categories'])) {$category = explode(",", $_GET['categories']);}	
+	if (isset($_GET['categories'])) {$category = explode(",", $_GET['categories']);}
+	elseif (isset($_POST['categories']) and $_POST['categories'] != "") {$category = explode(",", $_POST['categories']);}
 	elseif ($category == "") {$category = array();}
 	else {$category = explode(",", $category);}	
 	if (isset($_GET['sub-categories'])) {$subcategory = explode(",", $_GET['sub-categories']);}	
+	elseif (isset($_POST['subcategories']) and $_POST['subcategories'] != "") {$subcategory = explode(",", $_POST['subcategories']);}
 	elseif ($subcategory == "") {$subcategory = array();}
 	else {$subcategory = explode(",", $subcategory);}	
-	if (isset($_GET['tags'])) {$tags = explode(",", $_GET['tags']);}	
+	if (isset($_GET['tags'])) {$tags = explode(",", $_GET['tags']);}
+	elseif (isset($_POST['tags']) and $_POST['tags'] != "") {$tags = explode(",", $_POST['tags']);}	
 	elseif ($tags == "") {$tags = array();}
 	else {$tags = explode(",", $tags);}	
+
+	if (isset($_POST['prod_name']) and $_POST['prod_name'] != "") {$prod_name = $_POST['prod_name'];}
 
 	//Pagination early work
 	if ($products_per_page == "") {$products_per_page = $Products_Per_Page;}
@@ -104,7 +114,7 @@ function Insert_Product_Catalog($atts) {
 	$ReturnString .= "<div class='shortcode-attr' id='upcp-current-layout'>" . $starting_layout . "</div>";
 	$ReturnString .= "<div class='shortcode-attr' id='upcp-exclude-layouts'>" . $excluded_layouts . "</div>";
 	$ReturnString .= "<div class='shortcode-attr' id='upcp-current-page'>" . $current_page . "</div>";
-	$ReturnString .= "<div class='shortcode-attr' id='upcp-default-search-text'>" . $Product_Name_Text . "...</div>";
+	$ReturnString .= "<div class='shortcode-attr' id='upcp-default-search-text'>" . $Product_Name_Text . "</div>";
 	if ($ajax_reload == "Yes") {$ReturnString .= "<div class='shortcode-attr' id='upcp-base-url'>" . $ajax_url . "</div>";}
 	else {
 		$uri_parts = explode('?', $_SERVER['REQUEST_URI'], 2);
@@ -279,6 +289,12 @@ function Insert_Product_Catalog($atts) {
 				
 		//if ($Pagination_Check == "Over") {break;}
 	}
+
+	if ($Product_Count == 0) {
+		$ProdThumbString .= $No_Results_Found_Label;
+		$ProdListString .= $No_Results_Found_Label;
+		$ProdDetailString .= $No_Results_Found_Label;
+	}
 				
 	$ProdThumbString .= "<div class='upcp-clear'></div>\n";
 	$ProdListString .= "<div class='upcp-clear'></div>\n";
@@ -363,7 +379,7 @@ function Insert_Product_Catalog($atts) {
 		
 	// If the sidebar is requested, add it
 	if (($sidebar == "Yes" or $sidebar == "yes" or $sidebar == "YES") and $only_inner != "Yes") {
-		$SidebarString = BuildSidebar($category, $subcategory, $tags);
+		$SidebarString = BuildSidebar($category, $subcategory, $tags, $prod_name);
 	}
 		
 	if ($Mobile_Style == "Yes") {
@@ -479,7 +495,7 @@ function AddProduct($format, $Item_ID, $Product, $Tags, $AjaxReload = "No", $Aja
 	if ($format == "Thumbnail") {				
 		$ProductString .= "<div id='prod-cat-item-" . $Product->Item_ID . "' class='prod-cat-item upcp-thumb-item'>\n";
 		$ProductString .= "<div id='prod-cat-thumb-div-" . $Product->Item_ID . "' class='prod-cat-thumb-image-div upcp-thumb-image-div'>";
-		$ProductString .= "<a class='";
+		$ProductString .= "<a class='upcp-catalogue-link ";
 		if ($FancyBoxClass and !$NewWindow) {$ProductString .= "fancybox";}
 		$ProductString .= "' ";
 		if ($NewWindow) {$ProductString .= "target='_blank'";}
@@ -488,7 +504,7 @@ function AddProduct($format, $Item_ID, $Product, $Tags, $AjaxReload = "No", $Aja
 		$ProductString .= "</a>";	
 		$ProductString .= "</div>\n";
 		$ProductString .= "<div id='prod-cat-title-" . $Product->Item_ID . "' class='prod-cat-title upcp-thumb-title'>";
-		$ProductString .= "<a class='";
+		$ProductString .= "<a class='upcp-catalogue-link ";
 		if ($FancyBoxClass and !$NewWindow) {$ProductString .= "fancybox";}
 		$ProductString .= " no-underline'";
 		if ($NewWindow) {$ProductString .= "target='_blank'";}
@@ -496,7 +512,7 @@ function AddProduct($format, $Item_ID, $Product, $Tags, $AjaxReload = "No", $Aja
 		$ProductString .= AddCustomFields($Product->Item_ID, "thumbs");
 		$ProductString .= "</div>\n";
 		$ProductString .= "<div id='prod-cat-price-" . $Product->Item_ID . "' class='prod-cat-price upcp-thumb-price'>" . $Product->Item_Price . "</div>\n";
-		$ProductString .= "<a class='";
+		$ProductString .= "<a class='upcp-catalogue-link ";
 		if ($FancyBoxClass and !$NewWindow) {$ProductString .= "fancybox";}
 		$ProductString .= "' ";
 		if ($NewWindow) {$ProductString .= "target='_blank'";}
@@ -511,7 +527,7 @@ function AddProduct($format, $Item_ID, $Product, $Tags, $AjaxReload = "No", $Aja
 		$ProductString .= "<div id='prod-cat-price-" . $Product->Item_ID . "' class='prod-cat-price upcp-list-price' onclick='ToggleItem(" . $Product->Item_ID . ");'>" . $Product->Item_Price . "</div>\n";
 		$ProductString .= "<div id='prod-cat-details-" . $Product->Item_ID . "' class='prod-cat-details upcp-list-details hidden-field'>\n";
 		$ProductString .= "<div id='prod-cat-thumb-div-" . $Product->Item_ID . "' class='prod-cat-thumb-image-div upcp-list-image-div'>";
-		$ProductString .= "<a class='";
+		$ProductString .= "<a class='upcp-catalogue-link ";
 		if ($FancyBoxClass and !$NewWindow) {$ProductString .= "fancybox";}
 		$ProductString .= "' ";
 		if ($NewWindow) {$ProductString .= "target='_blank'";}
@@ -520,7 +536,7 @@ function AddProduct($format, $Item_ID, $Product, $Tags, $AjaxReload = "No", $Aja
 		$ProductString .= "</a>";
 		$ProductString .= "</div>\n";
 		$ProductString .= "<div id='prod-cat-desc-" . $Product->Item_ID . "' class='prod-cat-desc upcp-list-desc'>" . $Description . "</div>\n";
-		$ProductString .= "<a class='";
+		$ProductString .= "<a class='upcp-catalogue-link ";
 		if ($FancyBoxClass and !$NewWindow) {$ProductString .= "fancybox";}
 		$ProductString .= "' ";
 		if ($NewWindow) {$ProductString .= "target='_blank'";}
@@ -533,7 +549,7 @@ function AddProduct($format, $Item_ID, $Product, $Tags, $AjaxReload = "No", $Aja
 	if ($format == "Detail") {				
 		$ProductString .= "<div id='prod-cat-item-" . $Product->Item_ID . "' class='prod-cat-item upcp-detail-item'>\n";
 		$ProductString .= "<div id='prod-cat-detail-div-" . $Product->Item_ID . "' class='prod-cat-detail-image-div upcp-detail-image-div'>";
-		$ProductString .= "<a class='";
+		$ProductString .= "<a class='upcp-catalogue-link ";
 		if ($FancyBoxClass and !$NewWindow) {$ProductString .= "fancybox";}
 		$ProductString .= "' ";
 		if ($NewWindow) {$ProductString .= "target='_blank'";}
@@ -547,7 +563,7 @@ function AddProduct($format, $Item_ID, $Product, $Tags, $AjaxReload = "No", $Aja
 		else {$ProductString .= "<div id='prod-cat-desc-" . $Product->Item_ID . "' class='prod-cat-desc upcp-detail-desc'>" . strip_tags($Description);}
 		if ($ReadMore == "Yes") {
 			if (strlen($Description) > $Detail_Desc_Chars) {
-				$ProductString .= "... <a class='";
+				$ProductString .= "... <a class='upcp-catalogue-link ";
 				if ($FancyBoxClass and !$NewWindow) {$ProductString .= "fancybox";}
 				$ProductString .= "' ";
 				if ($NewWindow) {$ProductString .= "target='_blank'";}
@@ -559,7 +575,7 @@ function AddProduct($format, $Item_ID, $Product, $Tags, $AjaxReload = "No", $Aja
 		$ProductString .= "</div>";
 		$ProductString .= "<div id='prod-cat-end-div-" . $Product->Item_ID . "' class='prod-cat-end-detail-div upcp-end-detail-div'>";
 		$ProductString .= "<div id='prod-cat-price-" . $Product->Item_ID . "' class='prod-cat-price upcp-detail-price'>" . $Product->Item_Price . "</div>\n";
-		$ProductString .= "<a class='";
+		$ProductString .= "<a class='upcp-catalogue-link ";
 		if ($FancyBoxClass and !$NewWindow) {$ProductString .= "fancybox";}
 		$ProductString .= "' ";
 		if ($NewWindow) {$ProductString .= "target='_blank'";}
@@ -669,7 +685,7 @@ function SingleProductPage() {
 		$ProductString .= "<div class='upcp-standard-product-page'>";
 				
 		$ProductString .= "<div class='prod-cat-back-link'>";
-		$ProductString .= "<a href='" . $Return_URL . "'>&#171; Back to Catalogue</a>";
+		$ProductString .= "<a class='upcp-catalogue-link' href='" . $Return_URL . "'>&#171; Back to Catalogue</a>";
 		$ProductString .= "</div>";
 		
 		$ProductString .= "<div id='prod-cat-addt-details-" . $Product->Item_ID . "' class='prod-cat-addt-details'>";
@@ -781,7 +797,7 @@ function SingleProductPage() {
 	return $ProductString;
 }
 
-function BuildSidebar($category, $subcategory, $tags) {
+function BuildSidebar($category, $subcategory, $tags, $prod_name) {
 	global $wpdb, $Full_Version, $ProdCats, $ProdSubCats, $ProdTags, $ProdCatString, $ProdSubCatString, $ProdTagString;
 	global $categories_table_name, $subcategories_table_name, $tags_table_name;
 		
@@ -796,6 +812,7 @@ function BuildSidebar($category, $subcategory, $tags) {
 	$Tags_Label = get_option("UPCP_Tags_Label");
 	$Sort_By_Label = get_option("UPCP_Sort_By_Label");
 	$Product_Name_Search_Label = get_option("UPCP_Product_Name_Search_Label");
+	$Product_Search_Text_Label = get_option("UPCP_Product_Name_Text_Label");
 
 	if ($Categories_Label != "") {$Categories_Text = $Categories_Label;}
 	else {$Categories_Text = __("Categories:", 'UPCP');}
@@ -805,13 +822,17 @@ function BuildSidebar($category, $subcategory, $tags) {
 	else {$Tags_Text = __("Tags:", 'UPCP');}
 	if ($Sort_By_Label != "") {$Sort_Text = $Sort_By_Label;}
 	else {$Sort_Text = __('Sort By:', 'UPCP');}
-	if ($Product_Name_Search_Label != "") {
-		$Product_Name_Text = $Product_Name_Search_Label;
-		$SearchLabel = $Product_Name_Search_Label;
+	if ($Product_Name_Search_Label != "") {$SearchLabel = $Product_Name_Search_Label;}
+	else {
+		if ($ProductSearch == "namedesc" or $ProductSearch == "namedesccust") {$SearchLabel = __("Product Search:", 'UPCP');}
+		else {$SearchLabel = __("Product Name:", 'UPCP');}
+	}
+	if ($prod_name != "") {$Product_Name_Text = $prod_name;}
+	elseif ($Product_Search_Text_Label != "") {$Product_Name_Text = $Product_Search_Text_Label;
 	}
 	else {
-		if ($ProductSearch == "namedesc" or $ProductSearch == "namedesccust") {$SearchLabel = __("Product Search:", 'UPCP'); $Product_Name_Text = __("Search", 'UPCP');}
-		else {$SearchLabel = __("Product Name:", 'UPCP'); $Product_Name_Text = __("Name", 'UPCP');}
+		if ($ProductSearch == "namedesc" or $ProductSearch == "namedesccust") {$Product_Name_Text = __("Search...", 'UPCP');}
+		else {$Product_Name_Text = __("Name...", 'UPCP');}
 	}
 	
 	// Get the categories, sub-categories and tags that apply to the products in the catalog
@@ -847,9 +868,9 @@ function BuildSidebar($category, $subcategory, $tags) {
 	// Create the text search box
 	$SidebarString .= "<div id='prod-cat-text-search' class='prod-cat-text-search'>\n";
 	$SidebarString .= $SearchLabel . "<br /><div class='styled-input'>";
-	if ($Filter  == "Javascript" and $Tag_Logic == "OR") {$SidebarString .= "<input type='text' id='upcp-name-search' class='jquery-prod-name-text' name='Text_Search' value='" . $Product_Name_Text . "...' onfocus='FieldFocus(this);' onblur='FieldBlur(this);' onkeyup='UPCP_Filer_Results_OR();'>\n";}
-	elseif ($Filter  == "Javascript") {$SidebarString .= "<input type='text' id='upcp-name-search' class='jquery-prod-name-text' name='Text_Search' value='" . $Product_Name_Text . "...' onfocus='FieldFocus(this);' onblur='FieldBlur(this);' onkeyup='UPCP_Filer_Results();'>\n";}
-	else {$SidebarString .= "<input type='text' id='upcp-name-search' class='jquery-prod-name-text' name='Text_Search' value='" . $Product_Name_Text . "...' onfocus='FieldFocus(this);' onblur='FieldBlur(this);' onkeyup='UPCP_DisplayPage(\"1\");'>\n";}
+	if ($Filter  == "Javascript" and $Tag_Logic == "OR") {$SidebarString .= "<input type='text' id='upcp-name-search' class='jquery-prod-name-text' name='Text_Search' value='" . $Product_Name_Text . "' onfocus='FieldFocus(this);' onblur='FieldBlur(this);' onkeyup='UPCP_Filer_Results_OR();'>\n";}
+	elseif ($Filter  == "Javascript") {$SidebarString .= "<input type='text' id='upcp-name-search' class='jquery-prod-name-text' name='Text_Search' value='" . $Product_Name_Text . "' onfocus='FieldFocus(this);' onblur='FieldBlur(this);' onkeyup='UPCP_Filer_Results();'>\n";}
+	else {$SidebarString .= "<input type='text' id='upcp-name-search' class='jquery-prod-name-text' name='Text_Search' value='" . $Product_Name_Text . "' onfocus='FieldFocus(this);' onblur='FieldBlur(this);' onkeyup='UPCP_DisplayPage(\"1\");'>\n";}
 	$SidebarString .= "</div></div>\n";
 				
 	// Create the categories checkboxes
