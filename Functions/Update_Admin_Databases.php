@@ -912,6 +912,7 @@ function Update_UPCP_Options() {
 		if ($Full_Version == "Yes") {update_option("UPCP_Products_Per_Page", $_POST['products_per_page']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_Pagination_Location", $_POST['pagination_location']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_Product_Sort", $_POST['product_sort']);}
+		if ($Full_Version == "Yes") {update_option("UPCP_CF_Conversion", $_POST['cf_converion']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_PP_Grid_Width", $_POST['pp_grid_width']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_PP_Grid_Height", $_POST['pp_grid_height']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_Top_Bottom_Padding", $_POST['pp_top_bottom_padding']);}

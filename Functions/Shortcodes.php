@@ -441,6 +441,7 @@ function AddProduct($format, $Item_ID, $Product, $Tags, $AjaxReload = "No", $Aja
 	$Links = get_option("UPCP_Product_Links");
 	$Pretty_Links = get_option("UPCP_Pretty_Links");
 	$Detail_Desc_Chars = get_option("UPCP_Desc_Chars");
+	$CF_Conversion = get_option("UPCP_CF_Conversion");
 
 	$Details_Label = get_option("UPCP_Details_Label");
 	if ($Details_Label != "") {$Details_Text = $Details_Label;}
@@ -449,7 +450,7 @@ function AddProduct($format, $Item_ID, $Product, $Tags, $AjaxReload = "No", $Aja
 	if ($Links == "New") {$NewWindow = true;}
 	else {$NewWindow = false;}
 		
-	$Description = ConvertCustomFields($Product->Item_Description);
+	if ($CF_Conversion != "No") {$Description = ConvertCustomFields($Product->Item_Description);}
 	$Description = str_replace("[upcp-price]", $Product->Item_Price, $Description);
 		
 	//Select the product info, tags and images for the product
@@ -632,13 +633,14 @@ function SingleProductPage() {
 	$PP_Grid_Height = get_option("UPCP_PP_Grid_Height");
 	$Top_Bottom_Padding = get_option("UPCP_Top_Bottom_Padding");
 	$Left_Right_Padding = get_option("UPCP_Left_Right_Padding");
+	$CF_Conversion = get_option("UPCP_CF_Conversion");
 		
 	if ($Pretty_Links == "Yes") {$Product = $wpdb->get_row("SELECT * FROM $items_table_name WHERE Item_Slug='" . trim(get_query_var('single_product'), "/? ") . "'");}
 	else {$Product = $wpdb->get_row("SELECT * FROM $items_table_name WHERE Item_ID='" . $_GET['SingleProduct'] . "'");}
 	$Item_Images = $wpdb->get_results("SELECT Item_Image_URL, Item_Image_ID FROM $item_images_table_name WHERE Item_ID=" . $Product->Item_ID);
 		
 	$Links = get_option("UPCP_Product_Links");
-	$Description = ConvertCustomFields($Product->Item_Description);
+	if ($CF_Conversion != "No") {$Description = ConvertCustomFields($Product->Item_Description);}
 	$Description = str_replace("[upcp-price]", $Product->Item_Price, $Description);
 	$Description = do_shortcode($Description);
 		

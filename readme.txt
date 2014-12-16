@@ -120,6 +120,10 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.5.5 =
+- Included the missing "Export to Excel" files
+- Added an option to turn on custom field slug conversions (which are not set to off by default)
+
 = 2.5.4 =
 - Filtering settings are preserved when using the "Back to Catalogue" link
 - Added an option to display a message when no products are found 

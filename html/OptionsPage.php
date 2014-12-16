@@ -23,6 +23,7 @@
 		$Left_Right_Padding = get_option("UPCP_Left_Right_Padding");
 		$Product_Search = get_option("UPCP_Product_Search");
 		$Product_Sort = get_option("UPCP_Product_Sort");
+		$CF_Conversion = get_option("UPCP_CF_Conversion");
 
 		$Categories_Label = get_option("UPCP_Categories_Label");
 		$SubCategories_Label = get_option("UPCP_SubCategories_Label");
@@ -288,6 +289,18 @@
 </td>
 </tr>
 <tr>
+<th scope="row"><?php _e("Custom Slugs Conversion", 'UPCP')?> <br/> 
+<div onMouseOver="ShowToolTip('cf_converion_exp')" onMouseOut="HideToolTip('cf_converion_exp')" class="questionMark"><br> 
+<div id="cf_converion_exp" class="toolTip" ><?php _e("Are custom field slugs being used in the product descriptions?", 'UPCP')?></div></div>
+</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span><?php _e("Are custom field slugs being used in the product descriptions?", 'UPCP')?></span></legend>
+	<label title='Yes'><input type='radio' name='cf_converion' value='Yes' <?php if($CF_Conversion == "Yes") {echo "checked='checked'";} ?> /> <span><?php _e("Yes", 'UPCP')?></span></label><br />
+	<label title='No'><input type='radio' name='cf_converion' value='No' <?php if($CF_Conversion == "No") {echo "checked='checked'";} ?> /> <span><?php _e("No", 'UPCP')?></span></label><br />
+	</fieldset>
+</td>
+</tr>
+<tr>
 <th scope="row"><?php _e("Product Page Grid Width", 'UPCP')?> <br/> 
 <div onMouseOver="ShowToolTip('pp_grid_width_exp')" onMouseOut="HideToolTip('pp_grid_width_exp')" class="questionMark"><br> 
 <div id="pp_grid_width_exp" class="toolTip" ><?php _e("How wide should the grid elements used to build custom product pages be? (in pixels)", 'UPCP')?></div></div>
@@ -331,8 +344,10 @@
 	</fieldset>
 </td>
 </tr>
+</table>
 
 <h3>Labelling Options</h3>
+<table class="form-table">
 <tr>
 <th scope="row"><?php _e("Categories Label", 'UPCP')?> <br/> 
 <div onMouseOver="ShowToolTip('categories_label_exp')" onMouseOut="HideToolTip('categories_label_exp')" class="questionMark"><br>  
