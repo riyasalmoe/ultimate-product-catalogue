@@ -120,6 +120,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.5.6=
+- Correct version of Shortcodes.php file included with this version (sorry!)
+
 = 2.5.5 =
 - Included the missing "Export to Excel" files
 - Added an option to turn on custom field slug conversions (which are not set to off by default)

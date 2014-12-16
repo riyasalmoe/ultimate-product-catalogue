@@ -451,6 +451,7 @@ function AddProduct($format, $Item_ID, $Product, $Tags, $AjaxReload = "No", $Aja
 	else {$NewWindow = false;}
 		
 	if ($CF_Conversion != "No") {$Description = ConvertCustomFields($Product->Item_Description);}
+	else {$Description = $Product->Item_Description;}
 	$Description = str_replace("[upcp-price]", $Product->Item_Price, $Description);
 		
 	//Select the product info, tags and images for the product
@@ -641,6 +642,7 @@ function SingleProductPage() {
 		
 	$Links = get_option("UPCP_Product_Links");
 	if ($CF_Conversion != "No") {$Description = ConvertCustomFields($Product->Item_Description);}
+	else {$Description = $Product->Item_Description;}
 	$Description = str_replace("[upcp-price]", $Product->Item_Price, $Description);
 	$Description = do_shortcode($Description);
 		
