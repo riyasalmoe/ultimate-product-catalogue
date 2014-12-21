@@ -120,6 +120,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.5.8 =
+- Fixed a linking error for users using the default WordPress link structure
+
 = 2.5.7 =
 - Added a label for "Back to Catalogue"
 - Added an option to not maintain filtering between page loads, to address some redirection issues

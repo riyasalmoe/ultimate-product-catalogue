@@ -126,7 +126,8 @@ function Insert_Product_Catalog($atts) {
 	if ($ajax_reload == "Yes") {$ReturnString .= "<div class='shortcode-attr' id='upcp-base-url'>" . $ajax_url . "</div>";}
 	else {
 		$uri_parts = explode('?', $_SERVER['REQUEST_URI'], 2);
-		$ReturnString .= "<div class='shortcode-attr' id='upcp-base-url'>" . $uri_parts[0] . "</div>";
+		if ($uri_parts[0] != "/") {$ReturnString .= "<div class='shortcode-attr' id='upcp-base-url'>" . $uri_parts[0] . "</div>";}
+		else {$ReturnString .= "<div class='shortcode-attr' id='upcp-base-url'>/?" . $uri_parts[1] . "</div>";}
 	}
 	$ReturnString .= "</div>";
 		
