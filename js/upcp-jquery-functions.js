@@ -22,12 +22,14 @@ jQuery(document).ready(function(){
 });
 
 function addClickHandlers() {
-	jQuery(".upcp-catalogue-link").click(function(event){
-		event.preventDefault();
-    	var link = jQuery(this).attr('href');
-    	jQuery("#upcp-hidden-filtering-form").attr('action', link);
-    	jQuery("#upcp-hidden-filtering-form").submit();
-	});
+	if (maintain_filtering != "No") {
+		jQuery(".upcp-catalogue-link").click(function(event){
+			event.preventDefault();
+    		var link = jQuery(this).attr('href');
+    		jQuery("#upcp-hidden-filtering-form").attr('action', link);
+    		jQuery("#upcp-hidden-filtering-form").submit();
+		});
+	}
 }
 
 function FieldFocus (Field) {

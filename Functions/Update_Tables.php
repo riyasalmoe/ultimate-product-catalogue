@@ -153,6 +153,7 @@ function UpdateTables() {
 		if (get_option("UPCP_Custom_Product_Page") == "") {update_option("UPCP_Custom_Product_Page", "No");}
 		if (get_option("UPCP_Sidebar_Order") == "") {update_option("UPCP_Sidebar_Order", "Normal");}
 		if (get_option("UPCP_Apply_Contents_Filter") == "") {update_option("UPCP_Apply_Contents_Filter", "Yes");}
+		if (get_option("UPCP_Maintain_Filtering") == "") {update_option("UPCP_Maintain_Filtering", "Yes");}
 		if (get_option("UPCP_Product_Page_Serialized_Mobile") == "") {update_option("UPCP_Product_Page_Serialized_Mobile", get_option("UPCP_Product_Page_Serialized"));}
 		
 		if (get_option("UPCP_Products_Per_Page") == "") {update_option("UPCP_Products_Per_Page", 1000000);}

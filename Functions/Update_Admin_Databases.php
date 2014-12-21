@@ -905,6 +905,7 @@ function Update_UPCP_Options() {
 		update_option("UPCP_Single_Page_Price", $_POST['single_page_price']);
 		update_option("UPCP_Case_Insensitive_Search", $_POST['case_insensitive_search']);
 		update_option("UPCP_Apply_Contents_Filter", $_POST['contents_filter']);
+		update_option("UPCP_Maintain_Filtering", $_POST['maintain_filtering']);
 		if ($InstallVersion <= 2.0 or $Full_Version == "Yes") {update_option("UPCP_Pretty_Links", $_POST['pretty_links']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_XML_Sitemap_URL", $_POST['xml_sitemap_url']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_Filter_Title", $_POST['filter_title']);}
@@ -925,6 +926,7 @@ function Update_UPCP_Options() {
 		if ($Full_Version == "Yes") {update_option("UPCP_Sort_By_Label", $_POST['sort_by_label']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_Product_Name_Search_Label", $_POST['product_name_search_label']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_Product_Name_Text_Label", $_POST['product_name_text_label']);}
+		if ($Full_Version == "Yes") {update_option("UPCP_Back_To_Catalogue_Label", $_POST['back_to_catalogue']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_No_Results_Found_Label", $_POST['no_results_found_label']);}
 		if ($Full_Version == "Yes") {update_option("UPCP_Products_Pagination_Label", $_POST['products_pagination_label']);}
 		

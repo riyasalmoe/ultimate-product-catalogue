@@ -120,6 +120,12 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.5.7 =
+- Added a label for "Back to Catalogue"
+- Added an option to not maintain filtering between page loads, to address some redirection issues
+- Fixed an export to Excel error
+- Fixed a filtering error on custom product pages
+
 = 2.5.6=
 - Correct version of Shortcodes.php file included with this version (sorry!)
 

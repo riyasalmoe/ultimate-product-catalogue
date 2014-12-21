@@ -3,7 +3,7 @@ function UPCP_Export_To_Excel() {
 	global $wpdb;
 	global $categories_table_name, $subcategories_table_name, $items_table_name, $tagged_items_table_name, $tags_table_name, $fields_table_name, $fields_meta_table_name;
 		
-	include_once('../wp-content/plugins/order-tracking/PHPExcel/Classes/PHPExcel.php');
+	include_once('../wp-content/plugins/ultimate-product-catalogue/PHPExcel/Classes/PHPExcel.php');
 		
 	// Instantiate a new PHPExcel object 
 	$objPHPExcel = new PHPExcel();  

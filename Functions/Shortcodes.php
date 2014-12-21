@@ -15,6 +15,7 @@ function Insert_Product_Catalog($atts) {
 	$Mobile_Style = get_option("UPCP_Mobile_SS");
 	$Pagination_Location = get_option("UPCP_Pagination_Location");
 	$CaseInsensitiveSearch = get_option("UPCP_Case_Insensitive_Search");
+	$Maintain_Filtering = get_option("UPCP_Maintain_Filtering");
 	$Products_Per_Page = get_option("UPCP_Products_Per_Page");
 	$ProductSearch = get_option("UPCP_Product_Search");
 
@@ -67,6 +68,13 @@ function Insert_Product_Catalog($atts) {
 		$HeaderBar .= "</style>";
 	}
 
+	$Top_JS .= "<script language='JavaScript' type='text/javascript'>";	
+	if ($Maintain_Filtering == "Yes") {$Top_JS .= "var maintain_filtering = 'Yes';";}
+	else {$Top_JS .= "var maintain_filtering = 'No';";}
+	$Top_JS .= "</script>";
+
+	$HeaderBar .= $Top_JS;
+	
 	$HeaderBar .= "<form id='upcp-hidden-filtering-form' method='post'>";
 	$HeaderBar .= "<input type='hidden' id='upcp-selected-categories' name='categories' value='" . $_POST['categories'] . "' />";
 	$HeaderBar .= "<input type='hidden' id='upcp-selected-subcategories' name='subcategories' value='" . $_POST['subcategories'] . "' />";
@@ -405,12 +413,10 @@ function Insert_Product_Catalog($atts) {
 	}
 	$HeaderBar .= "<div class='upcp-clear'></div>";
 	$HeaderBar .= "</div>";
-		
-	if (isset($_GET['Product_ID'])) {
-		$JS .= "<script language='JavaScript' type='text/javascript'>";
-		$JS .= "jQuery(window).load(OpenProduct('" . $_GET['Product_ID'] . "'));";
-		$JS .= "</script>";
-	}
+	
+	$Bottom_JS .= "<script language='JavaScript' type='text/javascript'>";	
+	if (isset($_GET['Product_ID'])) {$Bottom_JS .= "jQuery(window).load(OpenProduct('" . $_GET['Product_ID'] . "'));";}
+	$Bottom_JS .= "</script>";
 		
 	$InnerString .= "<div class='prod-cat-inner'>" . $ProdThumbString . "<div class='upcp-clear'></div>" . $ProdListString . "<div class='upcp-clear'></div>" . $ProdDetailString . "<div class='upcp-clear'></div></div>";
 		
@@ -425,7 +431,7 @@ function Insert_Product_Catalog($atts) {
 	$ReturnString .= $MobileMenuString;
 	$ReturnString .= $InnerString;
 	$ReturnString .= $SidebarString;
-	$ReturnString .= $JS;
+	$ReturnString .= $Bottom_JS;
 	$ReturnString .= "<div class='upcp-clear'></div></div>";
 		
 	return $ReturnString;
@@ -635,6 +641,10 @@ function SingleProductPage() {
 	$Top_Bottom_Padding = get_option("UPCP_Top_Bottom_Padding");
 	$Left_Right_Padding = get_option("UPCP_Left_Right_Padding");
 	$CF_Conversion = get_option("UPCP_CF_Conversion");
+
+	$Back_To_Catalogue_Label = get_option("UPCP_Back_To_Catalogue_Label");
+	if ($Back_To_Catalogue_Label != "") {$Back_To_Catalogue_Text = $Back_To_Catalogue_Label;}
+	else {$Back_To_Catalogue_Text = __("Back to Catalogue", 'UPCP');}
 		
 	if ($Pretty_Links == "Yes") {$Product = $wpdb->get_row("SELECT * FROM $items_table_name WHERE Item_Slug='" . trim(get_query_var('single_product'), "/? ") . "'");}
 	else {$Product = $wpdb->get_row("SELECT * FROM $items_table_name WHERE Item_ID='" . $_GET['SingleProduct'] . "'");}
@@ -689,7 +699,7 @@ function SingleProductPage() {
 		$ProductString .= "<div class='upcp-standard-product-page'>";
 				
 		$ProductString .= "<div class='prod-cat-back-link'>";
-		$ProductString .= "<a class='upcp-catalogue-link' href='" . $Return_URL . "'>&#171; Back to Catalogue</a>";
+		$ProductString .= "<a class='upcp-catalogue-link' href='" . $Return_URL . "'>&#171; " . $Back_To_Catalogue_Text . "</a>";
 		$ProductString .= "</div>";
 		
 		$ProductString .= "<div id='prod-cat-addt-details-" . $Product->Item_ID . "' class='prod-cat-addt-details'>";
@@ -715,7 +725,7 @@ function SingleProductPage() {
 		$ProductString .= "<div class='upcp-standard-product-page-mobile'>";
 				
 		$ProductString .= "<div class='prod-cat-back-link'>";
-		$ProductString .= "<a href='" . $Return_URL . "'>&#171; Back to Catalogue</a>";
+		$ProductString .= "<a class='upcp-catalogue-link' href='" . $Return_URL . "'>&#171; " . $Back_To_Catalogue_Text . "</a>";
 		$ProductString .= "</div>";
 				
 		$ProductString .= "<h2 class='prod-cat-addt-details-title'><a class='no-underline' href='http://" . $_SERVER['HTTP_HOST'] . $SP_Perm_URL . "'>" . $Product->Item_Name . "<img class='upcp-product-url-icon' src='" . get_bloginfo('wpurl') . "/wp-content/plugins/ultimate-product-catalogue/images/insert_link.png' /></a></h2>";
@@ -760,7 +770,7 @@ function SingleProductPage() {
 			$ProductString .= "<div class='upcp-standard-product-page-mobile'>";
 				
 			$ProductString .= "<div class='prod-cat-back-link'>";
-			$ProductString .= "<a href='" . $Return_URL . "'>&#171; Back to Catalogue</a>";
+			$ProductString .= "<a class='upcp-catalogue-link' href='" . $Return_URL . "'>&#171; " . $Back_To_Catalogue_Text . "</a>";
 			$ProductString .= "</div>";
 				
 			$ProductString .= "<h2 class='prod-cat-addt-details-title'><a class='no-underline' href='http://" . $_SERVER['HTTP_HOST'] . $SP_Perm_URL . "'>" . $Product->Item_Name . "<img class='upcp-product-url-icon' src='" . get_bloginfo('wpurl') . "/wp-content/plugins/ultimate-product-catalogue/images/insert_link.png' /></a></h2>";
@@ -983,6 +993,10 @@ function BuildSidebar($category, $subcategory, $tags, $prod_name) {
 
 function BuildGridster($Gridster, $Product, $Item_Images, $Description, $PhotoURL, $SP_Perm_URL, $Return_URL, $TagsString) {
 	global $wpdb, $fields_meta_table_name, $fields_table_name;
+
+	$Back_To_Catalogue_Label = get_option("UPCP_Back_To_Catalogue_Label");
+	if ($Back_To_Catalogue_Label != "") {$Back_To_Catalogue_Text = $Back_To_Catalogue_Label;}
+	else {$Back_To_Catalogue_Text = __("Back to Catalogue", 'UPCP');}
 		
 	if (is_array($Gridster)) {
 		foreach ($Gridster as $Element) {
@@ -996,7 +1010,7 @@ function BuildGridster($Gridster, $Product, $Item_Images, $Description, $PhotoUR
 					break;
 				case "back":
 					$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-back-div gs-w' style='display: list-item; position:absolute;'>";
-					$ProductString .= "<a href='" . $Return_URL . "'>&#171; " . __("Back to Catalogue", 'UPCP') . "</a>";
+					$ProductString .= "<a class='upcp-catalogue-link' href='" . $Return_URL . "'>&#171; " . $Back_To_Catalogue_Text . "</a>";
 					break;
 				case "blank":
 					$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-blank-div gs-w' style='display: list-item; position:absolute;'>";

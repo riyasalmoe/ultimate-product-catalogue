@@ -12,7 +12,8 @@ function Initial_UPCP_Options() {
 		if (get_option("UPCP_First_Install_Version") == "") {update_option("UPCP_First_Install_Version", "2.3");}
 		if (get_option("UPCP_Desc_Chars") == "") {update_option("UPCP_Desc_Chars", 240);}
 		if (get_option("UPCP_Case_Insensitive_Search") == "") {update_option("UPCP_Case_Insensitive_Search", "Yes");}
-		if (get_option("UPCP_Ap") == "") {update_option("UPCP_Apply_Contents_Filter", "Yes");}
+		if (get_option("UPCP_Apply_Contents_Filter") == "") {update_option("UPCP_Apply_Contents_Filter", "Yes");}
+		if (get_option("UPCP_Maintain_Filtering") == "") {update_option("UPCP_Maintain_Filtering", "Yes");}
 		
 		if (get_option("UPCP_Product_Search") == "") {update_option("UPCP_Product_Search", "name");}
 		if (get_option("UPCP_Custom_Product_Page") == "") {update_option("UPCP_Custom_Product_Page", "No");}

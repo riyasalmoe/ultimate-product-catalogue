@@ -13,6 +13,7 @@
 		$Detail_Image = get_option("UPCP_Details_Image");
 		$CaseInsensitiveSearch = get_option("UPCP_Case_Insensitive_Search");
 		$Apply_Contents_Filter = get_option("UPCP_Apply_Contents_Filter");
+		$Maintain_Filtering = get_option("UPCP_Maintain_Filtering");
 		$InstallVersion = get_option("UPCP_First_Install_Version");
 		$Custom_Product_Page = get_option("UPCP_Custom_Product_Page");
 		$Products_Per_Page = get_option("UPCP_Products_Per_Page");
@@ -32,6 +33,7 @@
 		$Sort_By_Label = get_option("UPCP_Sort_By_Label");
 		$Product_Name_Search_Label = get_option("UPCP_Product_Name_Search_Label");
 		$Product_Search_Text_Label = get_option("UPCP_Product_Name_Text_Label");
+		$Back_To_Catalogue_Label = get_option("UPCP_Back_To_Catalogue_Label");
 		$No_Results_Found_Label = get_option("UPCP_No_Results_Found_Label");
 		$Products_Pagination_Label = get_option("UPCP_Products_Pagination_Label");
 ?>
@@ -197,6 +199,18 @@
 	<fieldset><legend class="screen-reader-text"><span><?php _e("Contents Filter", 'UPCP')?></span></legend>
 	<label title='Yes'><input type='radio' name='contents_filter' value='Yes' <?php if($Apply_Contents_Filter == "Yes") {echo "checked='checked'";} ?> /> <span><?php _e("Yes", 'UPCP')?></span></label><br />
 	<label title='No'><input type='radio' name='contents_filter' value='No' <?php if($Apply_Contents_Filter == "No") {echo "checked='checked'";} ?> /> <span><?php _e("No", 'UPCP')?></span></label><br />
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row"><?php _e("Maintain Filtering", 'UPCP')?> <br/> 
+<div onMouseOver="ShowToolTip('maintain_filtering_exp')" onMouseOut="HideToolTip('maintain_filtering_exp')" class="questionMark"><br> 
+<div id="maintain_filtering_exp" class="toolTip" ><?php _e("Should filtering be maintained after viewing a product page (may cause redirect to homepage issues)?", 'UPCP')?></div></div>
+</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span><?php _e("Contents Filter", 'UPCP')?></span></legend>
+	<label title='Yes'><input type='radio' name='maintain_filtering' value='Yes' <?php if($Maintain_Filtering == "Yes") {echo "checked='checked'";} ?> /> <span><?php _e("Yes", 'UPCP')?></span></label><br />
+	<label title='No'><input type='radio' name='maintain_filtering' value='No' <?php if($Maintain_Filtering == "No") {echo "checked='checked'";} ?> /> <span><?php _e("No", 'UPCP')?></span></label><br />
 	</fieldset>
 </td>
 </tr>
@@ -415,13 +429,24 @@
 </td>
 </tr>
 <tr>
-<th scope="row"><?php _e("Placeholder Label", 'UPCP')?> <br/> 
+<th scope="row"><?php _e("Search Placeholder Label", 'UPCP')?> <br/> 
 <div onMouseOver="ShowToolTip('product_name_text_label_exp')" onMouseOut="HideToolTip('product_name_text_label_exp')" class="questionMark"><br>  
-<div id="product_name_text_label_exp" class="toolTip" ><?php _e("Text that should replace the placeholder text on your catalogue pages", 'UPCP')?></div></div>
+<div id="product_name_text_label_exp" class="toolTip" ><?php _e("Text that should replace the search placeholder text on your catalogue pages", 'UPCP')?></div></div>
 </th>
 <td>
-	<fieldset><legend class="screen-reader-text"><span><?php _e("Text that should replace the placeholder text on your catalogue pages", 'UPCP')?></span></legend>
+	<fieldset><legend class="screen-reader-text"><span><?php _e("Text that should replace the search placeholder text on your catalogue pages", 'UPCP')?></span></legend>
 	<input type='text' name='product_name_text_label' value='<?php echo $Product_Search_Text_Label; ?>' <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/>
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row"><?php _e("Back to Catalogue Label", 'UPCP')?> <br/> 
+<div onMouseOver="ShowToolTip('back_to_catalogue_label_exp')" onMouseOut="HideToolTip('back_to_catalogue_label_exp')" class="questionMark"><br>  
+<div id="back_to_catalogue_label_exp" class="toolTip" ><?php _e("Text that should replace 'Back to Catalogue' on product pages", 'UPCP')?></div></div>
+</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span><?php _e("Text that should replace the search placeholder text on your catalogue pages", 'UPCP')?></span></legend>
+	<input type='text' name='back_to_catalogue' value='<?php echo $Back_To_Catalogue_Label; ?>' <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/>
 	</fieldset>
 </td>
 </tr>
