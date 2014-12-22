@@ -22,6 +22,8 @@ jQuery(document).ready(function(){
 });
 
 function addClickHandlers() {
+	if (typeof maintain_filtering === 'undefined' || maintain_filtering === null) {maintain_filtering = "Yes";}
+
 	if (maintain_filtering != "No") {
 		jQuery(".upcp-catalogue-link").click(function(event){
 			event.preventDefault();

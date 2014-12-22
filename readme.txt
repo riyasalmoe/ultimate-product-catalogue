@@ -120,6 +120,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.5.9 = 
+- Fixes an important jquery error on non-plugin pages
+
 = 2.5.8 =
 - Fixed a linking error for users using the default WordPress link structure
 
