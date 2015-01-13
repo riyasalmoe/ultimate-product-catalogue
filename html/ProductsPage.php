@@ -392,36 +392,4 @@ echo $ReturnString;
 
 <div class='clear'></div>
 </div>
-</div><!-- /col-left -->
-
-
-	<!--<form method="get" action=""><table style="display: none"><tbody id="inlineedit">
-		<tr id="inline-edit" class="inline-edit-row" style="display: none"><td colspan="4" class="colspanchange">
-
-			<fieldset><div class="inline-edit-col">
-				<h4>Quick Edit</h4>
-
-				<label>
-					<span class="title">Name</span>
-					<span class="input-text-wrap"><input type="text" name="name" class="ptitle" value="" /></span>
-				</label>
-					<label>
-					<span class="title">Slug</span>
-					<span class="input-text-wrap"><input type="text" name="slug" class="ptitle" value="" /></span>
-				</label>
-				</div></fieldset>
-	
-		<p class="inline-edit-save submit">
-			<a accesskey="c" href="#inline-edit" title="Cancel" class="cancel button-secondary alignleft">Cancel</a>
-						<a accesskey="s" href="#inline-edit" title="Update Level" class="save button-primary alignright">Update Level</a>
-			<img class="waiting" style="display:none;" src="<?php echo ABSPATH . 'wp-admin/images/wpspin_light.gif'?>" alt="" />
-			<span class="error" style="display:none;"></span>
-			<input type="hidden" id="_inline_edit" name="_inline_edit" value="fb59c3f3d1" />			<input type="hidden" name="taxonomy" value="wmlevel" />
-			<input type="hidden" name="post_type" value="post" />
-			<br class="clear" />
-		</p>
-		</td></tr>
-		</tbody></table></form>-->
-		
-<!--</div>-->
-		
+</div><!-- /col-left -->		

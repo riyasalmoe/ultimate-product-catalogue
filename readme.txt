@@ -120,6 +120,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.5.10 =
+- Fixed a small product pages bug
+
 = 2.5.9 = 
 - Fixes an important jquery error on non-plugin pages
 
