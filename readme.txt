@@ -120,6 +120,11 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.5.11 =
+- Added a search box for products
+- Fixed a translation filtering error
+- Fixed a redirect error for sub-domains using default WordPress permalink structure
+
 = 2.5.10 =
 - Fixed a small product pages bug
 

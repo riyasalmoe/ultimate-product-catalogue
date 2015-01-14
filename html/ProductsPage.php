@@ -10,6 +10,7 @@
 			else {$Page = 1;}
 			
 			$Sql = "SELECT * FROM $items_table_name ";
+				if (isset($_POST['ItemName'])) {$Sql .= "WHERE Item_Name LIKE '%" . $_POST['ItemName'] . "%' ";}
 				if (isset($_GET['OrderBy']) and $_GET['DisplayPage'] == "Products") {$Sql .= "ORDER BY " . $_GET['OrderBy'] . " " . $_GET['Order'] . " ";}
 				else {$Sql .= "ORDER BY Item_Date_Created ";}
 				$Sql .= "LIMIT " . ($Page - 1)*20 . ",20";
@@ -21,7 +22,15 @@
 				$Current_Page_With_Order_By = "admin.php?page=UPCP-options&DisplayPage=Products";
 				if (isset($_GET['OrderBy'])) {$Current_Page_With_Order_By .= "&OrderBy=" .$_GET['OrderBy'] . "&Order=" . $_GET['Order'];}?>
 
-<form action="admin.php?page=UPCP-options&Action=UPCP_MassDeleteProducts&DisplayPage=Products" method="post">    
+<form action="admin.php?page=UPCP-options&DisplayPage=Products" method="post"> 
+<p class="search-box">
+	<label class="screen-reader-text" for="post-search-input">Search Products:</label>
+	<input type="search" id="post-search-input" name="ItemName" value="">
+	<input type="submit" name="" id="search-submit" class="button" value="Search Products">
+</p>  
+</form>
+
+<form action="admin.php?page=UPCP-options&Action=UPCP_MassDeleteProducts&DisplayPage=Products" method="post">  
 <div class="tablenav top">
 		<div class="alignleft actions">
 				<select name='action'>

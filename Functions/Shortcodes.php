@@ -107,11 +107,11 @@ function Insert_Product_Catalog($atts) {
 	elseif ($tags == "") {$tags = array();}
 	else {$tags = explode(",", $tags);}	
 
-	if (isset($_POST['prod_name']) and $_POST['prod_name'] != "") {$prod_name = $_POST['prod_name'];}
+	if (isset($_POST['search_prod_name']) and $_POST['search_prod_name'] != "") {$search_prod_name = $_POST['prod_name'];}
 
 	//Pagination early work
 	if ($products_per_page == "") {$products_per_page = $Products_Per_Page;}
-	if ($category != "" or $subcategory != "" or $tags != "" or $prod_name != "") {$Filtered = "Yes";}
+	if ($category != "" or $subcategory != "" or $tags != "" or $search_prod_name != "") {$Filtered = "Yes";}
 	else {$Filtered = "No";}
 	
 		
@@ -126,8 +126,10 @@ function Insert_Product_Catalog($atts) {
 	if ($ajax_reload == "Yes") {$ReturnString .= "<div class='shortcode-attr' id='upcp-base-url'>" . $ajax_url . "</div>";}
 	else {
 		$uri_parts = explode('?', $_SERVER['REQUEST_URI'], 2);
-		if ($uri_parts[0] != "/") {$ReturnString .= "<div class='shortcode-attr' id='upcp-base-url'>" . $uri_parts[0] . "</div>";}
-		else {$ReturnString .= "<div class='shortcode-attr' id='upcp-base-url'>/?" . $uri_parts[1] . "</div>";}
+		//if ($uri_parts[0] != "/") {$ReturnString .= "<div class='shortcode-attr' id='upcp-base-url'>" . $uri_parts[0] . "</div>";}
+		if (strpos($uri_parts[1], "page_id") === false) {$ReturnString .= "<div class='shortcode-attr' id='upcp-base-url'>" . $uri_parts[0] . "</div>";}
+		else {$ReturnString .= "<div class='shortcode-attr' id='upcp-base-url'>" . $uri_parts[0] . "?" . $uri_parts[1] . "</div>";}
+		//else {$ReturnString .= "<div class='shortcode-attr' id='upcp-base-url'>/?" . $uri_parts[1] . "</div>";}
 	}
 	$ReturnString .= "</div>";
 		
@@ -388,7 +390,7 @@ function Insert_Product_Catalog($atts) {
 		
 	// If the sidebar is requested, add it
 	if (($sidebar == "Yes" or $sidebar == "yes" or $sidebar == "YES") and $only_inner != "Yes") {
-		$SidebarString = BuildSidebar($category, $subcategory, $tags, $prod_name);
+		$SidebarString = BuildSidebar($category, $subcategory, $tags, $search_prod_name);
 	}
 		
 	if ($Mobile_Style == "Yes") {
