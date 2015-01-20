@@ -13,6 +13,7 @@ function Insert_Product_Catalog($atts) {
 	$Detail_Image = get_option("UPCP_Details_Image");
 	$Pretty_Links = get_option("UPCP_Pretty_Links");
 	$Mobile_Style = get_option("UPCP_Mobile_SS");
+	$Links = get_option("UPCP_Product_Links");
 	$Pagination_Location = get_option("UPCP_Pagination_Location");
 	$CaseInsensitiveSearch = get_option("UPCP_Case_Insensitive_Search");
 	$Maintain_Filtering = get_option("UPCP_Maintain_Filtering");
@@ -74,8 +75,11 @@ function Insert_Product_Catalog($atts) {
 	$Top_JS .= "</script>";
 
 	$HeaderBar .= $Top_JS;
+
+	if ($Links == "New") {$Target = "_blank";}
+	else {$Target = "_self";}
 	
-	$HeaderBar .= "<form id='upcp-hidden-filtering-form' method='post'>";
+	$HeaderBar .= "<form id='upcp-hidden-filtering-form' method='post' target='" . $Target . "'>";
 	$HeaderBar .= "<input type='hidden' id='upcp-selected-categories' name='categories' value='" . $_POST['categories'] . "' />";
 	$HeaderBar .= "<input type='hidden' id='upcp-selected-subcategories' name='subcategories' value='" . $_POST['subcategories'] . "' />";
 	$HeaderBar .= "<input type='hidden' id='upcp-selected-tags' name='tags' value='" . $_POST['tags'] . "' />";
