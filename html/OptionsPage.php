@@ -1,41 +1,44 @@
 <?php 
-		$Color = get_option("UPCP_Color_Scheme");
-		$Links = get_option("UPCP_Product_Links");
-		$Tags = get_option("UPCP_Tag_Logic");
-		$Filter = get_option("UPCP_Filter_Type");
-		$ReadMore = get_option("UPCP_Read_More");
-		$Detail_Desc_Chars = get_option("UPCP_Desc_Chars");
-		$Sidebar_Order = get_option("UPCP_Sidebar_Order");
-		$Single_Page_Price = get_option("UPCP_Single_Page_Price");
-		$PrettyLinks = get_option("UPCP_Pretty_Links");
-		$XML_Sitemap_URL = get_option("UPCP_XML_Sitemap_URL");
-		$Filter_Title = get_option("UPCP_Filter_Title");
-		$Detail_Image = get_option("UPCP_Details_Image");
-		$CaseInsensitiveSearch = get_option("UPCP_Case_Insensitive_Search");
-		$Apply_Contents_Filter = get_option("UPCP_Apply_Contents_Filter");
-		$Maintain_Filtering = get_option("UPCP_Maintain_Filtering");
-		$InstallVersion = get_option("UPCP_First_Install_Version");
-		$Custom_Product_Page = get_option("UPCP_Custom_Product_Page");
-		$Products_Per_Page = get_option("UPCP_Products_Per_Page");
-		$Pagination_Location = get_option("UPCP_Pagination_Location");
-		$PP_Grid_Width = get_option("UPCP_PP_Grid_Width");
-		$PP_Grid_Height = get_option("UPCP_PP_Grid_Height");
-		$Top_Bottom_Padding = get_option("UPCP_Top_Bottom_Padding");
-		$Left_Right_Padding = get_option("UPCP_Left_Right_Padding");
-		$Product_Search = get_option("UPCP_Product_Search");
-		$Product_Sort = get_option("UPCP_Product_Sort");
-		$CF_Conversion = get_option("UPCP_CF_Conversion");
-
-		$Categories_Label = get_option("UPCP_Categories_Label");
-		$SubCategories_Label = get_option("UPCP_SubCategories_Label");
-		$Tags_Label = get_option("UPCP_Tags_Label");
-		$Details_Label = get_option("UPCP_Details_Label");
-		$Sort_By_Label = get_option("UPCP_Sort_By_Label");
-		$Product_Name_Search_Label = get_option("UPCP_Product_Name_Search_Label");
-		$Product_Search_Text_Label = get_option("UPCP_Product_Name_Text_Label");
-		$Back_To_Catalogue_Label = get_option("UPCP_Back_To_Catalogue_Label");
-		$No_Results_Found_Label = get_option("UPCP_No_Results_Found_Label");
-		$Products_Pagination_Label = get_option("UPCP_Products_Pagination_Label");
+	$Color = get_option("UPCP_Color_Scheme");
+	$Links = get_option("UPCP_Product_Links");
+	$Tags = get_option("UPCP_Tag_Logic");
+	$Filter = get_option("UPCP_Filter_Type");
+	$ReadMore = get_option("UPCP_Read_More");
+	$Detail_Desc_Chars = get_option("UPCP_Desc_Chars");
+	$Sidebar_Order = get_option("UPCP_Sidebar_Order");
+	$Single_Page_Price = get_option("UPCP_Single_Page_Price");
+	$PrettyLinks = get_option("UPCP_Pretty_Links");
+	$XML_Sitemap_URL = get_option("UPCP_XML_Sitemap_URL");
+	$Filter_Title = get_option("UPCP_Filter_Title");
+	$Detail_Image = get_option("UPCP_Details_Image");
+	$CaseInsensitiveSearch = get_option("UPCP_Case_Insensitive_Search");
+	$Apply_Contents_Filter = get_option("UPCP_Apply_Contents_Filter");
+	$Maintain_Filtering = get_option("UPCP_Maintain_Filtering");
+	
+	$InstallVersion = get_option("UPCP_First_Install_Version");
+	$Custom_Product_Page = get_option("UPCP_Custom_Product_Page");
+	$Products_Per_Page = get_option("UPCP_Products_Per_Page");
+	$Pagination_Location = get_option("UPCP_Pagination_Location");
+	$Product_Search = get_option("UPCP_Product_Search");
+	$Product_Sort = get_option("UPCP_Product_Sort");
+	$CF_Conversion = get_option("UPCP_CF_Conversion");
+	$Related_Products = get_option("UPCP_Related_Products");
+	$Next_Previous = get_option("UPCP_Next_Previous");
+	$PP_Grid_Width = get_option("UPCP_PP_Grid_Width");
+	$PP_Grid_Height = get_option("UPCP_PP_Grid_Height");
+	$Top_Bottom_Padding = get_option("UPCP_Top_Bottom_Padding");
+	$Left_Right_Padding = get_option("UPCP_Left_Right_Padding");
+	
+	$Categories_Label = get_option("UPCP_Categories_Label");
+	$SubCategories_Label = get_option("UPCP_SubCategories_Label");
+	$Tags_Label = get_option("UPCP_Tags_Label");
+	$Details_Label = get_option("UPCP_Details_Label");
+	$Sort_By_Label = get_option("UPCP_Sort_By_Label");
+	$Product_Name_Search_Label = get_option("UPCP_Product_Name_Search_Label");
+	$Product_Search_Text_Label = get_option("UPCP_Product_Name_Text_Label");
+	$Back_To_Catalogue_Label = get_option("UPCP_Back_To_Catalogue_Label");
+	$No_Results_Found_Label = get_option("UPCP_No_Results_Found_Label");
+	$Products_Pagination_Label = get_option("UPCP_Products_Pagination_Label");
 ?>
 <div class="wrap">
 <div id="icon-options-general" class="icon32"><br /></div><h2>Settings</h2>
@@ -258,9 +261,9 @@
 </th>
 <td>
 	<fieldset><legend class="screen-reader-text"><span><?php _e("Use your custom designed page (Product Page tab) instead of the default?", 'UPCP')?></span></legend>
-	<label title='Yes'><input type='radio' name='custom_product_page' value='Yes' <?php if($Custom_Product_Page == "Yes") {echo "checked='checked'";} ?> /> <span><?php _e("Yes", 'UPCP')?></span></label><br />
-	<label title='Large'><input type='radio' name='custom_product_page' value='Large' <?php if($Custom_Product_Page == "Large") {echo "checked='checked'";} ?> /> <span><?php _e("Large Screen Only", 'UPCP')?></span></label><br />
-	<label title='No'><input type='radio' name='custom_product_page' value='No' <?php if($Custom_Product_Page == "No") {echo "checked='checked'";} ?> /> <span><?php _e("No", 'UPCP')?></span></label><br />
+	<label title='Yes'><input type='radio' name='custom_product_page' value='Yes' <?php if($Custom_Product_Page == "Yes") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Yes", 'UPCP')?></span></label><br />
+	<label title='Large'><input type='radio' name='custom_product_page' value='Large' <?php if($Custom_Product_Page == "Large") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Large Screen Only", 'UPCP')?></span></label><br />
+	<label title='No'><input type='radio' name='custom_product_page' value='No' <?php if($Custom_Product_Page == "No") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("No", 'UPCP')?></span></label><br />
 	</fieldset>
 </td>
 </tr>
@@ -282,9 +285,9 @@
 </th>
 <td>
 	<fieldset><legend class="screen-reader-text"><span><?php _e("Where should the pagination controls be located?", 'UPCP')?></span></legend>
-	<label title='Top'><input type='radio' name='pagination_location' value='Top' <?php if($Pagination_Location == "Top") {echo "checked='checked'";} ?> /> <span><?php _e("Top", 'UPCP')?></span></label><br />
-	<label title='Bottom'><input type='radio' name='pagination_location' value='Bottom' <?php if($Pagination_Location == "Bottom") {echo "checked='checked'";} ?> /> <span><?php _e("Bottom", 'UPCP')?></span></label><br />
-	<label title='Both'><input type='radio' name='pagination_location' value='Both' <?php if($Pagination_Location == "Both") {echo "checked='checked'";} ?> /> <span><?php _e("Top and Bottom", 'UPCP')?></span></label><br />
+	<label title='Top'><input type='radio' name='pagination_location' value='Top' <?php if($Pagination_Location == "Top") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Top", 'UPCP')?></span></label><br />
+	<label title='Bottom'><input type='radio' name='pagination_location' value='Bottom' <?php if($Pagination_Location == "Bottom") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Bottom", 'UPCP')?></span></label><br />
+	<label title='Both'><input type='radio' name='pagination_location' value='Both' <?php if($Pagination_Location == "Both") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Top and Bottom", 'UPCP')?></span></label><br />
 	</fieldset>
 </td>
 </tr>
@@ -309,8 +312,33 @@
 </th>
 <td>
 	<fieldset><legend class="screen-reader-text"><span><?php _e("Are custom field slugs being used in the product descriptions?", 'UPCP')?></span></legend>
-	<label title='Yes'><input type='radio' name='cf_converion' value='Yes' <?php if($CF_Conversion == "Yes") {echo "checked='checked'";} ?> /> <span><?php _e("Yes", 'UPCP')?></span></label><br />
-	<label title='No'><input type='radio' name='cf_converion' value='No' <?php if($CF_Conversion == "No") {echo "checked='checked'";} ?> /> <span><?php _e("No", 'UPCP')?></span></label><br />
+	<label title='Yes'><input type='radio' name='cf_converion' value='Yes' <?php if($CF_Conversion == "Yes") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Yes", 'UPCP')?></span></label><br />
+	<label title='No'><input type='radio' name='cf_converion' value='No' <?php if($CF_Conversion == "No") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("No", 'UPCP')?></span></label><br />
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row"><?php _e("Related Products", 'UPCP')?> <br/> 
+<div onMouseOver="ShowToolTip('related_products_exp')" onMouseOut="HideToolTip('related_products_exp')" class="questionMark"><br> 
+<div id="related_products_exp" class="toolTip" ><?php _e("Should related products be created automatically, manually, or not at all?", 'UPCP')?></div></div>
+</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span><?php _e("Should related products be created automatically, manually, or not at all?", 'UPCP')?></span></legend>
+	<label title='Auto'><input type='radio' name='related_products' value='Auto' <?php if($Related_Products == "Auto") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Automatic", 'UPCP')?></span></label><br />
+	<label title='Manual'><input type='radio' name='related_products' value='Manual' <?php if($Related_Products == "Manual") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Manual", 'UPCP')?></span></label><br />
+	<label title='None'><input type='radio' name='related_products' value='None' <?php if($Related_Products == "None") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("None", 'UPCP')?></span></label><br />
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row"><?php _e("Next/Previous Products", 'UPCP')?> <br/> 
+<div onMouseOver="ShowToolTip('next_previous_exp')" onMouseOut="HideToolTip('next_previous_exp')" class="questionMark"><br> 
+<div id="next_previous_exp" class="toolTip" ><?php _e("Should next and previous products be displayed?", 'UPCP')?></div></div>
+</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span><?php _e("Should next and previous products be displayed?", 'UPCP')?></span></legend>
+	<label title='Manual'><input type='radio' name='next_previous' value='Manual' <?php if($Next_Previous == "Manual") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Manual", 'UPCP')?></span></label><br />
+	<label title='None'><input type='radio' name='next_previous' value='None' <?php if($Next_Previous == "None") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("None", 'UPCP')?></span></label><br />
 	</fieldset>
 </td>
 </tr>

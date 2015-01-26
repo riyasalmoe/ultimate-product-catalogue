@@ -1,7 +1,7 @@
 === Plugin Name ===
 Contributors: Rustaurius, EtoileWebDesign
 Donate Link: http://www.etoilewebdesign.com/plugin-donations/
-Tags: product catalogue, product catalog, restaurant menu, responsive, customizable CSS, SEO friendly, affiliate links,  affiliates, attributes, blog catalog, catalog, catalogue, katalog, commerce, directory, display products, e-commerce, ecommerce, gallery, inventory, list products, manage, plugin, product, product feed, product gallery, product management, product portfolio, products, sales, sell, shipping, shop, shopping, store, wp catalog, wp catalogue
+Tags: product catalogue, product catalog, restaurant menu, responsive, customizable CSS, SEO friendly, affiliate links,  affiliates, attributes, blog catalog, catalog, catalogue, katalog, commerce, directory, display products, e-commerce, ecommerce, gallery, inventory, list products, manage, plugin, product, product feed, product gallery, product management, product portfolio, products, sales, sell, shipping, shop, shopping, shortcode, shortcodes, store, wp catalog, wp catalogue, widget, widgets, easy to use, user friendly
 Requires at least: 3.5.0
 Tested up to: 4.0
 License: GPLv3
@@ -120,6 +120,14 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.6 =
+- Added 3 widgets, which let users display a number of products
+- Added a new shortcode, insert-products, which lets users insert a small number of products
+- Added next/previous products for individual products
+- Added related products feature for individual products
+- Fixed a "Back to Catalogue" potential link error
+- Fixed an image display problem with https sites
+
 = 2.5.12 =
 - Fixed error where links would not open in new windows even with the option set
 

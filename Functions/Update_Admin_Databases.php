@@ -404,7 +404,7 @@ function Delete_Products_Catalogue() {
 
 /* Adds a single new product inputted via the form on the left-hand side of the
 *  products' page to the UPCP database */
-function Add_UPCP_Product($Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Description, $Item_Price, $Item_Link, $Item_Display_Status = "", $Category_ID = "", $Global_Item_ID = "", $Item_Special_Attr = "", $SubCategory_ID = "", $Tags = array()) {
+function Add_UPCP_Product($Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Description, $Item_Price, $Item_Link, $Item_Display_Status = "", $Category_ID = "", $Global_Item_ID = "", $Item_Special_Attr = "", $SubCategory_ID = "", $Tags = array(), $Related_Products = "", $Next_Previous = "") {
 		global $wpdb;
 		global $items_table_name;
 		global $categories_table_name;
@@ -443,6 +443,8 @@ function Add_UPCP_Product($Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Descrip
 						'Item_Special_Attr' => $Item_Special_Attr,
 						'SubCategory_ID' => $SubCategory_ID,
 						'SubCategory_Name' => $SubCategory_Name,
+						'Item_Related_Products' => $Related_Products,
+						'Item_Next_Previous' => $Next_Previous,
 						'Item_Date_Created' => $Today)
 		);
 		
@@ -510,7 +512,7 @@ function Add_UPCP_Product($Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Descrip
 }
 
 /* Edits a single product in the UPCP database */
-function Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Description, $Item_Price, $Item_Link, $Item_Display_Status = "", $Category_ID = "", $Global_Item_ID = "", $Item_Special_Attr = "", $SubCategory_ID = "", $Tags = array()) {
+function Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Description, $Item_Price, $Item_Link, $Item_Display_Status = "", $Category_ID = "", $Global_Item_ID = "", $Item_Special_Attr = "", $SubCategory_ID = "", $Tags = array(), $Related_Products = "", $Next_Previous = "") {
 		global $wpdb;
 		global $items_table_name;
 		global $categories_table_name;
@@ -561,7 +563,9 @@ function Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Slug, $Item_Photo_URL, $I
 						'Global_Item_ID' => $Global_Item_ID,
 						'Item_Special_Attr' => $Item_Special_Attr,
 						'SubCategory_ID' => $SubCategory_ID,
-						'SubCategory_Name' => $SubCategory_Name),
+						'SubCategory_Name' => $SubCategory_Name,
+						'Item_Related_Products' => $Related_Products,
+						'Item_Next_Previous' => $Next_Previous),
 						array( 'Item_ID' => $Item_ID)
 		);
 		
@@ -702,6 +706,7 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 		}
 		
 		$Prod_Count = $wpdb->get_var("SELECT COUNT(*) FROM " . $items_table_name);
+
 		$New_Product_Count = $Prod_Count + sizeOf($Data);
 		
 		if ($New_Product_Count > 100 and $Full_Version != "Yes") {
@@ -753,36 +758,37 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 				foreach ($Product as $Col_Index => $Value) {
 						if ((!isset($Tags_Column) or $Tags_Column != $Col_Index) and (!isset($Cat_ID_Column) or $Cat_ID_Column != $Col_Index) and !array_key_exists($Col_Index, $Custom_Fields)) {$Values[] = esc_sql($Value);}
 						if (isset($Category_Column) and $Category_Column == $Col_Index) {
-							 	$Values[] = $Categories[$Value];
-								$wpdb->query("UPDATE $categories_table_name SET Category_Item_Count=Category_Item_Count+1 WHERE Category_ID='" . $Categories[$Value] . "'");
+							$Values[] = $Categories[$Value];
+							$wpdb->query("UPDATE $categories_table_name SET Category_Item_Count=Category_Item_Count+1 WHERE Category_ID='" . $Categories[$Value] . "'");
 						}
 						if (isset($SubCategory_Column) and $SubCategory_Column == $Col_Index) {
-							  $Values[] = $SubCategories[$Value];
-								$wpdb->query("UPDATE $subcategories_table_name SET SubCategory_Item_Count=SubCategory_Item_Count+1 WHERE SubCategory_ID='" . $SubCategories[$Value] . "'");
+							$Values[] = $SubCategories[$Value];
+							$wpdb->query("UPDATE $subcategories_table_name SET SubCategory_Item_Count=SubCategory_Item_Count+1 WHERE SubCategory_ID='" . $SubCategories[$Value] . "'");
 						}
 						if (isset($Tags_Column) and $Tags_Column == $Col_Index) {
-							  $Tags_Names_Array = explode(",", esc_sql($Value));
+							$Tags_Names_Array = explode(",", esc_sql($Value));
 						}
 						if (array_key_exists($Col_Index, $Custom_Fields)) {
-							  $Custom_Fields_To_Insert[$Custom_Fields[$Col_Index]] = $Value;
+							$Custom_Fields_To_Insert[$Custom_Fields[$Col_Index]] = $Value;
 						}
 						if (isset($Cat_ID_Column) and $Cat_ID_Column == $Col_Index and $Value != "") {
-							  $Cat_ID = $Value;
+							$Cat_ID = $Value;
 						}
 				}
+				
 				$ValuesString = implode("','", $Values);
 				$wpdb->query(
-							$wpdb->prepare("INSERT INTO $items_table_name (" . $FieldsString . ", Item_Display_Status) VALUES ('" . $ValuesString . "','%s')", $ShowStatus)
+					$wpdb->prepare("INSERT INTO $items_table_name (" . $FieldsString . ", Item_Display_Status) VALUES ('" . $ValuesString . "','%s')", $ShowStatus)
 				);
-				
+
 				$Item_ID = $wpdb->insert_id;
 				if (is_array($Tags_Names_Array)) {
-						foreach ($Tags_Names_Array as $Tag_Name) {
-								$Trimmed_Name = trim($Tag_Name);
-								$Tag_ID = $Tags[$Trimmed_Name];
-								$wpdb->query($wpdb->prepare("INSERT INTO $tagged_items_table_name (Tag_ID, Item_ID) VALUES (%d, %d)", $Tag_ID, $Item_ID));
-								$wpdb->query($wpdb->prepare("UPDATE $tags_table_name SET Tag_Item_Count=Tag_Item_Count WHERE Tag_ID=%d", $Tag_ID));
-						}
+					foreach ($Tags_Names_Array as $Tag_Name) {
+						$Trimmed_Name = trim($Tag_Name);
+						$Tag_ID = $Tags[$Trimmed_Name];
+						$wpdb->query($wpdb->prepare("INSERT INTO $tagged_items_table_name (Tag_ID, Item_ID) VALUES (%d, %d)", $Tag_ID, $Item_ID));
+						$wpdb->query($wpdb->prepare("UPDATE $tags_table_name SET Tag_Item_Count=Tag_Item_Count WHERE Tag_ID=%d", $Tag_ID));
+					}
 				}
 				
 				if (isset($Cat_ID)) {
@@ -889,55 +895,58 @@ function Delete_Product_Image() {
 
 /* Updates the main plugin options in the WordPress database */
 function Update_UPCP_Options() {
-		global $Full_Version;
-		$InstallVersion = get_option("UPCP_First_Install_Version");
-		
-		update_option('UPCP_Color_Scheme', $_POST['color_scheme']);
-		update_option('UPCP_Product_Links', $_POST['product_links']);
-		update_option('UPCP_Tag_Logic', $_POST['tag_logic']);
-		update_option('UPCP_Filter_Type', $_POST['filter_type']);
-		update_option("UPCP_Read_More", $_POST['read_more']);
-		update_option("UPCP_Desc_Chars", $_POST['desc_count']);
-		update_option("UPCP_Sidebar_Order", $_POST['sidebar_order']);
-		update_option("UPCP_Product_Search", $_POST['product_search']);
-		$DetailsImageLink = Prepare_Details_Image();
-		update_option("UPCP_Details_Image", $DetailsImageLink);
-		update_option("UPCP_Single_Page_Price", $_POST['single_page_price']);
-		update_option("UPCP_Case_Insensitive_Search", $_POST['case_insensitive_search']);
-		update_option("UPCP_Apply_Contents_Filter", $_POST['contents_filter']);
-		update_option("UPCP_Maintain_Filtering", $_POST['maintain_filtering']);
-		if ($InstallVersion <= 2.0 or $Full_Version == "Yes") {update_option("UPCP_Pretty_Links", $_POST['pretty_links']);}
-		if ($Full_Version == "Yes") {update_option("UPCP_XML_Sitemap_URL", $_POST['xml_sitemap_url']);}
-		if ($Full_Version == "Yes") {update_option("UPCP_Filter_Title", $_POST['filter_title']);}
-		if ($Full_Version == "Yes") {update_option("UPCP_Custom_Product_Page", $_POST['custom_product_page']);}
-		if ($Full_Version == "Yes") {update_option("UPCP_Products_Per_Page", $_POST['products_per_page']);}
-		if ($Full_Version == "Yes") {update_option("UPCP_Pagination_Location", $_POST['pagination_location']);}
-		if ($Full_Version == "Yes") {update_option("UPCP_Product_Sort", $_POST['product_sort']);}
-		if ($Full_Version == "Yes") {update_option("UPCP_CF_Conversion", $_POST['cf_converion']);}
-		if ($Full_Version == "Yes") {update_option("UPCP_PP_Grid_Width", $_POST['pp_grid_width']);}
-		if ($Full_Version == "Yes") {update_option("UPCP_PP_Grid_Height", $_POST['pp_grid_height']);}
-		if ($Full_Version == "Yes") {update_option("UPCP_Top_Bottom_Padding", $_POST['pp_top_bottom_padding']);}
-		if ($Full_Version == "Yes") {update_option("UPCP_Left_Right_Padding", $_POST['pp_left_right_padding']);}
-
-		if ($Full_Version == "Yes") {update_option("UPCP_Categories_Label", $_POST['categories_label']);}
-		if ($Full_Version == "Yes") {update_option("UPCP_SubCategories_Label", $_POST['subcategories_label']);}
-		if ($Full_Version == "Yes") {update_option("UPCP_Tags_Label", $_POST['tags_label']);}
-		if ($Full_Version == "Yes") {update_option("UPCP_Details_Label", $_POST['details_label']);}
-		if ($Full_Version == "Yes") {update_option("UPCP_Sort_By_Label", $_POST['sort_by_label']);}
-		if ($Full_Version == "Yes") {update_option("UPCP_Product_Name_Search_Label", $_POST['product_name_search_label']);}
-		if ($Full_Version == "Yes") {update_option("UPCP_Product_Name_Text_Label", $_POST['product_name_text_label']);}
-		if ($Full_Version == "Yes") {update_option("UPCP_Back_To_Catalogue_Label", $_POST['back_to_catalogue']);}
-		if ($Full_Version == "Yes") {update_option("UPCP_No_Results_Found_Label", $_POST['no_results_found_label']);}
-		if ($Full_Version == "Yes") {update_option("UPCP_Products_Pagination_Label", $_POST['products_pagination_label']);}
-		
-		if ($_POST['Pretty_Links'] == "Yes") {
-			 update_option("UPCP_Update_RR_Rules", "Yes");
-		}
-		
-		UPCP_Create_XML_Sitemap();
-		
-		$update = __("Options have been succesfully updated.", 'UPCP');
-		return $update;
+	global $Full_Version;
+	$InstallVersion = get_option("UPCP_First_Install_Version");
+	
+	update_option('UPCP_Color_Scheme', $_POST['color_scheme']);
+	update_option('UPCP_Product_Links', $_POST['product_links']);
+	update_option('UPCP_Tag_Logic', $_POST['tag_logic']);
+	update_option('UPCP_Filter_Type', $_POST['filter_type']);
+	update_option("UPCP_Read_More", $_POST['read_more']);
+	update_option("UPCP_Desc_Chars", $_POST['desc_count']);
+	update_option("UPCP_Sidebar_Order", $_POST['sidebar_order']);
+	update_option("UPCP_Product_Search", $_POST['product_search']);
+	$DetailsImageLink = Prepare_Details_Image();
+	update_option("UPCP_Details_Image", $DetailsImageLink);
+	update_option("UPCP_Single_Page_Price", $_POST['single_page_price']);
+	update_option("UPCP_Case_Insensitive_Search", $_POST['case_insensitive_search']);
+	update_option("UPCP_Apply_Contents_Filter", $_POST['contents_filter']);
+	update_option("UPCP_Maintain_Filtering", $_POST['maintain_filtering']);
+	
+	if ($InstallVersion <= 2.0 or $Full_Version == "Yes") {update_option("UPCP_Pretty_Links", $_POST['pretty_links']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_XML_Sitemap_URL", $_POST['xml_sitemap_url']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Filter_Title", $_POST['filter_title']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Custom_Product_Page", $_POST['custom_product_page']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Products_Per_Page", $_POST['products_per_page']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Pagination_Location", $_POST['pagination_location']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Product_Sort", $_POST['product_sort']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_CF_Conversion", $_POST['cf_converion']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Related_Products", $_POST['related_products']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Next_Previous", $_POST['next_previous']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_PP_Grid_Width", $_POST['pp_grid_width']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_PP_Grid_Height", $_POST['pp_grid_height']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Top_Bottom_Padding", $_POST['pp_top_bottom_padding']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Left_Right_Padding", $_POST['pp_left_right_padding']);}
+	
+	if ($Full_Version == "Yes") {update_option("UPCP_Categories_Label", $_POST['categories_label']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_SubCategories_Label", $_POST['subcategories_label']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Tags_Label", $_POST['tags_label']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Details_Label", $_POST['details_label']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Sort_By_Label", $_POST['sort_by_label']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Product_Name_Search_Label", $_POST['product_name_search_label']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Product_Name_Text_Label", $_POST['product_name_text_label']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Back_To_Catalogue_Label", $_POST['back_to_catalogue']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_No_Results_Found_Label", $_POST['no_results_found_label']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Products_Pagination_Label", $_POST['products_pagination_label']);}
+	
+	if ($_POST['Pretty_Links'] == "Yes") {
+		 update_option("UPCP_Update_RR_Rules", "Yes");
+	}
+	
+	UPCP_Create_XML_Sitemap();
+	
+	$update = __("Options have been succesfully updated.", 'UPCP');
+	return $update;
 }
 
 function Restore_Default_PP_Layout() {

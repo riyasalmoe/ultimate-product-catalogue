@@ -13,6 +13,7 @@ function Insert_Product_Catalog($atts) {
 	$Detail_Image = get_option("UPCP_Details_Image");
 	$Pretty_Links = get_option("UPCP_Pretty_Links");
 	$Mobile_Style = get_option("UPCP_Mobile_SS");
+	$Tag_Logic = get_option("UPCP_Tag_Logic");
 	$Links = get_option("UPCP_Product_Links");
 	$Pagination_Location = get_option("UPCP_Pagination_Location");
 	$CaseInsensitiveSearch = get_option("UPCP_Case_Insensitive_Search");
@@ -443,6 +444,60 @@ function Insert_Product_Catalog($atts) {
 		
 	return $ReturnString;
 }
+add_shortcode("product-catalogue", "Insert_Product_Catalog");
+
+function Insert_Minimal_Products($atts) {
+	global $wpdb, $items_table_name, $catalogue_items_table_name;
+
+	// Get the attributes passed by the shortcode, and store them in new variables for processing
+	extract( shortcode_atts( array(
+				"catalogue_url" => "",
+				"product_ids" => "",
+				"catalogue_id" => "",
+				"product_count" => 3,
+				"products_wide" => 3),
+			$atts
+		)
+	);
+
+	// If there's a product select, return that product
+	if (get_query_var('single_product') != "" or $_GET['SingleProduct'] != "") {
+		return do_shortcode("[product-catalogue]");
+	}
+
+	$ReturnString .= "<div class='upcp-minimal-catalogue upcp-minimal-width-" . $products_wide . "'>";
+	if ($product_ids != "") {
+		$Product_Array = explode(",", $product_ids);
+		foreach ($Product_Array as $Product) {$Products_String .= $Product . ",";}
+		$Products_String = substr($Products_String, 0, -1);
+		$Products = $wpdb->get_results("SELECT * FROM $items_table_name WHERE Item_ID IN (" . $Products_String . ")");
+	}
+	elseif ($catalogue_id != "") {
+		$Category_ID = 999999;
+		$SubCategory_ID = 999999;
+		$Catalogue_Items = $wpdb->get_results("SELECT * FROM $catalogue_items_table_name WHERE Catalogue_ID='" . $catalogue_id . "'");
+		foreach ($Catalogue_Items as $Catalogue_Item) {
+			if ($Catalogue_Item->Item_ID != "") {$Item_IDs .= "'" . $Catalogue_Item->Item_ID . "',";}
+			elseif ($Catalogue_Item->Category_ID != 0) {$Category_ID = $Catalogue_Item->CategoryID;}
+			elseif ($Catalogue_Item->SubCategory_ID != 0) {$SubCategory_ID = $Catalogue_Item->SubCategoryID;}
+		}
+		$Item_IDs = substr($Item_IDs, 0, -1);
+		$Products = $wpdb->get_results("SELECT * FROM $items_table_name WHERE Item_ID IN (" . $Item_IDs . ") OR Category_ID='" . $Category_ID . "' OR SubCategory_ID='" . $SubCategory_ID . "' ORDER BY rand() LIMIT " . $product_count);
+	}
+	else {
+		$Products = $wpdb->get_results("SELECT * FROM $items_table_name ORDER BY Item_Date_Created ASC LIMIT " . $product_count);
+	}
+	foreach ($Products as $Product) {
+		$ReturnString .= "<div class='upcp-insert-product upcp-minimal-product-listing'>";
+		$ReturnString .= Build_Minimal_Product_Listing($Product, $catalogue_url);
+		$ReturnString .= "</div>";
+	}
+	
+	$ReturnString .= "</div>";
+
+	return $ReturnString;
+}
+add_shortcode("insert-products", "Insert_Minimal_Products");
 
 /* Function to add the HTML for an individual product to the catalog */
 function AddProduct($format, $Item_ID, $Product, $Tags, $AjaxReload = "No", $AjaxURL = "") {
@@ -471,7 +526,7 @@ function AddProduct($format, $Item_ID, $Product, $Tags, $AjaxReload = "No", $Aja
 	$Item_Images = $wpdb->get_results("SELECT Item_Image_URL, Item_Image_ID FROM $item_images_table_name WHERE Item_ID=" . $Item_ID);
 	$TagsString = "";
 		
-	if ($Product->Item_Photo_URL != "" and strlen($Product->Item_Photo_URL) > 7 and substr($Product->Item_Photo_URL, 0, 7) != "http://") {
+	if ($Product->Item_Photo_URL != "" and strlen($Product->Item_Photo_URL) > 7 and substr($Product->Item_Photo_URL, 0, 7) != "http://" and substr($Product->Item_Photo_URL, 0, 8) != "https://") {
 		$PhotoCode = $Product->Item_Photo_URL;
 		$PhotoCode = do_shortcode($PhotoCode);
 	}
@@ -641,6 +696,8 @@ function SingleProductPage() {
 	$Filter_Title = get_option("UPCP_Filter_Title");
 	$Single_Page_Price = get_option("UPCP_Single_Page_Price");
 	$Custom_Product_Page = get_option("UPCP_Custom_Product_Page");
+	$Related_Type = get_option("UPCP_Related_Products");
+	$Next_Previous = get_option("UPCP_Next_Previous");
 	$Product_Page_Serialized = get_option("UPCP_Product_Page_Serialized");
 	$Mobile_Product_Page_Serialized = get_option("UPCP_Product_Page_Serialized_Mobile");
 	$PP_Grid_Width = get_option("UPCP_PP_Grid_Width");
@@ -678,7 +735,7 @@ function SingleProductPage() {
 	}
 	$TagsString = trim($TagsString, " ,");
 		
-	if ($Product->Item_Photo_URL != "" and strlen($Product->Item_Photo_URL) > 7 and substr($Product->Item_Photo_URL, 0, 7) != "http://") {
+	if ($Product->Item_Photo_URL != "" and strlen($Product->Item_Photo_URL) > 7 and substr($Product->Item_Photo_URL, 0, 7) != "http://" and substr($Product->Item_Photo_URL, 0, 8) != "https://") {
 		$PhotoCode = $Product->Item_Photo_URL;
 		$PhotoCode = do_shortcode($PhotoCode);
 	}
@@ -697,8 +754,8 @@ function SingleProductPage() {
 	$SP_Perm_URL = $uri_parts[0] . "?" . $uri_parts[1];
 	$Return_URL = $uri_parts[0];
 	if ($Pretty_Links == "Yes") {$Return_URL = substr($uri_parts[0], 0, strrpos($uri_parts[0], "/", -2)-8) . "/?" . $uri_parts[1];}
-	elseif ($uri_parts[0] == "/") {$Return_URL .= "?" . substr($uri_parts[1], 0, strpos($uri_parts[1], "&"));}
-		
+	elseif (strpos($uri_parts[1],  "page_id") !== false) {$Return_URL .= "?" . substr($uri_parts[1], 0, strpos($uri_parts[1], "&"));}
+
 	if ($uri_parts[1] == "") {$SP_Perm_URL .= "Product_ID=" . $Product->Item_ID;}
 	else {$SP_Perm_URL .= "&Product_ID=" . $Product->Item_ID;}
 		
@@ -724,6 +781,8 @@ function SingleProductPage() {
 		$ProductString .= "<div id='prod-cat-addt-details-desc-div-" . $Product->Item_ID . "' class='prod-cat-addt-details-desc-div'>";
 		$ProductString .= $Description . "</div>";
 		$ProductString .= "<div class='upcp-clear'></div>\n";
+		if ($Related_Type == "Manual" or $Related_Type == "Auto") {$ProductString .= Get_Related_Products($Product, $Related_Type);}
+		if ($Next_Previous == "Manual") {$ProductString .= Get_Next_Previous($Product, $Next_Previous);}
 		$ProductString .= "</div>\n";
 		$ProductString .= "</div>\n";
 				
@@ -795,6 +854,8 @@ function SingleProductPage() {
 			$ProductString .= "<div id='prod-cat-addt-details-desc-div-" . $Product->Item_ID . "' class='prod-cat-addt-details-desc-div'>";
 			$ProductString .= $Description . "</div>";
 			$ProductString .= "<div class='upcp-clear'></div>\n";
+			if ($Related_Type == "Manual" or $Related_Type == "Auto") {$ProductString .= Get_Related_Products($Product, $Related_Type);}
+			if ($Next_Previous == "Manual") {$ProductString .= Get_Next_Previous($Product, $Next_Previous);}
 			$ProductString .= "</div>\n";
 				
 			$ProductString .= "</div>\n";
@@ -1038,6 +1099,10 @@ function BuildGridster($Gridster, $Product, $Item_Images, $Description, $PhotoUR
 					$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-main-image-div gs-w' style='display: list-item; position:absolute;'>";
 					$ProductString .= "<img src='" . $PhotoURL . "' alt='" . $Product->Item_Name . " Image' id='prod-cat-addt-details-main-" . $Product->Item_ID . "' class='prod-cat-addt-details-main' />";
 					break;
+				case "next_previous":
+					$Next_Previous_Type = get_option("UPCP_Next_Previous");
+					$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-prod-name-div gs-w' style='display: list-item; position:absolute;'>";
+					$ProductString .= Get_Next_Previous($Product, $Next_Previous_Type);
 				case "price":
 					$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-price-div gs-w' style='display: list-item; position:absolute;'>";
 					$ProductString .= "<h3 class='prod-cat-addt-details-price'>" . $Product->Item_Price . "</h3>";
@@ -1053,6 +1118,11 @@ function BuildGridster($Gridster, $Product, $Item_Images, $Description, $PhotoUR
 				case "product_name":
 					$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-prod-name-div gs-w' style='display: list-item; position:absolute;'>";
 					$ProductString .= "<h2 class='prod-cat-addt-details-title upcp-cpp-title'><a class='no-underline' href='http://" . $_SERVER['HTTP_HOST'] . $SP_Perm_URL . "'>" . $Product->Item_Name . "</a></h2>";
+					break;
+				case "related_products":
+					$Related_Type = get_option("UPCP_Related_Products");
+					$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-prod-name-div gs-w' style='display: list-item; position:absolute;'>";
+					$ProductString .= Get_Related_Products($Product, $Related_Type);
 					break;
 				case "subcategory":
 					$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-sub-cat-div gs-w' style='display: list-item; position:absolute;'>";
@@ -1096,6 +1166,128 @@ function BuildGridster($Gridster, $Product, $Item_Images, $Description, $PhotoUR
 		
 	return $ProductString;
 }
+
+function Get_Next_Previous($Product, $Next_Previous_Type = "Manual") {
+	global $wpdb, $items_table_name;
+
+	if ($Next_Previous_Type == "Manual") {
+		$Next_Product_ID = substr($Product->Item_Next_Previous, 0, strpos($Product->Item_Next_Previous, ","));
+		$Previous_Product_ID = substr($Product->Item_Next_Previous, strpos($Product->Item_Next_Previous, ",")+1);
+	}
+
+	$Next_Product = $wpdb->get_row("SELECT * FROM $items_table_name WHERE Item_ID='" . $Next_Product_ID ."'");
+	$Previous_Product = $wpdb->get_row("SELECT * FROM $items_table_name WHERE Item_ID='" . $Previous_Product_ID ."'");
+
+	$ReturnString .= "<div class='upcp-next-previous-products'>";
+	$ReturnString .= "<div class='upcp-next-product upcp-minimal-product-listing'>";
+	$ReturnString .= "<div class='upcp-next-product-title'>" . __("Next Product:", "UPCP") . "</div>";
+	$ReturnString .= Build_Minimal_Product_Listing($Next_Product);
+	$ReturnString .= "<div class='upcp-clear'></div>";
+	$ReturnString .= "</div>";
+	$ReturnString .= "<div class='upcp-previous-product upcp-minimal-product-listing'>";
+	$ReturnString .= "<div class='upcp-previous-product-title'>" . __("Previous Product:", "UPCP") . "</div>";
+	$ReturnString .= Build_Minimal_Product_Listing($Previous_Product);
+	$ReturnString .= "<div class='upcp-clear'></div>";
+	$ReturnString .= "</div>";
+	$ReturnString .= "<div class='upcp-clear'></div>";
+	$ReturnString .= "</div>";
+
+	return $ReturnString;
+}
+
+function Get_Related_Products($Product, $Related_Type = "Auto") {
+	global $wpdb, $items_table_name;
+
+	if ($Related_Type == "Manual") {
+		$Related_Products_IDs = explode(",", $Product->Item_Related_Products);
+		foreach ($Related_Products_IDs as $Related_Product_ID) {$ID_String .= "'" . $Related_Product_ID . "',";}
+		$ID_String = substr($ID_String, 0, -1);
+		$Related_Products = $wpdb->get_results("SELECT * FROM $items_table_name WHERE Item_ID IN (" . $ID_String . ")");
+	}
+
+	elseif ($Related_Type == "Auto") {
+		$Ordered_Sub_Cat_Products = array();
+		$Ordered_Cat_Products = array();
+
+		$Sub_Category_Products = $wpdb->get_results("SELECT * FROM $items_table_name WHERE SubCategory_ID='" . $Product->SubCategory_ID . "' AND Item_ID!='" . $Product->Item_ID . "'", ARRAY_A);
+		if ($wpdb->num_rows < 5) {
+			$Category_Products = $wpdb->get_results("SELECT * FROM $items_table_name WHERE Category_ID='" . $Product->Category_ID . "' AND SubCategory_ID!='" . $Product->SubCategory_ID . "' AND Item_ID!='" . $Product->Item_ID . "'", ARRAY_A);
+		}
+
+		$Ordered_Sub_Cat_Products = Order_Products($Selected_Product, $Sub_Category_Products);
+		if (isset($Category_Products)) {$Ordered_Cat_Products = Order_Products($Selected_Product, $Category_Products);}
+
+		$Related_Products = $Ordered_Sub_Cat_Products + $Ordered_Cat_Products;
+		$Related_Products = array_splice($Related_Products, 0, 5);
+	}
+
+	$ReturnString .= "<div class='upcp-related-products'>";
+	$ReturnString .= "<div class='upcp-related-products-title'>" . __("Related Products:", "UPCP") . "</div>";
+	$ReturnString .= "<div class='upcp-clear'></div>";
+	foreach ($Related_Products as $Related_Product) {
+		$ReturnString .= "<div class='upcp-related-product upcp-minimal-product-listing'>";
+		$ReturnString .= Build_Minimal_Product_Listing($Related_Product);
+		$ReturnString .= "<div class='upcp-clear'></div>";
+		$ReturnString .= "</div>";
+	}
+	$RetunString .= "</div>";
+	$RetunString .= "</div>";
+
+	return $ReturnString;
+}
+
+function Order_Products($Product, $Related_Products_Array) {
+	global $wpdb, $tagged_items_table_name;
+
+	$Product_Tags = $wpdb->get_results("SELECT Tag_ID FROM $tagged_items_table_name WHERE Item_ID='" . $Product['Item_ID'] . "'", ARRAY_A);
+
+	foreach ($Related_Products_Array as $Related_Product) {
+		$Related_Product_Tags = $wpdb->get_results("SELECT Tag_ID FROM $tagged_items_table_name WHERE Item_ID='" . $Related_Product['Item_ID'] . "'", ARRAY_A);
+		$Intersect = array_intersect($Product_Tags, $Related_Product_Tags);
+		$Related_Product['Score'] = sizeOf($Intersect);
+		unset($Related_Product_Tags);
+	}
+
+	usort($Related_Products_Array, 'Score_Sort');
+
+	return $Related_Products_Array;
+}
+
+function Score_Sort($a, $b) {
+	return $a['Score'] == $b['Score'] ? 0 : ($a['Score'] > $b['Score']) ? 1 : -1;
+}
+
+function Build_Minimal_Product_Listing($Product, $Catalogue_URL = "") {
+	global $wpdb, $items_table_name;
+
+	$Pretty_Links = get_option("UPCP_Pretty_Links");
+
+	if (is_array($Product)) {$Product = $wpdb->get_row("SELECT * FROM $items_table_name WHERE Item_ID='" . $Product['Item_ID'] . "'");}
+
+	if ($Product->Item_ID == "") {return;}
+
+	$uri_parts = explode('?', $_SERVER['REQUEST_URI'], 2);
+	if ($Catalogue_URL == "") {$Base = $uri_parts[0];}
+	else {$Base = $Catalogue_URL;}
+	if ($Product->Item_Link != "") {$ItemLink = $Product->Item_Link;}
+	elseif ($Pretty_Links == "Yes") {$ItemLink = $Base . "product/" . $Product->Item_Slug . "/?" . $uri_parts[1];}
+	elseif (strpos($uri_parts[1], "page_id") !== false) {$ItemLink = $Base . "?" . substr($uri_parts[1], 0, strpos($uri_parts[1], "&")) . "&SingleProduct=" . $Product->Item_ID;}
+	else {$ItemLink = $Base . "?SingleProduct=" . $Product->Item_ID;}
+
+	if ($Product->Item_Photo_URL != "") {$PhotoURL = $Product->Item_Photo_URL;}
+	else {$PhotoURL = plugins_url('ultimate-product-catalogue/images/No-Photo-Available.jpg');}
+
+	$ReturnString .= "<a class='upcp-minimal-link' href='" . $ItemLink . "'>";
+	$ReturnString .= "<div class='upcp-minimal-img-div'>";
+	$ReturnString .= "<img class='upcp-minimal-img' src='" . $PhotoURL . "' alt='Product Image' />";
+	$ReturnString .= "</div>";
+	$ReturnString .= "<div class='upcp-minimal-title'>" . $Product->Item_Name . "</div>";
+	$ReturnString .= "<div class='upcp-minimal-price'>" . $Product->Item_Price . "</div>";
+	$ReturnString .= "</a>";
+
+	return $ReturnString;
+}
+
 function FilterCount($Product, $Tags) {
 	global $ProdCats, $ProdSubCats, $ProdTags;
 		
@@ -1227,5 +1419,5 @@ function UPCP_Alter_Title($Title, $ProductName) {
 	return $Title;
 }
 
-add_shortcode("product-catalogue", "Insert_Product_Catalog");
+
  ?>

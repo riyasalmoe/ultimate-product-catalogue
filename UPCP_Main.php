@@ -7,7 +7,7 @@ Author: Etoile Web Design
 Author URI: http://www.EtoileWebDesign.com/
 Terms and Conditions: http://www.etoilewebdesign.com/plugin-terms-and-conditions/
 Text Domain: UPCP
-Version: 2.5.12
+Version: 2.6
 */
 
 global $UPCP_db_version;
@@ -25,7 +25,7 @@ $tags_table_name = $wpdb->prefix . "UPCP_Tags";
 $tagged_items_table_name = $wpdb->prefix . "UPCP_Tagged_Items";
 $fields_table_name = $wpdb->prefix . "UPCP_Custom_Fields";
 $fields_meta_table_name = $wpdb->prefix . "UPCP_Fields_Meta";
-$UPCP_db_version = "2.5.7";
+$UPCP_db_version = "2.5.13";
 
 define( 'UPCP_CD_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'UPCP_CD_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -162,6 +162,7 @@ include "Functions/Update_Tables.php";
 include "Functions/FrontEndAjaxUrl.php";
 include "Functions/UPCP_Create_XML_Sitemap.php";
 include "Functions/UPCP_Export_To_Excel.php";
+include "Functions/UPCP_Widget.php";
 
 // Updates the UPCP database when required
 if (get_option('UPCP_DB_Version') != $UPCP_db_version) {
