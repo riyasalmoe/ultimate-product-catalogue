@@ -461,7 +461,7 @@ function Insert_Minimal_Products($atts) {
 	);
 
 	// If there's a product select, return that product
-	if (get_query_var('single_product') != "" or $_GET['SingleProduct'] != "") {
+	if (get_query_var('single_product') != "" or $_GET['SingleProduct'] != "" and $catalogue_url == "") {
 		return do_shortcode("[product-catalogue]");
 	}
 

@@ -120,6 +120,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 2.6.1 =
+- Changed the behaviour of the new insert-products shortcode, when a catalogue_url is included
+
 = 2.6 =
 - Added 3 widgets, which let users display a number of products
 - Added a new shortcode, insert-products, which lets users insert a small number of products
