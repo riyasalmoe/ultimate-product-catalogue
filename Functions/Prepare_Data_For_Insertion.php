@@ -334,16 +334,17 @@ function Add_Edit_Custom_Field() {
 		$Field_Description = stripslashes_deep($_POST['Field_Description']);
 		$Field_Values = stripslashes_deep($_POST['Field_Values']);
 		$Field_Displays = stripslashes_deep($_POST['Field_Displays']);
+		$Field_Searchable = stripslashes_deep($_POST['Field_Searchable']);
 		$Field_ID = $_POST['Field_ID'];
 
 		if (!isset($error)) {
 				/* Pass the data to the appropriate function in Update_Admin_Databases.php to create the custom field */
 				if ($_POST['action'] == "Add_Custom_Field") {
-					  $user_update = Add_UPCP_Custom_Field($Field_Name, $Field_Slug, $Field_Type, $Field_Description, $Field_Values, $Field_Displays);
+					  $user_update = Add_UPCP_Custom_Field($Field_Name, $Field_Slug, $Field_Type, $Field_Description, $Field_Values, $Field_Displays, $Field_Searchable);
 				}
 				/* Pass the data to the appropriate function in Update_Admin_Databases.php to edit the custom field */
 				else {
-						$user_update = Edit_UPCP_Custom_Field($Field_ID, $Field_Name, $Field_Slug, $Field_Type, $Field_Description, $Field_Values, $Field_Displays);
+						$user_update = Edit_UPCP_Custom_Field($Field_ID, $Field_Name, $Field_Slug, $Field_Type, $Field_Description, $Field_Values, $Field_Displays, $Field_Searchable);
 				}
 				$user_update = array("Message_Type" => "Update", "Message" => $user_update);
 				return $user_update;

@@ -19,7 +19,7 @@ echo "</script>";
 		<div id="cpp-message" class="postbox " >
 			<div class="handlediv" title="Click to toggle"></div><h3 class='hndle'><span><?php _e("Feature Update", 'UPCP') ?></span></h3>
 			<div class="inside">
-					<?php _e("Some users have reported problems using this feature with FireFox and IE browsers. No issues reported yet with Chrome.", 'UPCP'); ?>
+					<?php _e("Some users have reported problems using the admin area functions of this feature with FireFox and IE browsers. No issues reported yet with Chrome, or with any browser on the visitor's side.", 'UPCP'); ?>
 			</div>
 		</div>
 	</div>

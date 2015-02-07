@@ -32,6 +32,7 @@
 	$Categories_Label = get_option("UPCP_Categories_Label");
 	$SubCategories_Label = get_option("UPCP_SubCategories_Label");
 	$Tags_Label = get_option("UPCP_Tags_Label");
+	$Custom_Fields_Label = get_option("UPCP_Custom_Fields_Label");
 	$Details_Label = get_option("UPCP_Details_Label");
 	$Sort_By_Label = get_option("UPCP_Sort_By_Label");
 	$Product_Name_Search_Label = get_option("UPCP_Product_Name_Search_Label");
@@ -39,6 +40,10 @@
 	$Back_To_Catalogue_Label = get_option("UPCP_Back_To_Catalogue_Label");
 	$No_Results_Found_Label = get_option("UPCP_No_Results_Found_Label");
 	$Products_Pagination_Label = get_option("UPCP_Products_Pagination_Label");
+
+	$Catalogue_Style = get_option("UPCP_Catalogue_Style");
+	$Sidebar_Style = get_option("UPCP_Sidebar_Style");
+	$Pagination_Style = get_option("UPCP_Pagination_Style");
 ?>
 <div class="wrap">
 <div id="icon-options-general" class="icon32"><br /></div><h2>Settings</h2>
@@ -424,6 +429,17 @@
 </td>
 </tr>
 <tr>
+<th scope="row"><?php _e("Custom Fields Label", 'UPCP')?> <br/> 
+<div onMouseOver="ShowToolTip('custom_fields_label_exp')" onMouseOut="HideToolTip('custom_fields_label_exp')" class="questionMark"><br>  
+<div id="custom_fields_label_exp" class="toolTip" ><?php _e("Text that should replace 'Additional Options' on your catalogue pages", 'UPCP')?></div></div>
+</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span><?php _e("Text that should replace 'Additional Options' on your catalogue pages", 'UPCP')?></span></legend>
+	<input type='text' name='custom_fields_label' value='<?php echo $Custom_Fields_Label; ?>' <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/>
+	</fieldset>
+</td>
+</tr>
+<tr>
 <th scope="row"><?php _e("Details Label", 'UPCP')?> <br/> 
 <div onMouseOver="ShowToolTip('details_label_exp')" onMouseOut="HideToolTip('details_label_exp')" class="questionMark"><br>  
 <div id="details_label_exp" class="toolTip" ><?php _e("Text that should replace 'Details' on your catalogue pages", 'UPCP')?></div></div>
@@ -500,7 +516,46 @@
 	</fieldset>
 </td>
 </tr>
+</table>
 
+<h3>Display Options</h3>
+<table class="form-table">
+<tr>
+<th scope="row"><?php _e("Catalogue Style", 'UPCP')?> <br/> 
+<div onMouseOver="ShowToolTip('catalogue_style_exp')" onMouseOut="HideToolTip('catalogue_style_exp')" class="questionMark"><br> 
+<div id="catalogue_style_exp" class="toolTip" ><?php _e("Selects a layout style for your catalogue.", 'UPCP')?></div></div>
+</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span><?php _e("Selects a layout style for your catalogue.", 'UPCP')?></span></legend>
+	<label title='Default'><input type='radio' name='catalogue_style' value='None' <?php if($Catalogue_Style == "None") {echo "checked='checked'";} ?> /> <span><?php _e("Default", 'UPCP')?></span></label><br />
+	<label title='Minimalist'><input type='radio' name='catalogue_style' value='main-minimalist' <?php if($Catalogue_Style == "main-minimalist") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Minimalist", 'UPCP')?></span></label><br />
+	</fieldset>
+</td>
+</tr>
+<!--<tr>
+<th scope="row"><?php _e("Sidebar Style", 'UPCP')?> <br/> 
+<div onMouseOver="ShowToolTip('sidebar_style_exp')" onMouseOut="HideToolTip('sidebar_style_exp')" class="questionMark"><br> 
+<div id="sidebar_style_exp" class="toolTip" ><?php _e("Selects a layout style for your sidebar.", 'UPCP')?></div></div>
+</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span><?php _e("Selects a layout style for your catalogue.", 'UPCP')?></span></legend>
+	<label title='Default'><input type='radio' name='sidebar_style' value='None' <?php if($Sidebar_Style == "None") {echo "checked='checked'";} ?> /> <span><?php _e("Default", 'UPCP')?></span></label><br />
+	<label title='Large Bar'><input type='radio' name='sidebar_style' value='pag-large-bar' <?php if($Sidebar_Style == "pag-large-bar") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Large Bar", 'UPCP')?></span></label><br />
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row"><?php _e("Pagination Style", 'UPCP')?> <br/> 
+<div onMouseOver="ShowToolTip('pagination_style_exp')" onMouseOut="HideToolTip('pagination_style_exp')" class="questionMark"><br> 
+<div id="pagination_style_exp" class="toolTip" ><?php _e("Selects a layout style for the pagination controls for your catalogue.", 'UPCP')?></div></div>
+</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span><?php _e("Selects a layout style for the pagination controls for your catalogue.", 'UPCP')?></span></legend>
+	<label title='Default'><input type='radio' name='pagination_style' value='None' <?php if($Pagination_Style == "None") {echo "checked='checked'";} ?> /> <span><?php _e("Default", 'UPCP')?></span></label><br />
+	<label title='Number Blocks'><input type='radio' name='pagination_style' value='sidebar-number-blocks' <?php if($Pagination_Style == "sidebar-number-blocks") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Number Blocks", 'UPCP')?></span></label><br />
+	</fieldset>
+</td>
+</tr>-->
 </table>
 
 

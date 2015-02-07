@@ -202,7 +202,7 @@ function Delete_Products_Tags() {
 }
 
 /* Adds a single new custom field to the UPCP database */
-function Add_UPCP_Custom_Field($Field_Name, $Field_Slug, $Field_Type, $Field_Description, $Field_Values, $Field_Displays) {
+function Add_UPCP_Custom_Field($Field_Name, $Field_Slug, $Field_Type, $Field_Description, $Field_Values, $Field_Displays, $Field_Searchable) {
 		global $wpdb;
 		global $fields_table_name;
 		$Date = date("Y-m-d H:i:s");
@@ -217,6 +217,7 @@ function Add_UPCP_Custom_Field($Field_Name, $Field_Slug, $Field_Type, $Field_Des
 							 'Field_Values' => $Field_Values,
 							 'Field_Values' => $Field_Values,
 							 'Field_Displays' => $Field_Displays,
+							 'Field_Searchable' => $Field_Searchable,
 							 'Field_Date_Created' => $Date)
 		);
 		$update = __("Field has been successfully created.", 'UPCP');
@@ -931,6 +932,7 @@ function Update_UPCP_Options() {
 	if ($Full_Version == "Yes") {update_option("UPCP_Categories_Label", $_POST['categories_label']);}
 	if ($Full_Version == "Yes") {update_option("UPCP_SubCategories_Label", $_POST['subcategories_label']);}
 	if ($Full_Version == "Yes") {update_option("UPCP_Tags_Label", $_POST['tags_label']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Custom_Fields_Label", $_POST['custom_fields_label']);}
 	if ($Full_Version == "Yes") {update_option("UPCP_Details_Label", $_POST['details_label']);}
 	if ($Full_Version == "Yes") {update_option("UPCP_Sort_By_Label", $_POST['sort_by_label']);}
 	if ($Full_Version == "Yes") {update_option("UPCP_Product_Name_Search_Label", $_POST['product_name_search_label']);}
@@ -938,6 +940,10 @@ function Update_UPCP_Options() {
 	if ($Full_Version == "Yes") {update_option("UPCP_Back_To_Catalogue_Label", $_POST['back_to_catalogue']);}
 	if ($Full_Version == "Yes") {update_option("UPCP_No_Results_Found_Label", $_POST['no_results_found_label']);}
 	if ($Full_Version == "Yes") {update_option("UPCP_Products_Pagination_Label", $_POST['products_pagination_label']);}
+
+	if ($Full_Version == "Yes") {update_option("UPCP_Catalogue_Style", $_POST['catalogue_style']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Sidebar_Style", $_POST['sidebar_style']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Pagination_Style", $_POST['pagination_style']);}
 	
 	if ($_POST['Pretty_Links'] == "Yes") {
 		 update_option("UPCP_Update_RR_Rules", "Yes");

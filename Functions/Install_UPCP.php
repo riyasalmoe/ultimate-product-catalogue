@@ -1,6 +1,6 @@
 <?php
 function Install_UPCP_DB() {
-		/* Add in the required globals to be able to create the tables */
+	/* Add in the required globals to be able to create the tables */
   	global $wpdb;
    	global $UPCP_db_version;
 	global $categories_table_name, $subcategories_table_name, $items_table_name, $item_images_table_name, $tagged_items_table_name, $tags_table_name, $catalogues_table_name, $catalogue_items_table_name, $fields_table_name, $fields_meta_table_name;
@@ -133,6 +133,7 @@ function Install_UPCP_DB() {
 		Field_Description text DEFAULT '' NOT NULL,
 		Field_Values text DEFAULT '' NOT NULL,
 		Field_Displays text DEFAULT '' NOT NULL,
+		Field_Searchable text DEFAULT '' NOT NULL,
 		Field_Date_Created datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
   		UNIQUE KEY id (Field_ID)
     	)

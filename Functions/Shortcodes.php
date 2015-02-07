@@ -3,8 +3,8 @@
 * supplied in the product-catalog shortcode */
 function Insert_Product_Catalog($atts) {
 	// Include the required global variables, and create a few new ones
-	global $wpdb, $categories_table_name, $subcategories_table_name, $tags_table_name, $tagged_items_table_name, $catalogues_table_name, $catalogue_items_table_name, $items_table_name;
-	global $ReturnString, $ProdCats, $ProdSubCats, $ProdTags, $ProdCatString, $ProdSubCatString, $ProdTagString, $Catalogue_ID, $Catalogue_Layout_Format, $Catalogue_Sidebar, $Full_Version;
+	global $wpdb, $categories_table_name, $subcategories_table_name, $tags_table_name, $tagged_items_table_name, $catalogues_table_name, $catalogue_items_table_name, $items_table_name, $fields_meta_table_name;
+	global $ReturnString, $ProdCats, $ProdSubCats, $ProdTags, $ProdCustomFields, $ProdCatString, $ProdSubCatString, $ProdTagString, $ProdCustomFieldsString, $Catalogue_ID, $Catalogue_Layout_Format, $Catalogue_Sidebar, $Full_Version;
 
 	$ReturnString = "";
 	$Filter = get_option("UPCP_Filter_Type");
@@ -47,6 +47,7 @@ function Insert_Product_Catalog($atts) {
 				"category" => "",
 				"subcategory" => "",
 				"tags" => "",
+				"custom_fields" => "",
 				"prod_name" => ""),
 			$atts
 		)
@@ -158,6 +159,27 @@ function Insert_Product_Catalog($atts) {
 	$ProdCats = array();
 	$ProdSubCats = array();
 	$ProdTags = array();
+	$ProdCustomFields = array();
+
+	// If filtering for custom fields, build the field/value query string
+	if ($custom_fields != "") {
+		$Custom_Field_IDs = explode(",", $custom_fields);
+		foreach ($Custom_Field_IDs as $Custom_Field_ID){
+			$Field_ID = substr($Custom_Field_ID, 0, strpos($Custom_Field_ID, "=>"));
+			$Field_Value = substr($Custom_Field_ID, strpos($Custom_Field_ID, "=>")+2);
+			$Selected_Custom_Fields[$Field_ID][] = $Field_Value;
+		}
+		foreach ($Selected_Custom_Fields as $Field_ID => $Selected_Custom_Field) {
+			$Custom_Fields_Sql_String .= "(";
+			$Custom_Fields_Sql_String .= "Field_ID='" . $Field_ID . "' AND (";
+			foreach ($Selected_Custom_Field as $Value){
+				$Custom_Fields_Sql_String .= "Meta_Value='" . $Value . "' OR ";
+			}
+			$Custom_Fields_Sql_String = substr($Custom_Fields_Sql_String, 0, -4);
+			$Custom_Fields_Sql_String .= "))";
+		}
+		$Custom_Field_Count = sizeOf($Selected_Custom_Fields);
+	}
 		
 	$ProdThumbString .=  "<div id='prod-cat-" . $id . "' class='prod-cat thumb-display ";
 	if ($Starting_Layout != "Thumbnail") {$ProdThumbString .= "hidden-field";}
@@ -181,28 +203,30 @@ function Insert_Product_Catalog($atts) {
 		if ($CatalogueItem->Item_ID != "" and $CatalogueItem->Item_ID != 0) {
 			$Product = $wpdb->get_row("SELECT * FROM $items_table_name WHERE Item_ID=" . $CatalogueItem->Item_ID);
 			$ProdTagObj = $wpdb->get_results("SELECT Tag_ID FROM $tagged_items_table_name WHERE Item_ID=" . $CatalogueItem->Item_ID);
-			$ProdTag = ObjectToArray($ProdTagObj);
+			if ($ajax_reload == "No") {
+				$Prod_Custom_Fields = $wpdb->get_results("SELECT Field_ID, Meta_Value FROM $fields_meta_table_name WHERE Item_ID=" . $Product->Item_ID);
+			}
 						
-			$NameSearchMatch = SearchProductName($Product->Item_ID, $Product->Item_Name, $Product->Item_Description, $prod_name, $CaseInsensitiveSearch, $ProductSearch);
-			if (sizeOf($tags) == 0) {$Tag_Check = "Yes";}
-			else {$Tag_Check = CheckTags($tags, $ProdTag, $Tag_Logic);}
-			if ($products_per_page < 1000000) {$Pagination_Check = CheckPagination($Product_Count, $products_per_page, $current_page, $Filtered);}
-			else {$Pagination_Check = "OK";}
-						
-			if ($NameSearchMatch == "Yes") {
-				if ($Product->Item_Display_Status != "Hide") {
-					if (sizeOf($category) == 0 or in_array($Product->Category_ID, $category)) {
-						if (sizeOf($subcategory) == 0 or in_array($Product->SubCategory_ID, $subcategory)) {
-							if ($Tag_Check == "Yes") {
+			if ($Product->Item_Display_Status != "Hide") {
+				if (sizeOf($category) == 0 or in_array($Product->Category_ID, $category)) {
+					if (sizeOf($subcategory) == 0 or in_array($Product->SubCategory_ID, $subcategory)) {
+						$ProdTag = ObjectToArray($ProdTagObj);
+						$Tag_Check = CheckTags($tags, $ProdTag, $Tag_Logic);
+						if ($Tag_Check == "Yes") {
+							$Custom_Field_Check = Custom_Field_Check($Custom_Fields_Sql_String, $Custom_Field_Count, $Product->Item_ID);
+							if ($Custom_Field_Check == "Yes") {
+								$Pagination_Check = CheckPagination($Product_Count, $products_per_page, $current_page, $Filtered);
 								if ($Pagination_Check == "OK") {
-									$HeaderBar .= "<a id='hidden_FB_link-" . $CatalogueItem->Item_ID . "' class='fancybox' href='#prod-cat-addt-details-" . $CatalogueItem->Item_ID . "'></a>";
-									if (!in_array("Thumbnail", $ExcludedLayouts)) {$ProdThumbString .= AddProduct("Thumbnail", $CatalogueItem->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
-									if (!in_array("List", $ExcludedLayouts)) {$ProdListString .= AddProduct("List", $CatalogueItem->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
-									if (!in_array("Detail", $ExcludedLayouts)) {$ProdDetailString .= AddProduct("Detail", $CatalogueItem->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
-								}
-								$Product_Count++;
+									$Name_Search_Match = SearchProductName($Product->Item_ID, $Product->Item_Name, $Product->Item_Description, $prod_name, $CaseInsensitiveSearch, $ProductSearch);
+									if ($Name_Search_Match == "Yes") {
+										$HeaderBar .= "<a id='hidden_FB_link-" . $Product->Item_ID . "' class='fancybox' href='#prod-cat-addt-details-" . $Product->Item_ID . "'></a>";
+										if (!in_array("Thumbnail", $ExcludedLayouts)) {$ProdThumbString .= AddProduct("Thumbnail", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
+										if (!in_array("List", $ExcludedLayouts)) {$ProdListString .= AddProduct("List", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
+										if (!in_array("Detail", $ExcludedLayouts)) {$ProdDetailString .= AddProduct("Detail", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
+							}}
+							$Product_Count++;
 			}}}}}
-			if ($ajax_reload == "No") {FilterCount($Product, $ProdTagObj);}
+			if ($ajax_reload == "No") {FilterCount($Product, $ProdTagObj, $Prod_Custom_Fields);}
 			unset($NameSearchMatch);
 		}
 				
@@ -228,29 +252,31 @@ function Insert_Product_Catalog($atts) {
 				$Products = $wpdb->get_results("SELECT * FROM $items_table_name WHERE Category_ID=" . $CatalogueItem->Category_ID);
 						
 				foreach ($Products as $Product) {
-					$ProdTagObj = $wpdb->get_results("SELECT Tag_ID FROM $tagged_items_table_name WHERE Item_ID=" . $Product->Item_ID);
-					$ProdTag = ObjectToArray($ProdTagObj);
+					$ProdTagObj = $wpdb->get_results("SELECT Tag_ID FROM $tagged_items_table_name WHERE Item_ID=" . $CatalogueItem->Item_ID);
+					if ($ajax_reload == "No") {
+						$Prod_Custom_Fields = $wpdb->get_results("SELECT Field_ID, Meta_Value FROM $fields_meta_table_name WHERE Item_ID=" . $Product->Item_ID);
+					}
 								
-					$NameSearchMatch = SearchProductName($Product->Item_ID, $Product->Item_Name, $Product->Item_Description, $prod_name, $CaseInsensitiveSearch, $ProductSearch);
-					if (sizeOf($tags) == 0) {$Tag_Check = "Yes";}
-					else {$Tag_Check = CheckTags($tags, $ProdTag, $Tag_Logic);}
-					if ($products_per_page < 1000000) {$Pagination_Check = CheckPagination($Product_Count, $products_per_page, $current_page, $Filtered);}
-					else {$Pagination_Check = "OK";}
-								
-					if ($NameSearchMatch == "Yes") {
-						if ($Product->Item_Display_Status != "Hide") {
+					if ($Product->Item_Display_Status != "Hide") {
+						if (sizeOf($category) == 0 or in_array($Product->Category_ID, $category)) {
 							if (sizeOf($subcategory) == 0 or in_array($Product->SubCategory_ID, $subcategory)) {
+								$ProdTag = ObjectToArray($ProdTagObj);
+								$Tag_Check = CheckTags($tags, $ProdTag, $Tag_Logic);
 								if ($Tag_Check == "Yes") {
-									if ($Pagination_Check == "OK") {
-										$HeaderBar .= "<a id='hidden_FB_link-" . $Product->Item_ID . "' class='fancybox' href='#prod-cat-addt-details-" . $Product->Item_ID . "'></a>";
-										if (!in_array("Thumbnail", $ExcludedLayouts)) {$ProdThumbString .= AddProduct("Thumbnail", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
-										if (!in_array("List", $ExcludedLayouts)) {$ProdListString .= AddProduct("List", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
-										if (!in_array("Detail", $ExcludedLayouts)) {$ProdDetailString .= AddProduct("Detail", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
-										$CatProdCount++;
-									}
+									$Custom_Field_Check = Custom_Field_Check($Custom_Fields_Sql_String, $Custom_Field_Count, $Product->Item_ID);
+									if ($Custom_Field_Check == "Yes") {
+										$Pagination_Check = CheckPagination($Product_Count, $products_per_page, $current_page, $Filtered);
+										if ($Pagination_Check == "OK") {
+											$Name_Search_Match = SearchProductName($Product->Item_ID, $Product->Item_Name, $Product->Item_Description, $prod_name, $CaseInsensitiveSearch, $ProductSearch);
+											if ($Name_Search_Match == "Yes") {
+												$HeaderBar .= "<a id='hidden_FB_link-" . $Product->Item_ID . "' class='fancybox' href='#prod-cat-addt-details-" . $Product->Item_ID . "'></a>";
+												if (!in_array("Thumbnail", $ExcludedLayouts)) {$ProdThumbString .= AddProduct("Thumbnail", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
+												if (!in_array("List", $ExcludedLayouts)) {$ProdListString .= AddProduct("List", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
+												if (!in_array("Detail", $ExcludedLayouts)) {$ProdDetailString .= AddProduct("Detail", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
+									}}
 									$Product_Count++;
-					}}}}
-					if ($ajax_reload == "No") {FilterCount($Product, $ProdTagObj);}
+					}}}}}
+					if ($ajax_reload == "No") {FilterCount($Product, $ProdTagObj, $Prod_Custom_Fields);}
 					unset($NameSearchMatch);
 				}
 						
@@ -277,28 +303,31 @@ function Insert_Product_Catalog($atts) {
 				$Products = $wpdb->get_results("SELECT * FROM $items_table_name WHERE SubCategory_ID=" . $CatalogueItem->SubCategory_ID);
 						
 				foreach ($Products as $Product) {
-					$ProdTagObj = $wpdb->get_results("SELECT Tag_ID FROM $tagged_items_table_name WHERE Item_ID=" . $Product->Item_ID);
-					$ProdTag = ObjectToArray($ProdTagObj);
+					$ProdTagObj = $wpdb->get_results("SELECT Tag_ID FROM $tagged_items_table_name WHERE Item_ID=" . $CatalogueItem->Item_ID);
+					if ($ajax_reload == "No") {
+						$Prod_Custom_Fields = $wpdb->get_results("SELECT Field_ID, Meta_Value FROM $fields_meta_table_name WHERE Item_ID=" . $Product->Item_ID);
+					}
 								
-					$NameSearchMatch = SearchProductName($Product->Item_ID, $Product->Item_Name, $Product->Item_Description, $prod_name, $CaseInsensitiveSearch, $ProductSearch);
-					if (sizeOf($tags) == 0) {$Tag_Check = "Yes";}
-					else {$Tag_Check = CheckTags($tags, $ProdTag, $Tag_Logic);}
-					if ($products_per_page < 1000000) {$Pagination_Check = CheckPagination($Product_Count, $products_per_page, $current_page, $Filtered);}
-					else {$Pagination_Check = "OK";}
-								
-					if ($NameSearchMatch == "Yes") {
-						if ($Product->Item_Display_Status != "Hide") {
-							if (sizeOf($category) == 0 or in_array($Product->Category_ID, $category)) {
+					if ($Product->Item_Display_Status != "Hide") {
+						if (sizeOf($category) == 0 or in_array($Product->Category_ID, $category)) {
+							if (sizeOf($subcategory) == 0 or in_array($Product->SubCategory_ID, $subcategory)) {
+								$ProdTag = ObjectToArray($ProdTagObj);
+								$Tag_Check = CheckTags($tags, $ProdTag, $Tag_Logic);
 								if ($Tag_Check == "Yes") {
-									if ($Pagination_Check == "OK") {
-										$HeaderBar .= "<a id='hidden_FB_link-" . $Product->Item_ID . "' class='fancybox' href='#prod-cat-addt-details-" . $Product->Item_ID . "'></a>";
-										if (!in_array("Thumbnail", $ExcludedLayouts)) {$ProdThumbString .= AddProduct("Thumbnail", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
-										if (!in_array("List", $ExcludedLayouts)) {$ProdListString .= AddProduct("List", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
-										if (!in_array("Detail", $ExcludedLayouts)) {$ProdDetailString .= AddProduct("Detail", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
-									}
+									$Custom_Field_Check = Custom_Field_Check($Custom_Fields_Sql_String, $Custom_Field_Count, $Product->Item_ID);
+									if ($Custom_Field_Check == "Yes") {
+										$Pagination_Check = CheckPagination($Product_Count, $products_per_page, $current_page, $Filtered);
+										if ($Pagination_Check == "OK") {
+											$Name_Search_Match = SearchProductName($Product->Item_ID, $Product->Item_Name, $Product->Item_Description, $prod_name, $CaseInsensitiveSearch, $ProductSearch);
+											if ($Name_Search_Match == "Yes") {
+												$HeaderBar .= "<a id='hidden_FB_link-" . $Product->Item_ID . "' class='fancybox' href='#prod-cat-addt-details-" . $Product->Item_ID . "'></a>";
+												if (!in_array("Thumbnail", $ExcludedLayouts)) {$ProdThumbString .= AddProduct("Thumbnail", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
+												if (!in_array("List", $ExcludedLayouts)) {$ProdListString .= AddProduct("List", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
+												if (!in_array("Detail", $ExcludedLayouts)) {$ProdDetailString .= AddProduct("Detail", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
+									}}
 									$Product_Count++;
-					}}}}
-					if ($ajax_reload == "No") {FilterCount($Product, $ProdTagObj);}
+					}}}}}
+					if ($ajax_reload == "No") {FilterCount($Product, $ProdTagObj, $Prod_Custom_Fields);}
 					unset($NameSearchMatch);
 				}
 		}}
@@ -392,6 +421,8 @@ function Insert_Product_Catalog($atts) {
 	$ProdSubCatString = trim($ProdSubCatString, " ,");
 	foreach ($ProdTags as $key=>$value) {$ProdTagString .= $key . ",";}
 	$ProdTagString = trim($ProdTagString, " ,");
+	foreach ($ProdCustomFields as $key=>$value) {$ProdCustomFieldsString .= $key . ",";}
+	$ProdCustomFieldsString = trim($ProdCustomFieldsString, " ,");
 		
 	// If the sidebar is requested, add it
 	if (($sidebar == "Yes" or $sidebar == "yes" or $sidebar == "YES") and $only_inner != "Yes") {
@@ -454,6 +485,8 @@ function Insert_Minimal_Products($atts) {
 				"catalogue_url" => "",
 				"product_ids" => "",
 				"catalogue_id" => "",
+				"category_id" => "",
+				"subcategory_id" => "",
 				"product_count" => 3,
 				"products_wide" => 3),
 			$atts
@@ -461,7 +494,7 @@ function Insert_Minimal_Products($atts) {
 	);
 
 	// If there's a product select, return that product
-	if (get_query_var('single_product') != "" or $_GET['SingleProduct'] != "" and $catalogue_url == "") {
+	if ((get_query_var('single_product') != "" or $_GET['SingleProduct'] != "") and $catalogue_url == "") {
 		return do_shortcode("[product-catalogue]");
 	}
 
@@ -484,6 +517,12 @@ function Insert_Minimal_Products($atts) {
 		$Item_IDs = substr($Item_IDs, 0, -1);
 		$Products = $wpdb->get_results("SELECT * FROM $items_table_name WHERE Item_ID IN (" . $Item_IDs . ") OR Category_ID='" . $Category_ID . "' OR SubCategory_ID='" . $SubCategory_ID . "' ORDER BY rand() LIMIT " . $product_count);
 	}
+	elseif ($category_id != "") {
+		$Products = $wpdb->get_results("SELECT * FROM $items_table_name WHERE  Category_ID='" . $category_id . "' ORDER BY rand() LIMIT " . $product_count);
+	}
+	elseif ($subcategory_id != "") {
+		$Products = $wpdb->get_results("SELECT * FROM $items_table_name WHERE  SubCategory_ID='" . $subcategory_id . "' ORDER BY rand() LIMIT " . $product_count);
+	}
 	else {
 		$Products = $wpdb->get_results("SELECT * FROM $items_table_name ORDER BY Item_Date_Created ASC LIMIT " . $product_count);
 	}
@@ -503,7 +542,7 @@ add_shortcode("insert-products", "Insert_Minimal_Products");
 function AddProduct($format, $Item_ID, $Product, $Tags, $AjaxReload = "No", $AjaxURL = "") {
 	// Add the required global variables
 	global $wpdb, $categories_table_name, $subcategories_table_name, $tags_table_name, $tagged_items_table_name, $catalogues_table_name, $catalogue_items_table_name, $items_table_name, $item_images_table_name;
-	global $ProdCats, $ProdSubCats, $ProdTags, $ReturnString;
+	global $ProdCats, $ProdSubCats, $ProdTags, $ProdCustomFields, $ReturnString;
 		
 	$ReadMore = get_option("UPCP_Read_More");
 	$Links = get_option("UPCP_Product_Links");
@@ -880,8 +919,8 @@ function SingleProductPage() {
 }
 
 function BuildSidebar($category, $subcategory, $tags, $prod_name) {
-	global $wpdb, $Full_Version, $ProdCats, $ProdSubCats, $ProdTags, $ProdCatString, $ProdSubCatString, $ProdTagString;
-	global $categories_table_name, $subcategories_table_name, $tags_table_name;
+	global $wpdb, $Full_Version, $ProdCats, $ProdSubCats, $ProdTags, $ProdCustomFields, $ProdCatString, $ProdSubCatString, $ProdTagString, $ProdCustomFieldsString;
+	global $categories_table_name, $subcategories_table_name, $tags_table_name, $fields_table_name;
 		
 	$Color = get_option("UPCP_Color_Scheme");
 	$Tag_Logic = get_option("UPCP_Tag_Logic");
@@ -892,6 +931,7 @@ function BuildSidebar($category, $subcategory, $tags, $prod_name) {
 	$Categories_Label = get_option("UPCP_Categories_Label");
 	$SubCategories_Label = get_option("UPCP_SubCategories_Label");
 	$Tags_Label = get_option("UPCP_Tags_Label");
+	$Custom_Fields_Label = get_option("UPCP_Custom_Fields_Label");
 	$Sort_By_Label = get_option("UPCP_Sort_By_Label");
 	$Product_Name_Search_Label = get_option("UPCP_Product_Name_Search_Label");
 	$Product_Search_Text_Label = get_option("UPCP_Product_Name_Text_Label");
@@ -902,6 +942,8 @@ function BuildSidebar($category, $subcategory, $tags, $prod_name) {
 	else {$SubCategories_Text = __("Sub-Categories:", 'UPCP');}
 	if ($Tags_Label != "") {$Tags_Text = $Tags_Label;}
 	else {$Tags_Text = __("Tags:", 'UPCP');}
+	if ($Custom_Fields_Label != "") {$Custom_Field_Text = $Custom_Fields_Label;}
+	else {$Custom_Field_Text = __("Additional Options:", 'UPCP');}
 	if ($Sort_By_Label != "") {$Sort_Text = $Sort_By_Label;}
 	else {$Sort_Text = __('Sort By:', 'UPCP');}
 	if ($Product_Name_Search_Label != "") {$SearchLabel = $Product_Name_Search_Label;}
@@ -918,11 +960,13 @@ function BuildSidebar($category, $subcategory, $tags, $prod_name) {
 	}
 	
 	// Get the categories, sub-categories and tags that apply to the products in the catalog
-	if ($ProdCatString != "") {$Categories = $wpdb->get_results("SELECT Category_ID, Category_Name FROM $categories_table_name WHERE Category_ID in (" . $ProdCatString . ") ORDER BY Category_Name");}
-	if ($ProdSubCatString != "") {$SubCategories = $wpdb->get_results("SELECT SubCategory_ID, SubCategory_Name, Category_ID FROM $subcategories_table_name WHERE SubCategory_ID in (" . $ProdSubCatString . ") ORDER BY SubCategory_Name");}
-	if ($ProdTagString != "") {$Tags = $wpdb->get_results("SELECT Tag_ID, Tag_Name FROM $tags_table_name WHERE Tag_ID in (" . $ProdTagString . ") ORDER BY Tag_Date_Created");}
+	if ($ProdCatString != "") {$Categories = $wpdb->get_results("SELECT Category_ID, Category_Name FROM $categories_table_name WHERE Category_ID IN (" . $ProdCatString . ") ORDER BY Category_Name");}
+	if ($ProdSubCatString != "") {$SubCategories = $wpdb->get_results("SELECT SubCategory_ID, SubCategory_Name, Category_ID FROM $subcategories_table_name WHERE SubCategory_ID IN (" . $ProdSubCatString . ") ORDER BY SubCategory_Name");}
+	if ($ProdTagString != "") {$Tags = $wpdb->get_results("SELECT Tag_ID, Tag_Name FROM $tags_table_name WHERE Tag_ID IN (" . $ProdTagString . ") ORDER BY Tag_Date_Created");}
 	else {$Tags = array();}
-				
+	if ($ProdCustomFieldsString != "") {$Custom_Fields = $wpdb->get_results("SELECT Field_ID, Field_Name FROM $fields_table_name WHERE Field_ID IN (" . $ProdCustomFieldsString . ") AND Field_Searchable='Yes' ORDER BY Field_Name");}
+	else {$Custom_Fields = array();}
+
 	$SidebarString .= "<div id='prod-cat-sidebar-" . $id . "' class='prod-cat-sidebar'>\n";
 	//$SidebarString .= "<form action='#' name='Product_Catalog_Sidebar_Form'>\n";
 	$SidebarString .= "<form onsubmit='return false;' name='Product_Catalog_Sidebar_Form'>\n";
@@ -1047,7 +1091,23 @@ function BuildSidebar($category, $subcategory, $tags, $prod_name) {
 			else {
 				$SidebarString .= "<input type='checkbox' name='Tag[]' value='" . $Tag->Tag_ID . "'  onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");' class='jquery-prod-tag-value'";
 				if (in_array($Tag->Tag_ID, $tags)) {$SidebarString .= "checked=checked";}
-				$SidebarString .= ">" . $Tag->Tag_Name . "\n";
+				$SidebarString .= "> " . $Tag->Tag_Name . "\n";
+			}
+			$SidebarString .= "</div>";
+		}
+		$SidebarString .= "</div>\n";
+	}
+
+	if (sizeOf($Custom_Fields) > 0) {
+		$SidebarString .= "<div id='prod-cat-sidebar-cf-div-" . $id . "' class='prod-cat-sidebar-cf-div'>\n";
+		$SidebarString .= "<div id='prod-cat-sidebar-cf-title-" . $id . "' class='prod-cat-cf-sidebar-title'><h3>" . $Custom_Field_Text . "</h3></div>\n";
+		foreach ($Custom_Fields as $Custom_Field) {
+			$SidebarString .= "<div id='prod-cat-sidebar-cf-" . $Custom_Field->Field_ID . "' class='prod-cat-sidebar-cf' data-cfid='" . $Custom_Field->Field_ID . "'>\n";
+			$SidebarString .= "<div class='prod-cat-sidebar-cf-title'>" . $Custom_Field->Field_Name . "</div>";
+			foreach ($ProdCustomFields[$Custom_Field->Field_ID]  as $Meta_Value => $Count) {
+				$SidebarString .= "<div class='prod-cat-sidebar-cf-value-div'>";
+				$SidebarString .= "<input type='checkbox' name='Custom_Field[]' value='" . $Meta_Value . "'  onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");' class='jquery-prod-cf-value' /> " . $Meta_Value . " (" . $Count . ")";
+				$SidebarString .= "</div>";
 			}
 			$SidebarString .= "</div>";
 		}
@@ -1288,14 +1348,17 @@ function Build_Minimal_Product_Listing($Product, $Catalogue_URL = "") {
 	return $ReturnString;
 }
 
-function FilterCount($Product, $Tags) {
-	global $ProdCats, $ProdSubCats, $ProdTags;
-		
+function FilterCount($Product, $Tags, $Custom_Fields) {
+	global $ProdCats, $ProdSubCats, $ProdTags, $ProdCustomFields;
+
 	// Increment the arrays keeping count of the number of products in each 
 	// category, sub-category and tag
 	$ProdCats[$Product->Category_ID]++;
 	$ProdSubCats[$Product->SubCategory_ID]++;
 	foreach ($Tags as $Tag) {$ProdTags[$Tag->Tag_ID]++;}
+	if (is_array($Custom_Fields)) {
+		foreach ($Custom_Fields as $Custom_Field) {$ProdCustomFields[$Custom_Field->Field_ID][$Custom_Field->Meta_Value]++;}
+	}
 }
 
 function SearchProductName($Item_ID, $ProductName, $ProductDescription, $SearchName, $CaseInsensitive, $SearchLocation) {
@@ -1325,7 +1388,19 @@ function SearchProductName($Item_ID, $ProductName, $ProductDescription, $SearchN
 	return $NameSearchMatch;
 }
 
+function Custom_Field_Check($Custom_Fields_Sql_String, $Custom_Field_Count, $Product_ID) {
+	global $wpdb, $fields_meta_table_name;
+
+	if ($Custom_Fields_Sql_String == "") {return "Yes";}
+
+	$Fields = $wpdb->get_results("SELECT Field_ID FROM $fields_meta_table_name WHERE " . $Custom_Fields_Sql_String . " AND Item_ID='" . $Product_ID . "'");
+	if ($wpdb->num_rows == $Custom_Field_Count) {return "Yes";}
+	else {return "No";} 
+}
+
 function CheckTags($tags, $ProdTag, $Tag_Logic) {
+	if (sizeOf($tags) == 0) {return "Yes";}
+
 	if ($Tag_Logic == "OR") {
 		if (count(array_intersect($tags, $ProdTag)) > 0) {return "Yes";}
 	}
@@ -1337,6 +1412,7 @@ function CheckTags($tags, $ProdTag, $Tag_Logic) {
 }
 
 function CheckPagination($Product_Count, $products_per_page, $current_page, $Filtered = "No") {
+	if ($products_per_page >= 1000000) {return "OK";}
 	if ($Product_Count >= ($products_per_page * ($current_page - 1))) {
 		if ($Product_Count < ($products_per_page * $current_page)) {
 			return "OK";
@@ -1385,14 +1461,17 @@ function AddCustomFields($ProductID, $Layout) {
 		
 	$Fields = $wpdb->get_results("SELECT Field_ID, Field_Name, Field_Type FROM $fields_table_name WHERE Field_Displays='" . $Layout . "' OR Field_Displays='both'");
 	if (is_array($Fields)) {
-		$CustomFieldString .= "<div class='upcp-prod-desc-custom-fields'>";
+		$CustomFieldString .= "<div class='upcp-prod-desc-custom-fields upcp-custom-field-" . $Layout . "'>";
+		if ($Layout == "details") {$AddBreak = "<br />";}
+		else {$AddBreak = "";}
 		foreach ($Fields as $Field) {
 			$Meta = $wpdb->get_row("SELECT Meta_Value FROM $fields_meta_table_name WHERE Field_ID='" . $Field->Field_ID . "' AND Item_ID='" . $ProductID . "'");
 			if ($Field->Field_Type == "file") {
-				$CustomFieldString .= "<br />" . $Field->Field_Name . ": ";
+				$CustomFieldString .= $AddBreak . $Field->Field_Name . ": ";
 				$CustomFieldString .= "<a href='" . $upload_dir['baseurl'] . "/upcp-product-file-uploads/" .$Meta->Meta_Value . "' download>" . $Meta->Meta_Value . "</a>";
 			}
-			else {$CustomFieldString .= "<br />" . $Field->Field_Name . ": " . $Meta->Meta_Value;}
+			else {$CustomFieldString .= $AddBreak . $Field->Field_Name . ": " . $Meta->Meta_Value;}
+			$AddBreak = "<br />";
 		}
 		$CustomFieldString .= "</div>";
 	}

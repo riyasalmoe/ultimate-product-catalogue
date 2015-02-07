@@ -483,6 +483,14 @@
 								</select>
 								<p><?php _e("Should this field be displayed in any of the main catalogue pages?", 'UPCP') ?></p>
 						</div>
+						<div class="form-field">
+								<label for="Field_Searchable"><?php _e("Searchable?", 'UPCP') ?></label>
+								<select name="Field_Searchable" id="Field_Searchable">
+										<option value='No' <?php if ($Field->Field_Searchable == "No") {echo "selected=selected";} ?>><?php _e("No", 'UPCP') ?></option>
+										<option value='Yes' <?php if ($Field->Field_Searchable == "Yes") {echo "selected=selected";} ?>><?php _e("Yes", 'UPCP') ?></option>
+								</select>
+								<p><?php _e("Should this field be searchable in your catalogues?", 'UPCP') ?></p>
+						</div>
 
 						<p class="submit"><input type="submit" name="submit" id="submit" class="button-primary" value="<?php _e('Save Changes', 'UPCP') ?>"  /></p>
 						</form>

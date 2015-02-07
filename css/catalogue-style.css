@@ -294,6 +294,11 @@
 .upcp-margin-left-6 {
   margin-left: 6px;
 }
+.styled-input {border-radius: 10px;}
+.prod-cat-sidebar-cf-title {
+	font-weight: 600;
+	font-size: 1.2em;
+}
 
 
 /* Thumbnail Display-Specific Styles */

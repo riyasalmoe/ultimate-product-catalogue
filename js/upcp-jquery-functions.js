@@ -56,45 +56,52 @@ function UPCPHighlight(Field, Color) {
 }
 
 function UPCP_DisplayPage(PageNum) {
-		jQuery('#upcp-current-page').html(PageNum);
-		UPCP_Ajax_Filter();
+	jQuery('#upcp-current-page').html(PageNum);
+	UPCP_Ajax_Filter();
 }
 
 var RequestCount = 0;
 function UPCP_Ajax_Filter() {
-		var CatValues = [];
-		var SubCatValues = [];
-		var TagBoxValues = [];
-		
-		var id = jQuery('#upcp-catalogue-id').html();
-		var sidebar = jQuery('#upcp-catalogue-sidebar').html();
-		var start_layout = jQuery('#upcp-starting-layout').html();
-		var current_layout = jQuery('#upcp-current-layout').html();
-		var excluded_layouts = jQuery('#upcp-excluded-layouts').html();
-		var current_page = jQuery('#upcp-current-page').html();
-		var base_url = jQuery('#upcp-base-url').html();
-		var default_search_text = jQuery('#upcp-default-search-text').html();
-		
-		jQuery('.jquery-prod-cat-value').each(function() {if (jQuery(this).prop('checked')) {CatValues.push(jQuery(this).val());}});
-		jQuery('.jquery-prod-sub-cat-value').each(function() {if (jQuery(this).prop('checked')) {SubCatValues.push(jQuery(this).val());}});
-		jQuery('.jquery-prod-tag-value').each(function() {if (jQuery(this).prop('checked')) {TagBoxValues.push(jQuery(this).val());}});
-		if (jQuery('.prod-cat-sidebar').css('display') == "none") {var SelectedProdName = jQuery('#upcp-mobile-search').val();}
-		else {var SelectedProdName = jQuery('#upcp-name-search').val();}
-		
-		jQuery('.prod-cat-inner').html('<h3>Updating results...</h3>');
-		RequestCount = RequestCount + 1;
-		var data = 'id=' + id + '&sidebar=' + sidebar + '&start_layout=' + current_layout + '&excluded_layouts=' + excluded_layouts + '&ajax_url=' + base_url + '&current_page=' + current_page + '&default_search_text=' + default_search_text + '&ajax_reload=Yes' + '&Prod_Name=' + SelectedProdName + '&Category=' + CatValues + '&SubCategory=' + SubCatValues + '&Tags=' + TagBoxValues + '&request_count=' + RequestCount + '&action=update_catalogue';
-		jQuery.post(ajaxurl, data, function(response) {
-				response = response.substring(0, response.length - 1);
-				var parsed_response = jQuery.parseJSON(response);
-				if (parsed_response.request_count == RequestCount) {
-						jQuery('.prod-cat-inner').html(parsed_response.message);
-						UPCP_Sort_By();
-						adjustCatalogueHeight();
-						addClickHandlers();
-						ResetFancyBoxes();
-				}
-		});
+	var CatValues = [];
+	var SubCatValues = [];
+	var TagBoxValues = [];
+	var CFBoxValues = [];
+	
+	var id = jQuery('#upcp-catalogue-id').html();
+	var sidebar = jQuery('#upcp-catalogue-sidebar').html();
+	var start_layout = jQuery('#upcp-starting-layout').html();
+	var current_layout = jQuery('#upcp-current-layout').html();
+	var excluded_layouts = jQuery('#upcp-excluded-layouts').html();
+	var current_page = jQuery('#upcp-current-page').html();
+	var base_url = jQuery('#upcp-base-url').html();
+	var default_search_text = jQuery('#upcp-default-search-text').html();
+	
+	jQuery('.jquery-prod-cat-value').each(function() {if (jQuery(this).prop('checked')) {CatValues.push(jQuery(this).val());}});
+	jQuery('.jquery-prod-sub-cat-value').each(function() {if (jQuery(this).prop('checked')) {SubCatValues.push(jQuery(this).val());}});
+	jQuery('.jquery-prod-tag-value').each(function() {if (jQuery(this).prop('checked')) {TagBoxValues.push(jQuery(this).val());}});
+	jQuery('.jquery-prod-cf-value').each(function() {if (jQuery(this).prop('checked')) {
+		Array_Value = jQuery(this).parent().parent().data('cfid') + "=>" + jQuery(this).val();
+		CFBoxValues.push(Array_Value);
+	}});
+	
+	if (jQuery('.prod-cat-sidebar').css('display') == "none") {var SelectedProdName = jQuery('#upcp-mobile-search').val();}
+	else {var SelectedProdName = jQuery('#upcp-name-search').val();}
+	
+	jQuery('.prod-cat-inner').html('<h3>Updating results...</h3>');
+	RequestCount = RequestCount + 1;
+	var data = 'id=' + id + '&sidebar=' + sidebar + '&start_layout=' + current_layout + '&excluded_layouts=' + excluded_layouts + '&ajax_url=' + base_url + '&current_page=' + current_page + '&default_search_text=' + default_search_text + '&ajax_reload=Yes' + '&Prod_Name=' + SelectedProdName + '&Category=' + CatValues + '&SubCategory=' + SubCatValues + '&Tags=' + TagBoxValues + '&Custom_Fields=' + CFBoxValues + '&request_count=' + RequestCount + '&action=update_catalogue';
+	jQuery.post(ajaxurl, data, function(response) {
+		alert(response);
+		response = response.substring(0, response.length - 1);
+		var parsed_response = jQuery.parseJSON(response);
+		if (parsed_response.request_count == RequestCount) {
+			jQuery('.prod-cat-inner').html(parsed_response.message);
+			UPCP_Sort_By();
+			adjustCatalogueHeight();
+			addClickHandlers();
+			ResetFancyBoxes();
+		}
+	});
 }
 
 function UPCP_Filer_Results() {

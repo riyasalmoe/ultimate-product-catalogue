@@ -51,8 +51,9 @@ function UPCP_Filter_Catalogue() {
 		$Category = $_POST['Category'];
 		$SubCategory = $_POST['SubCategory'];
 		$Tags = $_POST['Tags'];
+		$Custom_Fields = $_POST['Custom_Fields'];
 		
-		echo do_shortcode("[product-catalogue id='" . $id . "' only_inner='Yes' starting_layout='" . $start_layout . "' excluded_layouts='" . $exclude_layouts . "' current_page='" . $current_page . "' ajax_reload='" . $ajax_reload . "' ajax_url='" . $ajax_url . "' request_count='" . $request_count . "' category='" . $Category . "' subcategory='" . $SubCategory . "' tags='" . $Tags . "' prod_name='" . $Prod_Name . "']");
+		echo do_shortcode("[product-catalogue id='" . $id . "' only_inner='Yes' starting_layout='" . $start_layout . "' excluded_layouts='" . $exclude_layouts . "' current_page='" . $current_page . "' ajax_reload='" . $ajax_reload . "' ajax_url='" . $ajax_url . "' request_count='" . $request_count . "' category='" . $Category . "' subcategory='" . $SubCategory . "' tags='" . $Tags . "' custom_fields='" . $Custom_Fields . "' prod_name='" . $Prod_Name . "']");
 }
 add_action('wp_ajax_update_catalogue', 'UPCP_Filter_Catalogue');
 add_action( 'wp_ajax_nopriv_update_catalogue', 'UPCP_Filter_Catalogue');

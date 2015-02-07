@@ -120,6 +120,12 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 3.0.0 =
+- Added the ability to search custom fields
+- Added a new display style for the catalogue
+- Added arguments to the new "insert-products" shortcode, so that products from a category or sub-category can be displayed
+- Fixed a number of small display bugs
+
 = 2.6.1 =
 - Changed the behaviour of the new insert-products shortcode, when a catalogue_url is included
 
