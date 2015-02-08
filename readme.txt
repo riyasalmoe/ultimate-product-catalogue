@@ -120,6 +120,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 3.0.1 =
+- Fixed a filtering error
+
 = 3.0.0 =
 - Added the ability to search custom fields
 - Added a new display style for the catalogue
