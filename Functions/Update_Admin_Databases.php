@@ -225,7 +225,7 @@ function Add_UPCP_Custom_Field($Field_Name, $Field_Slug, $Field_Type, $Field_Des
 }
 
 /* Edits a single custom field with a given ID in the UPCP database */
-function  Edit_UPCP_Custom_Field($Field_ID, $Field_Name, $Field_Slug, $Field_Type, $Field_Description, $Field_Values, $Field_Displays) {
+function  Edit_UPCP_Custom_Field($Field_ID, $Field_Name, $Field_Slug, $Field_Type, $Field_Description, $Field_Values, $Field_Displays, $Field_Searchable) {
 		global $wpdb;
 		global $fields_table_name;
 		global $Full_Version;
@@ -238,7 +238,8 @@ function  Edit_UPCP_Custom_Field($Field_ID, $Field_Name, $Field_Slug, $Field_Typ
 									 'Field_Type' => $Field_Type,
 							 		 'Field_Description' => $Field_Description,
 									 'Field_Values' => $Field_Values,
-									 'Field_Displays' => $Field_Displays),
+									 'Field_Displays' => $Field_Displays,
+									 'Field_Searchable' => $Field_Searchable),
 						array( 'Field_ID' => $Field_ID)
 		);
 		$update = __("Field has been successfully edited.", 'UPCP');

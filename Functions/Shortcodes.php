@@ -457,7 +457,9 @@ function Insert_Product_Catalog($atts) {
 	if (isset($_GET['Product_ID'])) {$Bottom_JS .= "jQuery(window).load(OpenProduct('" . $_GET['Product_ID'] . "'));";}
 	$Bottom_JS .= "</script>";
 		
-	$InnerString .= "<div class='prod-cat-inner'>" . $ProdThumbString . "<div class='upcp-clear'></div>" . $ProdListString . "<div class='upcp-clear'></div>" . $ProdDetailString . "<div class='upcp-clear'></div></div>";
+	if ($only_inner != "Yes") {$InnerString .= "<div class='prod-cat-inner'>";}
+	$InnerString .= $ProdThumbString . "<div class='upcp-clear'></div>" . $ProdListString . "<div class='upcp-clear'></div>" . $ProdDetailString . "<div class='upcp-clear'></div>";
+	if ($only_inner != "Yes") {$InnerString .= "</div>";}
 		
 	if ($only_inner == "Yes") {
 		$ReturnArray['request_count'] = $request_count;

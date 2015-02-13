@@ -120,6 +120,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 3.0.2 =
+- Fixed a repeating div that would be added in AJAX filtering
+
 = 3.0.1 =
 - Fixed a filtering error
 
