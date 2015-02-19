@@ -120,6 +120,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 3.0.4 =
+- Fixed a Tags display problem with category items in catalogues
+
 = 3.0.3 =
 - Fixed an error with filtering and labels
 - Fixed a List-view height adjustment problem
