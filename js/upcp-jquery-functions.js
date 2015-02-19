@@ -195,12 +195,14 @@ function UPCP_Filer_Results_OR() {
 
 /* Used in the bare-list layout to show or hide extra product details */
 function ToggleItem(Item_ID) {
-		if (jQuery('#prod-cat-details-'+Item_ID).css('display') == "none") {
-			  jQuery('#prod-cat-details-'+Item_ID).removeClass('hidden-field');
-		}
-		else {
-				jQuery('#prod-cat-details-'+Item_ID).addClass('hidden-field');
-		}
+	if (jQuery('#prod-cat-details-'+Item_ID).css('display') == "none") {
+		jQuery('#prod-cat-details-'+Item_ID).removeClass('hidden-field');
+		adjustCatalogueHeight();
+	}
+	else {
+		jQuery('#prod-cat-details-'+Item_ID).addClass('hidden-field');
+		adjustCatalogueHeight();
+	}
 }
 
 /* Used to track the number of times that a product is clicked in all catalogues */

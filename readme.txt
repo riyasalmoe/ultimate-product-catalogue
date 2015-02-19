@@ -120,6 +120,10 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 3.0.3 =
+- Fixed an error with filtering and labels
+- Fixed a List-view height adjustment problem
+
 = 3.0.2 =
 - Fixed a repeating div that would be added in AJAX filtering
 

@@ -23,14 +23,22 @@ function Insert_Product_Catalog($atts) {
 
 	$Products_Pagination_Label = get_option("UPCP_Products_Pagination_Label");
 	$Product_Name_Search_Label = get_option("UPCP_Product_Name_Search_Label");
+	$Product_Search_Text_Label = get_option("UPCP_Product_Name_Text_Label");
 	$No_Results_Found_Label = get_option("UPCP_No_Results_Found_Label");
 	if ($Products_Pagination_Label != "") {$Products_Pagination_Text = $Products_Pagination_Label;}
 	else {$Products_Pagination_Text = __(' products', 'UPCP');}
-	if ($Product_Search_Text_Label != "") {$Product_Name_Text = $Product_Name_Search_Label;}
+	if ($Product_Name_Search_Label != "") {$SearchLabel = $Product_Name_Search_Label;}
+	else {
+		if ($ProductSearch == "namedesc" or $ProductSearch == "namedesccust") {$SearchLabel = __("Product Search:", 'UPCP');}
+		else {$SearchLabel = __("Product Name:", 'UPCP');}
+	}
+	if ($prod_name != "") {$Product_Name_Text = $prod_name;}
+	elseif ($Product_Search_Text_Label != "") {$Product_Name_Text = $Product_Search_Text_Label;
+	}
 	else {
 		if ($ProductSearch == "namedesc" or $ProductSearch == "namedesccust") {$Product_Name_Text = __("Search...", 'UPCP');}
 		else {$Product_Name_Text = __("Name...", 'UPCP');}
-	}	
+	}
 		
 	// Get the attributes passed by the shortcode, and store them in new variables for processing
 	extract( shortcode_atts( array(
