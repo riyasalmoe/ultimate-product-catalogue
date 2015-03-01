@@ -7,7 +7,7 @@ Tested up to: 4.1
 License: GPLv3
 License URI:http://www.gnu.org/licenses/gpl-3.0.html
 
-Displays a product catalog(ue) or menu for your store, restaurant, group, etc. Has three default responsive layouts and can accept custom CSS.
+Displays a product catalog or menu for your store, restaurant, group, etc. Has three default responsive layouts and can accept custom CSS.
 
 == Description ==
 
