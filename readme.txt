@@ -120,6 +120,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 3.0.5 =
+- Fixed an error on for checkbox custom field types
+
 = 3.0.4 =
 - Fixed a Tags display problem with category items in catalogues
 

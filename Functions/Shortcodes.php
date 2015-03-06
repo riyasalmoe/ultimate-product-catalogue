@@ -60,6 +60,8 @@ function Insert_Product_Catalog($atts) {
 			$atts
 		)
 	);
+
+	if ($ajax_reload != "No"){$ajax_reload = ucfirst(strtolower($ajax_reload));}
 		
 	// Select the catalogue information from the database 
 	$Catalogue = $wpdb->get_row("SELECT * FROM $catalogues_table_name WHERE Catalogue_ID=" . $id);

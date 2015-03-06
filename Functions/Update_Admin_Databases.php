@@ -466,7 +466,8 @@ function Add_UPCP_Product($Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Descrip
 		}
 		
 		//Add the custom fields to the meta table
-		$Fields = $wpdb->get_results("SELECT Field_ID, Field_Name, Field_Values FROM $fields_table_name");
+		$Fields = $wpdb->get_results("SELECT Field_ID, Field_Type, Field_Name, Field_Values FROM $fields_table_name");
+		print_r($_POST);
 		if (is_array($Fields)) {
 			  foreach ($Fields as $Field) {
 						$FieldName = str_replace(" ", "_", $Field->Field_Name);
@@ -489,7 +490,7 @@ function Add_UPCP_Product($Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Descrip
 									  	  array_walk($Options, create_function('&$val', '$val = trim($val);'));
 												$InArray = in_array($Value, $Options);
 										}
-								}		
+								}
 								if (!isset($InArray) or $InArray) {
 									  if ($NoFile != "Yes") {
 											  $wpdb->insert($fields_meta_table_name,
@@ -503,6 +504,8 @@ function Add_UPCP_Product($Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Descrip
 								unset($Value);
 								unset($InArray);
 								unset($NoFile);
+								unset($CombinedValue);
+								unset($FieldName);
 						}
 				}
 		}
@@ -583,6 +586,7 @@ function Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Slug, $Item_Photo_URL, $I
 		
 		//Add the custom fields to the meta table
 		$Fields = $wpdb->get_results("SELECT Field_ID, Field_Name, Field_Values, Field_Type FROM $fields_table_name");
+		print_r($_POST);
 		if (is_array($Fields)) {
 			  foreach ($Fields as $Field) {
 						$FieldName = str_replace(" ", "_", $Field->Field_Name);
@@ -620,6 +624,7 @@ function Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Slug, $Item_Photo_URL, $I
 								unset($InArray);
 								unset($NoFile);
 								unset($CombinedValue);
+								unset($FieldName);
 						}
 				}
 		}
