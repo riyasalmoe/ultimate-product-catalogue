@@ -120,6 +120,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 3.0.6 =
+- Removed some debugging code accidentally left in from the last update
+
 = 3.0.5 =
 - Fixed an error on for checkbox custom field types
 

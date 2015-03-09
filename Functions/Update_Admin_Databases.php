@@ -467,7 +467,6 @@ function Add_UPCP_Product($Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Descrip
 		
 		//Add the custom fields to the meta table
 		$Fields = $wpdb->get_results("SELECT Field_ID, Field_Type, Field_Name, Field_Values FROM $fields_table_name");
-		print_r($_POST);
 		if (is_array($Fields)) {
 			  foreach ($Fields as $Field) {
 						$FieldName = str_replace(" ", "_", $Field->Field_Name);
@@ -586,7 +585,6 @@ function Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Slug, $Item_Photo_URL, $I
 		
 		//Add the custom fields to the meta table
 		$Fields = $wpdb->get_results("SELECT Field_ID, Field_Name, Field_Values, Field_Type FROM $fields_table_name");
-		print_r($_POST);
 		if (is_array($Fields)) {
 			  foreach ($Fields as $Field) {
 						$FieldName = str_replace(" ", "_", $Field->Field_Name);
