@@ -836,6 +836,7 @@ function SingleProductPage() {
 		if ($Next_Previous == "Manual") {$ProductString .= Get_Next_Previous($Product, $Next_Previous);}
 		$ProductString .= "</div>\n";
 		$ProductString .= "</div>\n";
+		$ProductString .= "</div>\n";
 				
 		$ProductString .= "</div>\n";
 				
