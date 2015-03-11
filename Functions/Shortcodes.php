@@ -179,6 +179,7 @@ function Insert_Product_Catalog($atts) {
 			$Field_Value = substr($Custom_Field_ID, strpos($Custom_Field_ID, "=>")+2);
 			$Selected_Custom_Fields[$Field_ID][] = $Field_Value;
 		}
+		$Custom_Fields_Sql_String .= "(";
 		foreach ($Selected_Custom_Fields as $Field_ID => $Selected_Custom_Field) {
 			$Custom_Fields_Sql_String .= "(";
 			$Custom_Fields_Sql_String .= "Field_ID='" . $Field_ID . "' AND (";
@@ -187,7 +188,10 @@ function Insert_Product_Catalog($atts) {
 			}
 			$Custom_Fields_Sql_String = substr($Custom_Fields_Sql_String, 0, -4);
 			$Custom_Fields_Sql_String .= "))";
+			$Custom_Fields_Sql_String .= " OR ";
 		}
+		$Custom_Fields_Sql_String = substr($Custom_Fields_Sql_String, 0, -4);
+		$Custom_Fields_Sql_String .= ")";
 		$Custom_Field_Count = sizeOf($Selected_Custom_Fields);
 	}
 		
@@ -283,6 +287,7 @@ function Insert_Product_Catalog($atts) {
 												if (!in_array("Thumbnail", $ExcludedLayouts)) {$ProdThumbString .= AddProduct("Thumbnail", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
 												if (!in_array("List", $ExcludedLayouts)) {$ProdListString .= AddProduct("List", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
 												if (!in_array("Detail", $ExcludedLayouts)) {$ProdDetailString .= AddProduct("Detail", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
+												$CatProdCount++;
 									}}
 									$Product_Count++;
 					}}}}}

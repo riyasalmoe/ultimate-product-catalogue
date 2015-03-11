@@ -170,7 +170,12 @@ Premium Features
 3. The "thumbnail" catalogue view
 4. The "list" catalogue view
 5. The admin area
+
 == Changelog ==
+= 3.0.8 =
+- Made searcing more than one custom field at a time possible
+- Returned the missing category labels on category pages
+
 = 3.0.7 =
 - Fixed a mobile page display error
 
