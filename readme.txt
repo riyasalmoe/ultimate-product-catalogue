@@ -172,6 +172,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 3.0.9 =
+- Fixed a related products link error
+
 = 3.0.8 =
 - Made searcing more than one custom field at a time possible
 - Returned the missing category labels on category pages
