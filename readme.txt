@@ -7,46 +7,41 @@ Tested up to: 4.1
 License: GPLv3
 License URI:http://www.gnu.org/licenses/gpl-3.0.html
 
-Displays a product catalog or menu for your store, restaurant, group, etc. Has three default responsive layouts and can accept custom CSS.
+A responsive and easily customizable plugin for all your product catalogue needs.
 
 == Description ==
 
-Displays a product catalogue or menu for your store, restaurant, group, etc. Has three default responsive layouts and can accept custom CSS.
+Use this plugin to display your products in an a sleek and easy to customize catalogue. Choose between three default responsive layouts or customize it to suit your needs in the Custom CSS. Make your catalogue easy to browse, sort and update with categories, sub-categories, and tags. Simple to add to any page using the [product-catalogue] shortcode!
 
-You can use categories, sub-categories and tags to make your products easy to sort through for your visitors.
-You can also use categories and sub-categories in your catalogue(s) to make it easy to keep them up to date. 
+Perfect for your store, restaurant and more!
 
-[youtube http://www.youtube.com/watch?v=z6XL7whjY1Q]
+= Key Features =
 
-**Key Features:**
-
-* 3 default layout formats, users can tab between them
-* Categories, sub-categories and tags to organize your products
-* Custom fields and custom product pages make the catalogues completely customizable
-* Fully customizable via CSS
-* SEO friendly single product pages
+* 3 default layouts (thumbnail, detail and list)
+* Categories and sub-categories
+* Custom fields
+* Custom product pages 
+* Fully customizable with CSS
+* Widgets to display recent products, product list, random products
+* Include catalogues using the [product-catalogue id=’X’] shortcode
+* Upload products directly from a spreadsheet
 * UTF8 support
-* Drag-and-drop to re-order your catalogues
-* Upload products from a spreadsheet
-* Change starting layout by setting the "starting_layout" attribute
-* Exclude one or more layouts by using the "excluded_layouts" attribute (accepts a comma-separated list)
-* Options page lets you customize a number of a options
+* Search function with Javascript or AJAX
+* Easy to use attributes like [starting_layout], [excluded_layout]
+* Options page that makes it easy to customize features
 
-To have Fancyboxes display in the Ultimate Product Catalogue Plugin, FancyBox for WordPress is required (http://wordpress.org/plugins/fancybox-for-wordpress/).
-If FancyBox for WordPress isn't installed, individual products will be displayed on their own pages.
 
-Tutorial videos available in the FAQ section.
-
-**Premium Features:**
+= Premium Features =
+The premium version includes a lot of great features including: the ability to add over 100 products, additional product images, SEO friendly URLs, product tags and custom fields for sorting, custom product pages, a minimalist layout option and more!
 
 * Drag-and-drop product pages layout
 * Product tags
 * Custom fields that can be used to include product manuals, additional information, etc.
 * SEO friendly single product pages
+* For a more in depth list, please visit our FAQ page:
+<http://www.etoilewebdesign.com/ultimate-product-catalogue-faq>
 
-[youtube http://www.youtube.com/watch?v=uLzYkRF8UoA]
-
-**Additional Languages:**
+=Additional Languages=
 * Brazilian Portugese (thanks to <a href='http://wordpress.org/support/profile/tito_cadallora'>Tito_Cadallora</a>);
 * Canadian French (thanks to Pascale DRP)
 * Dutch (Thanks to Martin S.)
@@ -55,6 +50,16 @@ Tutorial videos available in the FAQ section.
 * Russian (thanks to Alexander M.)
 * Spanish (thanks to Irene L.)
 * Turkish (thanks to Ayhan)
+
+Check out our Frequently Asked Questions here:
+<https://wordpress.org/plugins/ultimate-product-catalogue/faq/>
+
+Please head to the "Support" forum to report issues or make suggestions:
+<https://wordpress.org/support/plugin/ultimate-product-catalogue>
+
+[youtube https://www.youtube.com/watch?v=z6XL7whjY1Q]
+
+Check out more videos on the FAQ page.
 
 == Installation ==
 
@@ -76,31 +81,78 @@ To get started using the plugin, you can:
 
 == Frequently Asked Questions ==
 
-= I have more than one catalogue. What do I do? =
+= How do I display my catalogue? If I have more than one catalogue, what do I do? =
 
-You can use the attribute "id='X'" in the product-catalogue shortcode to specify a catalogue, where 'X' is replaced with the catalogue ID (available at the top of the catalogue details page).
+Put this shortcode on whatever page you’re trying to put the catalogue on: ‘[product-catalogue id=’X’]’ and replace the ‘X’ with the ID of your catalogue. This can be found by clicking on your catalogue, the catalogue ID  is beside the catalogue name on the catalogue’s details page. You can also copy the shortcode directly from the “Catalogues” page.
 
-= How do I remove the sidebar from my catalogue? =
+To display one of your catalogues use the corresponding attribute ‘id='X'’ in the product-catalogue shortcode to specify that catalogue, where 'X' is replaced with the catalogue ID.
 
-You can use the attribute "sidebar='No'" in the product-catalogue shortcode to remove the sidebar from a catalogue.
+= Can my products be in more than one category or sub-category? =
+
+No, products can only be in a single category and sub-category. Products can have as many tags desired, since tags are used to represent product attributes.
 
 = Can I start with a layout other than the default "Thumbnail" layout? =
 
-Add the attribute "starting_layout='LAYOUT'", where LAYOUT is replaced with the layout you would like to be the starting layout (List or Detail are the two options currently).
+Add the attribute [starting_layout='LAYOUT’], where LAYOUT is replaced with the layout you would like to be the starting layout (List or Detail are the two options currently).
 
-= How do I exclude one of the layouts? =
+= I only want to display one layout and to remove the layout bar at the top from my catalogue? =
 
-The attribute "excluded_layouts" lets you stop one or more layouts from being displayed. It accepts a comma separated list of layouts you wish to exclude. For example, "excluded_layouts='Thumbnail, List'" would make your catalogue display only the "Detail" view.
+The attribute ‘excluded_layouts’ lets you stop one or more layouts from being displayed. It accepts a comma separated list of layouts you wish to exclude. For example, [excluded_layouts='Thumbnail, List’] would make your catalogue display only the "Detail" view.
+To remove the layout bar you can try adding the following into your Custom.css box (where the colour matches the colour of the catalogue you are using):
+‘.Blue-prod-cat-header-div {display: none;}’
+
+= My product description gets cut off even though I have changed the max characters, how can I fix this? =
+
+There is a text area labelled "Custom CSS" when you click on the catalogue that you're editing. Try adding this to it:  ‘.prod-cat-addt-details-desc-div {max-height:none;}’
+
+= How do I remove the sidebar? =
+
+You can use the attribute [sidebar=‘No'] in the product-catalogue shortcode to remove the sidebar from a catalogue.
+
+= Why aren’t my products uploading from the spreadsheet? =
+
+There are a number of reasons why products might not be uploading correctly.
+First, make sure that you’re uploading either a .xls or .xlsx file type (not .csv).
+Second, make sure that you’ve written all of your field names correctly (Name, Slug, Description, Price, Image, Category, Sub-Category, Tags), especially custom fields, which need to be exactly the same as the field name.
+Third, make sure that you don’t have any columns that have been edited unintentionally (which gives an “incorrect field name” error).
+
+= How do I get custom changes I’ve made to the product page layout or the custom fields I’ve added in the product details to display? =
+
+On  the “Options” page the “Custom Product Page” needs to be set to “Yes” for custom layout to display.
+
+= How do I sort the order of the products within the catalogue? =
+
+You can arrange the order of the products by dragging and dropping the products on the “Catalogue Details” page .
+
+= How do I translate the plugin into my language? =
+A great place to start learning about how to translate a plugin is at the link below: <http://premium.wpmudev.org/blog/how-to-translate-a-wordpress-plugin>
+
+Once translated, you'll need to put the translated mo- and po- files directly in the lang folder and make sure they are named properly for your localization.
+If you do translate the plugin, other users would love to have access to the files in your language. You can send them to us at Contact@EtoileWebDesign.com, and we’ll be sure they’re included in a future release.
 
 = What is enabled in the 'Premium' version? =
 
-The premium version allows you to add more than 100 products to the plugin, to use the 'Tags' feature, and to add additional images to products.
+The premium version includes a lot of great features including: the ability to add over 100 products, additional product images, SEO friendly URLs, product tags and custom fields for sorting, custom product pages, a minimalist layout option and more!
 
-= Why do I get a "Page not found" error when I turn on SEO friendly links? =
+* Drag-and-drop product pages layout
+* Product tags
+* Custom fields that can be used to include product manuals, additional information, etc.
+* SEO friendly single product pages
+* Unlimited products
+* Additional images per product
+* Pretty permalinks
+* More layout options
+* Related and Next/Previous product display
 
-You need to have some kind of pretty permalinks already enabled on your blog for them to work on the plugin. 
+For a more in depth list, please visit our FAQ page:
+<http://www.etoilewebdesign.com/ultimate-product-catalogue-faq>
 
-Videos
+For more questions and support you can post in the support forum:
+<https://wordpress.org/support/plugin/ultimate-product-catalogue>
+
+
+
+= Videos =
 
 Tutorial Part 1
 [youtube http://www.youtube.com/watch?v=9sdHtGGZpKU]
@@ -118,7 +170,6 @@ Premium Features
 3. The "thumbnail" catalogue view
 4. The "list" catalogue view
 5. The admin area
-
 == Changelog ==
 = 3.0.7 =
 - Fixed a mobile page display error
