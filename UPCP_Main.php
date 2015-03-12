@@ -7,7 +7,7 @@ Author: Etoile Web Design
 Author URI: http://www.EtoileWebDesign.com/
 Terms and Conditions: http://www.etoilewebdesign.com/plugin-terms-and-conditions/
 Text Domain: UPCP
-Version: 3.0.9
+Version: 3.0.10
 */
 
 global $UPCP_db_version;
@@ -25,7 +25,7 @@ $tags_table_name = $wpdb->prefix . "UPCP_Tags";
 $tagged_items_table_name = $wpdb->prefix . "UPCP_Tagged_Items";
 $fields_table_name = $wpdb->prefix . "UPCP_Custom_Fields";
 $fields_meta_table_name = $wpdb->prefix . "UPCP_Fields_Meta";
-$UPCP_db_version = "3.0.0";
+$UPCP_db_version = "3.0.10";
 
 define( 'UPCP_CD_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'UPCP_CD_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -57,7 +57,10 @@ function Remove_UPCP() {
 
 /* Admin Page setup */
 function UPCP_Plugin_Menu() {
-	add_menu_page('Ultimate Product Catalogue Plugin', 'Product Catalogue', 'administrator', 'UPCP-options', 'UPCP_Output_Options',null , '50.5');
+	$Access_Role = get_option("EWD_OTP_Access_Role");
+
+	if ($Access_Role == "") {$Access_Role = "administrator";}
+	add_menu_page('Ultimate Product Catalogue Plugin', 'Product Catalogue', $Access_Role, 'UPCP-options', 'UPCP_Output_Options',null , '50.5');
 }
 
 /* Add localization support */

@@ -24,6 +24,7 @@
 	$CF_Conversion = get_option("UPCP_CF_Conversion");
 	$Related_Products = get_option("UPCP_Related_Products");
 	$Next_Previous = get_option("UPCP_Next_Previous");
+	$Access_Role = get_option("UPCP_Access_Role");
 	$PP_Grid_Width = get_option("UPCP_PP_Grid_Width");
 	$PP_Grid_Height = get_option("UPCP_PP_Grid_Height");
 	$Top_Bottom_Padding = get_option("UPCP_Top_Bottom_Padding");
@@ -344,6 +345,23 @@
 	<fieldset><legend class="screen-reader-text"><span><?php _e("Should next and previous products be displayed?", 'UPCP')?></span></legend>
 	<label title='Manual'><input type='radio' name='next_previous' value='Manual' <?php if($Next_Previous == "Manual") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Manual", 'UPCP')?></span></label><br />
 	<label title='None'><input type='radio' name='next_previous' value='None' <?php if($Next_Previous == "None") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("None", 'UPCP')?></span></label><br />
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row"><?php _e("Set Access Role", 'UPCP')?> <br/> 
+<div onMouseOver="ShowToolTip('access_role_exp')" onMouseOut="HideToolTip('access_role_exp')" class="questionMark"><br> 
+<div id="access_role_exp" class="toolTip" ><?php _e("Which level of user should have access to UPCP?", 'UPCP')?></div></div>
+</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span>Set Access Role</span></legend>
+	<label title='Access Role'></label><select name='access_role' <?php if ($Full_Version != "Yes") {echo "disabled";} ?>> 
+		<option value="administrator"<?php if($Access_Role == "administrator") {echo " selected=selected";} ?>>Administrator</option>
+		<option value="delete_others_pages"<?php if($Access_Role == "delete_others_pages") {echo " selected=selected";} ?>>Editor</option>
+		<option value="delete_published_posts"<?php if($Access_Role == "delete_published_posts") {echo " selected=selected";} ?>>Author</option>
+		<option value="delete_posts"<?php if($Access_Role == "delete_posts") {echo " selected=selected";} ?>>Contributor</option>
+		<option value="read"<?php if($Access_Role == "read") {echo " selected=selected";} ?>>Subscriber</option>
+	</select>
 	</fieldset>
 </td>
 </tr>
