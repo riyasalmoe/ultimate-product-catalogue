@@ -137,6 +137,10 @@
   			display:none;
 				opacity: 0;
 		}
+		.prod-cat-addt-details {
+			max-width: none;
+			max-height: none;
+		}
 }
 
 /* Product Catalogue */
@@ -587,7 +591,7 @@
 }
 .prod-cat-addt-details-desc-div {
   min-height: 100px;
-	max-height: 180px;
+	/*max-height: 180px;*/
 	padding: 10px 10px 10px 15px;
 	text-indent: 25px;
 	float: left;

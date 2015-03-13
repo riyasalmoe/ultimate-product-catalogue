@@ -172,6 +172,10 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 3.0.11 =
+- Fixed a mobile display issue
+- Fixed an error with setting user access role
+
 = 3.0.10 =
 - Added a new premium option to set the user role that can access the plugin menus
 
