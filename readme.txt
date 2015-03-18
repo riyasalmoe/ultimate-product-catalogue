@@ -39,9 +39,10 @@ The premium version includes a lot of great features including: the ability to a
 * Custom fields that can be used to include product manuals, additional information, etc.
 * SEO friendly single product pages
 * For a more in depth list, please visit our FAQ page:
+
 <http://www.etoilewebdesign.com/ultimate-product-catalogue-faq>
 
-=Additional Languages=
+= Additional Languages =
 * Brazilian Portugese (thanks to <a href='http://wordpress.org/support/profile/tito_cadallora'>Tito_Cadallora</a>);
 * Canadian French (thanks to Pascale DRP)
 * Dutch (Thanks to Martin S.)
@@ -54,7 +55,7 @@ The premium version includes a lot of great features including: the ability to a
 Check out our Frequently Asked Questions here:
 <https://wordpress.org/plugins/ultimate-product-catalogue/faq/>
 
-Please head to the "Support" forum to report issues or make suggestions:
+Head over to the "Support" forum to report issues or make suggestions:
 <https://wordpress.org/support/plugin/ultimate-product-catalogue>
 
 [youtube https://www.youtube.com/watch?v=z6XL7whjY1Q]
