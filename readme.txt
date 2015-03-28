@@ -173,6 +173,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 3.0.13=
+- Fixed a small display bug
+
 = 3.0.12 =
 - Fixed an error with the access role option
 
