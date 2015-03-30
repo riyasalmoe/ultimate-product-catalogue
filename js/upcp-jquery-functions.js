@@ -86,7 +86,9 @@ function UPCP_Ajax_Filter() {
 	
 	if (jQuery('.prod-cat-sidebar').css('display') == "none") {var SelectedProdName = jQuery('#upcp-mobile-search').val();}
 	else {var SelectedProdName = jQuery('#upcp-name-search').val();}
-	
+
+	if (SelectedProdName == undefined) {SelectedProdName = default_search_text;}
+
 	jQuery('.prod-cat-inner').html('<h3>Updating results...</h3>');
 	RequestCount = RequestCount + 1;
 	var data = 'id=' + id + '&sidebar=' + sidebar + '&start_layout=' + current_layout + '&excluded_layouts=' + excluded_layouts + '&ajax_url=' + base_url + '&current_page=' + current_page + '&default_search_text=' + default_search_text + '&ajax_reload=Yes' + '&Prod_Name=' + SelectedProdName + '&Category=' + CatValues + '&SubCategory=' + SubCatValues + '&Tags=' + TagBoxValues + '&Custom_Fields=' + CFBoxValues + '&request_count=' + RequestCount + '&action=update_catalogue';

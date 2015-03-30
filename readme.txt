@@ -173,6 +173,10 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 3.0.14 =
+- Fixed a mobile pagination error
+- Fixed a text filtering problem with pagination
+
 = 3.0.13=
 - Fixed a small display bug
 

@@ -229,16 +229,17 @@ function Insert_Product_Catalog($atts) {
 						if ($Tag_Check == "Yes") {
 							$Custom_Field_Check = Custom_Field_Check($Custom_Fields_Sql_String, $Custom_Field_Count, $Product->Item_ID);
 							if ($Custom_Field_Check == "Yes") {
-								$Pagination_Check = CheckPagination($Product_Count, $products_per_page, $current_page, $Filtered);
-								if ($Pagination_Check == "OK") {
-									$Name_Search_Match = SearchProductName($Product->Item_ID, $Product->Item_Name, $Product->Item_Description, $prod_name, $CaseInsensitiveSearch, $ProductSearch);
-									if ($Name_Search_Match == "Yes") {
+								$Name_Search_Match = SearchProductName($Product->Item_ID, $Product->Item_Name, $Product->Item_Description, $prod_name, $CaseInsensitiveSearch, $ProductSearch);
+								if ($Name_Search_Match == "Yes") {
+									$Pagination_Check = CheckPagination($Product_Count, $products_per_page, $current_page, $Filtered);
+									if ($Pagination_Check == "OK") {
 										$HeaderBar .= "<a id='hidden_FB_link-" . $Product->Item_ID . "' class='fancybox' href='#prod-cat-addt-details-" . $Product->Item_ID . "'></a>";
 										if (!in_array("Thumbnail", $ExcludedLayouts)) {$ProdThumbString .= AddProduct("Thumbnail", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
 										if (!in_array("List", $ExcludedLayouts)) {$ProdListString .= AddProduct("List", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
 										if (!in_array("Detail", $ExcludedLayouts)) {$ProdDetailString .= AddProduct("Detail", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
-							}}
-							$Product_Count++;
+									}
+									$Product_Count++;
+								}
 			}}}}}
 			if ($ajax_reload == "No") {FilterCount($Product, $ProdTagObj, $Prod_Custom_Fields);}
 			unset($NameSearchMatch);
@@ -279,17 +280,18 @@ function Insert_Product_Catalog($atts) {
 								if ($Tag_Check == "Yes") {
 									$Custom_Field_Check = Custom_Field_Check($Custom_Fields_Sql_String, $Custom_Field_Count, $Product->Item_ID);
 									if ($Custom_Field_Check == "Yes") {
-										$Pagination_Check = CheckPagination($Product_Count, $products_per_page, $current_page, $Filtered);
-										if ($Pagination_Check == "OK") {
-											$Name_Search_Match = SearchProductName($Product->Item_ID, $Product->Item_Name, $Product->Item_Description, $prod_name, $CaseInsensitiveSearch, $ProductSearch);
-											if ($Name_Search_Match == "Yes") {
+										$Name_Search_Match = SearchProductName($Product->Item_ID, $Product->Item_Name, $Product->Item_Description, $prod_name, $CaseInsensitiveSearch, $ProductSearch);
+										if ($Name_Search_Match == "Yes") {
+											$Pagination_Check = CheckPagination($Product_Count, $products_per_page, $current_page, $Filtered);
+											if ($Pagination_Check == "OK") {
 												$HeaderBar .= "<a id='hidden_FB_link-" . $Product->Item_ID . "' class='fancybox' href='#prod-cat-addt-details-" . $Product->Item_ID . "'></a>";
 												if (!in_array("Thumbnail", $ExcludedLayouts)) {$ProdThumbString .= AddProduct("Thumbnail", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
 												if (!in_array("List", $ExcludedLayouts)) {$ProdListString .= AddProduct("List", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
 												if (!in_array("Detail", $ExcludedLayouts)) {$ProdDetailString .= AddProduct("Detail", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
 												$CatProdCount++;
-									}}
-									$Product_Count++;
+											}
+											$Product_Count++;
+										}
 					}}}}}
 					if ($ajax_reload == "No") {FilterCount($Product, $ProdTagObj, $Prod_Custom_Fields);}
 					unset($NameSearchMatch);
@@ -331,16 +333,17 @@ function Insert_Product_Catalog($atts) {
 								if ($Tag_Check == "Yes") {
 									$Custom_Field_Check = Custom_Field_Check($Custom_Fields_Sql_String, $Custom_Field_Count, $Product->Item_ID);
 									if ($Custom_Field_Check == "Yes") {
-										$Pagination_Check = CheckPagination($Product_Count, $products_per_page, $current_page, $Filtered);
-										if ($Pagination_Check == "OK") {
-											$Name_Search_Match = SearchProductName($Product->Item_ID, $Product->Item_Name, $Product->Item_Description, $prod_name, $CaseInsensitiveSearch, $ProductSearch);
-											if ($Name_Search_Match == "Yes") {
+										$Name_Search_Match = SearchProductName($Product->Item_ID, $Product->Item_Name, $Product->Item_Description, $prod_name, $CaseInsensitiveSearch, $ProductSearch);
+										if ($Name_Search_Match == "Yes") {
+											$Pagination_Check = CheckPagination($Product_Count, $products_per_page, $current_page, $Filtered);
+											if ($Pagination_Check == "OK") {
 												$HeaderBar .= "<a id='hidden_FB_link-" . $Product->Item_ID . "' class='fancybox' href='#prod-cat-addt-details-" . $Product->Item_ID . "'></a>";
 												if (!in_array("Thumbnail", $ExcludedLayouts)) {$ProdThumbString .= AddProduct("Thumbnail", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
 												if (!in_array("List", $ExcludedLayouts)) {$ProdListString .= AddProduct("List", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
 												if (!in_array("Detail", $ExcludedLayouts)) {$ProdDetailString .= AddProduct("Detail", $Product->Item_ID, $Product, $ProdTagObj, $ajax_reload, $ajax_url);}
-									}}
-									$Product_Count++;
+											}	
+											$Product_Count++;
+										}
 					}}}}}
 					if ($ajax_reload == "No") {FilterCount($Product, $ProdTagObj, $Prod_Custom_Fields);}
 					unset($NameSearchMatch);
