@@ -173,6 +173,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 3.0.16 =
+- Fixed an error with the recent and random product widgets
+
 = 3.0.15 =
 - Fixed an error with Next/Previous products
 

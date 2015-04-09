@@ -753,6 +753,7 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 		$FieldsString = implode(",", $Fields);
 		
 		$ShowStatus = "Show";
+		$Today = date("Y-m-d H:i:s"); 
 		$wpdb->show_errors();
 		// Create the query to insert the products one at a time into the database and then run it
 		foreach ($Data as $Product) {
@@ -783,7 +784,7 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 				
 				$ValuesString = implode("','", $Values);
 				$wpdb->query(
-					$wpdb->prepare("INSERT INTO $items_table_name (" . $FieldsString . ", Item_Display_Status) VALUES ('" . $ValuesString . "','%s')", $ShowStatus)
+					$wpdb->prepare("INSERT INTO $items_table_name (" . $FieldsString . ", Item_Display_Status, Item_Date_Created) VALUES ('" . $ValuesString . "','%s', '%s')", $ShowStatus, $Today)
 				);
 
 				$Item_ID = $wpdb->insert_id;

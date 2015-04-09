@@ -526,16 +526,19 @@ function Insert_Minimal_Products($atts) {
 		$Products = $wpdb->get_results("SELECT * FROM $items_table_name WHERE Item_ID IN (" . $Products_String . ")");
 	}
 	elseif ($catalogue_id != "") {
-		$Category_ID = 999999;
-		$SubCategory_ID = 999999;
+		$Item_IDs = "'999999',";
+		$Category_IDs = "'999999',";
+		$SubCategory_IDs = "'999999',";
 		$Catalogue_Items = $wpdb->get_results("SELECT * FROM $catalogue_items_table_name WHERE Catalogue_ID='" . $catalogue_id . "'");
 		foreach ($Catalogue_Items as $Catalogue_Item) {
-			if ($Catalogue_Item->Item_ID != "") {$Item_IDs .= "'" . $Catalogue_Item->Item_ID . "',";}
-			elseif ($Catalogue_Item->Category_ID != 0) {$Category_ID = $Catalogue_Item->CategoryID;}
-			elseif ($Catalogue_Item->SubCategory_ID != 0) {$SubCategory_ID = $Catalogue_Item->SubCategoryID;}
+			if ($Catalogue_Item->Item_ID != 0) {$Item_IDs .= "'" . $Catalogue_Item->Item_ID . "',";}
+			elseif ($Catalogue_Item->Category_ID != 0) {$Category_IDs .= "'" . $Catalogue_Item->Category_ID . "',";}
+			elseif ($Catalogue_Item->SubCategory_ID != 0) {$SubCategory_IDs = "'" . $Catalogue_Item->SubCategory_ID . "',";}
 		}
 		$Item_IDs = substr($Item_IDs, 0, -1);
-		$Products = $wpdb->get_results("SELECT * FROM $items_table_name WHERE Item_ID IN (" . $Item_IDs . ") OR Category_ID='" . $Category_ID . "' OR SubCategory_ID='" . $SubCategory_ID . "' ORDER BY rand() LIMIT " . $product_count);
+		$Category_IDs = substr($Category_IDs, 0, -1);
+		$SubCategory_IDs = substr($SubCategory_IDs, 0, -1);
+		$Products = $wpdb->get_results("SELECT * FROM $items_table_name WHERE Item_ID IN (" . $Item_IDs . ") OR Category_ID IN (" . $Category_IDs . ") OR SubCategory_ID IN (" . $SubCategory_IDs . ") ORDER BY rand() LIMIT " . $product_count);
 	}
 	elseif ($category_id != "") {
 		$Products = $wpdb->get_results("SELECT * FROM $items_table_name WHERE  Category_ID='" . $category_id . "' ORDER BY rand() LIMIT " . $product_count);
@@ -544,7 +547,7 @@ function Insert_Minimal_Products($atts) {
 		$Products = $wpdb->get_results("SELECT * FROM $items_table_name WHERE  SubCategory_ID='" . $subcategory_id . "' ORDER BY rand() LIMIT " . $product_count);
 	}
 	else {
-		$Products = $wpdb->get_results("SELECT * FROM $items_table_name ORDER BY Item_Date_Created ASC LIMIT " . $product_count);
+		$Products = $wpdb->get_results("SELECT * FROM $items_table_name WHERE Item_Date_Created!='0000-00-00 00:00:00' ORDER BY Item_Date_Created ASC LIMIT " . $product_count);
 	}
 	foreach ($Products as $Product) {
 		$ReturnString .= "<div class='upcp-insert-product upcp-minimal-product-listing'>";
