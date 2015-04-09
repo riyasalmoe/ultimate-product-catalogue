@@ -173,6 +173,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 3.0.15 =
+- Fixed an error with Next/Previous products
+
 = 3.0.14 =
 - Fixed a mobile pagination error
 - Fixed a text filtering problem with pagination

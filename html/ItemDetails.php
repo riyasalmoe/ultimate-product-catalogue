@@ -93,27 +93,27 @@
 				<?php } ?>
 				<p><?php _e("What tags should this product have? Tags help to describe the attributes of a product.", 'UPCP') ?></p></td>
 			</tr>
-
-			<?php if ($Related_Products != "Manual") {$Disabled = "disabled";} ?>
+			
+			<?php if ($Related_Products != "Manual") {$RelatedDisabled = "disabled";} ?>
 			<?php $Related_Products_Array = explode(",", $Product->Item_Related_Products); ?>
 			<tr>
 				<th><label for="Item_Related_Products"><?php _e("Related Products", 'UPCP') ?></label></th>
 				<td>
-				<label title='Product ID'></label><input type='text' name='Item_Related_Products_1' value="<?php echo $Related_Products_Array['0']; ?>" <?php echo $Disabled; ?>/><br />
-				<label title='Product ID'></label><input type='text' name='Item_Related_Products_2' value="<?php echo $Related_Products_Array['1']; ?>" <?php echo $Disabled; ?>/><br />
-				<label title='Product ID'></label><input type='text' name='Item_Related_Products_3' value="<?php echo $Related_Products_Array['2']; ?>" <?php echo $Disabled; ?>/><br />
-				<label title='Product ID'></label><input type='text' name='Item_Related_Products_4' value="<?php echo $Related_Products_Array['3']; ?>" <?php echo $Disabled; ?>/><br />
-				<label title='Product ID'></label><input type='text' name='Item_Related_Products_5' value="<?php echo $Related_Products_Array['4']; ?>" <?php echo $Disabled; ?>/><br />
+				<label title='Product ID'></label><input type='text' name='Item_Related_Products_1' value="<?php echo $Related_Products_Array['0']; ?>" <?php echo $RelatedDisabled; ?>/><br />
+				<label title='Product ID'></label><input type='text' name='Item_Related_Products_2' value="<?php echo $Related_Products_Array['1']; ?>" <?php echo $RelatedDisabled; ?>/><br />
+				<label title='Product ID'></label><input type='text' name='Item_Related_Products_3' value="<?php echo $Related_Products_Array['2']; ?>" <?php echo $RelatedDisabled; ?>/><br />
+				<label title='Product ID'></label><input type='text' name='Item_Related_Products_4' value="<?php echo $Related_Products_Array['3']; ?>" <?php echo $RelatedDisabled; ?>/><br />
+				<label title='Product ID'></label><input type='text' name='Item_Related_Products_5' value="<?php echo $Related_Products_Array['4']; ?>" <?php echo $RelatedDisabled; ?>/><br />
 				<p><?php _e("What products are related to this one if set to manual related products? (premium feature, input product IDs)", 'UPCP') ?></p>
 				</td>
 			</tr>
 			
-			<?php if ($Next_Previous != "Manual") {$Disabled = "disabled";} ?>
+			<?php if ($Next_Previous != "Manual") {$NextPreviousDisabled = "disabled";} ?>
 			<tr>
 				<th><label for="Item_Related_Products"><?php _e("Next/Previous Products", 'UPCP') ?></label></th>
 				<td>
-				<label title='Product ID'>Next Product ID:</label><input type='text' name='Item_Next_Product' value="<?php echo substr($Product->Item_Next_Previous, 0, strpos($Product->Item_Next_Previous, ',')); ?>" <?php echo $Disabled; ?>/><br />
-				<label title='Product ID'>Previous Product ID:</label><input type='text' name='Item_Previous_Product' value="<?php echo substr($Product->Item_Next_Previous, strpos($Product->Item_Next_Previous, ',')+1); ?>" <?php echo $Disabled; ?>/><br />
+				<label title='Product ID'>Next Product ID:</label><input type='text' name='Item_Next_Product' value="<?php echo substr($Product->Item_Next_Previous, 0, strpos($Product->Item_Next_Previous, ',')); ?>" <?php echo $NextPreviousDisabled; ?>/><br />
+				<label title='Product ID'>Previous Product ID:</label><input type='text' name='Item_Previous_Product' value="<?php echo substr($Product->Item_Next_Previous, strpos($Product->Item_Next_Previous, ',')+1); ?>" <?php echo $NextPreviousDisabled; ?>/><br />
 				<p><?php _e("What products should be listed as the next/previous products? (premium feature, input product IDs)", 'UPCP') ?></p>
 				</td>
 			</tr>

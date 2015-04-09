@@ -306,22 +306,22 @@
 	<p><?php _e("What tags should this product have? Tags help to describe the attributes of a product.", 'UPCP') ?></p>
 </div>
 
-<?php if ($Related_Products != "Manual") {$Disabled = "disabled";} ?>
+<?php if ($Related_Products != "Manual") {$RelatedDisabled = "disabled";} ?>
 <div class="form-field">
 	<label for="Item_Related_Products"><?php _e("Related Products", 'UPCP') ?></label>
-	<label title='Product ID'></label><input type='text' name='Item_Related_Products_1' value='' <?php echo $Disabled; ?>/><br />
-	<label title='Product ID'></label><input type='text' name='Item_Related_Products_2' value='' <?php echo $Disabled; ?>/><br />
-	<label title='Product ID'></label><input type='text' name='Item_Related_Products_3' value='' <?php echo $Disabled; ?>/><br />
-	<label title='Product ID'></label><input type='text' name='Item_Related_Products_4' value='' <?php echo $Disabled; ?>/><br />
-	<label title='Product ID'></label><input type='text' name='Item_Related_Products_5' value='' <?php echo $Disabled; ?>/><br />
+	<label title='Product ID'></label><input type='text' name='Item_Related_Products_1' value='' <?php echo $RelatedDisabled; ?>/><br />
+	<label title='Product ID'></label><input type='text' name='Item_Related_Products_2' value='' <?php echo $RelatedDisabled; ?>/><br />
+	<label title='Product ID'></label><input type='text' name='Item_Related_Products_3' value='' <?php echo $RelatedDisabled; ?>/><br />
+	<label title='Product ID'></label><input type='text' name='Item_Related_Products_4' value='' <?php echo $RelatedDisabled; ?>/><br />
+	<label title='Product ID'></label><input type='text' name='Item_Related_Products_5' value='' <?php echo $RelatedDisabled; ?>/><br />
 	<p><?php _e("What products are related to this one? (premium feature, input product IDs)", 'UPCP') ?></p>
 </div>
 
-<?php if ($Next_Previous != "Manual") {$Disabled = "disabled";} ?>
+<?php if ($Next_Previous != "Manual") {$NextPreviousDisabled = "disabled";} ?>
 <div class="form-field">
 	<label for="Item_Related_Products"><?php _e("Next/Previous Products", 'UPCP') ?></label>
-	<label title='Product ID'>Next Product ID:</label><input type='text' name='Item_Next_Product' value='' <?php echo $Disabled; ?>/><br />
-	<label title='Product ID'>Previous Product ID:</label><input type='text' name='Item_Previous_Product' value='' <?php echo $Disabled; ?>/><br />
+	<label title='Product ID'>Next Product ID:</label><input type='text' name='Item_Next_Product' value='' <?php echo $NextPreviousDisabled; ?>/><br />
+	<label title='Product ID'>Previous Product ID:</label><input type='text' name='Item_Previous_Product' value='' <?php echo $NextPreviousDisabled; ?>/><br />
 	<p><?php _e("What products should be listed as the next/previous products? (premium feature, input product IDs)", 'UPCP') ?></p>
 </div>
 
