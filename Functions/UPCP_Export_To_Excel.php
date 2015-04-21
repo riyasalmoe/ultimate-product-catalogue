@@ -4,6 +4,8 @@ function UPCP_Export_To_Excel() {
 	global $categories_table_name, $subcategories_table_name, $items_table_name, $tagged_items_table_name, $tags_table_name, $fields_table_name, $fields_meta_table_name;
 		
 	include_once('../wp-content/plugins/ultimate-product-catalogue/PHPExcel/Classes/PHPExcel.php');
+
+	$FileType = $_GET['FileType'];
 		
 	// Instantiate a new PHPExcel object 
 	$objPHPExcel = new PHPExcel();  
@@ -65,11 +67,20 @@ function UPCP_Export_To_Excel() {
 
 
 	// Redirect output to a client’s web browser (Excel5) 
-	header('Content-Type: application/vnd.ms-excel'); 
-	header('Content-Disposition: attachment;filename="Product_Export.xls"'); 
-	header('Cache-Control: max-age=0'); 
-	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5'); 
-	$objWriter->save('php://output');
+	if ($FileType == "CSV") {
+		header('Content-Type: application/vnd.ms-excel'); 
+		header('Content-Disposition: attachment;filename="Product_Export.csv"'); 
+		header('Cache-Control: max-age=0'); 
+		$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'CSV');
+		$objWriter->save('php://output');
+	}
+	else {
+		header('Content-Type: application/vnd.ms-excel'); 
+		header('Content-Disposition: attachment;filename="Product_Export.xls"'); 
+		header('Cache-Control: max-age=0'); 
+		$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5'); 
+		$objWriter->save('php://output');
+	}
 
 }
 ?>

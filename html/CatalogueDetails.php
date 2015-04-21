@@ -9,7 +9,7 @@ $Catalogue = $wpdb->get_row($Query); ?>
 				<div class="form-wrap CatalogueDetail">
 						<a href="admin.php?page=UPCP-options&DisplayPage=Catalogues" class="NoUnderline">&#171; <?php _e("Back", 'UPCP') ?> </a>
 						<h3>Edit <?php echo $Catalogue->Catalogue_Name;?> (ID: <?php echo $Catalogue->Catalogue_ID; ?>)</h3>
-						<form id="addtag" method="post" action="admin.php?page=UPCP-options&Action=UPCP_EditCatalogue&DisplayPage=Catalogue" class="validate" enctype="multipart/form-data">
+						<form id="addtag" method="post" action="admin.php?page=UPCP-options&Action=UPCP_EditCatalogue&Update_Item=Catalogue&Catalogue_ID=<?php echo $Catalogue->Catalogue_ID ?>" class="validate" enctype="multipart/form-data">
 						<input type="hidden" name="action" value="Edit_Catalogue" />
 						<input type="hidden" name="Catalogue_ID" value="<?php echo $Catalogue->Catalogue_ID; ?>" />
 						<?php wp_nonce_field(); ?>

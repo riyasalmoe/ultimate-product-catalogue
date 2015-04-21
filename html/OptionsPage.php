@@ -7,13 +7,13 @@
 	$Detail_Desc_Chars = get_option("UPCP_Desc_Chars");
 	$Sidebar_Order = get_option("UPCP_Sidebar_Order");
 	$Single_Page_Price = get_option("UPCP_Single_Page_Price");
-	$PrettyLinks = get_option("UPCP_Pretty_Links");
-	$XML_Sitemap_URL = get_option("UPCP_XML_Sitemap_URL");
 	$Filter_Title = get_option("UPCP_Filter_Title");
 	$Detail_Image = get_option("UPCP_Details_Image");
 	$CaseInsensitiveSearch = get_option("UPCP_Case_Insensitive_Search");
 	$Apply_Contents_Filter = get_option("UPCP_Apply_Contents_Filter");
 	$Maintain_Filtering = get_option("UPCP_Maintain_Filtering");
+	$Extra_Elements_Array = get_option("UPCP_Extra_Elements");
+	$Extra_Elements = explode(",", $Extra_Elements_Array);
 	
 	$InstallVersion = get_option("UPCP_First_Install_Version");
 	$Custom_Product_Page = get_option("UPCP_Custom_Product_Page");
@@ -41,6 +41,13 @@
 	$Back_To_Catalogue_Label = get_option("UPCP_Back_To_Catalogue_Label");
 	$No_Results_Found_Label = get_option("UPCP_No_Results_Found_Label");
 	$Products_Pagination_Label = get_option("UPCP_Products_Pagination_Label");
+
+	$PrettyLinks = get_option("UPCP_Pretty_Links");
+	$XML_Sitemap_URL = get_option("UPCP_XML_Sitemap_URL");
+	$SEO_Option = get_option("UPCP_SEO_Option");
+	$SEO_Integration = get_option("UPCP_SEO_Integration");
+	$SEO_Title = get_option("UPCP_SEO_Title");
+	$Update_Breadcrumbs = get_option("UPCP_Update_Breadcrumbs");
 
 	$Catalogue_Style = get_option("UPCP_Catalogue_Style");
 	$Sidebar_Style = get_option("UPCP_Sidebar_Style");
@@ -77,20 +84,6 @@
 	</fieldset>
 </td>
 </tr>
-<?php if ($InstallVersion <= 2.0) { ?>
-<tr>
-<th scope="row"><?php _e("Pretty Permalinks", 'UPCP')?><br />
-<div onMouseOver="ShowToolTip('pretty_links_exp')" onMouseOut="HideToolTip('pretty_links_exp')" class="questionMark"><br> 
-<div id="pretty_links_exp" class="toolTip" ><?php _e("Should the plugin create SEO-friendly product page URLs?", 'UPCP')?></div></div>
-</th>
-<td>
-	<fieldset><legend class="screen-reader-text"><span><?php _e("Use Pretty Permalinks for Product Pages", 'UPCP')?></span></legend>
-	<label title='Yes'><input type='radio' name='pretty_links' value='Yes' <?php if($PrettyLinks == "Yes") {echo "checked='checked'";} ?> /> <span><?php _e("Yes", 'UPCP')?></span></label><br />
-	<label title='No'><input type='radio' name='pretty_links' value='No' <?php if($PrettyLinks == "No") {echo "checked='checked'";} ?> /> <span><?php _e("No", 'UPCP')?></span></label><br />
-	</fieldset>
-</td>
-</tr>
-<?php } ?>
 <tr>
 <th scope="row"><?php _e("Read More", 'UPCP')?> <br/> 
 <div onMouseOver="ShowToolTip('read_more_exp')" onMouseOut="HideToolTip('read_more_exp')" class="questionMark"><br> 
@@ -223,43 +216,24 @@
 	</fieldset>
 </td>
 </tr>
+<tr>
+<th scope="row"><?php _e("Extra Product Page Elements", 'UPCP')?> <br/> 
+<div onMouseOver="ShowToolTip('extra_elements_exp')" onMouseOut="HideToolTip('extra_elements_exp')" class="questionMark"><br> 
+<div id="extra_elements_exp" class="toolTip" ><?php _e("Select extra elements to be displayed on the right of product pages.", 'UPCP')?></div></div>
+</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span><?php _e("Extra Product Page Elements", 'UPCP')?></span></legend>
+	<label title='Category'><input type='checkbox' name='extra_elements[]' value='Category' <?php if(in_array("Category", $Extra_Elements)) {echo "checked='checked'";} ?> /> <span>Category Name</span></label><br />
+	<label title='SubCategory'><input type='checkbox' name='extra_elements[]' value='SubCategory' <?php if(in_array("SubCategory", $Extra_Elements)) {echo "checked='checked'";} ?> /> <span>SubCategory Name</span></label><br />
+	<label title='Tags'><input type='checkbox' name='extra_elements[]' value='Tags' <?php if(in_array("Tags", $Extra_Elements)) {echo "checked='checked'";} ?> /> <span>Tags</span></label><br />
+	<label title='CustomFields'><input type='checkbox' name='extra_elements[]' value='CustomFields' <?php if(in_array("CustomFields", $Extra_Elements)) {echo "checked='checked'";} ?> /> <span>Custom Fields</span></label><br />
+	<label title='Videos'><input type='checkbox' name='extra_elements[]' value='Videos' <?php if(in_array("Videos", $Extra_Elements)) {echo "checked='checked'";} ?> /> <span>Videos</span></label><br />
+	</fieldset>
+</td>
+</tr>
 </table>
 <h3>Premium Options</h3>
-<?php if ($InstallVersion >= 2.1) { ?>
 <table class="form-table">
-<tr>
-<th scope="row"><?php _e("Pretty Permalinks", 'UPCP')?> <br/> 
-<div onMouseOver="ShowToolTip('pretty_links_exp')" onMouseOut="HideToolTip('pretty_links_exp')" class="questionMark"><br> 
-<div id="pretty_links_exp" class="toolTip" ><?php _e("Should the plugin create SEO-friendly product page URLs?", 'UPCP')?></div></div>
-</th>
-<td>
-	<fieldset><legend class="screen-reader-text"><span><?php _e("Use Pretty Permalinks for Product Pages", 'UPCP')?></span></legend>
-	<label title='Yes'><input type='radio' name='pretty_links' value='Yes' <?php if($PrettyLinks == "Yes") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Yes", 'UPCP')?></span></label><br />
-	<label title='No'><input type='radio' name='pretty_links' value='No' <?php if($PrettyLinks == "No") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("No", 'UPCP')?></span></label><br />
-	</fieldset>
-</td>
-</tr>
-<?php } ?>
-<tr>
-<th scope="row"><?php _e("XML Sitemap URL", 'UPCP')?> <br/> 
-<div onMouseOver="ShowToolTip('xml_sitemap_url_exp')" onMouseOut="HideToolTip('xml_sitemap_url_exp')" class="questionMark"><br> 
-<div id="xml_sitemap_url_exp" class="toolTip" ><?php _e("Set the base URL path of XML sitemap that the plugin creates of all products, used for SEO purposes", 'UPCP')?></div></div>
-</th>
-<td>
-	<fieldset><legend class="screen-reader-text"><span><?php _e("What URL should be used at the base of the products sitemap?", 'UPCP')?></span></legend>
-	<input type='text' name='xml_sitemap_url' value='<?php echo $XML_Sitemap_URL; ?>' <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/>
-	</fieldset>
-</td>
-</tr>
-<?php /*<tr>
-<th scope="row">Add Product Name to Title</th>
-<td>
-	<fieldset><legend class="screen-reader-text"><span>Should the product name be added to the page title on individual product pages?</span></legend>
-	<label title='Yes'><input type='radio' name='filter_title' value='Yes' <?php if($Filter_Title == "Yes") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span>Yes</span></label><br />
-	<label title='No'><input type='radio' name='filter_title' value='No' <?php if($Filter_Title == "No") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span>No</span></label><br />
-	</fieldset>
-</td>
-</tr> */ ?>
 <tr>
 <th scope="row"><?php _e("Custom Product Pages", 'UPCP')?> <br/> 
 <div onMouseOver="ShowToolTip('custom_product_page_exp')" onMouseOut="HideToolTip('custom_product_page_exp')" class="questionMark"><br> 
@@ -409,6 +383,79 @@
 	</fieldset>
 </td>
 </tr>
+</table>
+
+<h3>SEO Options</h3>
+<table class="form-table">
+<tr>
+<th scope="row"><?php _e("Pretty Permalinks", 'UPCP')?> <br/> 
+<div onMouseOver="ShowToolTip('pretty_links_exp')" onMouseOut="HideToolTip('pretty_links_exp')" class="questionMark"><br> 
+<div id="pretty_links_exp" class="toolTip" ><?php _e("Should the plugin create SEO-friendly product page URLs?", 'UPCP')?></div></div>
+</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span><?php _e("Use Pretty Permalinks for Product Pages", 'UPCP')?></span></legend>
+	<label title='Yes'><input type='radio' name='pretty_links' value='Yes' <?php if($PrettyLinks == "Yes") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Yes", 'UPCP')?></span></label><br />
+	<label title='No'><input type='radio' name='pretty_links' value='No' <?php if($PrettyLinks == "No") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("No", 'UPCP')?></span></label><br />
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row"><?php _e("XML Sitemap URL", 'UPCP')?> <br/> 
+<div onMouseOver="ShowToolTip('xml_sitemap_url_exp')" onMouseOut="HideToolTip('xml_sitemap_url_exp')" class="questionMark"><br> 
+<div id="xml_sitemap_url_exp" class="toolTip" ><?php _e("Set the base URL path of XML sitemap that the plugin creates of all products, used for SEO purposes", 'UPCP')?></div></div>
+</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span><?php _e("What URL should be used at the base of the products sitemap?", 'UPCP')?></span></legend>
+	<input type='text' name='xml_sitemap_url' value='<?php echo $XML_Sitemap_URL; ?>' <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/>
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row"><?php _e("SEO By Yoast Integration", 'UPCP')?> <br/> 
+<div onMouseOver="ShowToolTip('seo_option_exp')" onMouseOut="HideToolTip('seo_option_exp')" class="questionMark"><br> 
+<div id="seo_option_exp" class="toolTip" ><?php _e("Should product descriptions and titled be added using SEO By Yoast for product pages?", 'UPCP')?></div></div>
+</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span><?php _e("Should product descriptions and titled be added using SEO By Yoast for product pages?", 'UPCP')?></span></legend>
+	<label title='Yoast'><input type='radio' name='seo_option' value='Yoast' <?php if($SEO_Option == "Yoast") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Yes", 'UPCP')?></span></label><br />
+	<label title='None'><input type='radio' name='seo_option' value='None' <?php if($SEO_Option == "None") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("No", 'UPCP')?></span></label><br />
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row"><?php _e("Description Handling", 'UPCP')?> <br/> 
+<div onMouseOver="ShowToolTip('seo_integration_exp')" onMouseOut="HideToolTip('seo_integration_exp')" class="questionMark"><br> 
+<div id="seo_integration_exp" class="toolTip" ><?php _e("Should the page description be added to or replaced?", 'UPCP')?></div></div>
+</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span><?php _e("Should the page description be added to or replaced?", 'UPCP')?></span></legend>
+	<label title='Add'><input type='radio' name='seo_integration' value='Add' <?php if($SEO_Integration == "Add") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Add", 'UPCP')?></span></label><br />
+	<label title='Replace'><input type='radio' name='seo_integration' value='Replace' <?php if($SEO_Integration == "Replace") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Replace", 'UPCP')?></span></label><br />
+	</fieldset>
+</td>
+</tr>
+<th scope="row"><?php _e("SEO Title", 'UPCP')?> <br/> 
+<div onMouseOver="ShowToolTip('seo_title_exp')" onMouseOut="HideToolTip('seo_title_exp')" class="questionMark"><br> 
+<div id="seo_title_exp" class="toolTip" ><?php _e("What should the page title be set to? Can use [page-title], [product-name], [category-name], [subcategory_name] to substitute those in the title.", 'UPCP')?></div></div>
+</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span><?php _e("What should the page title be set to? Can use [page-title], [product-name], [category-name], [subcategory_name] to substitute those in the title.", 'UPCP')?></span></legend>
+	<input type='text' name='seo_title' value='<?php echo $SEO_Title; ?>' <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/>
+	</fieldset>
+</td>
+</tr>
+<!--<tr>
+<th scope="row"><?php _e("Update Breadcrumb Trail", 'UPCP')?> <br/> 
+<div onMouseOver="ShowToolTip('update_breadcrumbs_exp')" onMouseOut="HideToolTip('update_breadcrumbs_exp')" class="questionMark"><br> 
+<div id="update_breadcrumbs_exp" class="toolTip" ><?php _e("Should the breadcrumb trail be updated on product pages?", 'UPCP')?></div></div>
+</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span><?php _e("Should the breadcrumb trail be updated on product pages?", 'UPCP')?></span></legend>
+	<label title='Yes'><input type='radio' name='update_breadcrumbs' value='Yes' <?php if($Update_Breadcrumbs == "Yes") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Yes", 'UPCP')?></span></label><br />
+	<label title='No'><input type='radio' name='update_breadcrumbs' value='No' <?php if($Update_Breadcrumbs == "No") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("No", 'UPCP')?></span></label><br />
+	</fieldset>
+</td>
+</tr>-->
 </table>
 
 <h3>Labelling Options</h3>

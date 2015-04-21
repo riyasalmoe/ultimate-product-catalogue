@@ -1,5 +1,9 @@
 jQuery(document).ready(function(){
 	addClickHandlers();
+
+	var thumbContainerWidth = 0,thumbContainerHeight = 0,thumbHolderWidth = 0,thumbImageWidth = 0,thumbImageHeight = 0,numberOfImages = 0;
+	var thumbnailHolderContainer,thumbnailControls;
+
 	jQuery(".jquery-prod-cat-value").change(function(){
 		var CatValues = [];
 		jQuery('.jquery-prod-cat-value').each(function() {if (jQuery(this).prop('checked')) {CatValues.push(jQuery(this).val());}});
@@ -19,7 +23,60 @@ jQuery(document).ready(function(){
 		var prod_name = jQuery(this).val();
 		jQuery('#upcp-selected-prod-name').val(prod_name);
 	});
+
+	screenshotThumbHolderWidth();
+	jQuery('.upcp-catalogue-link ').hover(
+		function(){jQuery(this).children('.upcp-prod-desc-custom-fields').fadeIn(400);},
+		function(){jQuery(this).children('.upcp-prod-desc-custom-fields').fadeOut(400);}
+	);
+	jQuery('.upcp-minimal-img-div').hover(
+		function(){jQuery(this).children('.upcp-prod-desc-custom-fields').fadeIn(400);},
+		function(){jQuery(this).children('.upcp-prod-desc-custom-fields').fadeOut(400);}
+	);
 });
+
+function screenshotThumbHolderWidth(){
+	var screenshotImage = jQuery('.prod-cat-addt-details-thumbs-div img:first-child');
+	var thumbnailHolderContainer = jQuery('.game-thumbnail-holder');
+
+	thumbImageWidth = screenshotImage.width();
+	thumbImageHeight = screenshotImage.height();
+	numberOfImages = jQuery('.prod-cat-addt-details-thumb').length;
+	thumbContainerWidth = (thumbImageWidth+20)*numberOfImages;
+	thumbnailHolderContainerW = thumbnailHolderContainer.width();
+	thumbnailControls = jQuery('.thumbnail-control');
+	//jQuery('.prod-cat-addt-details-thumbs-div').css({width:thumbContainerWidth,height:thumbImageHeight+20,position:"absolute",top:0,left:0});
+	//jQuery(thumbnailHolderContainer).css({minHeight:thumbImageHeight+20,width:thumbContainerWidth});
+	
+	if(thumbContainerWidth > thumbnailHolderContainerW){
+		thumbnailControls.show();
+		var tnScrollerW = jQuery(".thumbnail-scroller").width();
+		var tnHolderDiv = jQuery(".prod-cat-addt-details-thumbs-div").width();
+		var tnScrollLimit = -tnHolderDiv + tnScrollerW + thumbImageWidth;
+		jQuery('.thumbnail-nav-left').click(function(){
+			var tnContainerPos = thumbnailHolderContainer.position();
+			var tnContainerXPos = tnContainerPos.left;
+			if(tnContainerXPos >= tnScrollLimit){
+				var scrollThumbnails = tnContainerXPos - (thumbImageWidth+20);
+				jQuery(thumbnailHolderContainer).animate({left:scrollThumbnails});
+				jQuery('.thumbnail-nav-right').show();
+			}else if(tnContainerXPos <= tnScrollLimit){
+				jQuery(this).hide();
+			}; 
+		});
+		jQuery('.thumbnail-nav-right').click(function(){
+			var tnContainerPos = thumbnailHolderContainer.position();
+			var tnContainerXPos = tnContainerPos.left;
+			if(tnContainerXPos != 0){
+				var scrollThumbnails = tnContainerXPos + (thumbImageWidth+20);
+				jQuery(thumbnailHolderContainer).animate({left:scrollThumbnails});
+				jQuery('.thumbnail-nav-left').show();
+			}else if(tnContainerXPos == 0){
+				jQuery(this).hide();
+			}
+		});
+	};
+};
 
 function addClickHandlers() {
 	if (typeof maintain_filtering === 'undefined' || maintain_filtering === null) {maintain_filtering = "Yes";}
@@ -269,7 +326,10 @@ function OpenProduct(ProdID) {
 
 jQuery(document).ready(function() 
 {
-     adjustCatalogueHeight();
+    adjustCatalogueHeight();
+    jQuery(window).resize(function() {
+    	adjustCatalogueHeight();
+    });
 });
 
 function adjustCatalogueHeight() {

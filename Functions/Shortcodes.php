@@ -3,8 +3,8 @@
 * supplied in the product-catalog shortcode */
 function Insert_Product_Catalog($atts) {
 	// Include the required global variables, and create a few new ones
-	global $wpdb, $categories_table_name, $subcategories_table_name, $tags_table_name, $tagged_items_table_name, $catalogues_table_name, $catalogue_items_table_name, $items_table_name, $fields_meta_table_name;
-	global $ReturnString, $ProdCats, $ProdSubCats, $ProdTags, $ProdCustomFields, $ProdCatString, $ProdSubCatString, $ProdTagString, $ProdCustomFieldsString, $Catalogue_ID, $Catalogue_Layout_Format, $Catalogue_Sidebar, $Full_Version;
+	global $wpdb, $categories_table_name, $subcategories_table_name, $tags_table_name, $tagged_items_table_name, $tag_groups_table_name, $catalogues_table_name, $catalogue_items_table_name, $items_table_name, $fields_meta_table_name, $item_videos_table_name;
+	global $ReturnString, $ProdCats, $ProdSubCats, $ProdTags, $ProdCustomFields, $ProdCatString, $ProdSubCatString, $ProdTagString, $ProdCustomFieldsString, $Catalogue_ID, $Catalogue_Layout_Format, $Catalogue_Sidebar, $Full_Version, $TagGroupName;
 
 	$ReturnString = "";
 	$Filter = get_option("UPCP_Filter_Type");
@@ -564,7 +564,7 @@ add_shortcode("insert-products", "Insert_Minimal_Products");
 /* Function to add the HTML for an individual product to the catalog */
 function AddProduct($format, $Item_ID, $Product, $Tags, $AjaxReload = "No", $AjaxURL = "") {
 	// Add the required global variables
-	global $wpdb, $categories_table_name, $subcategories_table_name, $tags_table_name, $tagged_items_table_name, $catalogues_table_name, $catalogue_items_table_name, $items_table_name, $item_images_table_name;
+	global $wpdb, $categories_table_name, $subcategories_table_name, $tags_table_name, $tagged_items_table_name, $catalogues_table_name, $catalogue_items_table_name, $items_table_name, $item_images_table_name, $item_videos_table_name;
 	global $ProdCats, $ProdSubCats, $ProdTags, $ProdCustomFields, $ReturnString;
 		
 	$ReadMore = get_option("UPCP_Read_More");
@@ -585,7 +585,7 @@ function AddProduct($format, $Item_ID, $Product, $Tags, $AjaxReload = "No", $Aja
 	$Description = str_replace("[upcp-price]", $Product->Item_Price, $Description);
 		
 	//Select the product info, tags and images for the product
-	$Item_Images = $wpdb->get_results("SELECT Item_Image_URL, Item_Image_ID FROM $item_images_table_name WHERE Item_ID=" . $Item_ID);
+	$Item_Images = $wpdb->get_results("SELECT Item_Image_URL, Item_Image_ID FROM $item_images_table_name WHERE Item_ID=" . $Item_ID . " ORDER BY Item_Image_Order");
 	$TagsString = "";
 		
 	if ($Product->Item_Photo_URL != "" and strlen($Product->Item_Photo_URL) > 7 and substr($Product->Item_Photo_URL, 0, 7) != "http://" and substr($Product->Item_Photo_URL, 0, 8) != "https://") {
@@ -752,10 +752,12 @@ function AddProduct($format, $Item_ID, $Product, $Tags, $AjaxReload = "No", $Aja
 }
 
 function SingleProductPage() {
-	global $wpdb, $items_table_name, $item_images_table_name, $fields_table_name, $fields_meta_table_name, $tagged_items_table_name, $tags_table_name;
+	global $wpdb, $items_table_name, $item_images_table_name, $fields_table_name, $fields_meta_table_name, $tagged_items_table_name, $tags_table_name, $tag_groups_table_name, $item_videos_table_name;
 		
 	$Pretty_Links = get_option("UPCP_Pretty_Links");
 	$Filter_Title = get_option("UPCP_Filter_Title");
+	$Extra_Elements_String = get_option("UPCP_Extra_Elements");
+	$Extra_Elements = explode(",", $Extra_Elements_String);
 	$Single_Page_Price = get_option("UPCP_Single_Page_Price");
 	$Custom_Product_Page = get_option("UPCP_Custom_Product_Page");
 	$Related_Type = get_option("UPCP_Related_Products");
@@ -767,15 +769,16 @@ function SingleProductPage() {
 	$Top_Bottom_Padding = get_option("UPCP_Top_Bottom_Padding");
 	$Left_Right_Padding = get_option("UPCP_Left_Right_Padding");
 	$CF_Conversion = get_option("UPCP_CF_Conversion");
-
+	
+	$TagGroupName = "";
 	$Back_To_Catalogue_Label = get_option("UPCP_Back_To_Catalogue_Label");
 	if ($Back_To_Catalogue_Label != "") {$Back_To_Catalogue_Text = $Back_To_Catalogue_Label;}
 	else {$Back_To_Catalogue_Text = __("Back to Catalogue", 'UPCP');}
 		
 	if ($Pretty_Links == "Yes") {$Product = $wpdb->get_row("SELECT * FROM $items_table_name WHERE Item_Slug='" . trim(get_query_var('single_product'), "/? ") . "'");}
 	else {$Product = $wpdb->get_row("SELECT * FROM $items_table_name WHERE Item_ID='" . $_GET['SingleProduct'] . "'");}
-	$Item_Images = $wpdb->get_results("SELECT Item_Image_URL, Item_Image_ID FROM $item_images_table_name WHERE Item_ID=" . $Product->Item_ID);
-		
+	$Item_Images = $wpdb->get_results("SELECT Item_Image_URL, Item_Image_ID FROM $item_images_table_name WHERE Item_ID=" . $Product->Item_ID . " ORDER BY Item_Image_Order");
+
 	$Links = get_option("UPCP_Product_Links");
 	if ($CF_Conversion != "No") {$Description = ConvertCustomFields($Product->Item_Description);}
 	else {$Description = $Product->Item_Description;}
@@ -820,6 +823,9 @@ function SingleProductPage() {
 
 	if ($uri_parts[1] == "") {$SP_Perm_URL .= "Product_ID=" . $Product->Item_ID;}
 	else {$SP_Perm_URL .= "&Product_ID=" . $Product->Item_ID;}
+
+	$TagGroupNames = $wpdb->get_results("SELECT * FROM $tag_groups_table_name ORDER BY Tag_Group_Order ASC");
+	$ProductVideos = $wpdb->get_results($wpdb->prepare("SELECT * FROM $item_videos_table_name WHERE Item_ID='%d' ORDER BY Item_Video_Order ASC", $Product->Item_ID));
 		
 	if ($Custom_Product_Page == "No") {
 		$ProductString .= "<div class='upcp-standard-product-page'>";
@@ -847,6 +853,50 @@ function SingleProductPage() {
 		if ($Next_Previous == "Manual") {$ProductString .= Get_Next_Previous($Product, $Next_Previous);}
 		$ProductString .= "</div>\n";
 		$ProductString .= "</div>\n";
+		if (is_array($Extra_Elements)) {
+			// Display selected elements on the side of the page
+			$ProductString .= "<div class='prod-details-right'>";
+			if (in_array("Category", $Extra_Elements)) {$ProductString .= "<div class='prod-category-container upcp-product-side-container'>\n<div class='upcp-side-title'>" . __('Category', 'UPCP') . ": </div>" . $Product->Category_Name . "</div>";}
+			if (in_array("SubCategory", $Extra_Elements)) {$ProductString .= "<div class='prod-category-container upcp-product-side-container'>\n<div class='upcp-side-title'>" . __('Sub-Category', 'UPCP') . ": </div>" . $Product->SubCategory_Name . "</div>";}
+			if (in_array("Tags", $Extra_Elements)) {$ProductString .= "<div class='prod-tag-container upcp-product-side-container'>\n<div class='upcp-side-title'>Tags:</div>" . $TagsString . "</div>";}
+			if (in_array("CustomFields", $Extra_Elements)) {
+				$ProductString .= "<div class='prod-cf-container upcp-product-side-container'>";
+				$CustomFields = $wpdb->get_results("SELECT Field_ID, Meta_Value FROM $fields_meta_table_name WHERE Item_ID='" . $Product->Item_ID . "'");
+				foreach ($CustomFields as $CustomField) {
+					$Field = $wpdb->get_row("SELECT Field_Name FROM $fields_table_name WHERE Field_ID='" . $CustomField->Field_ID . "'");
+					$ProductString .= "<div class='upcp-side-title'>" . $Field->Field_Name . ":</div>" . $CustomField->Meta_Value . "<br>";
+				}
+				$ProductString .= "</div>";
+			}
+			if (in_array("Videos", $Extra_Elements)) {
+				$ProductString .= "<div class='prod-videos-container upcp-product-side-container'>";
+				$ItemVideos = $wpdb->get_results("SELECT * FROM $item_videos_table_name WHERE Item_ID='" . $Product->Item_ID . "' ORDER BY Item_Video_Order ASC");
+				foreach ($ItemVideos as $Video) {
+					$video_info = 'http://gdata.youtube.com/feeds/api/videos/' . $Video->Item_Video_URL;
+		
+					if($video_info != ""){
+						$ch = curl_init();
+						curl_setopt($ch, CURLOPT_URL, $video_info);
+						curl_setopt($ch, CURLOPT_HEADER, 0);
+						curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+						
+						$response = curl_exec($ch);
+						curl_close($ch);
+						
+						if ($response) {
+							$xml   = new SimpleXMLElement($response);
+							$ItemVideoDescription = (string) $xml->title;
+						} else {
+							$ItemVideoDescription = "No title available for this video";
+						}
+					}
+					$ProductString .= "<div class='upcp-side-title upcp-product-video'>" . $ItemVideoDescription . "</div>";
+					$ProductString .= "<iframe width='300' height='225' src='http://www.youtube.com/embed/" . $Video->Item_Video_URL . "?rel=0&fs=1' webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>";
+				}
+				$ProductString .= "</div>";
+			}
+			$ProductString .= "</div>";
+		}
 		$ProductString .= "</div>\n";
 				
 		$ProductString .= "</div>\n";
@@ -1041,9 +1091,9 @@ function BuildSidebar($category, $subcategory, $tags, $prod_name) {
 			if ($Filter  == "Javascript" and $Tag_Logic == "OR") {$SidebarString .= "<input type='checkbox' class='jquery-prod-cat-value' name='Category" . $Category->Category_ID . "' value='" . $Category->Category_ID . "' onclick='UPCP_Filer_Results_OR(); UPCPHighlight(this, \"" . $Color . "\");'>" . $Category->Category_Name . " (" . $ProdCats[$Category->Category_ID] . ")\n";}
 			elseif ($Filter  == "Javascript") {$SidebarString .= "<input type='checkbox' class='jquery-prod-cat-value' name='Category" . $Category->Category_ID . "' value='" . $Category->Category_ID . "' onclick='UPCP_Filer_Results(); UPCPHighlight(this, \"" . $Color . "\");'>" . $Category->Category_Name . " (" . $ProdCats[$Category->Category_ID] . ")\n";}
 			else {
-				$SidebarString .= "<input type='checkbox' name='Category" . $Category->Category_ID . "' value='" . $Category->Category_ID . "' onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");' class='jquery-prod-cat-value'";
+				$SidebarString .= "<input type='checkbox' name='Category" . $Category->Category_ID . "' value='" . $Category->Category_ID . "' onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");' id='cat-". $Category->Category_ID ."' class='jquery-prod-cat-value'";
 				if (in_array($Category->Category_ID, $category)) {$SidebarString .= "checked=checked";}
-				$SidebarString .= "> " . $Category->Category_Name . " (" . $ProdCats[$Category->Category_ID] . ")\n";
+				$SidebarString .= "><label for='cat-". $Category->Category_ID ."'> " . $Category->Category_Name . " (" . $ProdCats[$Category->Category_ID] . ")</label>\n";
 			}
 			$SidebarString .= "</div>\n";
 						
@@ -1056,9 +1106,9 @@ function BuildSidebar($category, $subcategory, $tags, $prod_name) {
 						if ($Filter  == "Javascript" and $Tag_Logic == "OR") {$SidebarString .= "<input type='checkbox' class='jquery-prod-sub-cat-value' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_Filer_Results_OR(); UPCPHighlight(this, \"" . $Color . "\");'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID] . ")\n";}
 						elseif ($Filter  == "Javascript") {$SidebarString .= "<input type='checkbox' class='jquery-prod-sub-cat-value' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_Filer_Results(); UPCPHighlight(this, \"" . $Color . "\");'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID] . ")\n";}
 						else {
-							$SidebarString .= "<input type='checkbox' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");' class='jquery-prod-sub-cat-value'";
+							$SidebarString .= "<input type='checkbox' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");' id='sub-" . $SubCategory->SubCategory_ID . "' class='jquery-prod-sub-cat-value'";
 							if (in_array($SubCategory->SubCategory_ID, $subcategory)) {$SidebarString .= "checked=checked";}
-							$SidebarString .= "> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID] . ")\n";
+							$SidebarString .= "><label for='sub-". $SubCategory->SubCategory_ID ."'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID] . ")</label>\n";
 						}
 						$SidebarString .= "</div>\n";
 					}
@@ -1086,9 +1136,9 @@ function BuildSidebar($category, $subcategory, $tags, $prod_name) {
 			if ($Filter  == "Javascript" and $Tag_Logic == "OR") {$SidebarString .= "<input type='checkbox' class='jquery-prod-sub-cat-value' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_Filer_Results_OR(); UPCPHighlight(this, \"" . $Color . "\");'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID] . ")\n";}
 			elseif ($Filter  == "Javascript") {$SidebarString .= "<input type='checkbox' class='jquery-prod-sub-cat-value' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_Filer_Results(); UPCPHighlight(this, \"" . $Color . "\");'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID] . ")\n";}
 			else {
-				$SidebarString .= "<input type='checkbox' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");' class='jquery-prod-sub-cat-value'";
+				$SidebarString .= "<input type='checkbox' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");' id='sub-" . $SubCategory->SubCategory_ID . "' class='jquery-prod-sub-cat-value'";
 				if (in_array($SubCategory->SubCategory_ID, $subcategory)) {$SidebarString .= "checked=checked";}
-				$SidebarString .= "> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID] . ")\n";
+				$SidebarString .= "><label for='sub-". $SubCategory->SubCategory_ID ."'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID] . ")</label>\n";
 			}
 			$SidebarString .= "</div>\n";
 		}
@@ -1113,9 +1163,9 @@ function BuildSidebar($category, $subcategory, $tags, $prod_name) {
 			if ($Filter  == "Javascript" and $Tag_Logic == "OR") {$SidebarString .= "<input type='checkbox' class='jquery-prod-tag-value' name='Tag[]' value='" . $Tag->Tag_ID . "'  onclick='UPCP_Filer_Results_OR(); UPCPHighlight(this, \"" . $Color . "\");'>" . $Tag->Tag_Name . "\n";}
 			elseif ($Filter  == "Javascript") {$SidebarString .= "<input type='checkbox' class='jquery-prod-tag-value' name='Tag[]' value='" . $Tag->Tag_ID . "'  onclick='UPCP_Filer_Results(); UPCPHighlight(this, \"" . $Color . "\");'> " . $Tag->Tag_Name . "\n";}
 			else {
-				$SidebarString .= "<input type='checkbox' name='Tag[]' value='" . $Tag->Tag_ID . "'  onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");' class='jquery-prod-tag-value'";
+				$SidebarString .= "<input type='checkbox' name='Tag[]' value='" . $Tag->Tag_ID . "'  onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");' id='tag-" . $Tag->Tag_ID . "' class='jquery-prod-tag-value'";
 				if (in_array($Tag->Tag_ID, $tags)) {$SidebarString .= "checked=checked";}
-				$SidebarString .= "> " . $Tag->Tag_Name . "\n";
+				$SidebarString .= "><label for='tag-". $Tag->Tag_ID ."'> " . $Tag->Tag_Name . "</label>\n";
 			}
 			$SidebarString .= "</div>";
 		}
@@ -1130,7 +1180,8 @@ function BuildSidebar($category, $subcategory, $tags, $prod_name) {
 			$SidebarString .= "<div class='prod-cat-sidebar-cf-title'>" . $Custom_Field->Field_Name . "</div>";
 			foreach ($ProdCustomFields[$Custom_Field->Field_ID]  as $Meta_Value => $Count) {
 				$SidebarString .= "<div class='prod-cat-sidebar-cf-value-div'>";
-				$SidebarString .= "<input type='checkbox' name='Custom_Field[]' value='" . $Meta_Value . "'  onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");' class='jquery-prod-cf-value' /> " . $Meta_Value . " (" . $Count . ")";
+				$SidebarString .= "<input type='checkbox' name='Custom_Field[]' value='" . $Meta_Value . "'  onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");' id='cf-" . $Custom_Field->Field_ID . "-" . $Meta_Value . "' class='jquery-prod-cf-value' /> ";
+				$SidebarString .= "<label for='cf-" . $Custom_Field->Field_ID . "-" . $Meta_Value . "'>" . $Meta_Value . " (" . $Count . ")</label>";
 				$SidebarString .= "</div>";
 			}
 			$SidebarString .= "</div>";

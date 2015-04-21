@@ -1,7 +1,7 @@
 === Plugin Name ===
 Contributors: Rustaurius, EtoileWebDesign
 Donate Link: http://www.etoilewebdesign.com/plugin-donations/
-Tags: product catalogue, product catalog, restaurant menu, responsive, customizable CSS, SEO friendly, affiliate links,  affiliates, attributes, blog catalog, catalog, catalogue, katalog, commerce, directory, display products, e-commerce, ecommerce, gallery, inventory, list products, manage, plugin, product, product feed, product gallery, product management, product portfolio, products, sales, sell, shipping, shop, shopping, shortcode, shortcodes, store, wp catalog, wp catalogue, widget, widgets, easy to use, user friendly
+Tags: product catalogue, product catalog, restaurant menu, responsive, customizable CSS, SEO friendly, SEO By Yoast, affiliate links,  affiliates, attributes, blog catalog, catalog, catalogue, katalog, commerce, directory, display products, e-commerce, ecommerce, gallery, inventory, list products, manage, plugin, product, product feed, product gallery, product management, product portfolio, products, sales, sell, shipping, shop, shopping, shortcode, shortcodes, store, wp catalog, wp catalogue, widget, widgets, easy to use, user friendly
 Requires at least: 3.5.0
 Tested up to: 4.1
 License: GPLv3
@@ -35,9 +35,10 @@ Perfect for your store, restaurant and more!
 The premium version includes a lot of great features including: the ability to add over 100 products, additional product images, SEO friendly URLs, product tags and custom fields for sorting, custom product pages, a minimalist layout option and more!
 
 * Drag-and-drop product pages layout
-* Product tags
+* Product tags, additional images and videos
 * Custom fields that can be used to include product manuals, additional information, etc.
 * SEO friendly single product pages
+* SEO By Yoast Integration
 * For a more in depth list, please visit our FAQ page:
 
 <http://www.etoilewebdesign.com/ultimate-product-catalogue-faq>
@@ -51,6 +52,8 @@ The premium version includes a lot of great features including: the ability to a
 * Russian (thanks to Alexander M.)
 * Spanish (thanks to Irene L.)
 * Turkish (thanks to Ayhan)
+
+Thanks to James K for a number of excellent features
 
 Check out our Frequently Asked Questions here:
 <https://wordpress.org/plugins/ultimate-product-catalogue/faq/>
@@ -173,6 +176,17 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 3.1.0 =
+- Added SEO By Yoast Integration
+- Added ability to add YouTube videos for products
+- Added ability to group tags
+- Added option to display additional product information on the right side of the product page
+- Added ability to sort additional images
+- Added ability to export to CSV
+- Switched the default action when editing an item so that admins remain on the edit page
+- Fixed a bug with the "file" custom field type
+- Fixed an include error for the admin area
+
 = 3.0.16 =
 - Fixed an error with the recent and random product widgets
 

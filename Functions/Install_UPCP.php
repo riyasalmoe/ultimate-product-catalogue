@@ -3,9 +3,9 @@ function Install_UPCP_DB() {
 	/* Add in the required globals to be able to create the tables */
   	global $wpdb;
    	global $UPCP_db_version;
-	global $categories_table_name, $subcategories_table_name, $items_table_name, $item_images_table_name, $tagged_items_table_name, $tags_table_name, $catalogues_table_name, $catalogue_items_table_name, $fields_table_name, $fields_meta_table_name;
+	global $categories_table_name, $subcategories_table_name, $items_table_name, $item_images_table_name, $tagged_items_table_name, $tags_table_name, $tags_group_table_name, $item_videos_table_name, $catalogues_table_name, $catalogue_items_table_name, $fields_table_name, $fields_meta_table_name;
     
-	/* Update the categories table */  
+		/* Update the categories table */  
    	$sql = "CREATE TABLE $categories_table_name (
   		Category_ID mediumint(9) NOT NULL AUTO_INCREMENT,
   		Category_Name text DEFAULT '' NOT NULL,
@@ -53,6 +53,7 @@ function Install_UPCP_DB() {
 		Item_Display_Status text DEFAULT '',
 		Item_Related_Products text DEFAULT '',
 		Item_Next_Previous text DEFAULT '',
+		Item_SEO_Description text DEFAULT '',
   		UNIQUE KEY id (Item_ID)
     	)
 		DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;";
@@ -65,7 +66,21 @@ function Install_UPCP_DB() {
   		Item_ID mediumint(9) DEFAULT '0' NOT NULL,
   		Item_Image_URL text DEFAULT '',
 		Item_Image_Description text DEFAULT '',
+		Item_Image_Order mediumint(9) DEFAULT '0' NOT NULL,
   		UNIQUE KEY id (Item_Image_ID)
+    	)
+		DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;";
+   	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+   	dbDelta($sql);
+
+   	/* Update the table that stores video IDs for products */
+	$sql = "CREATE TABLE $item_videos_table_name (
+  		Item_Video_ID mediumint(9) NOT NULL AUTO_INCREMENT,
+  		Item_ID mediumint(9) DEFAULT '0' NOT NULL,
+  		Item_Video_URL text DEFAULT '',
+		Item_Video_Type text DEFAULT '',
+		Item_Video_Order mediumint(9) DEFAULT '0' NOT NULL,
+  		UNIQUE KEY id (Item_Video_ID)
     	)
 		DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;";
    	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
@@ -77,8 +92,21 @@ function Install_UPCP_DB() {
   		Tag_Name text DEFAULT '' NOT NULL,
 		Tag_Description text DEFAULT '' NOT NULL,
 		Tag_Item_Count text DEFAULT '' NOT NULL,
+		Tag_Group_ID mediumint(9) DEFAULT '0' NOT NULL,
 		Tag_Date_Created datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
   		UNIQUE KEY id (Tag_ID)
+    	)
+		DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;";
+   	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+   	dbDelta($sql);
+
+   	/* Update the tag groups table */
+	$sql = "CREATE TABLE $tag_groups_table_name (
+  		Tag_Group_ID mediumint(9) NOT NULL AUTO_INCREMENT,
+  		Tag_Group_Name text DEFAULT '' NOT NULL,
+		Tag_Group_Description text DEFAULT '' NOT NULL,
+		Tag_Group_Order mediumint(9) DEFAULT '0' NOT NULL,
+  		UNIQUE KEY id (Tag_Group_ID)
     	)
 		DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;";
    	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');

@@ -130,33 +130,37 @@ function Delete_UPCP_SubCategory($Sub_ID) {
 }
 
 /* Adds a single new tag to the UPCP database */
-function Add_UPCP_Tag($Tag_Name, $Tag_Description) {
+function Add_UPCP_Tag($Tag_Name, $Tag_Description, $Tag_Group_ID) {
 		global $wpdb;
 		global $tags_table_name;
 		global $Full_Version;
 		
 		if ($Full_Version != "Yes") {exit();}
 		$wpdb->insert($tags_table_name,
-				array( 'Tag_Name' => $Tag_Name,
-							 'Tag_Description' => $Tag_Description,
-							 'Tag_Item_Count' => 0)
+			array( 
+				'Tag_Name' => $Tag_Name,
+				'Tag_Description' => $Tag_Description,
+				'Tag_Group_ID' => $Tag_Group_ID,
+				'Tag_Item_Count' => 0)
 		);
 		$update = __("Tag has been successfully created.", 'UPCP');
 		return $update;
 }
 
 /* Edits a single tag with a given ID in the UPCP database */
-function Edit_UPCP_Tag($Tag_ID, $Tag_Name, $Tag_Description) {
+function Edit_UPCP_Tag($Tag_ID, $Tag_Name, $Tag_Description, $Tag_Group_ID) {
 		global $wpdb;
 		global $tags_table_name;
 		global $Full_Version;
 		
 		if ($Full_Version != "Yes") {exit();}		
 		$wpdb->update(
-						$tags_table_name,
-						array( 'Tag_Name' => $Tag_Name,
-							 		 'Tag_Description' => $Tag_Description),
-						array( 'Tag_ID' => $Tag_ID)
+			$tags_table_name,
+			array( 
+				'Tag_Name' => $Tag_Name,
+				'Tag_Description' => $Tag_Description,
+				'Tag_Group_ID' => $Tag_Group_ID),
+			array( 'Tag_ID' => $Tag_ID)
 		);
 		$update = __("Tag has been successfully edited.", 'UPCP');
 		return $update;
@@ -172,14 +176,14 @@ function Delete_UPCP_Tag($Tag_ID) {
 		
 		if ($Full_Version != "Yes") {exit();}		
 		$wpdb->delete(
-						$tags_table_name,
-						array('Tag_ID' => $Tag_ID)
-					);
+			$tags_table_name,
+			array('Tag_ID' => $Tag_ID)
+		);
 					
 		$wpdb->delete(
-						$tagged_items_table_name,
-						array('Tag_ID' => $Tag_ID)
-					);
+			$tagged_items_table_name,
+			array('Tag_ID' => $Tag_ID)
+		);
 
 		$update = __("Tag has been successfully deleted.", 'UPCP');
 		return $update;
@@ -193,75 +197,163 @@ function Delete_Products_Tags() {
 		
 		if ($Full_Version != "Yes") {exit();}					
 		$wpdb->delete(
-						$tagged_items_table_name,
-						array('Tagged_Item_ID' => $_GET['Tagged_Item_ID'])
-					);
+			$tagged_items_table_name,
+			array('Tagged_Item_ID' => $_GET['Tagged_Item_ID'])
+		);
 
 		$update = __("Tag has been successfully deleted from product.", 'UPCP');
 		return $update;
 }
 
+/* Adds a single new group tag to the UPCP database */
+function Add_UPCP_Tag_Group($Tag_Group_Name,$Tag_Group_Description,$Tag_Group_ID,$Display_Tag_Group){
+	global $wpdb;
+	global $tag_groups_table_name;
+	global $Full_Version;
+	
+	if ($Full_Version != "Yes") {exit();}
+	$wpdb->insert($tag_groups_table_name,
+		array(
+			'Tag_Group_Name' => $Tag_Group_Name,
+			'Tag_Group_Description' => $Tag_Group_Description,
+			'Tag_Group_ID' => $Tag_Group_ID,
+			'Display_Tag_Group' => $Display_Tag_Group
+		)
+	);
+	$update = __("Tag Group has been successfully created.", 'UPCP');
+	return $update;
+}
+
+/* Edtis a single tag group with a given ID in the UPCP database */
+function Edit_UPCP_Tag_Group($Tag_Group_Name,$Tag_Group_Description,$Tag_Group_ID,$Display_Tag_Group){
+	global $wpdb;
+	global $tag_groups_table_name;
+	global $Full_Version;
+	
+	if ($Full_Version != "Yes") {exit();}
+	$wpdb->update($tag_groups_table_name,
+		array(	
+			'Tag_Group_Name' => $Tag_Group_Name,
+			'Tag_Group_Description' => $Tag_Group_Description,
+			'Display_Tag_Group' => $Display_Tag_Group),
+		array('Tag_Group_ID' => $Tag_Group_ID)
+					
+	);
+	$update = __("Tag Group has been successfully edited.", 'UPCP');
+	return $update;
+}
+/* Deletes a single tag group with a given ID in the UPCP database, and then changes all occurances of the tag group back to uncatagorized tags.  */
+function Delete_UPCP_Tag_Group($Tag_Group_ID){
+	global $wpdb;
+	global $tag_groups_table_name;
+	global $tags_table_name;
+	global $Full_Version;
+	
+	if ($Full_Version != "Yes") {exit();}
+	$wpdb->delete(
+		$tag_groups_table_name,
+		array(
+			'Tag_Group_ID' => $Tag_Group_ID
+		)
+	);
+	$wpdb->update(
+		$tags_table_name,
+		array(
+			'Tag_Group_ID' => "0"
+		),
+		array('Tag_Group_ID' => $Tag_Group_ID)
+	);
+}
+
+/* Adds one or multiple videos to database */
+function Add_Product_Videos($Item_ID, $Item_Video_URL, $Item_Video_Type) {
+	global $wpdb;
+	global $item_videos_table_name;
+	
+	$wpdb->query($wpdb->prepare("INSERT INTO $item_videos_table_name (Item_ID, Item_Video_URL, Item_Video_Type) VALUES (%d, %s, %s)", $Item_ID, $Item_Video_URL, $Item_Video_Type));
+	
+	$update = __("video has been successfully added to the product.", 'UPCP');
+	return $update;
+}
+/* Deletes video from UPCP database and removes it from the product */
+function Delete_Product_Video() {
+	global $wpdb;
+	global $item_videos_table_name;
+	
+	$wpdb->delete(
+		$item_videos_table_name,
+		array(
+			'Item_Video_ID' => $_GET['Item_Video_ID']
+		)
+	);
+	$update = "Your video has been successfully deleted."; 
+	$user_update = array("Message_Type" => "Update", "Message" => $update);
+	return $user_update;
+}
+
 /* Adds a single new custom field to the UPCP database */
 function Add_UPCP_Custom_Field($Field_Name, $Field_Slug, $Field_Type, $Field_Description, $Field_Values, $Field_Displays, $Field_Searchable) {
-		global $wpdb;
-		global $fields_table_name;
-		$Date = date("Y-m-d H:i:s");
-		global $Full_Version;
-		
-		if ($Full_Version != "Yes") {exit();}		
-		$wpdb->insert($fields_table_name,
-				array( 'Field_Name' => $Field_Name,
-							 'Field_Slug' => $Field_Slug,
-							 'Field_Type' => $Field_Type,
-							 'Field_Description' => $Field_Description,
-							 'Field_Values' => $Field_Values,
-							 'Field_Values' => $Field_Values,
-							 'Field_Displays' => $Field_Displays,
-							 'Field_Searchable' => $Field_Searchable,
-							 'Field_Date_Created' => $Date)
-		);
-		$update = __("Field has been successfully created.", 'UPCP');
-		return $update;
+	global $wpdb;
+	global $fields_table_name;
+	$Date = date("Y-m-d H:i:s");
+	global $Full_Version;
+	
+	if ($Full_Version != "Yes") {exit();}		
+	$wpdb->insert($fields_table_name,
+		array( 
+			'Field_Name' => $Field_Name,
+			'Field_Slug' => $Field_Slug,
+			'Field_Type' => $Field_Type,
+			'Field_Description' => $Field_Description,
+			'Field_Values' => $Field_Values,
+			'Field_Values' => $Field_Values,
+			'Field_Displays' => $Field_Displays,
+			'Field_Searchable' => $Field_Searchable,
+			'Field_Date_Created' => $Date
+		)
+	);
+	$update = __("Field has been successfully created.", 'UPCP');
+	return $update;
 }
 
 /* Edits a single custom field with a given ID in the UPCP database */
 function  Edit_UPCP_Custom_Field($Field_ID, $Field_Name, $Field_Slug, $Field_Type, $Field_Description, $Field_Values, $Field_Displays, $Field_Searchable) {
-		global $wpdb;
-		global $fields_table_name;
-		global $Full_Version;
-		
-		if ($Full_Version != "Yes") {exit();}		
-		$wpdb->update(
-						$fields_table_name,
-						array( 'Field_Name' => $Field_Name,
-									 'Field_Slug' => $Field_Slug,
-									 'Field_Type' => $Field_Type,
-							 		 'Field_Description' => $Field_Description,
-									 'Field_Values' => $Field_Values,
-									 'Field_Displays' => $Field_Displays,
-									 'Field_Searchable' => $Field_Searchable),
-						array( 'Field_ID' => $Field_ID)
-		);
-		$update = __("Field has been successfully edited.", 'UPCP');
-		return $update;
+	global $wpdb;
+	global $fields_table_name;
+	global $Full_Version;
+	
+	if ($Full_Version != "Yes") {exit();}		
+	$wpdb->update(
+		$fields_table_name,
+		array( 
+			'Field_Name' => $Field_Name,
+			'Field_Slug' => $Field_Slug,
+			'Field_Type' => $Field_Type,
+			'Field_Description' => $Field_Description,
+			'Field_Values' => $Field_Values,
+			'Field_Displays' => $Field_Displays,
+			'Field_Searchable' => $Field_Searchable),
+		array( 'Field_ID' => $Field_ID)
+	);
+	$update = __("Field has been successfully edited.", 'UPCP');
+	return $update;
 }
 
 /* Deletes a single tag with a given ID in the UPCP database, and then eliminates 
 *  all of the occurrences of that tag from the tagged items table.  */
 function Delete_UPCP_Custom_Field($Field_ID) {
-		global $wpdb;
-		global $fields_table_name;
-		global $Full_Version;
-		
-		if ($Full_Version != "Yes") {exit();}		
-		$wpdb->delete(
-						$fields_table_name,
-						array('Field_ID' => $Field_ID)
-					);
+	global $wpdb;
+	global $fields_table_name;
+	global $Full_Version;
+	
+	if ($Full_Version != "Yes") {exit();}		
+	$wpdb->delete(
+		$fields_table_name,
+		array('Field_ID' => $Field_ID)
+	);
 					
-
-		$update = __("Field has been successfully deleted.", 'UPCP');
-		return $update;
+	$update = __("Field has been successfully deleted.", 'UPCP');
+	return $update;
 }
 
 /* Adds a single new catalogue to the UPCP database */
@@ -406,7 +498,7 @@ function Delete_Products_Catalogue() {
 
 /* Adds a single new product inputted via the form on the left-hand side of the
 *  products' page to the UPCP database */
-function Add_UPCP_Product($Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Description, $Item_Price, $Item_Link, $Item_Display_Status = "", $Category_ID = "", $Global_Item_ID = "", $Item_Special_Attr = "", $SubCategory_ID = "", $Tags = array(), $Related_Products = "", $Next_Previous = "") {
+function Add_UPCP_Product($Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Description, $Item_Price, $Item_SEO_Description, $Item_Link, $Item_Display_Status = "", $Category_ID = "", $Global_Item_ID = "", $Item_Special_Attr = "", $SubCategory_ID = "", $Tags = array(), $Related_Products = "", $Next_Previous = "") {
 		global $wpdb;
 		global $items_table_name;
 		global $categories_table_name;
@@ -447,6 +539,7 @@ function Add_UPCP_Product($Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Descrip
 						'SubCategory_Name' => $SubCategory_Name,
 						'Item_Related_Products' => $Related_Products,
 						'Item_Next_Previous' => $Next_Previous,
+						'Item_SEO_Description' => $Item_SEO_Description,
 						'Item_Date_Created' => $Today)
 		);
 		
@@ -516,7 +609,7 @@ function Add_UPCP_Product($Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Descrip
 }
 
 /* Edits a single product in the UPCP database */
-function Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Description, $Item_Price, $Item_Link, $Item_Display_Status = "", $Category_ID = "", $Global_Item_ID = "", $Item_Special_Attr = "", $SubCategory_ID = "", $Tags = array(), $Related_Products = "", $Next_Previous = "") {
+function Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Description, $Item_Price, $Item_SEO_Description, $Item_Link, $Item_Display_Status = "", $Category_ID = "", $Global_Item_ID = "", $Item_Special_Attr = "", $SubCategory_ID = "", $Tags = array(), $Related_Products = "", $Next_Previous = "") {
 		global $wpdb;
 		global $items_table_name;
 		global $categories_table_name;
@@ -537,11 +630,12 @@ function Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Slug, $Item_Photo_URL, $I
 				array('Item_ID' => $Item_ID)
 		);
 		
-		// Delete the custom field values for the given Item_ID
-		$wpdb->delete(
-				$fields_meta_table_name,
-				array('Item_ID' => $Item_ID)
-		);
+		// Delete the custom field values for the given Item_ID but save the Meta_Value's for "file" field types
+		$File_Fields = $wpdb->get_results("SELECT Field_ID FROM $fields_table_name WHERE Field_Type='file'");
+		foreach ($File_Fields as $File_Field) {$File_Field_IDs .= $File_Field->Field_ID . ",";}
+		$Sql = "DELETE FROM $fields_meta_table_name WHERE Item_ID='" . $Item_ID . "'";
+		if (strlen($File_Field_IDs) > 0) {$Sql .= " AND Field_ID NOT IN (" . substr($File_Field_IDs, 0, -1) . ")";}
+		$wpdb->query($Sql);
 		
 		// Decrease the Item_Count column for the category and sub-category tables in the database
 		$Current_Product = $wpdb->get_row("SELECT Category_ID, SubCategory_ID FROM $items_table_name WHERE Item_ID='" . $Item_ID ."'");
@@ -569,7 +663,8 @@ function Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Slug, $Item_Photo_URL, $I
 						'SubCategory_ID' => $SubCategory_ID,
 						'SubCategory_Name' => $SubCategory_Name,
 						'Item_Related_Products' => $Related_Products,
-						'Item_Next_Previous' => $Next_Previous),
+						'Item_Next_Previous' => $Next_Previous,
+						'Item_SEO_Description' => $Item_SEO_Description),
 						array( 'Item_ID' => $Item_ID)
 		);
 		
@@ -591,10 +686,14 @@ function Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Slug, $Item_Photo_URL, $I
 						if (isset($_POST[$FieldName]) or isset($_FILES[$FieldName])) {
 							  // If it's a file, pass back to Prepare_Data_For_Insertion.php to upload the file and get the name
 								if ($Field->Field_Type == "file") {
-										$File_Upload_Return = UPCP_Handle_File_Upload($FieldName);
-										if ($File_Upload_Return['Success'] == "No") {return $File_Upload_Return['Data'];}
-										elseif ($File_Upload_Return['Success'] == "N/A") {$NoFile = "Yes";}
-										else {$Value = $File_Upload_Return['Data'];}
+										if ($_FILES[$FieldName]['name'] != "") {
+											$wpdb->delete($fields_meta_table_name, array('Item_ID' => $Item_ID, 'Field_ID' => $Field->Field_ID));
+											$File_Upload_Return = UPCP_Handle_File_Upload($FieldName);
+											if ($File_Upload_Return['Success'] == "No") {return $File_Upload_Return['Data'];}
+											elseif ($File_Upload_Return['Success'] == "N/A") {$NoFile = "Yes";}
+											else {$Value = $File_Upload_Return['Data'];}
+										}
+										else {$NoFile = "Yes";}
 								}
 								elseif ($Field->Field_Type == "checkbox") {
 										foreach ($_POST[$FieldName] as $SingleValue) {$Value .= trim($SingleValue) . ",";}
@@ -918,9 +1017,10 @@ function Update_UPCP_Options() {
 	update_option("UPCP_Case_Insensitive_Search", $_POST['case_insensitive_search']);
 	update_option("UPCP_Apply_Contents_Filter", $_POST['contents_filter']);
 	update_option("UPCP_Maintain_Filtering", $_POST['maintain_filtering']);
+	$Extra_Elements_Array = $_POST['extra_elements'];
+	$Extra_Elements = implode(",", $Extra_Elements_Array);
+	update_option("UPCP_Extra_Elements", $Extra_Elements);
 	
-	if ($InstallVersion <= 2.0 or $Full_Version == "Yes") {update_option("UPCP_Pretty_Links", $_POST['pretty_links']);}
-	if ($Full_Version == "Yes") {update_option("UPCP_XML_Sitemap_URL", $_POST['xml_sitemap_url']);}
 	if ($Full_Version == "Yes") {update_option("UPCP_Filter_Title", $_POST['filter_title']);}
 	if ($Full_Version == "Yes") {update_option("UPCP_Custom_Product_Page", $_POST['custom_product_page']);}
 	if ($Full_Version == "Yes") {update_option("UPCP_Products_Per_Page", $_POST['products_per_page']);}
@@ -946,6 +1046,13 @@ function Update_UPCP_Options() {
 	if ($Full_Version == "Yes") {update_option("UPCP_Back_To_Catalogue_Label", $_POST['back_to_catalogue']);}
 	if ($Full_Version == "Yes") {update_option("UPCP_No_Results_Found_Label", $_POST['no_results_found_label']);}
 	if ($Full_Version == "Yes") {update_option("UPCP_Products_Pagination_Label", $_POST['products_pagination_label']);}
+
+	if ($Full_Version == "Yes") {update_option("UPCP_Pretty_Links", $_POST['pretty_links']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_XML_Sitemap_URL", $_POST['xml_sitemap_url']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_SEO_Option", $_POST['seo_option']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_SEO_Integration", $_POST['seo_integration']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_SEO_Title", $_POST['seo_title']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Update_Breadcrumbs", $_POST['update_breadcrumbs']);}
 
 	if ($Full_Version == "Yes") {update_option("UPCP_Catalogue_Style", $_POST['catalogue_style']);}
 	if ($Full_Version == "Yes") {update_option("UPCP_Sidebar_Style", $_POST['sidebar_style']);}

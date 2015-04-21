@@ -1,7 +1,7 @@
 <?php
 function UpdateTables() {
 	global $wpdb;
-	global $categories_table_name, $subcategories_table_name, $items_table_name, $item_images_table_name, $tagged_items_table_name, $tags_table_name, $catalogues_table_name, $catalogue_items_table_name, $fields_table_name, $fields_meta_table_name;
+	global $categories_table_name, $subcategories_table_name, $items_table_name, $item_images_table_name, $tagged_items_table_name, $tags_table_name, $tag_groups_table_name, $item_videos_table_name, $catalogues_table_name, $catalogue_items_table_name, $fields_table_name, $fields_meta_table_name;
 	
 	/* Update the categories table */  
    	$sql = "CREATE TABLE $categories_table_name (
@@ -51,6 +51,7 @@ function UpdateTables() {
 		Item_Display_Status text DEFAULT '',
 		Item_Related_Products text DEFAULT '',
 		Item_Next_Previous text DEFAULT '',
+		Item_SEO_Description text DEFAULT '',
   		UNIQUE KEY id (Item_ID)
     	)
 		DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;";
@@ -63,7 +64,21 @@ function UpdateTables() {
   		Item_ID mediumint(9) DEFAULT '0' NOT NULL,
   		Item_Image_URL text DEFAULT '',
 		Item_Image_Description text DEFAULT '',
+		Item_Image_Order mediumint(9) DEFAULT '0' NOT NULL,
   		UNIQUE KEY id (Item_Image_ID)
+    	)
+		DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;";
+   	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+   	dbDelta($sql);
+
+   	/* Update the table that stores video IDs for products */
+	$sql = "CREATE TABLE $item_videos_table_name (
+  		Item_Video_ID mediumint(9) NOT NULL AUTO_INCREMENT,
+  		Item_ID mediumint(9) DEFAULT '0' NOT NULL,
+  		Item_Video_URL text DEFAULT '',
+		Item_Video_Type text DEFAULT '',
+		Item_Video_Order mediumint(9) DEFAULT '0' NOT NULL,
+  		UNIQUE KEY id (Item_Video_ID)
     	)
 		DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;";
    	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
@@ -75,8 +90,22 @@ function UpdateTables() {
   		Tag_Name text DEFAULT '' NOT NULL,
 		Tag_Description text DEFAULT '' NOT NULL,
 		Tag_Item_Count text DEFAULT '' NOT NULL,
+		Tag_Group_ID mediumint(9) DEFAULT '0' NOT NULL,
 		Tag_Date_Created datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
   		UNIQUE KEY id (Tag_ID)
+    	)
+		DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;";
+   	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+   	dbDelta($sql);
+
+   	/* Update the tag groups table */
+	$sql = "CREATE TABLE $tag_groups_table_name (
+  		Tag_Group_ID mediumint(9) NOT NULL AUTO_INCREMENT,
+  		Tag_Group_Name text DEFAULT '' NOT NULL,
+		Tag_Group_Description text DEFAULT '' NOT NULL,
+		Display_Tag_Group text DEFAULT '' NOT NULL,
+		Tag_Group_Order mediumint(9) DEFAULT '0' NOT NULL,
+  		UNIQUE KEY id (Tag_Group_ID)
     	)
 		DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;";
    	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
@@ -167,5 +196,10 @@ function UpdateTables() {
 	if (get_option("UPCP_PP_Grid_Height") == "") {update_option("UPCP_PP_Grid_Height", 35);}
 	if (get_option("UPCP_Top_Bottom_Padding") == "") {update_option("UPCP_Top_Bottom_Padding", 10);}
 	if (get_option("UPCP_Left_Right_Padding") == "") {update_option("UPCP_Left_Right_Padding", 10);}
+
+	if (get_option("UPCP_SEO_Option") == "") {update_option("UPCP_SEO_Option", "None");}
+	if (get_option("UPCP_SEO_Integration") == "") {update_option("UPCP_SEO_Integration", "Add");}
+	if (get_option("UPCP_SEO_Title") == "") {update_option("UPCP_SEO_Title", "[page-title] | [product-name]");}
+	if (get_option("UPCP_Update_Breadcrumbs") == "") {update_option("UPCP_Update_Breadcrumbs", "No");}
 }
 ?>

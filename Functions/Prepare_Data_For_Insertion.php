@@ -12,6 +12,7 @@ function Add_Edit_Product() {
 		$Item_Description = stripslashes_deep($_POST['Item_Description']);
 		if ($Apply_Contents_Filter == "Yes") {$Item_Description = apply_filters('the_content', $Item_Description);}
 		$Item_Price = $_POST['Item_Price'];
+		$Item_SEO_Description = $_POST['Item_SEO_Description'];
 		$Item_Link = $_POST['Item_Link'];
 		$Item_Display_Status = $_POST['Item_Display_Status'];
 		$Category_ID = $_POST['Category_ID'];
@@ -26,11 +27,11 @@ function Add_Edit_Product() {
 		if (!isset($error) or $error == __('No file was uploaded.', 'UPCP')) {
 				/* Pass the data to the appropriate function in Update_Admin_Databases.php to create the product */
 				if ($_POST['action'] == "Add_Product") {
-					  $user_update = Add_UPCP_Product($Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Description, $Item_Price, $Item_Link, $Item_Display_Status, $Category_ID, $Global_Item_ID, $Item_Special_Attr, $SubCategory_ID, $Tags, $Related_Products, $Next_Previous);
+					  $user_update = Add_UPCP_Product($Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Description, $Item_Price, $Item_SEO_Description, $Item_Link, $Item_Display_Status, $Category_ID, $Global_Item_ID, $Item_Special_Attr, $SubCategory_ID, $Tags, $Related_Products, $Next_Previous);
 				}
 				/* Pass the data to the appropriate function in Update_Admin_Databases.php to edit the product */
 				else {
-						$user_update = Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Description, $Item_Price, $Item_Link, $Item_Display_Status, $Category_ID, $Global_Item_ID, $Item_Special_Attr, $SubCategory_ID, $Tags, $Related_Products, $Next_Previous);
+						$user_update = Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Description, $Item_Price, $Item_SEO_Description, $Item_Link, $Item_Display_Status, $Category_ID, $Global_Item_ID, $Item_Special_Attr, $SubCategory_ID, $Tags, $Related_Products, $Next_Previous);
 				}
 				$user_update = array("Message_Type" => "Update", "Message" => $user_update);
 				return $user_update;
@@ -141,6 +142,54 @@ function Delete_All_Products() {
 		$update = __("Products have been successfully deleted.", 'UPCP');
 		$user_update = array("Message_Type" => "Update", "Message" => $update);
 		return $user_update;
+}
+
+/* Prepares the data to add one or more videos URL or video ID */
+function Prepare_Add_Product_Video() {
+	global $wpdb;
+	global $item_videos_table_name;
+
+	$ItemVideoURLs = $_POST['Item_Video'];
+	
+	/* Process the $_POST data where neccessary before storage */
+	$Item_ID = $_POST['Item_ID'];
+	$Item_Video_Type = $_POST['Item_Video_Type'];
+	if($Item_Video_Type == ""){ $Item_Video_Type = "YouTube"; }
+	
+	/* Removing any empty objects from array */
+	$ItemVideoURLs = (array_filter($ItemVideoURLs));
+	
+	/* Checking to see if any videos were added */
+	if (empty($ItemVideoURLs)) {
+		$user_update = "No videos were added.";
+		$user_update = array("Message_Type" => "Update", "Message" => $user_update);
+		return $user_update;
+	}
+	
+	if(is_array($ItemVideoURLs)){
+		foreach($ItemVideoURLs as $Item_Video_URL){
+			if($Item_Video_URL != ""){
+				$ch = curl_init();
+				curl_setopt($ch, CURLOPT_URL, 'http://gdata.youtube.com/feeds/api/videos/' . $Item_Video_URL);
+				curl_setopt($ch, CURLOPT_HEADER, 0);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			               
+				$response = curl_exec($ch);
+				curl_close($ch);
+				
+				/* Checks to see if  YouTube video id is valid */
+				if ($response == "Invalid id") {
+					$video_update .= "Video " . $Item_Video_URL . " does not seem to be a valid YouTube ID.<br />";
+					$user_update = array("Message_Type" => "Update", "Message" => $video_update);
+				}else{
+					$user_update = Add_Product_Videos($Item_ID,$Item_Video_URL,$Item_Video_Type);
+					$video_update .= $Item_Video_URL . " video has been added.<br />";
+					$user_update = array("Message_Type" => "Update", "Message" => $video_update);
+				}
+			}
+		}
+		return $user_update;
+	}
 }
 
 /* Prepare the data to add a new image for a product */
@@ -287,43 +336,70 @@ function Mass_Delete_SubCategories() {
 
 /* Prepare the data to add a new tag */
 function Add_Edit_Tag() {
-		/* Process the $_POST data where neccessary before storage */
-		$Tag_Name = stripslashes_deep($_POST['Tag_Name']);
-		$Tag_Description = stripslashes_deep($_POST['Tag_Description']);
-		$Tag_ID = $_POST['Tag_ID'];
-
-		if (!isset($error)) {
-				/* Pass the data to the appropriate function in Update_Admin_Databases.php to create the tag */
-				if ($_POST['action'] == "Add_Tag") {
-					  $user_update = Add_UPCP_Tag($Tag_Name, $Tag_Description);
-				}
-				/* Pass the data to the appropriate function in Update_Admin_Databases.php to edit the tag */
-				else {
-						$user_update = Edit_UPCP_Tag($Tag_ID, $Tag_Name, $Tag_Description);
-				}
-				$user_update = array("Message_Type" => "Update", "Message" => $user_update);
-				return $user_update;
+	/* Process the $_POST data where neccessary before storage */
+	$Tag_Name = stripslashes_deep($_POST['Tag_Name']);
+	$Tag_Description = stripslashes_deep($_POST['Tag_Description']);
+	$Tag_ID = $_POST['Tag_ID'];
+	$Tag_Group_ID = $_POST['Tag_Group_ID'];
+	
+	if (!isset($error)) {
+		/* Pass the data to the appropriate function in Update_Admin_Databases.php to create the tag */
+		if ($_POST['action'] == "Add_Tag") {
+			$user_update = Add_UPCP_Tag($Tag_Name, $Tag_Description, $Tag_Group_ID);
 		}
+		/* Pass the data to the appropriate function in Update_Admin_Databases.php to edit the tag */
 		else {
-				$output_error = array("Message_Type" => "Error", "Message" => $error);
-				return $output_error;
+			$user_update = Edit_UPCP_Tag($Tag_ID, $Tag_Name, $Tag_Description, $Tag_Group_ID);
 		}
+		$user_update = array("Message_Type" => "Update", "Message" => $user_update);
+		return $user_update;
+	}
+	else {
+		$output_error = array("Message_Type" => "Error", "Message" => $error);
+		return $output_error;
+	}
 }
 
 function Mass_Delete_UPCP_Tags() {
-		$Tags = $_POST['Tags_Bulk'];
-		
-		if (is_array($Tags)) {
-				foreach ($Tags as $Tag) {
-						if ($Tag != "") {
-								Delete_UPCP_Tag($Tag);
-						}
-				}
+	$Tags = $_POST['Tags_Bulk'];
+	
+	if (is_array($Tags)) {
+		foreach ($Tags as $Tag) {
+			if ($Tag != "") {
+				Delete_UPCP_Tag($Tag);
+				Delete_UPCP_Tag_Group($Tag_ID);
+			}
 		}
-		
-		$update = __("Tag(s) have been successfully deleted.", 'UPCP');
-		$user_update = array("Message_Type" => "Update", "Message" => $update);
+	}
+	
+	$update = __("Tag(s) have been successfully deleted.", 'UPCP');
+	$user_update = array("Message_Type" => "Update", "Message" => $update);
+	return $user_update;
+}
+
+function Add_Edit_Tag_Group(){
+	/* Process the $_POST data where neccessary before storage */
+	$Tag_Group_Name = stripslashes_deep($_POST['Tag_Group_Name']);
+	$Tag_Group_Description = stripslashes_deep($_POST['Tag_Group_Description']);
+	$Tag_Group_ID = $_POST['Tag_Group_ID'];
+	$Display_Tag_Group = $_POST['Display_Tag_Group'];
+	
+	if (!isset($error)) {
+		/* Pass the data to the appropriate function in Update_Admin_Databases.php to create the tag */
+		if ($_POST['action'] == "Add_Tag_Group") {
+			  $user_update = Add_UPCP_Tag_Group($Tag_Group_Name, $Tag_Group_Description, $Tag_Group_ID, $Display_Tag_Group);
+		}
+		/* Pass the data to the appropriate function in Update_Admin_Databases.php to edit the tag */
+		else {
+				$user_update = Edit_UPCP_Tag_Group($Tag_Group_Name,$Tag_Group_Description,$Tag_Group_ID, $Display_Tag_Group);
+		}
+		$user_update = array("Message_Type" => "Update", "Message" => $user_update);
 		return $user_update;
+	}
+	else {
+		$output_error = array("Message_Type" => "Error", "Message" => $error);
+		return $output_error;
+	}	
 }
 
 function Add_Edit_Custom_Field() {

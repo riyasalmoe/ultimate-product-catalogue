@@ -44,6 +44,20 @@ a {
 .ItemDetail {
   max-width:750px;
 }
+.upcp-sortable-preview {
+  cursor: move;
+}
+.item-video-image{
+  float:left;
+  width: 100px;
+  height: 100px;
+  padding-right:20px;
+  position:relative;
+}
+.item-video-image img{
+  height:100%;
+  width:100%;
+}
 .NoUnderline {
   text-decoration: none;
 }
@@ -74,6 +88,51 @@ a {
   height:75%;
 	width:95%;
 }
+
+/***********************************************************
+* VIDEO TABLE STYLE
+***********************************************************/
+
+.videos-list{
+  width: 75%;
+  position: relative;
+  display: table;
+  border: 1px solid #e5e5e5;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  background-color: #ffffff;
+}
+.video-row {
+  width: 100%;
+  position: relative;
+  display: table-row;
+  text-align: center;
+}
+.table-header,
+.table-footer {
+  height: 35px;
+  font-size: 14px;
+  color: #333;
+  line-height: 1.4em;
+  font-weight: 400;
+  background-color: #f2f9fe; background-image: -webkit-gradient(linear, left top, left bottom, from(#f2f9fe), to(#d6f0fd));
+  background-image: -webkit-linear-gradient(top, #f2f9fe, #d6f0fd);
+  background-image: -moz-linear-gradient(top, #f2f9fe, #d6f0fd);
+  background-image: -ms-linear-gradient(top, #f2f9fe, #d6f0fd);
+  background-image: -o-linear-gradient(top, #f2f9fe, #d6f0fd);
+  background-image: linear-gradient(to bottom, #f2f9fe, #d6f0fd);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#f2f9fe, endColorstr=#d6f0fd);
+}
+
+.video-delete,
+.video-image,
+.video-description {
+  position: relative;
+  display: table-cell;
+  vertical-align: middle;
+  padding: 5px 0;
+}
+
 
 /***********************************************************
 * GRIDSTER
@@ -222,8 +281,8 @@ button.close {
 
 .fade {
   opacity: 0;
-  -webkit-transition: opacity .15s linear;
-          transition: opacity .15s linear;
+  -webkit-transition: opacity .25s linear;
+          transition: opacity .25s linear;
 }
 .fade.in {
   opacity: 1;

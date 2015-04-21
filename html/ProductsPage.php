@@ -241,8 +241,8 @@
 <div class="form-field">
 	<label for="Item_Image"><?php _e("Image", 'UPCP') ?></label>
 	<input id="Item_Image" type="text" size="36" name="Item_Image" value="http://" /> 
-  <input id="Item_Image_button" class="button" type="button" value="Upload Image" />
-	<p><?php _e("The image that will be displayed in association with this product.", 'UPCP') ?></p>
+	<input id="Item_Image_button" class="button" type="button" value="Upload Image" />
+	<p><?php _e("The main image that will be displayed in association with this product.", 'UPCP') ?></p>
 </div>
 <div class="form-field">
 	<label for="Item_Price"><?php _e("Price", 'UPCP') ?></label>
@@ -255,6 +255,11 @@
 												 	 'textarea_rows' => 6);																						
 				wp_editor("", "Item_Description", $settings); ?>
 	<p><?php _e("The description of the product. What is it and what makes it worth getting?", 'UPCP') ?></p>
+</div>
+<div class="form-field">
+	<label for="Item_SEO_Description"><?php _e("SEO Description", 'UPCP') ?></label>
+	<input name="Item_SEO_Description" id="Item_SEO_Description" type="text" value="" size="60" />
+	<p><?php _e("The description to use for this product in the SEO By Yoast meta description tag.", 'UPCP') ?></p>
 </div>
 <div>
 		<label for="Item_Link"><?php _e("Product Link", 'UPCP') ?></label>
@@ -297,12 +302,24 @@
 </div>
 <div class="form-field">
 	<label for="Item_Tags"><?php _e("Tags:", 'UPCP') ?></label>
-	<?php $Tagged_Items = $wpdb->get_results("SELECT Tag_ID FROM $tagged_items_table_name WHERE Item_ID='" . $Product->Item_ID ."'"); ?>
-	<?php $Tags = $wpdb->get_results("SELECT * FROM $tags_table_name"); ?>
-	<?php foreach ($Tags as $Tag) { ?>
-			<input type="checkbox" class='upcp-tag-input' name="Tags[]" value="<?php echo $Tag->Tag_ID; ?>" id="Tag-<?php echo $Tag->Tag_Name; ?>" <?php if (in_array($Tag->Tag_ID, $Tagged_Items)) {echo " checked";} ?>>
-			<?php echo $Tag->Tag_Name; ?></br>
-	<?php } ?>
+	<?php $TagGroupNames = $wpdb->get_results("SELECT * FROM $tag_groups_table_name ORDER BY Tag_Group_ID ASC"); ?>
+    <div class="Tag-Group-Holder" style="margin:10px auto;">
+    <?php 
+    	foreach($TagGroupNames as $TagGroupName){  
+			$TagGroupID = $TagGroupName->Tag_Group_ID;
+			$Tags = $wpdb->get_results("SELECT * FROM $tags_table_name WHERE Tag_Group_ID=" . $TagGroupID . " ORDER BY Tag_Name ASC");
+			if(!empty($Tags)){ ?>
+        	    <div style="padding:10px;" id="Tag-Group-<?php echo $TagGroupName->Tag_Group_ID; ?>">
+				<?php 
+					echo $TagGroupName->Tag_Group_Name . "<br /><br />";
+        	    	foreach ($Tags as $Tag) { ?>
+						<input type="checkbox" class='upcp-tag-input' name="Tags[]" value="<?php echo $Tag->Tag_ID; ?>" id="Tag-<?php echo $Tag->Tag_Name; ?>">
+						<?php echo $Tag->Tag_Name; ?></br>
+        	        <?php } ?>
+        	    </div><!-- end #Tag-Group-<?php echo $TagGroupName->Tag_Group_ID; ?> -->
+        	<?php };
+		} ?>
+    </div><!-- end .Tag-Group-Holder -->
 	<p><?php _e("What tags should this product have? Tags help to describe the attributes of a product.", 'UPCP') ?></p>
 </div>
 
@@ -407,6 +424,9 @@ echo $ReturnString;
 		<form method="post" action="admin.php?page=UPCP-options&Action=UPCP_ExportToExcel">
 			<p><?php _e("Downloads all products currently in the database to Excel", 'UPCP') ?></p>
 			<p class="submit"><input type="submit" name="Export_Submit" id="submit" class="button button-primary" value="Export to Excel"  /></p>
+		</form>
+		<form method="post" action="admin.php?page=UPCP-options&Action=UPCP_ExportToExcel&FileType=CSV">
+			<p class="submit"><input type="submit" name="Export_Submit" id="submit" class="button button-primary" value="Export to CSV"  /></p>
 		</form>
 	</div>
 <?php } else { ?>

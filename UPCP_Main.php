@@ -7,11 +7,22 @@ Author: Etoile Web Design
 Author URI: http://www.EtoileWebDesign.com/
 Terms and Conditions: http://www.etoilewebdesign.com/plugin-terms-and-conditions/
 Text Domain: UPCP
-Version: 3.0.16
+Version: 3.1.0
 */
 
 global $UPCP_db_version;
-global $categories_table_name, $subcategories_table_name, $items_table_name, $item_images_table_name, $catalogues_table_name, $catalogue_items_table_name, $tagged_items_table_name, $tags_table_name, $fields_table_name, $fields_meta_table_name;
+global 	$categories_table_name, 
+		$subcategories_table_name, 
+		$items_table_name, 
+		$item_images_table_name, 
+		$catalogues_table_name, 
+		$catalogue_items_table_name,
+		$item_videos_table_name, 
+		$tagged_items_table_name, 
+		$tags_table_name, 
+		$tag_groups_table_name,
+		$fields_table_name, 
+		$fields_meta_table_name;
 global $wpdb;
 global $upcp_message;
 global $Full_Version;
@@ -21,17 +32,19 @@ $items_table_name = $wpdb->prefix . "UPCP_Items";
 $item_images_table_name = $wpdb->prefix . "UPCP_Item_Images";
 $catalogues_table_name = $wpdb->prefix . "UPCP_Catalogues";
 $catalogue_items_table_name = $wpdb->prefix . "UPCP_Catalogue_Items";
+$item_videos_table_name = $wpdb->prefix . "UPCP_Videos";
 $tags_table_name = $wpdb->prefix . "UPCP_Tags";
 $tagged_items_table_name = $wpdb->prefix . "UPCP_Tagged_Items";
+$tag_groups_table_name = $wpdb->prefix . "UPCP_Tag_Groups";
 $fields_table_name = $wpdb->prefix . "UPCP_Custom_Fields";
 $fields_meta_table_name = $wpdb->prefix . "UPCP_Fields_Meta";
-$UPCP_db_version = "3.0.10";
+$UPCP_db_version = "3.1.0";
 
 define( 'UPCP_CD_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'UPCP_CD_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
-/*define('WP_DEBUG', true);
-$wpdb->show_errors();*/
+/* define('WP_DEBUG', true);
+$wpdb->show_errors(); */
 
 /* When plugin is activated */
 register_activation_hook(__FILE__,'Install_UPCP_DB');
@@ -126,9 +139,9 @@ function UPCP_Add_Stylesheet() {
 		//wp_enqueue_style( 'wp-admin' );
 	}
 
-	if ($Catalogue_Style != "None") {wp_register_style('upcp-addtl-stylesheet', UPCP_CD_PLUGIN_URL . "css/addtl/" . $Catalogue_Style . ".css"); wp_enqueue_style('upcp-addtl-stylesheet');}
-	if ($Sidebar_Style != "None") {wp_register_style('upcp-sidebar', UPCP_CD_PLUGIN_URL . "css/addtl/" . $Sidebar_Style . ".css"); wp_enqueue_style('upcp-sidebar');}
-	if ($Pagination_Style != "None") {wp_register_style('upcp-pagination', UPCP_CD_PLUGIN_URL . "css/addtl/" . $Pagination_Style . ".css"); wp_enqueue_style('upcp-pagination');}
+	if ($Catalogue_Style != "None" and $Catalogue_Style != "") {wp_register_style('upcp-addtl-stylesheet', UPCP_CD_PLUGIN_URL . "css/addtl/" . $Catalogue_Style . ".css"); wp_enqueue_style('upcp-addtl-stylesheet');}
+	if ($Sidebar_Style != "None" and $Sidebar_Style != "") {wp_register_style('upcp-sidebar', UPCP_CD_PLUGIN_URL . "css/addtl/" . $Sidebar_Style . ".css"); wp_enqueue_style('upcp-sidebar');}
+	if ($Pagination_Style != "None" and $Pagination_Style != "") {wp_register_style('upcp-pagination', UPCP_CD_PLUGIN_URL . "css/addtl/" . $Pagination_Style . ".css"); wp_enqueue_style('upcp-pagination');}
 }
 
 add_action( 'wp_enqueue_scripts', 'Add_UPCP_FrontEnd_Scripts' );
@@ -172,6 +185,7 @@ include "Functions/Version_Upgrade.php";
 include "Functions/Rewrite_Rules.php";
 include "Functions/Update_Tables.php";
 include "Functions/FrontEndAjaxUrl.php";
+include "Functions/UPCP_Add_SEO.php";
 include "Functions/UPCP_Create_XML_Sitemap.php";
 include "Functions/UPCP_Export_To_Excel.php";
 include "Functions/UPCP_Widget.php";
@@ -189,5 +203,11 @@ if (!isset($rules['"(.?.+?)/([^&]+)/?$"']) and $PrettyLinks == "Yes") {
 	add_filter('init', 'UPCP_Rewrite_Rules');
 	update_option("UPCP_Update_RR_Rules", "No");
 }
+
+function UPCP_Adjust_SEO() {
+	$SEO_Option = get_option("UPCP_SEO_Option");
+	if ($SEO_Option != "None") {UPCP_Add_SEO();}
+}
+add_action("init", "UPCP_Adjust_SEO");
 
 ?>

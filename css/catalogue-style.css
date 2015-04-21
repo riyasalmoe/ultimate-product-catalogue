@@ -719,6 +719,25 @@
   width: 100%;
 }
 
+.prod-details-right{
+	max-width: 300px;
+	float: left;
+	padding-left: 15px;
+	margin-top: 10px;
+}
+.upcp-product-side-container {
+	clear: both;
+}
+.upcp-side-title {
+	float: left;
+	padding-right: 10px;
+	font-weight: 600;
+}
+.upcp-product-video {
+	margin-top:12px;
+	margin-bottom: 6px;
+}
+
 @media only screen and (max-width: 670px) {
   .upcp-standard-product-page,
 	.upcp-custom-large-product-page {

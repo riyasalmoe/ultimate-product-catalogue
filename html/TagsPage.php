@@ -7,19 +7,22 @@
 <?php wp_referer_field(); ?>
 
 <?php 
-			if (isset($_GET['Page']) and $_GET['DisplayPage'] == "Tags") {$Page = $_GET['Page'];}
-			else {$Page = 1;}
-			
-			$Sql = "SELECT * FROM $tags_table_name ";
-				if (isset($_GET['OrderBy']) and $_GET['DisplayPage'] == "Tags") {$Sql .= "ORDER BY " . $_GET['OrderBy'] . " " . $_GET['Order'] . " ";}
-				else {$Sql .= "ORDER BY Tag_Name ";}
-				$Sql .= "LIMIT " . ($Page - 1)*20 . ",20";
-				$myrows = $wpdb->get_results($Sql);
-				$TotalProducts = $wpdb->get_results("SELECT Tag_ID FROM $tags_table_name");
-				$num_rows = $wpdb->num_rows; 
-				$Number_of_Pages = ceil($wpdb->num_rows/20);
-				$Current_Page_With_Order_By = "admin.php?page=UPCP-options&DisplayPage=Tags";
-				if (isset($_GET['OrderBy'])) {$Current_Page_With_Order_By .= "&OrderBy=" .$_GET['OrderBy'] . "&Order=" . $_GET['Order'];}?>
+	global $wpdb,$TagGroups,$TagGroupName;
+
+	if (isset($_GET['Page']) and $_GET['DisplayPage'] == "Tags") {$Page = $_GET['Page'];}
+	else {$Page = 1;}
+	
+	$Sql = "SELECT * FROM $tags_table_name ";
+	if (isset($_GET['OrderBy']) and $_GET['DisplayPage'] == "Tags") {$Sql .= "ORDER BY " . $_GET['OrderBy'] . " " . $_GET['Order'] . " ";}
+	else {$Sql .= "ORDER BY Tag_Name ";}
+	$Sql .= "LIMIT " . ($Page - 1)*20 . ",20";
+	$myrows = $wpdb->get_results($Sql);
+	$TotalProducts = $wpdb->get_results("SELECT Tag_ID FROM $tags_table_name");
+	$num_rows = $wpdb->num_rows; 
+	$Number_of_Pages = ceil($wpdb->num_rows/20);
+	$Current_Page_With_Order_By = "admin.php?page=UPCP-options&DisplayPage=Tags";
+	if (isset($_GET['OrderBy'])) {$Current_Page_With_Order_By .= "&OrderBy=" .$_GET['OrderBy'] . "&Order=" . $_GET['Order'];}
+?>
 
 <form action="admin.php?page=UPCP-options&Action=UPCP_MassDeleteTags&DisplayPage=Tags" method="post"> 
 <div class="tablenav top">
@@ -67,6 +70,13 @@
 												<span class="sorting-indicator"></span>
 										</a>
 						</th>
+						<th scope='col' id='groups' class='manage-column column-requirements sortable desc'  style="">
+									  <?php if ($_GET['OrderBy'] == "Tag_Group_ID" and $_GET['Order'] == "ASC") { echo "<a href='admin.php?page=UPCP-options&DisplayPage=Tags&OrderBy=Tag_Group_ID&Order=DESC'>";}
+										 			else {echo "<a href='admin.php?page=UPCP-options&DisplayPage=Tags&OrderBy=Tag_Group_ID&Order=ASC'>";} ?>
+											  <span><?php _e("Tag Group", 'UPCP') ?></span>
+												<span class="sorting-indicator"></span>
+										</a>
+						</th>
 				</tr>
 		</thead>
 
@@ -94,13 +104,20 @@
 												<span class="sorting-indicator"></span>
 										</a>
 						</th>
+						<th scope='col' id='groups' class='manage-column column-requirements sortable desc'  style="">
+									  <?php if ($_GET['OrderBy'] == "Tag_Group_ID" and $_GET['Order'] == "ASC") { echo "<a href='admin.php?page=UPCP-options&DisplayPage=Tags&OrderBy=Tag_Group_ID&Order=DESC'>";}
+										 			else {echo "<a href='admin.php?page=UPCP-options&DisplayPage=Tags&OrderBy=Tag_Group_ID&Order=ASC'>";} ?>
+											  <span><?php _e("Tag Group", 'UPCP') ?></span>
+												<span class="sorting-indicator"></span>
+										</a>
+						</th>
 				</tr>
 		</tfoot>
 
 	<tbody id="the-list" class='list:tag'>
 		
 		 <?php
-				if ($myrows) { 
+				if ($myrows) {
 	  			  foreach ($myrows as $Tag) {
 								echo "<tr id='Item" . $Tag->Tag_ID ."'>";
 								echo "<th scope='row' class='check-column'>";
@@ -124,6 +141,12 @@
 								echo "</td>";
 								echo "<td class='description column-description'>" . $Tag->Tag_Description . "</td>";
 								echo "<td class='description column-items-count'>" . $Tag->Tag_Item_Count . "</td>";
+								if ($Tag->Tag_Group_ID != 0) {
+									$TagGroupName = $wpdb->get_row("SELECT * FROM $tag_groups_table_name WHERE Tag_Group_ID='".$Tag->Tag_Group_ID."'");
+									echo "<td class='description column-group'>" . $TagGroupName->Tag_Group_Name . "</td>";
+								} else {
+									echo "<td class='description column-group'>Not assigned a group</td>";
+								};
 								echo "</tr>";
 						}
 				}
@@ -179,9 +202,101 @@
 	<p><?php _e("The description of the tag. What will it be used to display?", 'UPCP') ?></p>
 </div>
 
+<div>
+	<label for="Tag_Group"><?php _e("Tag Group:", 'UPCP') ?></label>
+	<select name="Tag_Group_ID" id="Tag_Group_ID">
+	<option value="0">Uncategorized Tags</option>
+	<?php if ($Tag->Tag_Group_ID != "") {
+					  $TagGroups = $wpdb->get_results("SELECT * FROM $tag_groups_table_name ORDER BY Tag_Group_Order");
+					  $TaggedItem = $wpdb->get_results("SELECT * FROM $tagged_item_table_name");
+						foreach ($TagGroups as $TagGroup) {
+							if($TagGroup->Tag_Group_ID != 0){
+								echo "<option value='" . $TagGroup->Tag_Group_ID . "' ";
+								echo ">" . $TagGroup->Tag_Group_Name . "</option>";
+							} 
+						}
+				} ?>
+	</select>
+    <p><?php _e("Assign the tag to a group",'UPCP') ?></p>
++</div>
+
 <p class="submit"><input type="submit" name="submit" id="submit" class="button-primary" value="<?php _e('Add New Tag', 'UPCP') ?>"  /></p></form></div>
 <br class="clear" />
 </div>
+</div>
+
+<!-- Form to create new tag group -->
+<div id="col-left">
+<div class="col-wrap">
+ 
+<div class="form-wrap">
+<h3><?php _e("Add a New Tag Group", 'UPCP') ?></h3>
+<form id="addtaggroup" method="post" action="admin.php?page=UPCP-options&Action=UPCP_AddTagGroup&DisplayPage=Tag" class="validate" enctype="multipart/form-data">
+<input type="hidden" name="action" value="Add_Tag_Group" />
+<?php wp_nonce_field(); ?>
+<?php wp_referer_field(); ?>
+<div class="form-field form-required">
+	<label for="Tag_Group_Name"><?php _e("New Tag Group",'UPCP') ?></label>
+    <input name="Tag_Group_Name" id="Tag_Group_Name" type="text" value="" size="60" />
+    <p><?php _e("Create a name for the new tag group",'UPCP') ?></p>
+</div>
+<div class="form-field">
+	<label for="Tag_Group_Description"><?php _e("Tag Group Description", 'UPCP') ?></label>
+	<textarea name="Tag_Group_Description" id="Tag_Group_Description" rows="5" cols="40"></textarea>
+	<p><?php _e("What tags should belong to this group?", 'UPCP') ?></p>
+</div>
+<label for="Tag_Group_Display_Status"><?php _e("Display Tag Group", 'UPCP') ?></label>
+<label title='Yes'><input type='radio' name='Display_Tag_Group' value='Yes' checked='checked' /> <span>Show</span></label>
+<label title='No'><input type='radio' name='Display_Tag_Group' value='No' /> <span>Hide</span></label>
+<p><?php _e("Should this tag group be displayed on the page?", 'UPCP') ?></p>
+<br />
+<p class="submit"><input type="submit" name="submit" id="submit" class="button-primary" value="<?php _e('Add New Tag Group', 'UPCP') ?>"  /></p></form></div>
+<br class="clear" />
+</div>
+</div>
+
+<!-- Form to edit tag group -->
+<div id="col-left">
+    <div class="col-wrap">
+        <div class="form-wrap">
+			<?php $EditTagGroups = $wpdb->get_results("SELECT * FROM $tag_groups_table_name ORDER BY Tag_Group_Order");
+            ?>
+        	<h3><?php _e("Edit Tag Group", 'UPCP') ?></h3>
+        		<label for="Edit_Tag_Group"><?php _e("Edit Tag Group:", 'UPCP') ?></label>
+                <table class="wp-list-table widefat tags sorttable tag-group-list" style="width:100%;">
+            <thead>
+                <tr>
+                    <th><?php _e("Edit/Delete", 'UPCP') ?></th>
+                    <th><?php _e("Tag Group Name", 'UPCP') ?></th>
+                    <th><?php _e("Tag Group Description", 'UPCP') ?></th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php foreach($EditTagGroups as $EditTagGroup){
+				$TagGroupID = $EditTagGroup->Tag_Group_ID;
+				$TagGroupName = $EditTagGroup->Tag_Group_Name;
+				$TagGroupDescription = $EditTagGroup->Tag_Group_Description;
+				if($TagGroupID != 0){?>
+                    <tr id="list-item-<?php echo $TagGroupID; ?>" class="list-item-tag-group">
+                        <td class="tag-group-edit-delete"><a href="admin.php?page=UPCP-options&Action=UPCP_Tag_Groups&Selected=Tag_Group&Tag_Group_ID=<?php echo $TagGroupID; ?>"><?php _e("Edit", 'UPCP') ?></a>&nbsp;|&nbsp;<a href="admin.php?page=UPCP-options&Action=UPCP_DeleteTagGroup&DisplayPage=Tags" class="confirm-delete"><?php _e("Delete", 'UPCP') ?></a></td>
+                        <td class="tag-group-name"><p><?php echo $TagGroupName; ?></p></td>
+                        <td class="tag-group-description" style="width:35%;"><p><?php echo $TagGroupDescription; ?></p></td>
+						</tr>
+                <?php }
+				}
+			?>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th><?php _e("Edit/Delete", 'UPCP') ?></th>
+                    <th><?php _e("Tag Group Name", 'UPCP') ?></th>
+                    <th><?php _e("Tag Group Description", 'UPCP') ?></th>
+                </tr>
+            </tfoot>
+    	</table>
+        </div>
+        <br class="clear" />
+    </div>
 </div>
 
 
