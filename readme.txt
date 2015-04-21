@@ -176,6 +176,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 3.1.2 =
+- Security fix for spreadsheet uploads
+
 = 3.1.1 =
 - Fixed a selector conflict with WP Super Cache
 - Fixed a number of PHP notices

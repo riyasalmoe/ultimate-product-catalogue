@@ -45,6 +45,8 @@ function Add_Edit_Product() {
 /* Prepare the data to add multiple products from a spreadsheet */
 function Add_Products_From_Spreadsheet() {
 		
+		if (!is_user_logged_in()) {exit();}
+
 		/* Test if there is an error with the uploaded spreadsheet and return that error if there is */
 		if (!empty($_FILES['Products_Spreadsheet']['error']))
 		{
@@ -492,6 +494,8 @@ function Mass_Delete_Catalogues() {
 
 function UPCP_Handle_File_Upload($Field_Name) {
 		
+		if (!is_user_logged_in()) {exit();}
+
 		/* Test if there is an error with the uploaded file and return that error if there is */
 		if (!empty($_FILES[$Field_Name]['error']))
 		{
