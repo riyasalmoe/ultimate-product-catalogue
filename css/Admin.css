@@ -170,7 +170,7 @@ a {
 * CONFIRMATION DIALOG
 ***********************************************************/
 
-.modal.fade .modal-dialog {
+.modal.upcp-fade .modal-dialog {
   -webkit-transition: -webkit-transform .3s ease-out;
      -moz-transition:    -moz-transform .3s ease-out;
        -o-transition:      -o-transform .3s ease-out;
@@ -279,12 +279,12 @@ button.close {
   outline: 0;
 }
 
-.fade {
+.upcp-fade {
   opacity: 0;
   -webkit-transition: opacity .25s linear;
           transition: opacity .25s linear;
 }
-.fade.in {
+.upcp-fade.in {
   opacity: 1;
 }
 

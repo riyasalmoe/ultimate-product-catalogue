@@ -176,6 +176,10 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 3.1.1 =
+- Fixed a selector conflict with WP Super Cache
+- Fixed a number of PHP notices
+
 = 3.1.0 =
 - Added SEO By Yoast Integration
 - Added ability to add YouTube videos for products

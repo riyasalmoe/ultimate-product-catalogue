@@ -11,6 +11,18 @@ function UPCP_Output_Options() {
 	if (isset($_GET['DisplayPage'])) {
 		  $Display_Page = $_GET['DisplayPage'];
 	}
+	else {
+		$Display_Page = null;
+	}
+
+	if (!isset($_GET['Action'])) {
+		$_GET['Action'] = null;
+	}
+
+	if (!isset($_GET['OrderBy'])) {
+		$_GET['OrderBy'] = null;
+	}
+
 
 	include UPCP_CD_PLUGIN_PATH . 'html/AdminHeader.php';
 	if ($_GET['Action'] == "UPCP_Item_Details" or 
