@@ -62,11 +62,11 @@ function Record_Item_View() {
 	$Path = ABSPATH . 'wp-load.php';
 	include_once($Path);
 	global $wpdb;
-	
+
 	$Item_ID = $_POST['Item_ID'];
-	$Item = $wpdb->get_row("SELECT Item_Views FROM $items_table_name WHERE Item_ID=" . $Item_ID);
-	if ($Item->Item_Views == "") {$wpdb->query("UPDATE $items_table_name SET Item_Views=1 WHERE Item_ID=" . $Item_ID);}
-	else {$wpdb->query("UPDATE $items_table_name SET Item_Views=Item_Views+1 WHERE Item_ID=" . $Item_ID);}
+	$Item = $wpdb->get_row($wpdb->prepare("SELECT Item_Views FROM $items_table_name WHERE Item_ID='%d'", $Item_ID));
+	if ($Item->Item_Views == "") {$wpdb->query($wpdb->prepare("UPDATE $items_table_name SET Item_Views=1 WHERE Item_ID='%d'", $Item_ID));}
+	else {$wpdb->query($wpdb->prepare("UPDATE $items_table_name SET Item_Views=Item_Views+1 WHERE Item_ID='%d'", $Item_ID));}
 }
 add_action('wp_ajax_record_view', 'Record_Item_View');
 add_action( 'wp_ajax_nopriv_record_view', 'Record_Item_View' );

@@ -776,7 +776,7 @@ function SingleProductPage() {
 	else {$Back_To_Catalogue_Text = __("Back to Catalogue", 'UPCP');}
 		
 	if ($Pretty_Links == "Yes") {$Product = $wpdb->get_row("SELECT * FROM $items_table_name WHERE Item_Slug='" . trim(get_query_var('single_product'), "/? ") . "'");}
-	else {$Product = $wpdb->get_row("SELECT * FROM $items_table_name WHERE Item_ID='" . $_GET['SingleProduct'] . "'");}
+	else {$Product = $wpdb->get_row($wpdb->prepare("SELECT * FROM $items_table_name WHERE Item_ID='%d'", $_GET['SingleProduct']));}
 	$Item_Images = $wpdb->get_results("SELECT Item_Image_URL, Item_Image_ID FROM $item_images_table_name WHERE Item_ID=" . $Product->Item_ID . " ORDER BY Item_Image_Order");
 
 	$Links = get_option("UPCP_Product_Links");

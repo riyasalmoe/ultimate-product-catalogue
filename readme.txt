@@ -175,7 +175,10 @@ Premium Features
 4. The "list" catalogue view
 5. The admin area
 
-== Changelog ==
+== Changelog == 
+= 3.1.3 =
+- Security fix for potential SQL-injection, depending on Options settings
+
 = 3.1.2 =
 - Security fix for spreadsheet uploads
 
