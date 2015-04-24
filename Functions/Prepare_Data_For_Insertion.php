@@ -5,22 +5,23 @@ function Add_Edit_Product() {
 		$Apply_Contents_Filter = get_option("UPCP_Apply_Contents_Filter");
 		
 		/* Process the $_POST data where neccessary before storage */
-		$Item_ID = $_POST['Item_ID'];
-		$Item_Name = stripslashes_deep($_POST['Item_Name']);
-		$Item_Slug = $_POST['Item_Slug'];
-		$Item_Photo_URL = stripslashes_deep($_POST['Item_Image']);
-		$Item_Description = stripslashes_deep($_POST['Item_Description']);
+		if (isset($_POST['Item_ID'])) {$Item_ID = $_POST['Item_ID'];}
+		$Item_Name = sanitize_text_field(stripslashes_deep($_POST['Item_Name']));
+		$Item_Slug = sanitize_text_field($_POST['Item_Slug']);
+		$Item_Photo_URL = sanitize_text_field(stripslashes_deep($_POST['Item_Image']));
+		$Item_Description = sanitize_text_field(stripslashes_deep($_POST['Item_Description']));
 		if ($Apply_Contents_Filter == "Yes") {$Item_Description = apply_filters('the_content', $Item_Description);}
-		$Item_Price = $_POST['Item_Price'];
+		$Item_Price = sanitize_text_field($_POST['Item_Price']);
 		$Item_SEO_Description = $_POST['Item_SEO_Description'];
 		$Item_Link = $_POST['Item_Link'];
 		$Item_Display_Status = $_POST['Item_Display_Status'];
 		$Category_ID = $_POST['Category_ID'];
-		$Global_Item_ID = $_POST['Global_Item_ID'];
-		$Item_Special_Attr = $_POST['Item_Special_Attr'];
-		$Tags = $_POST['Tags'];
-		$Related_Products = $_POST['Item_Related_Products_1'] . "," . $_POST['Item_Related_Products_2'] . "," . $_POST['Item_Related_Products_3'] . "," . $_POST['Item_Related_Products_4'] . "," . $_POST['Item_Related_Products_5'];
-		$Next_Previous = $_POST['Item_Next_Product'] . "," . $_POST['Item_Previous_Product'];
+		if (isset($_POST['Global_Item_ID'])) {$Global_Item_ID = $_POST['Global_Item_ID'];}
+		if (isset($_POST['Item_Special_Attr'])) {$Item_Special_Attr = $_POST['Item_Special_Attr'];}
+		if (isset($_POST['Tags'])) {$Tags = $_POST['Tags'];}
+		else {$Tags = null;}
+		if (isset($_POST['Item_Related_Products_1'])) {$Related_Products = $_POST['Item_Related_Products_1'] . "," . $_POST['Item_Related_Products_2'] . "," . $_POST['Item_Related_Products_3'] . "," . $_POST['Item_Related_Products_4'] . "," . $_POST['Item_Related_Products_5'];}
+		if (isset($_POST['Item_Next_Product'])) {$Next_Previous = $_POST['Item_Next_Product'] . "," . $_POST['Item_Previous_Product'];}
 		if ($Tags == "") {$Tags = array();}
 		$SubCategory_ID = $_POST['SubCategory_ID'];
 
@@ -83,6 +84,10 @@ function Add_Products_From_Spreadsheet() {
 		/* Make sure that the file exists */ 	 	
 		elseif (empty($_FILES['Products_Spreadsheet']['tmp_name']) || $_FILES['Products_Spreadsheet']['tmp_name'] == 'none') {
 				$error = __('No file was uploaded here..', 'UPCP');
+		}
+		/* Check that it is a .xls or .xlsx file */
+		elseif ($_FILES['Products_Spreadsheet']['type'] != "application/vnd.ms-excel" and $_FILES['Products_Spreadsheet']['type'] != "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
+			$error = __('File must be .xls or .xlsx', 'UPCP');
 		}
 		/* Move the file and store the URL to pass it onwards*/ 	 	
 		else {				 

@@ -509,17 +509,21 @@ function Add_UPCP_Product($Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Descrip
 		global $fields_meta_table_name;
 		global $Full_Version;
 		
+		if (!wp_verify_nonce($_POST['_wpnonce'])) {return __("There has been a validation error.", 'UPCP');}
+
 		$Prod_Count = $wpdb->get_var("SELECT COUNT(*) FROM " . $items_table_name);
 		
 		
-		if (Prod_Count >= 100 and $Full_Version != "Yes") {
+		if ($Prod_Count >= 100 and $Full_Version != "Yes") {
 			  $update = __("Maximum number of products (100) has been reached for free version. Upgrade to the premium version to continue.", 'UPCP');
 				return $update;
 		}
 
 		//Find the category and sub-category names, since only the ID's are passed in via the form
 		if ($Category_ID != "") {$Category = $wpdb->get_row("SELECT * FROM $categories_table_name WHERE Category_ID =" . $Category_ID); $Category_Name = $Category->Category_Name;}
+		else {$Category_Name = null;}
 		if ($SubCategory_ID != "") {$SubCategory = $wpdb->get_row("SELECT * FROM $subcategories_table_name WHERE SubCategory_ID =" . $SubCategory_ID); $SubCategory_Name = $SubCategory->SubCategory_Name;}
+		else {$SubCategory_Name = null;}
 		$Today = date("Y-m-d H:i:s"); 
 		
 		$wpdb->insert($items_table_name,
@@ -604,7 +608,8 @@ function Add_UPCP_Product($Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Descrip
 		
 		UPCP_Create_XML_Sitemap();
 		
-		$update = __("Product has been successfully created." . $CustomFieldError, 'UPCP');
+		$update = __("Product has been successfully created.", 'UPCP');
+		if (isset($CustomFieldError)) {$update .= $CustomFieldError;}
 		return $update;
 }
 
@@ -618,6 +623,8 @@ function Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Slug, $Item_Photo_URL, $I
 		global $tags_table_name;
 		global $fields_table_name;
 		global $fields_meta_table_name;
+
+		if (!wp_verify_nonce($_POST['_wpnonce'])) {return __("There has been a validation error.", 'UPCP');}
 		
 		// Delete the tagged item in the tagged items table for the given Item_ID
 		// and update the Item_Count column in the tags table in the database		
@@ -749,6 +756,8 @@ function Add_UPCP_Products_From_Spreadsheet($Excel_File_Name) {
 		global $fields_meta_table_name;
 		global $catalogue_items_table_name;
 		global $Full_Version;
+
+		if (!wp_verify_nonce($_POST['_wpnonce'])) {return __("There has been a validation error.", 'UPCP');}
 		
 		$Excel_URL = '../wp-content/plugins/ultimate-product-catalogue/product-sheets/' . $Excel_File_Name;
 		
@@ -1018,6 +1027,7 @@ function Update_UPCP_Options() {
 	update_option("UPCP_Apply_Contents_Filter", $_POST['contents_filter']);
 	update_option("UPCP_Maintain_Filtering", $_POST['maintain_filtering']);
 	$Extra_Elements_Array = $_POST['extra_elements'];
+	if (!is_array($Extra_Elements_Array)) {$Extra_Elements_Array = array();}
 	$Extra_Elements = implode(",", $Extra_Elements_Array);
 	update_option("UPCP_Extra_Elements", $Extra_Elements);
 	

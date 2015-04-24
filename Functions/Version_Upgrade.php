@@ -70,7 +70,7 @@ function SetUpdateOption() {
 }
 
 add_filter('upgrader_pre_install', 'SetUpdateOption', 10, 2);
-add_filter('upgrader_pre_install', 'TransferOutBeforeUpgrade', 10, 2); 
-add_filter('upgrader_post_install', 'TransferInAfterUpgrade', 10, 2);
+//add_filter('upgrader_pre_install', 'TransferOutBeforeUpgrade', 10, 2); 
+//add_filter('upgrader_post_install', 'TransferInAfterUpgrade', 10, 2);
 
  ?>

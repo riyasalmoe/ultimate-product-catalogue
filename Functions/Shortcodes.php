@@ -1404,7 +1404,7 @@ function Build_Minimal_Product_Listing($Product, $Catalogue_URL = "") {
 	$uri_parts = explode('?', $_SERVER['REQUEST_URI'], 2);
 	if ($Catalogue_URL == "") {
 		$Base = $uri_parts[0];
-		$Base = substr($Base, 0, strpos($Base, "/product/")+1);
+		if ($Pretty_Links == "Yes") {$Base = substr($Base, 0, strpos($Base, "/product/")+1);}
 	}
 	else {$Base = $Catalogue_URL;}
 	if ($Product->Item_Link != "") {$ItemLink = $Product->Item_Link;}

@@ -23,6 +23,9 @@ function UPCP_Output_Options() {
 		$_GET['OrderBy'] = null;
 	}
 
+	// Stop buffering and exit for Excel, CSV, etc. file downloads
+	if ($_GET['Action'] == "UPCP_ExportToExcel") {ob_end_clean(); exit();}
+
 
 	include UPCP_CD_PLUGIN_PATH . 'html/AdminHeader.php';
 	if ($_GET['Action'] == "UPCP_Item_Details" or 

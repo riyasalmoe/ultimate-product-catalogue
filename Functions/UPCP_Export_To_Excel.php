@@ -82,5 +82,8 @@ function UPCP_Export_To_Excel() {
 		$objWriter->save('php://output');
 	}
 
+	// Turn on buffering so that the WordPress menus don't end up in the file (turned off in UPCP_Output_Options.php)
+	ob_start();
+
 }
 ?>

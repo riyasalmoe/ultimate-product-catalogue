@@ -406,6 +406,7 @@ echo $ReturnString;
 
 <h3><?php _e("Add Products from Spreadsheet", 'UPCP') ?></h3>
 <form id="addtag" method="post" action="admin.php?page=UPCP-options&Action=UPCP_AddProductSpreadsheet&DisplayPage=Product" class="validate" enctype="multipart/form-data">
+<?php wp_nonce_field(); ?>
 <div class="form-field form-required">
 		<label for="Products_Spreadsheet"><?php _e("Spreadhseet Containing Products", 'UPCP') ?></label>
 		<input name="Products_Spreadsheet" id="Products_Spreadsheet" type="file" value=""/>

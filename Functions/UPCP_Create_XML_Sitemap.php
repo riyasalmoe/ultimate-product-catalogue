@@ -9,7 +9,7 @@ $XML_Sitemap_URL = get_option("UPCP_XML_Sitemap_URL");
 $Products = $wpdb->get_results("SELECT Item_Slug, Item_ID FROM $items_table_name");
 $Current_Date = date("Y-m-d");
 
-$XMLString .= "<?xml version='1.0' encoding='UTF-8'?>\n";
+$XMLString = "<?xml version='1.0' encoding='UTF-8'?>\n";
 $XMLString .= "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>\n";
 
 foreach ($Products as $Product) {

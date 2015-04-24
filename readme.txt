@@ -3,7 +3,7 @@ Contributors: Rustaurius, EtoileWebDesign
 Donate Link: http://www.etoilewebdesign.com/plugin-donations/
 Tags: product catalogue, product catalog, restaurant menu, responsive, customizable CSS, SEO friendly, SEO By Yoast, affiliate links,  affiliates, attributes, blog catalog, catalog, catalogue, katalog, commerce, directory, display products, e-commerce, ecommerce, gallery, inventory, list products, manage, plugin, product, product feed, product gallery, product management, product portfolio, products, sales, sell, shipping, shop, shopping, shortcode, shortcodes, store, wp catalog, wp catalogue, widget, widgets, easy to use, user friendly
 Requires at least: 3.5.0
-Tested up to: 4.1
+Tested up to: 4.2
 License: GPLv3
 License URI:http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -176,6 +176,13 @@ Premium Features
 5. The admin area
 
 == Changelog == 
+= 3.1.3 =
+- Fixed a related products linking error
+- Fixed extra text at the end of exports
+- Fixed a warning on the "options" page
+- Fixed a number of PHP warnings
+- Fixed a minor potential security issue for malicious authenticated users
+
 = 3.1.3 =
 - Security fix for potential SQL-injection, depending on Options settings
 
