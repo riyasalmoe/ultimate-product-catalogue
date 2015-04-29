@@ -176,6 +176,9 @@ Premium Features
 5. The admin area
 
 == Changelog == 
+= 3.1.5 =
+- Fixed a potential error with product descriptions containing HTML tags
+
 = 3.1.4 =
 - Fixed a related products linking error
 - Fixed extra text at the end of exports

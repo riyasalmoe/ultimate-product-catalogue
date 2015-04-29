@@ -9,7 +9,7 @@ function Add_Edit_Product() {
 		$Item_Name = sanitize_text_field(stripslashes_deep($_POST['Item_Name']));
 		$Item_Slug = sanitize_text_field($_POST['Item_Slug']);
 		$Item_Photo_URL = sanitize_text_field(stripslashes_deep($_POST['Item_Image']));
-		$Item_Description = sanitize_text_field(stripslashes_deep($_POST['Item_Description']));
+		$Item_Description = stripslashes_deep($_POST['Item_Description']);
 		if ($Apply_Contents_Filter == "Yes") {$Item_Description = apply_filters('the_content', $Item_Description);}
 		$Item_Price = sanitize_text_field($_POST['Item_Price']);
 		$Item_SEO_Description = $_POST['Item_SEO_Description'];
