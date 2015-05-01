@@ -176,6 +176,9 @@ Premium Features
 5. The admin area
 
 == Changelog == 
+= 3.1.6 =
+- Fixed an error with file downloads on custom product pages
+
 = 3.1.5 =
 - Fixed a potential error with product descriptions containing HTML tags
 

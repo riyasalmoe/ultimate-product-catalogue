@@ -1280,6 +1280,7 @@ function BuildGridster($Gridster, $Product, $Item_Images, $Description, $PhotoUR
 					$ProductString .= do_shortcode($Element->element_id);
 					break;
 				case "custom_field":
+					$Field = $wpdb->get_row("SELECT Field_Type FROM $fields_table_name WHERE Field_ID='" . $Element->element_id ."'");
 					$Field_Value = $wpdb->get_row("SELECT Meta_Value FROM $fields_meta_table_name WHERE Field_ID='" . $Element->element_id ."' AND Item_ID='" . $Product->Item_ID . "'");
 					$ProductString .= "<li data-col='" . $Element->col . "' data-row='" . $Element->row . "' data-sizex='" . $Element->size_x . "' data-sizey='" . $Element->size_y . "' class='prod-page-div prod-page-front-end prod-page-custom-field-div gs-w' style='display: list-item; position:absolute;'>";
 					if ($Field->Field_Type == "file") {
