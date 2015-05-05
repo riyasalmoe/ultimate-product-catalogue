@@ -302,7 +302,13 @@
 </div>
 <div class="form-field">
 	<label for="Item_Tags"><?php _e("Tags:", 'UPCP') ?></label>
-	<?php $TagGroupNames = $wpdb->get_results("SELECT * FROM $tag_groups_table_name ORDER BY Tag_Group_ID ASC"); ?>
+	<?php $TagGroupNames = $wpdb->get_results("SELECT * FROM $tag_groups_table_name ORDER BY Tag_Group_ID ASC");
+	$NoTag = new stdClass(); //Create an object for the tags that don't have a group
+	$NoTag->Tag_Group_ID = 0;
+	$NoTag->Tag_Group_Name = "Not Assigned";
+	$NoTag->Tag_Group_Order = 9999;
+	$NoTag->Display_Tag_Group = "Yes";
+	$TagGroupNames[] = $NoTag;?>
     <div class="Tag-Group-Holder" style="margin:10px auto;">
     <?php 
     	foreach($TagGroupNames as $TagGroupName){  

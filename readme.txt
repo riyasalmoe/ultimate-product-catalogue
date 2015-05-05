@@ -176,6 +176,10 @@ Premium Features
 5. The admin area
 
 == Changelog == 
+= 3.1.7 =
+- Fixed a custom fields display error
+- Fixed a tag groups tag display error
+
 = 3.1.6 =
 - Fixed an error with file downloads on custom product pages
 

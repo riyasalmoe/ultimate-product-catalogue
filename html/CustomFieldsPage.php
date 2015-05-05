@@ -7,11 +7,11 @@
 <?php wp_referer_field(); ?>
 
 <?php 
-			if (isset($_GET['Page'])) {$Page = $_GET['Page'];}
+			if (isset($_GET['Page']) and $_GET['DisplayPage'] == "CustomFields") {$Page = $_GET['Page'];}
 			else {$Page = 1;}
 			
 			$Sql = "SELECT * FROM $fields_table_name ";
-				if (isset($_GET['OrderBy'])) {$Sql .= "ORDER BY " . $_GET['OrderBy'] . " " . $_GET['Order'] . " ";}
+				if (isset($_GET['OrderBy']) and $_GET['DisplayPage'] == "CustomFields") {$Sql .= "ORDER BY " . $_GET['OrderBy'] . " " . $_GET['Order'] . " ";}
 				else {$Sql .= "ORDER BY Field_Date_Created ";}
 				$Sql .= "LIMIT " . ($Page - 1)*20 . ",20";
 				$myrows = $wpdb->get_results($Sql);
