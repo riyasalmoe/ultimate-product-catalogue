@@ -47,6 +47,7 @@ The premium version includes a lot of great features including: the ability to a
 * Brazilian Portugese (thanks to <a href='http://wordpress.org/support/profile/tito_cadallora'>Tito_Cadallora</a>);
 * Canadian French (thanks to Pascale DRP)
 * Dutch (Thanks to Martin S.)
+* Greek (Thanks to <a href='http://bigdrop.gr/'>Christoforos A.</a>)
 * Italian
 * Lithuanian (thanks to <a href='http://wordpress.org/support/profile/adart'>AdArt</a>);
 * Russian (thanks to Alexander M.)
@@ -176,6 +177,10 @@ Premium Features
 5. The admin area
 
 == Changelog == 
+= 3.1.8 =
+- Included a Greek translation
+- Fixed a small product pages bug
+
 = 3.1.7 =
 - Fixed a custom fields display error
 - Fixed a tag groups tag display error
