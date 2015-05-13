@@ -177,6 +177,10 @@ Premium Features
 5. The admin area
 
 == Changelog == 
+= 3.1.9 =
+- Made titles clickable in "Details" layout
+- Fixed a potential extra div error
+
 = 3.1.8 =
 - Included a Greek translation
 - Fixed a small product pages bug

@@ -690,7 +690,13 @@ function AddProduct($format, $Item_ID, $Product, $Tags, $AjaxReload = "No", $Aja
 		$ProductString .= "</a>";	
 		$ProductString .= "</div>\n";
 		$ProductString .= "<div id='prod-cat-mid-div-" . $Product->Item_ID . "' class='prod-cat-mid-detail-div upcp-mid-detail-div'>";
+		$ProductString .= "<a class='upcp-catalogue-link ";
+		if ($FancyBoxClass and !$NewWindow) {$ProductString .= "fancybox";}
+		$ProductString .= "' ";
+		if ($NewWindow) {$ProductString .= "target='_blank'";}
+		$ProductString .= " href='" . $ItemLink . "' onclick='RecordView(" . $Product->Item_ID . ");'>";
 		$ProductString .= "<div id='prod-cat-title-" . $Product->Item_ID . "' class='prod-cat-title upcp-detail-title'>" . $Product->Item_Name . "</div>\n";
+		$ProductString .= "</a>";
 		if ($ReadMore == "Yes") {$ProductString .= "<div id='prod-cat-desc-" . $Product->Item_ID . "' class='prod-cat-desc upcp-detail-desc'>" . strip_tags(substr($Description, 0, $Detail_Desc_Chars));}
 		else {$ProductString .= "<div id='prod-cat-desc-" . $Product->Item_ID . "' class='prod-cat-desc upcp-detail-desc'>" . strip_tags($Description);}
 		if ($ReadMore == "Yes") {
@@ -897,7 +903,7 @@ function SingleProductPage() {
 			}
 			$ProductString .= "</div>";
 		}
-		$ProductString .= "</div>\n";
+		//$ProductString .= "</div>\n"; Is this doubled up?
 				
 		$ProductString .= "</div>\n";
 				
