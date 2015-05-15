@@ -177,6 +177,9 @@ Premium Features
 5. The admin area
 
 == Changelog == 
+= 3.1.10 =
+- Fixed a CSS conflict that occurs in the sidebar labels with some themes
+
 = 3.1.9 =
 - Made titles clickable in "Details" layout
 - Fixed a potential extra div error

@@ -233,6 +233,9 @@
   background:rgba(225,225,225, 0.75);
 	border-radius: 4px;
 }
+.upcp-label {
+	display: inline;
+}
 .prod-cat-sidebar-category,
 .prod-cat-sidebar-subcategory,
 .prod-cat-sidebar-tag {

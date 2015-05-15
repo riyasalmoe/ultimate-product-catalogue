@@ -1099,7 +1099,7 @@ function BuildSidebar($category, $subcategory, $tags, $prod_name) {
 			else {
 				$SidebarString .= "<input type='checkbox' name='Category" . $Category->Category_ID . "' value='" . $Category->Category_ID . "' onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");' id='cat-". $Category->Category_ID ."' class='jquery-prod-cat-value'";
 				if (in_array($Category->Category_ID, $category)) {$SidebarString .= "checked=checked";}
-				$SidebarString .= "><label for='cat-". $Category->Category_ID ."'> " . $Category->Category_Name . " (" . $ProdCats[$Category->Category_ID] . ")</label>\n";
+				$SidebarString .= "><label class='upcp-label' for='cat-". $Category->Category_ID ."'> " . $Category->Category_Name . " (" . $ProdCats[$Category->Category_ID] . ")</label>\n";
 			}
 			$SidebarString .= "</div>\n";
 						
@@ -1114,7 +1114,7 @@ function BuildSidebar($category, $subcategory, $tags, $prod_name) {
 						else {
 							$SidebarString .= "<input type='checkbox' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");' id='sub-" . $SubCategory->SubCategory_ID . "' class='jquery-prod-sub-cat-value'";
 							if (in_array($SubCategory->SubCategory_ID, $subcategory)) {$SidebarString .= "checked=checked";}
-							$SidebarString .= "><label for='sub-". $SubCategory->SubCategory_ID ."'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID] . ")</label>\n";
+							$SidebarString .= "><label class='upcp-label' for='sub-". $SubCategory->SubCategory_ID ."'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID] . ")</label>\n";
 						}
 						$SidebarString .= "</div>\n";
 					}
@@ -1144,7 +1144,7 @@ function BuildSidebar($category, $subcategory, $tags, $prod_name) {
 			else {
 				$SidebarString .= "<input type='checkbox' name='SubCategory[]' value='" . $SubCategory->SubCategory_ID . "'  onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");' id='sub-" . $SubCategory->SubCategory_ID . "' class='jquery-prod-sub-cat-value'";
 				if (in_array($SubCategory->SubCategory_ID, $subcategory)) {$SidebarString .= "checked=checked";}
-				$SidebarString .= "><label for='sub-". $SubCategory->SubCategory_ID ."'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID] . ")</label>\n";
+				$SidebarString .= "><label class='upcp-label' for='sub-". $SubCategory->SubCategory_ID ."'> " . $SubCategory->SubCategory_Name . " (" . $ProdSubCats[$SubCategory->SubCategory_ID] . ")</label>\n";
 			}
 			$SidebarString .= "</div>\n";
 		}
@@ -1171,7 +1171,7 @@ function BuildSidebar($category, $subcategory, $tags, $prod_name) {
 			else {
 				$SidebarString .= "<input type='checkbox' name='Tag[]' value='" . $Tag->Tag_ID . "'  onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");' id='tag-" . $Tag->Tag_ID . "' class='jquery-prod-tag-value'";
 				if (in_array($Tag->Tag_ID, $tags)) {$SidebarString .= "checked=checked";}
-				$SidebarString .= "><label for='tag-". $Tag->Tag_ID ."'> " . $Tag->Tag_Name . "</label>\n";
+				$SidebarString .= "><label class='upcp-label' for='tag-". $Tag->Tag_ID ."'> " . $Tag->Tag_Name . "</label>\n";
 			}
 			$SidebarString .= "</div>";
 		}
@@ -1187,7 +1187,7 @@ function BuildSidebar($category, $subcategory, $tags, $prod_name) {
 			foreach ($ProdCustomFields[$Custom_Field->Field_ID]  as $Meta_Value => $Count) {
 				$SidebarString .= "<div class='prod-cat-sidebar-cf-value-div'>";
 				$SidebarString .= "<input type='checkbox' name='Custom_Field[]' value='" . $Meta_Value . "'  onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");' id='cf-" . $Custom_Field->Field_ID . "-" . $Meta_Value . "' class='jquery-prod-cf-value' /> ";
-				$SidebarString .= "<label for='cf-" . $Custom_Field->Field_ID . "-" . $Meta_Value . "'>" . $Meta_Value . " (" . $Count . ")</label>";
+				$SidebarString .= "<label class='upcp-label' for='cf-" . $Custom_Field->Field_ID . "-" . $Meta_Value . "'>" . $Meta_Value . " (" . $Count . ")</label>";
 				$SidebarString .= "</div>";
 			}
 			$SidebarString .= "</div>";
