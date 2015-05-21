@@ -107,8 +107,8 @@ jQuery(function(){ //DOM Ready
 						console.dir(serialized);
 						var data = 'serialized_product_page='+JSON.stringify(serialized)+'&action=save_serialized_product_page&type=regular';
 						jQuery.post(ajaxurl, data, function(response) {
-								/*if (response) {alert("Worked");}
-								else {alert("Failed");}*/
+								/*if (response) {alert(response);}
+								else {alert("Response: "+response);}*/
 						});
 				});
 		}

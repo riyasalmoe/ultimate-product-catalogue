@@ -86,7 +86,7 @@ function Add_Products_From_Spreadsheet() {
 				$error = __('No file was uploaded here..', 'UPCP');
 		}
 		/* Check that it is a .xls or .xlsx file */
-		elseif ($_FILES['Products_Spreadsheet']['type'] != "application/vnd.ms-excel" and $_FILES['Products_Spreadsheet']['type'] != "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
+		if(!preg_match("/\.(xls)$/", $_FILES['Products_Spreadsheet']['name'])) {
 			$error = __('File must be .xls or .xlsx', 'UPCP');
 		}
 		/* Move the file and store the URL to pass it onwards*/ 	 	

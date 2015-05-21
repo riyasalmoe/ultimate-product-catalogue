@@ -414,7 +414,7 @@ echo $ReturnString;
 <form id="addtag" method="post" action="admin.php?page=UPCP-options&Action=UPCP_AddProductSpreadsheet&DisplayPage=Product" class="validate" enctype="multipart/form-data">
 <?php wp_nonce_field(); ?>
 <div class="form-field form-required">
-		<label for="Products_Spreadsheet"><?php _e("Spreadhseet Containing Products", 'UPCP') ?></label>
+		<label for="Products_Spreadsheet"><?php _e("Spreadhsheet Containing Products", 'UPCP') ?></label>
 		<input name="Products_Spreadsheet" id="Products_Spreadsheet" type="file" value=""/>
 		<p><?php _e("The spreadsheet containing all of the products you wish to add. Make sure that the column title names are the same as the field names for products (ex: Name, Price, etc.), and that any categories and sub-categories are written exactly the same as they are online.", 'UPCP') ?></p>
 </div>

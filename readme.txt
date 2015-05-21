@@ -177,6 +177,9 @@ Premium Features
 5. The admin area
 
 == Changelog == 
+= 3.1.11 =
+- Fixed a potential spreadsheet upload error
+
 = 3.1.10 =
 - Fixed a CSS conflict that occurs in the sidebar labels with some themes
 
