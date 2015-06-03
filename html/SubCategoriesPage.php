@@ -41,7 +41,7 @@
 		</div>
 </div>
 
-<table class="wp-list-table widefat fixed tags sorttable" cellspacing="0">
+<table class="wp-list-table widefat fixed tags sorttable subcategories-list" cellspacing="0">
 		<thead>
 				<tr>
 						<th scope='col' id='cb' class='manage-column column-cb check-column'  style="">
@@ -115,7 +115,7 @@
 		 <?php
 				if ($myrows) { 
 	  			  foreach ($myrows as $SubCategory) {
-								echo "<tr id='Item" . $SubCategory->SubCategory_ID ."'>";
+								echo "<tr id='subcategory-item-" . $SubCategory->SubCategory_ID ."' class='subcategory-list-item'>";
 								echo "<th scope='row' class='check-column'>";
 								echo "<input type='checkbox' name='Subs_Bulk[]' value='" . $SubCategory->SubCategory_ID ."' />";
 								echo "</th>";

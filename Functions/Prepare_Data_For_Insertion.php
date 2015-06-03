@@ -1,47 +1,47 @@
 <?php
 /* Prepare the data to add or edit a single product */
 function Add_Edit_Product() {
-		
-		$Apply_Contents_Filter = get_option("UPCP_Apply_Contents_Filter");
-		
-		/* Process the $_POST data where neccessary before storage */
-		if (isset($_POST['Item_ID'])) {$Item_ID = $_POST['Item_ID'];}
-		$Item_Name = sanitize_text_field(stripslashes_deep($_POST['Item_Name']));
-		$Item_Slug = sanitize_text_field($_POST['Item_Slug']);
-		$Item_Photo_URL = sanitize_text_field(stripslashes_deep($_POST['Item_Image']));
-		$Item_Description = stripslashes_deep($_POST['Item_Description']);
-		if ($Apply_Contents_Filter == "Yes") {$Item_Description = apply_filters('the_content', $Item_Description);}
-		$Item_Price = sanitize_text_field($_POST['Item_Price']);
-		$Item_SEO_Description = $_POST['Item_SEO_Description'];
-		$Item_Link = $_POST['Item_Link'];
-		$Item_Display_Status = $_POST['Item_Display_Status'];
-		$Category_ID = $_POST['Category_ID'];
-		if (isset($_POST['Global_Item_ID'])) {$Global_Item_ID = $_POST['Global_Item_ID'];}
-		if (isset($_POST['Item_Special_Attr'])) {$Item_Special_Attr = $_POST['Item_Special_Attr'];}
-		if (isset($_POST['Tags'])) {$Tags = $_POST['Tags'];}
-		else {$Tags = null;}
-		if (isset($_POST['Item_Related_Products_1'])) {$Related_Products = $_POST['Item_Related_Products_1'] . "," . $_POST['Item_Related_Products_2'] . "," . $_POST['Item_Related_Products_3'] . "," . $_POST['Item_Related_Products_4'] . "," . $_POST['Item_Related_Products_5'];}
-		if (isset($_POST['Item_Next_Product'])) {$Next_Previous = $_POST['Item_Next_Product'] . "," . $_POST['Item_Previous_Product'];}
-		if ($Tags == "") {$Tags = array();}
-		$SubCategory_ID = $_POST['SubCategory_ID'];
+	
+	$Apply_Contents_Filter = get_option("UPCP_Apply_Contents_Filter");
+	
+	/* Process the $_POST data where neccessary before storage */
+	if (isset($_POST['Item_ID'])) {$Item_ID = $_POST['Item_ID'];}
+	$Item_Name = sanitize_text_field(stripslashes_deep($_POST['Item_Name']));
+	$Item_Slug = sanitize_text_field($_POST['Item_Slug']);
+	$Item_Photo_URL = sanitize_text_field(stripslashes_deep($_POST['Item_Image']));
+	$Item_Description = stripslashes_deep($_POST['Item_Description']);
+	if ($Apply_Contents_Filter == "Yes") {$Item_Description = apply_filters('the_content', $Item_Description);}
+	$Item_Price = sanitize_text_field($_POST['Item_Price']);
+	$Item_SEO_Description = $_POST['Item_SEO_Description'];
+	$Item_Link = $_POST['Item_Link'];
+	$Item_Display_Status = $_POST['Item_Display_Status'];
+	$Category_ID = $_POST['Category_ID'];
+	if (isset($_POST['Global_Item_ID'])) {$Global_Item_ID = $_POST['Global_Item_ID'];}
+	if (isset($_POST['Item_Special_Attr'])) {$Item_Special_Attr = $_POST['Item_Special_Attr'];}
+	if (isset($_POST['Tags'])) {$Tags = $_POST['Tags'];}
+	else {$Tags = null;}
+	if (isset($_POST['Item_Related_Products_1'])) {$Related_Products = $_POST['Item_Related_Products_1'] . "," . $_POST['Item_Related_Products_2'] . "," . $_POST['Item_Related_Products_3'] . "," . $_POST['Item_Related_Products_4'] . "," . $_POST['Item_Related_Products_5'];}
+	if (isset($_POST['Item_Next_Product'])) {$Next_Previous = $_POST['Item_Next_Product'] . "," . $_POST['Item_Previous_Product'];}
+	if ($Tags == "") {$Tags = array();}
+	$SubCategory_ID = $_POST['SubCategory_ID'];
 
-		if (!isset($error) or $error == __('No file was uploaded.', 'UPCP')) {
-				/* Pass the data to the appropriate function in Update_Admin_Databases.php to create the product */
-				if ($_POST['action'] == "Add_Product") {
-					  $user_update = Add_UPCP_Product($Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Description, $Item_Price, $Item_SEO_Description, $Item_Link, $Item_Display_Status, $Category_ID, $Global_Item_ID, $Item_Special_Attr, $SubCategory_ID, $Tags, $Related_Products, $Next_Previous);
-				}
-				/* Pass the data to the appropriate function in Update_Admin_Databases.php to edit the product */
-				else {
-						$user_update = Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Description, $Item_Price, $Item_SEO_Description, $Item_Link, $Item_Display_Status, $Category_ID, $Global_Item_ID, $Item_Special_Attr, $SubCategory_ID, $Tags, $Related_Products, $Next_Previous);
-				}
-				$user_update = array("Message_Type" => "Update", "Message" => $user_update);
-				return $user_update;
-		}
-		/* Return any error that might have occurred */
-		else {
-				$output_error = array("Message_Type" => "Error", "Message" => $error);
-				return $output_error;
-		}
+	if (!isset($error) or $error == __('No file was uploaded.', 'UPCP')) {
+			/* Pass the data to the appropriate function in Update_Admin_Databases.php to create the product */
+			if ($_POST['action'] == "Add_Product") {
+				  $user_update = Add_UPCP_Product($Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Description, $Item_Price, $Item_SEO_Description, $Item_Link, $Item_Display_Status, $Category_ID, $Global_Item_ID, $Item_Special_Attr, $SubCategory_ID, $Tags, $Related_Products, $Next_Previous);
+			}
+			/* Pass the data to the appropriate function in Update_Admin_Databases.php to edit the product */
+			else {
+					$user_update = Edit_UPCP_Product($Item_ID, $Item_Name, $Item_Slug, $Item_Photo_URL, $Item_Description, $Item_Price, $Item_SEO_Description, $Item_Link, $Item_Display_Status, $Category_ID, $Global_Item_ID, $Item_Special_Attr, $SubCategory_ID, $Tags, $Related_Products, $Next_Previous);
+			}
+			$user_update = array("Message_Type" => "Update", "Message" => $user_update);
+			return $user_update;
+	}
+	/* Return any error that might have occurred */
+	else {
+			$output_error = array("Message_Type" => "Error", "Message" => $error);
+			return $output_error;
+	}
 }
 /* Prepare the data to add multiple products from a spreadsheet */
 function Add_Products_From_Spreadsheet() {
@@ -86,7 +86,7 @@ function Add_Products_From_Spreadsheet() {
 				$error = __('No file was uploaded here..', 'UPCP');
 		}
 		/* Check that it is a .xls or .xlsx file */
-		if(!preg_match("/\.(xls)$/", $_FILES['Products_Spreadsheet']['name'])) {
+		if(!preg_match("/\.(xls.)$/", $_FILES['Products_Spreadsheet']['name'])) {
 			$error = __('File must be .xls or .xlsx', 'UPCP');
 		}
 		/* Move the file and store the URL to pass it onwards*/ 	 	

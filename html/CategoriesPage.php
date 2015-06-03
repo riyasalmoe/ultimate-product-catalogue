@@ -42,7 +42,7 @@
 		</div>
 </div>
 
-<table class="wp-list-table widefat fixed tags sorttable" cellspacing="0">
+<table class="wp-list-table widefat fixed tags sorttable categories-list" cellspacing="0">
 		<thead>
 				<tr>
 						<th scope='col' id='cb' class='manage-column column-cb check-column'  style="">
@@ -102,7 +102,7 @@
 		 <?php
 				if ($myrows) { 
 	  			  foreach ($myrows as $Category) {
-								echo "<tr id='Item" . $Category->Category_ID ."'>";
+								echo "<tr id='category-item-" . $Category->Category_ID ."' class='category-list-item'>";
 								echo "<th scope='row' class='check-column'>";
 								echo "<input type='checkbox' name='Cats_Bulk[]' value='" . $Category->Category_ID ."' />";
 								echo "</th>";

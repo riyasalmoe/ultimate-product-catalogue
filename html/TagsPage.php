@@ -45,7 +45,7 @@
 		</div>
 </div>
 
-<table class="wp-list-table widefat fixed tags sorttable" cellspacing="0">
+<table class="wp-list-table widefat fixed tags sorttable tags-list" cellspacing="0">
 		<thead>
 				<tr>
 						<th scope='col' id='cb' class='manage-column column-cb check-column'  style="">
@@ -119,7 +119,7 @@
 		 <?php
 				if ($myrows) {
 	  			  foreach ($myrows as $Tag) {
-								echo "<tr id='Item" . $Tag->Tag_ID ."'>";
+								echo "<tr id='tag-list-item-" . $Tag->Tag_ID ."' class='tag-list-item'>";
 								echo "<th scope='row' class='check-column'>";
 								echo "<input type='checkbox' name='Tags_Bulk[]' value='" . $Tag->Tag_ID ."' />";
 								echo "</th>";

@@ -44,15 +44,16 @@ The premium version includes a lot of great features including: the ability to a
 <http://www.etoilewebdesign.com/ultimate-product-catalogue-faq>
 
 = Additional Languages =
-* Brazilian Portugese (thanks to <a href='http://wordpress.org/support/profile/tito_cadallora'>Tito_Cadallora</a>);
-* Canadian French (thanks to Pascale DRP)
+* Brazilian Portugese (Thanks to <a href='http://wordpress.org/support/profile/tito_cadallora'>Tito_Cadallora</a>);
+* Bulgarian (Thanks to Preslav P.)
+* Canadian French (Thanks to Pascale DRP)
 * Dutch (Thanks to Martin S.)
 * Greek (Thanks to <a href='http://bigdrop.gr/'>Christoforos A.</a>)
 * Italian
-* Lithuanian (thanks to <a href='http://wordpress.org/support/profile/adart'>AdArt</a>);
-* Russian (thanks to Alexander M.)
-* Spanish (thanks to Irene L.)
-* Turkish (thanks to Ayhan)
+* Lithuanian (Thanks to <a href='http://wordpress.org/support/profile/adart'>AdArt</a>);
+* Russian (Thanks to Alexander M.)
+* Spanish (Thanks to Irene L.)
+* Turkish (Thanks to Ayhan)
 
 Thanks to James K for a number of excellent features
 
@@ -177,6 +178,16 @@ Premium Features
 5. The admin area
 
 == Changelog == 
+= 3.2.0 =
+- Added ability to sort order of products in category by dragging and dropping from the category details page
+- Added ability to sort order of categories, sub-categories, tags and custom fields in the sidebar (careful when upgrading, removes alphabetical ordering)
+- Hide/Show custom field sorting options
+- Option to default show or hide custom fields
+- Option to not display custom fields on the main catalogue page if they are empty
+- Added the "Custom CSS" box to the 'Catalogues' tab
+- Improved initial page load time slightly
+- Fixed an error with xlsx file uploads
+
 = 3.1.11 =
 - Fixed a potential spreadsheet upload error
 

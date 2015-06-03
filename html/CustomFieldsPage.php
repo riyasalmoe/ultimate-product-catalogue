@@ -43,7 +43,7 @@
 		</div>
 </div>
 
-<table class="wp-list-table widefat fixed tags sorttable" cellspacing="0">
+<table class="wp-list-table widefat fixed tags sorttable custom-fields-list" cellspacing="0">
 		<thead>
 				<tr>
 						<th scope='col' id='cb' class='manage-column column-cb check-column'  style="">
@@ -117,7 +117,7 @@
 		 <?php
 				if ($myrows) { 
 	  			  foreach ($myrows as $Field) {
-								echo "<tr id='Field" . $Field->Field_ID ."'>";
+								echo "<tr id='field-item-" . $Field->Field_ID ."' class='custom-field-list-item'>";
 								echo "<th scope='row' class='check-column'>";
 								echo "<input type='checkbox' name='Fields_Bulk[]' value='" . $Field->Field_ID ."' />";
 								echo "</th>";

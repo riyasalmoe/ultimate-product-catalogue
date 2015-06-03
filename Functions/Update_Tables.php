@@ -9,6 +9,7 @@ function UpdateTables() {
   		Category_Name text DEFAULT '' NOT NULL,
 		Category_Description text DEFAULT '' NOT NULL,
 		Category_Item_Count mediumint(9) DEFAULT '0',
+		Category_Sidebar_Order mediumint(9) DEFAULT '9999',
 		Category_Date_Created datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
   		UNIQUE KEY id (Category_ID)
     	)
@@ -24,6 +25,7 @@ function UpdateTables() {
   		SubCategory_Name text DEFAULT '' NOT NULL,
 		SubCategory_Description text DEFAULT '' NOT NULL,
 		SubCategory_Item_Count mediumint(9) DEFAULT '0' NOT NULL,
+		SubCategory_Sidebar_Order mediumint(9) DEFAULT '9999',
 		SubCategory_Date_Created datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
   		UNIQUE KEY id (SubCategory_ID)
     	)	
@@ -52,6 +54,7 @@ function UpdateTables() {
 		Item_Related_Products text DEFAULT '',
 		Item_Next_Previous text DEFAULT '',
 		Item_SEO_Description text DEFAULT '',
+		Item_Category_Product_Order mediumint(9) DEFAULT '9999',
   		UNIQUE KEY id (Item_ID)
     	)
 		DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;";
@@ -91,6 +94,7 @@ function UpdateTables() {
 		Tag_Description text DEFAULT '' NOT NULL,
 		Tag_Item_Count text DEFAULT '' NOT NULL,
 		Tag_Group_ID mediumint(9) DEFAULT '0' NOT NULL,
+		Tag_Sidebar_Order mediumint(9) DEFAULT '9999',
 		Tag_Date_Created datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
   		UNIQUE KEY id (Tag_ID)
     	)
@@ -161,6 +165,7 @@ function UpdateTables() {
 		Field_Values text DEFAULT '' NOT NULL,
 		Field_Displays text DEFAULT '' NOT NULL,
 		Field_Searchable text DEFAULT '' NOT NULL,
+		Field_Sidebar_Order mediumint(9) DEFAULT '9999',
 		Field_Date_Created datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
   		UNIQUE KEY id (Field_ID)
     	)

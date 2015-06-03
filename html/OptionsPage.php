@@ -25,6 +25,8 @@
 	$Related_Products = get_option("UPCP_Related_Products");
 	$Next_Previous = get_option("UPCP_Next_Previous");
 	$Access_Role = get_option("UPCP_Access_Role");
+	$Custom_Fields_Show_Hide = get_option("UPCP_Custom_Fields_Show_Hide");
+	$Custom_Fields_Blank = get_option("UPCP_Custom_Fields_Blank");
 	$PP_Grid_Width = get_option("UPCP_PP_Grid_Width");
 	$PP_Grid_Height = get_option("UPCP_PP_Grid_Height");
 	$Top_Bottom_Padding = get_option("UPCP_Top_Bottom_Padding");
@@ -336,6 +338,30 @@
 		<option value="delete_posts"<?php if($Access_Role == "delete_posts") {echo " selected=selected";} ?>>Contributor</option>
 		<option value="read"<?php if($Access_Role == "read") {echo " selected=selected";} ?>>Subscriber</option>
 	</select>
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row"><?php _e("Show/Hide Custom Fields", 'UPCP')?> <br/> 
+<div onMouseOver="ShowToolTip('custom_fields_show_hide_exp')" onMouseOut="HideToolTip('custom_fields_show_hide_exp')" class="questionMark"><br> 
+<div id="custom_fields_show_hide_exp" class="toolTip" ><?php _e("Should custom fields in the sidebar show or be hidden when the page loads?", 'UPCP')?></div></div>
+</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span><?php _e("Should custom fields in the sidebar show or be hidden when the page loads?", 'UPCP')?></span></legend>
+	<label title='Show'><input type='radio' name='custom_fields_show_hide' value='Show' <?php if($Custom_Fields_Show_Hide == "Show") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Show", 'UPCP')?></span></label><br />
+	<label title='Hide'><input type='radio' name='custom_fields_show_hide' value='Hide' <?php if($Custom_Fields_Show_Hide == "Hide") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Hide", 'UPCP')?></span></label><br />
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row"><?php _e("Hide Blank Custom Fields", 'UPCP')?> <br/> 
+<div onMouseOver="ShowToolTip('custom_fields_blank_exp')" onMouseOut="HideToolTip('custom_fields_blank_exp')" class="questionMark"><br> 
+<div id="custom_fields_blank_exp" class="toolTip" ><?php _e("Should custom fields be hidden when they are emtpy?", 'UPCP')?></div></div>
+</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span><?php _e("Should custom fields be hidden when they are emtpy?", 'UPCP')?></span></legend>
+	<label title='Yes'><input type='radio' name='custom_fields_blank' value='Yes' <?php if($Custom_Fields_Blank == "Yes") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Yes", 'UPCP')?></span></label><br />
+	<label title='No'><input type='radio' name='custom_fields_blank' value='No' <?php if($Custom_Fields_Blank == "No") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("No", 'UPCP')?></span></label><br />
 	</fieldset>
 </td>
 </tr>

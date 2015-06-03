@@ -306,6 +306,18 @@
 	font-weight: 600;
 	font-size: 1.2em;
 }
+.prod-cat-sidebar-cf-title {
+	cursor: pointer;
+	background: url("../images/cf-arrow.png");
+	background-repeat: no-repeat;
+	padding-left: 20px;
+}
+.upcp-cf-Show {
+	display:inline;
+}
+.upcp-cf-Hide {
+	display:none;
+}
 
 
 /* Thumbnail Display-Specific Styles */

@@ -4,27 +4,15 @@
 
 // Updates the order of items in the catalogue after a user has dragged and dropped them
 function Catalogue_Save_Order() {
-		global $catalogue_items_table_name;
-		$Path = ABSPATH . 'wp-load.php';
-		include_once($Path);
-		global $wpdb;
-		
-		foreach ($_POST['list-item'] as $Key=>$ID) {
-				$Result = $wpdb->query("UPDATE $catalogue_items_table_name SET Position='" . $Key . "' WHERE Catalogue_Item_ID=" . $ID);
-		}
-		
-}
-add_action('wp_ajax_catalogue_update_order', 'Catalogue_Save_Order');
-
-function Optional_Image_Save_Order(){
-	global $item_optional_images_table_name;
+	global $catalogue_items_table_name;
 	global $wpdb;
 	
 	foreach ($_POST['list-item'] as $Key=>$ID) {
-		$Result = $wpdb->query("UPDATE $item_optional_images_table_name SET Item_Optional_Image_Order='" . $Key . "' WHERE Item_Optional_Image_ID=" . $ID);
+		$Result = $wpdb->query("UPDATE $catalogue_items_table_name SET Position='" . $Key . "' WHERE Catalogue_Item_ID=" . $ID);
 	}
+		
 }
-add_action('wp_ajax_optional_image_update_order','Optional_Image_Save_Order');
+add_action('wp_ajax_catalogue_update_order', 'Catalogue_Save_Order');
 
 function Video_Save_Order(){
 	global $item_videos_table_name;
@@ -55,6 +43,56 @@ function Tag_Group_Save_Order(){
 	}
 }
 add_action('wp_ajax_tag_group_update_order','Tag_Group_Save_Order');
+
+function Category_Products_Save_Order(){
+	global $items_table_name;
+	global $wpdb;
+	
+	foreach ($_POST['category-product-item'] as $Key=>$ID) {
+		$Result = $wpdb->query("UPDATE $items_table_name SET Item_Category_Product_Order='" . $Key . "' WHERE Item_ID=" . $ID);
+	}
+}
+add_action('wp_ajax_category_products_update_order','Category_Products_Save_Order');
+
+function Custom_Fields_Save_Order(){
+	global $fields_table_name;
+	global $wpdb;
+	
+	foreach ($_POST['field-item'] as $Key=>$ID) {
+		$Result = $wpdb->query("UPDATE $fields_table_name SET Field_Sidebar_Order='" . $Key . "' WHERE Field_ID=" . $ID);
+	}
+}
+add_action('wp_ajax_custom_fields_update_order','Custom_Fields_Save_Order');
+
+function Catergories_Save_Order(){
+	global $categories_table_name;
+	global $wpdb;
+	
+	foreach ($_POST['category-item'] as $Key=>$ID) {
+		$Result = $wpdb->query("UPDATE $categories_table_name SET Category_Sidebar_Order='" . $Key . "' WHERE Category_ID=" . $ID);
+	}
+}
+add_action('wp_ajax_categories_update_order','Catergories_Save_Order');
+
+function SubCatergories_Save_Order(){
+	global $subcategories_table_name;
+	global $wpdb;
+	
+	foreach ($_POST['subcategory-item'] as $Key=>$ID) {
+		$Result = $wpdb->query("UPDATE $subcategories_table_name SET SubCategory_Sidebar_Order='" . $Key . "' WHERE SubCategory_ID=" . $ID);
+	}
+}
+add_action('wp_ajax_subcategories_update_order','SubCatergories_Save_Order');
+
+function Tags_Save_Order(){
+	global $tags_table_name;
+	global $wpdb;
+
+	foreach ($_POST['tag-list-item'] as $Key=>$ID) {
+		$Result = $wpdb->query("UPDATE $tags_table_name SET Tag_Sidebar_Order='" . $Key . "' WHERE Tag_ID=" . $ID);
+	}
+}
+add_action('wp_ajax_tags_update_order','Tags_Save_Order');
 
 // Records the number of times a product has been viewed
 function Record_Item_View() {

@@ -263,8 +263,8 @@ function Insert_Product_Catalog($atts) {
 				$CatThumbHead = "<div id='prod-cat-category-label-" . $CatalogueItem->Category_ID . "' class='prod-cat-category-label upcp-thumb-category-label'>" . $Category->Category_Name ."</div>\n";
 				$CatListHead = "<div id='prod-cat-category-label-" . $CatalogueItem->Category_ID . "' class='prod-cat-category-label upcp-list-category-label'>" . $Category->Category_Name ."</div>\n";
 				$CatDetailHead = "<div id='prod-cat-category-label-" . $CatalogueItem->Category_ID . "' class='prod-cat-category-label upcp-detail-category-label'>" . $Category->Category_Name ."</div>\n";
-						
-				$Products = $wpdb->get_results("SELECT * FROM $items_table_name WHERE Category_ID=" . $CatalogueItem->Category_ID);
+					
+				$Products = $wpdb->get_results("SELECT * FROM $items_table_name WHERE Category_ID=" . $CatalogueItem->Category_ID . " ORDER BY Item_Category_Product_Order");
 						
 				foreach ($Products as $Product) {
 					$ProdTagObj = $wpdb->get_results("SELECT Tag_ID FROM $tagged_items_table_name WHERE Item_ID=" . $Product->Item_ID);
@@ -1007,6 +1007,7 @@ function BuildSidebar($category, $subcategory, $tags, $prod_name) {
 	$ProductSearch = get_option("UPCP_Product_Search");
 	$Product_Sort = get_option("UPCP_Product_Sort");
 	$Sidebar_Order = get_option("UPCP_Sidebar_Order");
+	$Custom_Fields_Show_Hide = get_option("UPCP_Custom_Fields_Show_Hide");
 
 	$Categories_Label = get_option("UPCP_Categories_Label");
 	$SubCategories_Label = get_option("UPCP_SubCategories_Label");
@@ -1040,11 +1041,11 @@ function BuildSidebar($category, $subcategory, $tags, $prod_name) {
 	}
 	
 	// Get the categories, sub-categories and tags that apply to the products in the catalog
-	if ($ProdCatString != "") {$Categories = $wpdb->get_results("SELECT Category_ID, Category_Name FROM $categories_table_name WHERE Category_ID IN (" . $ProdCatString . ") ORDER BY Category_Name");}
-	if ($ProdSubCatString != "") {$SubCategories = $wpdb->get_results("SELECT SubCategory_ID, SubCategory_Name, Category_ID FROM $subcategories_table_name WHERE SubCategory_ID IN (" . $ProdSubCatString . ") ORDER BY SubCategory_Name");}
-	if ($ProdTagString != "") {$Tags = $wpdb->get_results("SELECT Tag_ID, Tag_Name FROM $tags_table_name WHERE Tag_ID IN (" . $ProdTagString . ") ORDER BY Tag_Date_Created");}
+	if ($ProdCatString != "") {$Categories = $wpdb->get_results("SELECT Category_ID, Category_Name FROM $categories_table_name WHERE Category_ID IN (" . $ProdCatString . ") ORDER BY Category_Sidebar_Order");}
+	if ($ProdSubCatString != "") {$SubCategories = $wpdb->get_results("SELECT SubCategory_ID, SubCategory_Name, Category_ID FROM $subcategories_table_name WHERE SubCategory_ID IN (" . $ProdSubCatString . ") ORDER BY SubCategory_Sidebar_Order");}
+	if ($ProdTagString != "") {$Tags = $wpdb->get_results("SELECT Tag_ID, Tag_Name FROM $tags_table_name WHERE Tag_ID IN (" . $ProdTagString . ") ORDER BY Tag_Sidebar_Order");}
 	else {$Tags = array();}
-	if ($ProdCustomFieldsString != "") {$Custom_Fields = $wpdb->get_results("SELECT Field_ID, Field_Name FROM $fields_table_name WHERE Field_ID IN (" . $ProdCustomFieldsString . ") AND Field_Searchable='Yes' ORDER BY Field_Name");}
+	if ($ProdCustomFieldsString != "") {$Custom_Fields = $wpdb->get_results("SELECT Field_ID, Field_Name FROM $fields_table_name WHERE Field_ID IN (" . $ProdCustomFieldsString . ") AND Field_Searchable='Yes' ORDER BY Field_Sidebar_Order");}
 	else {$Custom_Fields = array();}
 
 	$SidebarString .= "<div id='prod-cat-sidebar-" . $id . "' class='prod-cat-sidebar'>\n";
@@ -1081,13 +1082,6 @@ function BuildSidebar($category, $subcategory, $tags, $prod_name) {
 				
 	// Create the categories checkboxes
 	if (sizeof($Categories) > 0) {
-		foreach ($Categories as $key => $row) {
-    		$ID[$key]  = $row->Category_ID;
-    		$Name[$key] = $row->Category_Name;
-		}
-		array_multisort($Name, SORT_ASC, $ID, SORT_DESC, $Categories);
-		unset($ID);
-		unset($Name);
 		$SidebarString .= "<div id='prod-cat-sidebar-category-div-" . $id . "' class='prod-cat-sidebar-category-div'>\n";
 		$SidebarString .= "<div id='prod-cat-sidebar-category-title-" . $id . "' class='prod-cat-sidebar-category-title'><h3>" . $Categories_Text . "</h3></div>\n";
 		foreach ($Categories as $Category) {
@@ -1126,13 +1120,6 @@ function BuildSidebar($category, $subcategory, $tags, $prod_name) {
 				
 	// Create the sub-categories checkboxes
 	if (sizeof($SubCategories) > 0 and $Sidebar_Order != "Hierarchical") {
-		foreach ($SubCategories as $key => $row) {
-    		$ID[$key]  = $row->SubCategory_ID;
-    		$Name[$key] = $row->SubCategory_Name;
-		}
-		array_multisort($Name, SORT_ASC, $ID, SORT_DESC, $SubCategories);
-		unset($ID);
-		unset($Name);
 		$SidebarString .= "<div id='prod-cat-sidebar-subcategory-div-" . $id . "' class='prod-cat-sidebar-subcategory-div'>\n";
 		$SidebarString .= "<div id='prod-cat-sidebar-subcategory-title-" . $id . "' class='prod-cat-sidebar-subcategory-title'><h3>" . $SubCategories_Text . "</h3></div>\n";
 		foreach ($SubCategories as $SubCategory) {
@@ -1153,13 +1140,6 @@ function BuildSidebar($category, $subcategory, $tags, $prod_name) {
 				
 	// Create the tags checkboxes
 	if (sizeof($Tags) > 0) {
-		foreach ($Tags as $key => $row) {
-    		$ID[$key]  = $row->Tag_ID;
-    		$Name[$key] = $row->Tag_Name;
-		}
-		array_multisort($Name, SORT_ASC, $ID, SORT_DESC, $Tags);
-		unset($ID);
-		unset($Name);
 		$SidebarString .= "<div id='prod-cat-sidebar-tag-div-" . $id . "' class='prod-cat-sidebar-tag-div'>\n";
 		$SidebarString .= "<div id='prod-cat-sidebar-tag-title-" . $id . "' class='prod-cat-tag-sidebar-title'><h3>" . $Tags_Text . "</h3></div>\n";
 		foreach ($Tags as $Tag) {
@@ -1183,7 +1163,8 @@ function BuildSidebar($category, $subcategory, $tags, $prod_name) {
 		$SidebarString .= "<div id='prod-cat-sidebar-cf-title-" . $id . "' class='prod-cat-cf-sidebar-title'><h3>" . $Custom_Field_Text . "</h3></div>\n";
 		foreach ($Custom_Fields as $Custom_Field) {
 			$SidebarString .= "<div id='prod-cat-sidebar-cf-" . $Custom_Field->Field_ID . "' class='prod-cat-sidebar-cf' data-cfid='" . $Custom_Field->Field_ID . "'>\n";
-			$SidebarString .= "<div class='prod-cat-sidebar-cf-title'>" . $Custom_Field->Field_Name . "</div>";
+			$SidebarString .= "<div class='prod-cat-sidebar-cf-title' data-cfid='" . $Custom_Field->Field_ID . "' onclick='UPCP_Show_Hide_CF(this);'>" . $Custom_Field->Field_Name . "</div>";
+			$SidebarString .= "<div id='prod-cat-sidebar-cf-options-" . $id . "' class='prod-cat-cf-sidebar-option upcp-cf-" . $Custom_Fields_Show_Hide . "' data-cfid='" . $Custom_Field->Field_ID . "'>";
 			foreach ($ProdCustomFields[$Custom_Field->Field_ID]  as $Meta_Value => $Count) {
 				$SidebarString .= "<div class='prod-cat-sidebar-cf-value-div'>";
 				$SidebarString .= "<input type='checkbox' name='Custom_Field[]' value='" . $Meta_Value . "'  onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");' id='cf-" . $Custom_Field->Field_ID . "-" . $Meta_Value . "' class='jquery-prod-cf-value' /> ";
@@ -1191,6 +1172,7 @@ function BuildSidebar($category, $subcategory, $tags, $prod_name) {
 				$SidebarString .= "</div>";
 			}
 			$SidebarString .= "</div>";
+			$SidebarString .= "</div>\n";
 		}
 		$SidebarString .= "</div>\n";
 	}
@@ -1541,6 +1523,8 @@ function ConvertCustomFields($Description) {
 function AddCustomFields($ProductID, $Layout) {
 	global $wpdb;
 	global $fields_table_name, $fields_meta_table_name;
+
+	$Custom_Fields_Blank = get_option("UPCP_Custom_Fields_Blank");
 		
 	$upload_dir = wp_upload_dir();
 		
@@ -1551,12 +1535,14 @@ function AddCustomFields($ProductID, $Layout) {
 		else {$AddBreak = "";}
 		foreach ($Fields as $Field) {
 			$Meta = $wpdb->get_row("SELECT Meta_Value FROM $fields_meta_table_name WHERE Field_ID='" . $Field->Field_ID . "' AND Item_ID='" . $ProductID . "'");
-			if ($Field->Field_Type == "file") {
-				$CustomFieldString .= $AddBreak . $Field->Field_Name . ": ";
-				$CustomFieldString .= "<a href='" . $upload_dir['baseurl'] . "/upcp-product-file-uploads/" .$Meta->Meta_Value . "' download>" . $Meta->Meta_Value . "</a>";
+			if ($Meta != "" or $Custom_Fields_Blank != "Yes") {
+				if ($Field->Field_Type == "file") {
+					$CustomFieldString .= $AddBreak . $Field->Field_Name . ": ";
+					$CustomFieldString .= "<a href='" . $upload_dir['baseurl'] . "/upcp-product-file-uploads/" .$Meta->Meta_Value . "' download>" . $Meta->Meta_Value . "</a>";
+				}
+				else {$CustomFieldString .= $AddBreak . $Field->Field_Name . ": " . $Meta->Meta_Value;}
+				$AddBreak = "<br />";
 			}
-			else {$CustomFieldString .= $AddBreak . $Field->Field_Name . ": " . $Meta->Meta_Value;}
-			$AddBreak = "<br />";
 		}
 		$CustomFieldString .= "</div>";
 	}

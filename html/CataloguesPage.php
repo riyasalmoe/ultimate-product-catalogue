@@ -168,6 +168,11 @@
 	<textarea name="Catalogue_Description" id="Catalogue_Description" rows="5" cols="40"></textarea>
 	<p><?php _e("The description of the catalogue. What will it be used to display?", 'UPCP') ?></p>
 </div>
+<div class="form-field">
+	<label for="Catalogue_Custom_CSS"><?php _e("Custom CSS", 'UPCP') ?></label>
+	<textarea name="Catalogue_Custom_CSS" id="Catalogue_Custom_CSS" rows="5" cols="40"></textarea>
+	<p><?php _e("Custom CSS styles that should be applied to this catalogue.", 'UPCP') ?></p>
+</div>
 
 <p class="submit"><input type="submit" name="submit" id="submit" class="button-primary" value="<?php _e('Add New Catalogue', 'UPCP') ?>"  /></p></form></div>
 <br class="clear" />

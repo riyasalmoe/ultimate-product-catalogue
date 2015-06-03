@@ -1040,6 +1040,8 @@ function Update_UPCP_Options() {
 	if ($Full_Version == "Yes") {update_option("UPCP_Related_Products", $_POST['related_products']);}
 	if ($Full_Version == "Yes") {update_option("UPCP_Next_Previous", $_POST['next_previous']);}
 	if ($Full_Version == "Yes") {update_option("UPCP_Access_Role", $_POST['access_role']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Custom_Fields_Show_Hide", $_POST['custom_fields_show_hide']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Custom_Fields_Blank", $_POST['custom_fields_blank']);}
 	if ($Full_Version == "Yes") {update_option("UPCP_PP_Grid_Width", $_POST['pp_grid_width']);}
 	if ($Full_Version == "Yes") {update_option("UPCP_PP_Grid_Height", $_POST['pp_grid_height']);}
 	if ($Full_Version == "Yes") {update_option("UPCP_Top_Bottom_Padding", $_POST['pp_top_bottom_padding']);}

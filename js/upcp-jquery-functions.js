@@ -117,6 +117,17 @@ function UPCP_DisplayPage(PageNum) {
 	UPCP_Ajax_Filter();
 }
 
+function UPCP_Show_Hide_CF(cf_title) {
+	var CFID = jQuery(cf_title).data('cfid');
+
+	jQuery('.prod-cat-cf-sidebar-option').each(function() {
+		if (jQuery(this).data('cfid') == CFID) {
+			if (jQuery(this).hasClass('upcp-cf-Hide')) {jQuery(this).removeClass('upcp-cf-Hide');}
+			else {jQuery(this).addClass('upcp-cf-Hide');}
+		}
+	});
+}
+
 var RequestCount = 0;
 function UPCP_Ajax_Filter() {
 	var CatValues = [];
