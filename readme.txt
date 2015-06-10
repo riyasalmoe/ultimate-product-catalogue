@@ -11,7 +11,7 @@ A responsive and easily customizable plugin for all your product catalogue needs
 
 == Description ==
 
-Use this plugin to display your products in an a sleek and easy to customize catalogue. Choose between three default responsive layouts or customize it to suit your needs in the Custom CSS. Make your catalogue easy to browse, sort and update with categories, sub-categories, and tags. Simple to add to any page using the [product-catalogue] shortcode!
+Use this plugin to display your products in an a sleek and easy to customize catalog(ue). Choose between three default responsive layouts or customize it to suit your needs in the Custom CSS. Make your catalog easy to browse, sort and update with categories, sub-categories, and tags. Simple to add to any page using the [product-catalogue] shortcode!
 
 Perfect for your store, restaurant and more!
 
@@ -23,7 +23,7 @@ Perfect for your store, restaurant and more!
 * Custom product pages 
 * Fully customizable with CSS
 * Widgets to display recent products, product list, random products
-* Include catalogues using the [product-catalogue id=’X’] shortcode
+* Include catalogs using the [product-catalogue id=’X’] shortcode
 * Upload products directly from a spreadsheet
 * UTF8 support
 * Search function with Javascript or AJAX
@@ -71,27 +71,27 @@ Check out more videos on the FAQ page.
 
 1. Upload the `ultimate-product-catalogue` folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Place "[product-catalogue id='X']" on the page where you want your catalogue to display, where X is the ID of the catalogue to display
-4. *The page that displays the product catalogue needs to be a full-width type page for the catalogue to display correctly*
+3. Place "[product-catalogue id='X']" on the page where you want your catalog to display, where X is the ID of the catalog to display
+4. *The page that displays the product catalog needs to be a full-width type page for the catalog to display correctly*
 
 --------------------------------------------------------------
 
 To get started using the plugin, you can:
 - Go to the "Products" tab in the Ultimate Product Catalogue Plugin (UPCP) admin menu, add products one at a time or by uploading a spreadsheet
 - Create categories in the "Categories" tab, then create sub-categories in the "Sub-Categories" tab and assign your sub-categories to the correct category
-- Create a catalogue in the "Catalogues" tab, then add products, categories, or sub-categories to that catalogue
+- Create a catalog in the "Catalogues" tab, then add products, categories, or sub-categories to that catalog
 - Add additional images to a product by clicking on it and then adding them from the "Product Details" screen
 - Create tags in the "Tags" tab, then assign as many tags as necessary to each product from the "Product Details" screen
-- Re-order your catalogues by dragging and dropping items in the "Catalogue Details" screen
+- Re-order your catalogs by dragging and dropping items in the "Catalog Details" screen
 
 
 == Frequently Asked Questions ==
 
-= How do I display my catalogue? If I have more than one catalogue, what do I do? =
+= How do I display my catalog? If I have more than one catalog, what do I do? =
 
-Put this shortcode on whatever page you’re trying to put the catalogue on: ‘[product-catalogue id=’X’]’ and replace the ‘X’ with the ID of your catalogue. This can be found by clicking on your catalogue, the catalogue ID  is beside the catalogue name on the catalogue’s details page. You can also copy the shortcode directly from the “Catalogues” page.
+Put this shortcode on whatever page you’re trying to put the catalog on: ‘[product-catalogue id=’X’]’ and replace the ‘X’ with the ID of your catalog. This can be found by clicking on your catalog, the catalog ID  is beside the catalog name on the catalog’s details page. You can also copy the shortcode directly from the “Catalogues” page.
 
-To display one of your catalogues use the corresponding attribute ‘id='X'’ in the product-catalogue shortcode to specify that catalogue, where 'X' is replaced with the catalogue ID.
+To display one of your catalogu use the corresponding attribute ‘id='X'’ in the product-catalogue shortcode to specify that catalog, where 'X' is replaced with the catalog ID.
 
 = Can my products be in more than one category or sub-category? =
 
@@ -101,19 +101,19 @@ No, products can only be in a single category and sub-category. Products can hav
 
 Add the attribute [starting_layout='LAYOUT’], where LAYOUT is replaced with the layout you would like to be the starting layout (List or Detail are the two options currently).
 
-= I only want to display one layout and to remove the layout bar at the top from my catalogue? =
+= I only want to display one layout and to remove the layout bar at the top from my catalog? =
 
-The attribute ‘excluded_layouts’ lets you stop one or more layouts from being displayed. It accepts a comma separated list of layouts you wish to exclude. For example, [excluded_layouts='Thumbnail, List’] would make your catalogue display only the "Detail" view.
-To remove the layout bar you can try adding the following into your Custom.css box (where the colour matches the colour of the catalogue you are using):
+The attribute ‘excluded_layouts’ lets you stop one or more layouts from being displayed. It accepts a comma separated list of layouts you wish to exclude. For example, [excluded_layouts='Thumbnail, List’] would make your catalog display only the "Detail" view.
+To remove the layout bar you can try adding the following into your Custom.css box (where the colour matches the colour of the catalog you are using):
 ‘.Blue-prod-cat-header-div {display: none;}’
 
 = My product description gets cut off even though I have changed the max characters, how can I fix this? =
 
-There is a text area labelled "Custom CSS" when you click on the catalogue that you're editing. Try adding this to it:  ‘.prod-cat-addt-details-desc-div {max-height:none;}’
+There is a text area labelled "Custom CSS" when you click on the catalog that you're editing. Try adding this to it:  ‘.prod-cat-addt-details-desc-div {max-height:none;}’
 
 = How do I remove the sidebar? =
 
-You can use the attribute [sidebar=‘No'] in the product-catalogue shortcode to remove the sidebar from a catalogue.
+You can use the attribute [sidebar=‘No'] in the product-catalogue shortcode to remove the sidebar from a catalog.
 
 = Why aren’t my products uploading from the spreadsheet? =
 
@@ -126,7 +126,7 @@ Third, make sure that you don’t have any columns that have been edited uninten
 
 On  the “Options” page the “Custom Product Page” needs to be set to “Yes” for custom layout to display.
 
-= How do I sort the order of the products within the catalogue? =
+= How do I sort the order of the products within the catalog? =
 
 You can arrange the order of the products by dragging and dropping the products on the “Catalogue Details” page .
 
@@ -171,10 +171,10 @@ Premium Features
 
 == Screenshots ==
 
-1. The "detail" catalogue view
+1. The "detail" catalog view
 2. A product's detailed view, with mutiple images that can be clicked to display in the main image area
-3. The "thumbnail" catalogue view
-4. The "list" catalogue view
+3. The "thumbnail" catalog view
+4. The "list" catalog view
 5. The admin area
 
 == Changelog == 
