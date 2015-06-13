@@ -178,6 +178,10 @@ Premium Features
 5. The admin area
 
 == Changelog == 
+= 3.2.1 =
+- Fixed category label not displaying when products are filtered
+- Fixed a javascript error most users were getting
+
 = 3.2.0 =
 - Added ability to sort order of products in category by dragging and dropping from the category details page
 - Added ability to sort order of categories, sub-categories, tags and custom fields in the sidebar (careful when upgrading, removes alphabetical ordering)

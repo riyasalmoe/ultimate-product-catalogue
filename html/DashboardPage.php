@@ -25,8 +25,8 @@
 									<div class="handlediv" title="Click to toggle"></div>
 									<h3 class='hndle'><span><?php _e("Thank You!", 'UPCP') ?></span></h3>
 							 		<div class="inside">
-											<?php /* if (get_option("UPCP_Install_Flag") == "Yes") { ?><ul><li><?php _e("Thanks for installing the Ultimate Product Catalogue Plugin.", "UPCP"); ?><br> <a href='https://www.youtube.com/channel/UCZPuaoetCJB1vZOmpnMxJNw'><?php _e("Subscribe to our YouTube channel ", "UPCP"); ?></a> <?php _e("for tutorial videos on this and our other plugins!", "UPCP");?> </li></ul>
-											<?php } else { ?><ul><li><?php _e("Thanks for upgrading to version 2.4.21!", "UPCP"); ?><br> <a href='https://www.youtube.com/channel/UCZPuaoetCJB1vZOmpnMxJNw'><?php _e("Subscribe to our YouTube channel ", "UPCP"); ?></a> <?php _e("for tutorial videos on this and our other plugins!", "UPCP");?> </li></ul><?php } */ ?>
+											<?php  if (get_option("UPCP_Install_Flag") == "Yes") { ?><ul><li><?php _e("Thanks for installing the Ultimate Product Catalogue Plugin.", "UPCP"); ?><br> <a href='https://www.youtube.com/channel/UCZPuaoetCJB1vZOmpnMxJNw'><?php _e("Subscribe to our YouTube channel ", "UPCP"); ?></a> <?php _e("for tutorial videos on this and our other plugins!", "UPCP");?> </li></ul>
+											<?php } else { ?><ul><li><?php _e("Thanks for upgrading to version 3.2.1!", "UPCP"); ?><br> <a href='https://www.youtube.com/channel/UCZPuaoetCJB1vZOmpnMxJNw'><?php _e("Subscribe to our YouTube channel ", "UPCP"); ?></a> <?php _e("for tutorial videos on this and our other plugins!", "UPCP");?> </li></ul><?php } ?>
 											
 											<?php /* if (get_option("UPCP_Install_Flag") == "Yes") { ?><ul><li><?php _e("Thanks for installing the Ultimate Product Catalogue Plugin.", "UPCP"); ?><br> <a href='http://www.facebook.com/EtoileWebDesign'><?php _e("Follow us on Facebook", "UPCP"); ?></a> <?php _e("to suggest new features or hear about upcoming ones!", "UPCP");?> </li></ul>
 											<?php } else { ?><ul><li><?php _e("Thanks for upgrading to version 2.2.9!", "UPCP"); ?><br> <a href='http://www.facebook.com/EtoileWebDesign'><?php _e("Follow us on Facebook", "UPCP"); ?></a> <?php _e("to suggest new features or hear about upcoming ones!", "UPCP");?> </li></ul><?php } */ ?>
@@ -40,8 +40,8 @@
 											<?php /* if (get_option("UPCP_Install_Flag") == "Yes") { ?><ul><li><?php _e("Thanks for installing the Ultimate Product Catalogue Plugin.", "UPCP"); ?><br> <a href='http://www.facebook.com/EtoileWebDesign'><?php _e("Follow us on Facebook", "UPCP"); ?></a> <?php _e("to suggest new features or hear about upcoming ones!", "UPCP");?>  </li></ul>
 											<?php } else { ?><ul><li><?php _e("Thanks for upgrading to version 2.3.9!", "UPCP"); ?><br> <a href='http://wordpress.org/support/topic/error-hunt'><?php _e("Please let us know about any small display/functionality errors. ", "UPCP"); ?></a> <?php _e("We've noticed a couple, and would like to eliminate as many as possible.", "UPCP");?> </li></ul><?php } */ ?>
 											
-											<?php  if (get_option("UPCP_Install_Flag") == "Yes") { ?><ul><li><?php _e("Thanks for installing the Ultimate Product Catalogue Plugin.", "UPCP"); ?><br> <a href='https://www.youtube.com/channel/UCZPuaoetCJB1vZOmpnMxJNw'><?php _e("Check out our YouTube channel ", "UPCP"); ?></a> <?php _e("for tutorial videos on this and our other plugins!", "UPCP");?> </li></ul>
-											<?php } elseif ($Full_Version == "Yes") { ?><ul><li><?php _e("Thanks for upgrading to version 3.2!", "UPCP"); ?><br> <a href='http://www.facebook.com/EtoileWebDesign'><?php _e("Follow us on Facebook", "UPCP"); ?></a> <?php _e("to suggest new features or hear about upcoming ones!", "UPCP");?> </li></ul>
+											<?php /* if (get_option("UPCP_Install_Flag") == "Yes") { ?><ul><li><?php _e("Thanks for installing the Ultimate Product Catalogue Plugin.", "UPCP"); ?><br> <a href='https://www.youtube.com/channel/UCZPuaoetCJB1vZOmpnMxJNw'><?php _e("Check out our YouTube channel ", "UPCP"); ?></a> <?php _e("for tutorial videos on this and our other plugins!", "UPCP");?> </li></ul>
+											<?php } elseif ($Full_Version == "Yes") { ?><ul><li><?php _e("Thanks for upgrading to version 3.2.1!", "UPCP"); ?><br> <a href='http://www.facebook.com/EtoileWebDesign'><?php _e("Follow us on Facebook", "UPCP"); ?></a> <?php _e("to suggest new features or hear about upcoming ones!", "UPCP");?> </li></ul>
 											<?php } else { ?><ul><li><?php _e("Thanks for upgrading to version 3.2!", "UPCP"); ?><br> <?php _e("Love the plugin but don't need the premium version? Help us speed up product support and development by donating. Thanks for using the plugin!", "UPCP");?>
 																	 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 																	 <input type="hidden" name="cmd" value="_s-xclick">
@@ -50,7 +50,7 @@
 																	 <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
 																	 </form>
 																	 </li></ul>
-											<?php }  ?>
+											<?php } */ ?>
 
 									</div>
 							</div>
