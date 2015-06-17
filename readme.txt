@@ -178,6 +178,10 @@ Premium Features
 5. The admin area
 
 == Changelog == 
+= 3.2.2 =
+- Blank options no longer show in the "Additional Options" area 
+- Additional filtering options are now sorted alphabetically
+
 = 3.2.1 =
 - Fixed category label not displaying when products are filtered
 - Fixed a javascript error most users were getting

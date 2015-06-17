@@ -1165,11 +1165,14 @@ function BuildSidebar($category, $subcategory, $tags, $prod_name) {
 			$SidebarString .= "<div id='prod-cat-sidebar-cf-" . $Custom_Field->Field_ID . "' class='prod-cat-sidebar-cf' data-cfid='" . $Custom_Field->Field_ID . "'>\n";
 			$SidebarString .= "<div class='prod-cat-sidebar-cf-title' data-cfid='" . $Custom_Field->Field_ID . "' onclick='UPCP_Show_Hide_CF(this);'>" . $Custom_Field->Field_Name . "</div>";
 			$SidebarString .= "<div id='prod-cat-sidebar-cf-options-" . $id . "' class='prod-cat-cf-sidebar-option upcp-cf-" . $Custom_Fields_Show_Hide . "' data-cfid='" . $Custom_Field->Field_ID . "'>";
+			ksort($ProdCustomFields[$Custom_Field->Field_ID]);
 			foreach ($ProdCustomFields[$Custom_Field->Field_ID]  as $Meta_Value => $Count) {
-				$SidebarString .= "<div class='prod-cat-sidebar-cf-value-div'>";
-				$SidebarString .= "<input type='checkbox' name='Custom_Field[]' value='" . $Meta_Value . "'  onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");' id='cf-" . $Custom_Field->Field_ID . "-" . $Meta_Value . "' class='jquery-prod-cf-value' /> ";
-				$SidebarString .= "<label class='upcp-label' for='cf-" . $Custom_Field->Field_ID . "-" . $Meta_Value . "'>" . $Meta_Value . " (" . $Count . ")</label>";
-				$SidebarString .= "</div>";
+				if ($Meta_Value != "") {
+					$SidebarString .= "<div class='prod-cat-sidebar-cf-value-div'>";
+					$SidebarString .= "<input type='checkbox' name='Custom_Field[]' value='" . $Meta_Value . "'  onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");' id='cf-" . $Custom_Field->Field_ID . "-" . $Meta_Value . "' class='jquery-prod-cf-value' /> ";
+					$SidebarString .= "<label class='upcp-label' for='cf-" . $Custom_Field->Field_ID . "-" . $Meta_Value . "'>" . $Meta_Value . " (" . $Count . ")</label>";
+					$SidebarString .= "</div>";
+				}
 			}
 			$SidebarString .= "</div>";
 			$SidebarString .= "</div>\n";
