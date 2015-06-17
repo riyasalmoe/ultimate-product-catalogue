@@ -294,6 +294,7 @@ option of deleting them or switching the order around -->
     foreach ($ItemVideos as $ItemVideo) {
 		$ItemVideoThumb = $ItemVideo->Item_Video_URL;
 		/* Getting the title text from YouTube */
+		//AIzaSyApqwiOW9RVDghX2BnbIdNYxKCtIr4DWU8
 		$video_info = 'http://gdata.youtube.com/feeds/api/videos/'.$ItemVideoThumb;
 		
 		if($video_info != ""){
@@ -305,7 +306,7 @@ option of deleting them or switching the order around -->
 			$response = curl_exec($ch);
 			curl_close($ch);
 			
-			if ($response) {
+			if ($response and $response != "No longer available") {
 				$xml   = new SimpleXMLElement($response);
 				$ItemVideoDescription = (string) $xml->title;
 			} else {

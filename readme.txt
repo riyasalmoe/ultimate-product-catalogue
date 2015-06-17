@@ -178,6 +178,10 @@ Premium Features
 5. The admin area
 
 == Changelog == 
+= 3.2.3 =
+- Major upgrade to plugin CSS to increase responsivenss (WARNING: may cause any Custom CSS added to not work correctly)
+- Fixed a deprecated YouTube API error
+
 = 3.2.2 =
 - Blank options no longer show in the "Additional Options" area 
 - Additional filtering options are now sorted alphabetically

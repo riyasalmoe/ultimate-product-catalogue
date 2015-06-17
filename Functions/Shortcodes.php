@@ -488,8 +488,8 @@ function Insert_Product_Catalog($atts) {
 	$ReturnString .= "<div class='prod-cat-container'>";
 	$ReturnString .= $HeaderBar;
 	$ReturnString .= $MobileMenuString;
-	$ReturnString .= $InnerString;
 	$ReturnString .= $SidebarString;
+	$ReturnString .= $InnerString;
 	$ReturnString .= $Bottom_JS;
 	$ReturnString .= "<div class='upcp-clear'></div></div>";
 		
