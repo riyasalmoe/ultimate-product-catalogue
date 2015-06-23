@@ -345,14 +345,25 @@ jQuery(document).ready(function()
 });
 
 function adjustCatalogueHeight() {
- 		var objHeight = 0;
+ 	var objHeight = 0;
+
     jQuery.each(jQuery('.prod-cat-inner').children(), function(){
-           if (!jQuery(this).hasClass('hidden-field')) {
-					 		 objHeight = Math.max(jQuery(this).height(), objHeight);
-					 }
+     if (!jQuery(this).hasClass('hidden-field')) {
+		objHeight = Math.max(jQuery(this).height(), objHeight);
+		}
     });
-		objHeight = objHeight + 120;
+
+	objHeight = objHeight + 120;
     jQuery('.prod-cat-inner').height(objHeight);
+
+    if (jQuery(window).width() <= 715) {
+    	objHeight = jQuery('.prod-cat-inner').height() + jQuery('.prod-cat-sidebar').height();
+    	jQuery('.prod-cat-container').height(objHeight);
+	}
+	else {
+		objHeight = Math.max(jQuery('.prod-cat-inner').height(), jQuery('.prod-cat-sidebar').height());
+		jQuery('.prod-cat-container').height(objHeight);
+	}
 }
 
 /* Sort by price or by name */

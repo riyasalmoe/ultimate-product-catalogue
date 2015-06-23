@@ -89,16 +89,16 @@ background: #eee;
 ************************************************************/
 @media only screen and (max-width: 1050px) and (min-width:520px) {
 .upcp-detail-item {
-	width: 95%;
+    width: 100%;
 }
 .upcp-detail-image-div {
-	width: 25%;
-	height:200px;
+    width: 25%;
+    height:200px;
 }
 .upcp-detail-image-div a {
-	width:100%;
-	height:200px;
-	line-height: 0;
+    width:100%;
+    height:200px;
+    line-height: 0;
 }
 div.upcp-detail-image-div img {
     width:100%;
@@ -112,14 +112,15 @@ div.upcp-detail-image-div img {
     
 }
 .upcp-end-detail-div {
-    width:15%;
+    width:10%;
 }
 }
+
 
 /************************************************************
 *  LIST VIEW - NARROW
 ************************************************************/
-@media only screen and (max-width: 1050px) and (min-width:481px) {
+@media only screen and (max-width: 1200px) and (min-width:481px) {
 
 .upcp-list-item {
     width:100%;
@@ -132,22 +133,13 @@ div.upcp-detail-image-div img {
 .upcp-list-image-div {
     margin-top:10px;
 	width: 30%;
-	height: 200px;
 }
-.upcp-list-image-div a {
-    max-width:200px;
-    max-height:200px;
-}
-.upcp-list-image-div img {
-    max-width:100%;
-    max-height:200px;
-}
+
 .upcp-list-desc {
     margin-top:10px;
     float:left;
-    height:170px;	
-    overflow: hidden;
-    width:50%;
+    min-height:150px;	
+    width:55%;
     max-width:none;
     overflow:auto;
 }
@@ -172,9 +164,12 @@ div.upcp-detail-image-div img {
 .upcp-thumb-item {
     float:none;
     margin:0 auto 10px;
-    height:325px;
+    max-height:325px;
+    min-height:0;
+    min-width:80px;
     width:97% !important;
 }
+
 .upcp-thumb-image-div a {
     display: inline;
     width:97%;
@@ -189,6 +184,16 @@ div.upcp-thumb-image-div img {
     padding-top:10px;
     width:96% !important;
 }
+.upcp-thumb-price {
+    width:50%;
+    min-width:81px;
+}
+.upcp-thumb-details-link {
+float:left;
+width:42%;
+margin-left:6px;
+min-width:80px;
+}
 }
 
 /************************************************************
@@ -196,7 +201,7 @@ div.upcp-thumb-image-div img {
 ************************************************************/
 @media only screen and (max-width: 480px){
 .upcp-list-item {
-    width:100%;
+    width:90%;
 	margin-left:5%;
     margin-top:10px;
 }
@@ -204,25 +209,31 @@ div.upcp-thumb-image-div img {
     max-width:100%;
     }
 .upcp-list-image-div {
-    margin-top:10px;
-	width: 20%;
-	height: 200px;
+	width: 100%;
 }
 .upcp-list-image-div a {
-    max-width:200px;
-    max-height:200px;
+    width:75%;
+    display:table;
+    position:relative;
+    margin:0 auto;
 }
 .upcp-list-image-div img {
-    max-width:100%;
-    max-height:200px;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    max-height:160px;
 }
 .upcp-list-desc {
     margin-top:10px;
+    padding:0;
     float:left;
-    height:170px;	
     overflow: hidden;
-    width:60%;
+    width:100%;
     max-width:none;
+    min-height:0;
     overflow:auto;
 }
 .upcp-list-details-link {
@@ -242,20 +253,22 @@ div.upcp-thumb-image-div img {
 *  DETAILS VIEW - MOBILE
 ************************************************************/    
 @media only screen and (max-width: 519px) {
-.prod-cat-inner {
-
+.detail-display {
+    min-width:210px;
 }
 .upcp-detail-item {
     width: 95%;
     height:22em;
-    min-width:250px;
+    min-width:200px;
     overflow:hidden;
 }
 .upcp-detail-image-div {
     float:left;
-    width: 150px;
+    width: 60%;
+    max-width:150px;
+    min-width:50px;
     height:150px;
-    margin-top: 0;
+    position:relative;
 }
 .upcp-detail-image-div a {
     max-width:150px;
@@ -288,9 +301,10 @@ div.upcp-detail-image-div img {
 }  
 .upcp-end-detail-div {
     float:right;
-    position:relative;
-    bottom:407px;
+    position:absolute;
+    left:65%;
     min-height: 150px;
-    width:30%;
+    width:50%;
 }
+
 }

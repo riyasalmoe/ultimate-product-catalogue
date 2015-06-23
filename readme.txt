@@ -177,7 +177,11 @@ Premium Features
 4. The "list" catalog view
 5. The admin area
 
-== Changelog == 
+== Changelog ==
+= 3.2.4 =
+- Minor CSS update for to correct small problems in the recent update
+- Minor javascript fix to correct for incorrect catalogue height on some pages after recent update
+
 = 3.2.3 =
 - Major upgrade to plugin CSS to increase responsivenss (WARNING: may cause any Custom CSS added to not work correctly)
 - Fixed a deprecated YouTube API error
