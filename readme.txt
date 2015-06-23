@@ -178,6 +178,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 3.2.5 =
+- Fixed a bug that could erase all options and product page layouts on some installations
+
 = 3.2.4 =
 - Minor CSS update for to correct small problems in the recent update
 - Minor javascript fix to correct for incorrect catalogue height on some pages after recent update
