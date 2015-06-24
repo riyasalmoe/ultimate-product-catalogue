@@ -225,7 +225,7 @@
 						<th><label for="Item_Image"><?php _e("Image", 'UPCP') ?></label></th>
 						<td><input id="Item_Image_Addt" type="text" size="36" name="Item_Image[]" value="http://" /> 
 						<input id="Item_Image_Addt_button" class="button" type="button" value="<?php _e('Upload Image', 'UPCP');?>" />
-						<p><?php _e("The secondaries images that will be displayed.", 'UPCP') ?></p></td>
+						<p><?php _e("The secondary images that will be displayed.", 'UPCP') ?></p></td>
 					</tr>
 				</table>
 				<p class="submit"><input type="submit" name="submit" id="submit" class="button-primary" value="Add Image"  /></p>

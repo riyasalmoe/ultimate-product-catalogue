@@ -178,6 +178,10 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 3.2.6 =
+- Fixed an error where xls spreadsheets weren't allowed to be uploaded
+- Fixed a grammatical error
+
 = 3.2.5 =
 - Fixed a bug that could erase all options and product page layouts on some installations
 
