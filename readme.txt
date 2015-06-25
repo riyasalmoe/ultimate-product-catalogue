@@ -178,6 +178,9 @@ Premium Features
 5. The admin area
 
 == Changelog ==
+= 3.2.7 =
+- Condensed the "Options" tab so that it's easier to navigate
+
 = 3.2.6 =
 - Fixed an error where xls spreadsheets weren't allowed to be uploaded
 - Fixed a grammatical error

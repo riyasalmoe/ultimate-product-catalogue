@@ -59,7 +59,8 @@
 <div id="icon-options-general" class="icon32"><br /></div><h2>Settings</h2>
 
 <form method="post" action="admin.php?page=UPCP-options&DisplayPage=Options&Action=UPCP_UpdateOptions">
-<table class="form-table">
+<h3 id='label-basic-options' class='upcp-option-tab'>Basic Options</h3>
+<table id='basic-options' class="form-table upcp-options-table upcp-hidden">
 <tr>
 <th scope="row"><?php _e("Catalogue Color", 'UPCP')?> <br/> 
 <div onMouseOver="ShowToolTip('color_scheme_exp')" onMouseOut="HideToolTip('color_scheme_exp')" class="questionMark"><br> 
@@ -234,8 +235,8 @@
 </td>
 </tr>
 </table>
-<h3>Premium Options</h3>
-<table class="form-table">
+<h3 id='label-premium-options' class='upcp-option-tab'>Premium Options</h3>
+<table id='premium-options' class="form-table upcp-options-table upcp-hidden">
 <tr>
 <th scope="row"><?php _e("Custom Product Pages", 'UPCP')?> <br/> 
 <div onMouseOver="ShowToolTip('custom_product_page_exp')" onMouseOut="HideToolTip('custom_product_page_exp')" class="questionMark"><br> 
@@ -411,8 +412,8 @@
 </tr>
 </table>
 
-<h3>SEO Options</h3>
-<table class="form-table">
+<h3 id='label-seo-options' class='upcp-option-tab'>SEO Options</h3>
+<table id='seo-options' class="form-table upcp-options-table upcp-hidden">
 <tr>
 <th scope="row"><?php _e("Pretty Permalinks", 'UPCP')?> <br/> 
 <div onMouseOver="ShowToolTip('pretty_links_exp')" onMouseOut="HideToolTip('pretty_links_exp')" class="questionMark"><br> 
@@ -484,8 +485,8 @@
 </tr>-->
 </table>
 
-<h3>Labelling Options</h3>
-<table class="form-table">
+<h3 id='label-labelling-options' class='upcp-option-tab'>Labelling Options</h3>
+<table  id='labelling-options' class="form-table upcp-options-table upcp-hidden">
 <tr>
 <th scope="row"><?php _e("Categories Label", 'UPCP')?> <br/> 
 <div onMouseOver="ShowToolTip('categories_label_exp')" onMouseOut="HideToolTip('categories_label_exp')" class="questionMark"><br>  
@@ -609,8 +610,8 @@
 </tr>
 </table>
 
-<h3>Display Options</h3>
-<table class="form-table">
+<h3 id='label-display-options' class='upcp-option-tab'>Display Options</h3>
+<table id='display-options' class="form-table upcp-options-table upcp-hidden">
 <tr>
 <th scope="row"><?php _e("Catalogue Style", 'UPCP')?> <br/> 
 <div onMouseOver="ShowToolTip('catalogue_style_exp')" onMouseOut="HideToolTip('catalogue_style_exp')" class="questionMark"><br> 
