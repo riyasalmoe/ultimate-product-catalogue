@@ -21,6 +21,12 @@ function Insert_Product_Catalog($atts) {
 	$Products_Per_Page = get_option("UPCP_Products_Per_Page");
 	$ProductSearch = get_option("UPCP_Product_Search");
 
+	$Pagination_Background = get_option("UPCP_Pagination_Background");		
+	$Pagination_Border = get_option("UPCP_Pagination_Border");
+	$Pagination_Shadow = get_option("UPCP_Pagination_Shadow");
+	$Pagination_Gradient = get_option("UPCP_Pagination_Gradient");
+	$Pagination_Font = get_option("UPCP_Pagination_Font");
+
 	$Products_Pagination_Label = get_option("UPCP_Products_Pagination_Label");
 	$Product_Name_Search_Label = get_option("UPCP_Product_Name_Search_Label");
 	$Product_Search_Text_Label = get_option("UPCP_Product_Name_Text_Label");
@@ -391,7 +397,12 @@ function Insert_Product_Catalog($atts) {
 		$PrevPage = max($current_page - 1, 1);
 		$NextPage = min($current_page + 1, $Num_Pages);
 				
-		$PaginationString .= "<div class='catalogue-nav'>";
+		$PaginationString .= "<div class='catalogue-nav ";
+		$PaginationString .= "upcp-cat-nav-bg-" . $Pagination_Background . " ";
+		$PaginationString .= "upcp-cat-nav-border-" . $Pagination_Border . " ";
+		$PaginationString .= "upcp-cat-nav-" . $Pagination_Shadow . " ";
+		$PaginationString .= "upcp-cat-nav-" . $Pagination_Gradient . " ";
+		$PaginationString .= "'>";
 		$PaginationString .= "<span class='displaying-num'>" . $Total_Products . $Products_Pagination_Text . "</span>";
 		$PaginationString .= "<span class='pagination-links'>";
 		$PaginationString .= "<a class='first-page' title='Go to the first page' href='#' onclick='UPCP_DisplayPage(\"1\")'>&#171;</a>";
@@ -766,6 +777,7 @@ function SingleProductPage() {
 	$Extra_Elements = explode(",", $Extra_Elements_String);
 	$Single_Page_Price = get_option("UPCP_Single_Page_Price");
 	$Custom_Product_Page = get_option("UPCP_Custom_Product_Page");
+	$Product_Inquiry_Form = get_option("UPCP_Product_Inquiry_Form");
 	$Related_Type = get_option("UPCP_Related_Products");
 	$Next_Previous = get_option("UPCP_Next_Previous");
 	$Product_Page_Serialized = get_option("UPCP_Product_Page_Serialized");
@@ -889,12 +901,14 @@ function SingleProductPage() {
 						$response = curl_exec($ch);
 						curl_close($ch);
 						
-						if ($response) {
+						if ($response and $response != "No longer available") {
 							$xml   = new SimpleXMLElement($response);
 							$ItemVideoDescription = (string) $xml->title;
 						} else {
 							$ItemVideoDescription = "No title available for this video";
 						}
+					} else{
+						$ItemVideoDescription = $ItemVideoThumb;
 					}
 					$ProductString .= "<div class='upcp-side-title upcp-product-video'>" . $ItemVideoDescription . "</div>";
 					$ProductString .= "<iframe width='300' height='225' src='http://www.youtube.com/embed/" . $Video->Item_Video_URL . "?rel=0&fs=1' webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>";
@@ -903,7 +917,10 @@ function SingleProductPage() {
 			}
 			$ProductString .= "</div>";
 		}
-		//$ProductString .= "</div>\n"; Is this doubled up?
+		if ($Product_Inquiry_Form == "Yes" ) {
+			$ProductString .= "<div class='upcp-clear'></div>";
+			$ProductString .= Add_Product_Inquiry_Form();
+		}
 				
 		$ProductString .= "</div>\n";
 				
@@ -1358,7 +1375,26 @@ function Get_Related_Products($Product, $Related_Type = "Auto") {
 		$ReturnString .= "</div>";
 	}
 	$RetunString .= "</div>";
+	$ReturnString .= "<div class='upcp-clear'></div>";
 	$RetunString .= "</div>";
+	$ReturnString .= "<div class='upcp-clear'></div>";
+
+	return $ReturnString;
+}
+
+function Add_Product_Inquiry_Form() {
+	$plugin = "contact-form-7/wp-contact-form-7.php";
+	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+	$CF_7_Installed = is_plugin_active($plugin);
+
+	if ($CF_7_Installed) {
+		$UPCP_Contact_Form = get_page_by_path('upcp-product-inquiry-form', OBJECT, 'wpcf7_contact_form');
+
+		$ReturnString .= "<div class='upcp-contat-form-7-product-form'>";
+		$ReturnString .= "<h4>" . __("Product Inquiry Form", "UPCP") . "</h4>";
+		$ReturnString .= do_shortcode('[contact-form-7 id="' . $UPCP_Contact_Form->ID . '" title="' . $UPCP_Contact_Form->post_title . '"]');
+		$ReturnString .= "</div>";
+	}
 
 	return $ReturnString;
 }

@@ -1011,6 +1011,8 @@ function Delete_Product_Image() {
 function Update_UPCP_Options() {
 	global $Full_Version;
 	$InstallVersion = get_option("UPCP_First_Install_Version");
+
+	if ($_POST['product_inquiry_form'] == "Yes" and get_option("UPCP_Product_Inquiry_Form") == "No"){UPCP_Product_Inquiry_Form();}
 	
 	if (isset($_POST['color_scheme'])) {update_option('UPCP_Color_Scheme', $_POST['color_scheme']);}
 	if (isset($_POST['product_links'])) {update_option('UPCP_Product_Links', $_POST['product_links']);}
@@ -1033,6 +1035,7 @@ function Update_UPCP_Options() {
 	
 	if ($Full_Version == "Yes" and isset($_POST['filter_title'])) {update_option("UPCP_Filter_Title", $_POST['filter_title']);}
 	if ($Full_Version == "Yes" and isset($_POST['custom_product_page'])) {update_option("UPCP_Custom_Product_Page", $_POST['custom_product_page']);}
+	if ($Full_Version == "Yes" and isset($_POST['product_inquiry_form'])) {update_option("UPCP_Product_Inquiry_Form", $_POST['product_inquiry_form']);}
 	if ($Full_Version == "Yes" and isset($_POST['products_per_page'])) {update_option("UPCP_Products_Per_Page", $_POST['products_per_page']);}
 	if ($Full_Version == "Yes" and isset($_POST['pagination_location'])) {update_option("UPCP_Pagination_Location", $_POST['pagination_location']);}
 	if ($Full_Version == "Yes" and isset($_POST['product_sort'])) {update_option("UPCP_Product_Sort", $_POST['product_sort']);}
@@ -1068,8 +1071,12 @@ function Update_UPCP_Options() {
 
 	if ($Full_Version == "Yes" and isset($_POST['catalogue_style'])) {update_option("UPCP_Catalogue_Style", $_POST['catalogue_style']);}
 	if ($Full_Version == "Yes" and isset($_POST['sidebar_style'])) {update_option("UPCP_Sidebar_Style", $_POST['sidebar_style']);}
-	if ($Full_Version == "Yes" and isset($_POST['pagination_style'])) {update_option("UPCP_Pagination_Style", $_POST['pagination_style']);}
-	
+	if ($Full_Version == "Yes" and isset($_POST['pagination_background'])) {update_option("UPCP_Pagination_Background", $_POST['pagination_background']);}
+	if ($Full_Version == "Yes" and isset($_POST['pagination_border'])) {update_option("UPCP_Pagination_Border", $_POST['pagination_border']);}
+	if ($Full_Version == "Yes" and isset($_POST['pagination_shadow'])) {update_option("UPCP_Pagination_Shadow", $_POST['pagination_shadow']);}
+	if ($Full_Version == "Yes" and isset($_POST['pagination_gradient'])) {update_option("UPCP_Pagination_Gradient", $_POST['pagination_gradient']);}
+	if ($Full_Version == "Yes" and isset($_POST['pagination_font'])) {update_option("UPCP_Pagination_Font", $_POST['pagination_font']);}
+
 	if ($_POST['Pretty_Links'] == "Yes") {
 		 update_option("UPCP_Update_RR_Rules", "Yes");
 	}

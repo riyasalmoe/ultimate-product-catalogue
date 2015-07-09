@@ -177,7 +177,12 @@ Premium Features
 4. The "list" catalog view
 5. The admin area
 
-== Changelog ==
+== Changelog == 
+= 3.3.0 = 
+- Added an option to include a product inquiry form (requires Contact Form 7 plugin)
+- Added a number of styling options for the pagination buttons
+- Fixed a couple of small bugs
+
 = 3.2.7 =
 - Condensed the "Options" tab so that it's easier to navigate
 
