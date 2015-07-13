@@ -679,6 +679,7 @@ function AddProduct($format, $Item_ID, $Product, $Tags, $AjaxReload = "No", $Aja
 		$ProductString .= "</a>";
 		$ProductString .= "</div>\n";
 		$ProductString .= "<div id='prod-cat-desc-" . $Product->Item_ID . "' class='prod-cat-desc upcp-list-desc'>" . $Description . "</div>\n";
+		$ProductString .= AddCustomFields($Product->Item_ID, "list");
 		$ProductString .= "<a class='upcp-catalogue-link ";
 		if ($FancyBoxClass and !$NewWindow) {$ProductString .= "fancybox";}
 		$ProductString .= "' ";
@@ -845,6 +846,7 @@ function SingleProductPage() {
 	$TagGroupNames = $wpdb->get_results("SELECT * FROM $tag_groups_table_name ORDER BY Tag_Group_Order ASC");
 	$ProductVideos = $wpdb->get_results($wpdb->prepare("SELECT * FROM $item_videos_table_name WHERE Item_ID='%d' ORDER BY Item_Video_Order ASC", $Product->Item_ID));
 		
+	// Regular product page 
 	if ($Custom_Product_Page == "No") {
 		$ProductString .= "<div class='upcp-standard-product-page'>";
 				
@@ -946,6 +948,72 @@ function SingleProductPage() {
 		$ProductString .= $Description . "</div>";
 		$ProductString .= "<div class='upcp-clear'></div>\n";
 		$ProductString .= "</div>\n";
+				
+		$ProductString .= "</div>\n";
+	}
+	elseif ($Custom_Product_Page == "Tabbed") {
+		$ProductString .= "<div class='upcp-tabbed-product-page'>";
+
+		$ProductString .= "<div class='prod-cat-back-link'>";
+		$ProductString .= "<a class='upcp-catalogue-link' href='" . $Return_URL . "'>&#171; " . $Back_To_Catalogue_Text . "</a>";
+		$ProductString .= "</div>";
+
+		$ProductString .= "<div class='upcp-tabbed-images-container'>";
+		$ProductString .= "<div id='upcp-tabbed-main-image-div-" . $Product->Item_ID . "' class='upcp-tabbed-main-image-div'>";
+		$ProductString .= $PhotoCode;
+		$ProductString .= "</div>";
+		$ProductString .= "<div class='upcp-clear'></div>";
+		$ProductString .= "<div id='upcp-tabbed-image-thumbs-div-" . $Product->Item_ID . "' class='upcp-tabbed-image-thumbs-div'>";
+		if (isset($PhotoURL)) {$ProductString .= "<img src='" . $PhotoURL . "' id='prod-cat-addt-details-thumb-P". $Product->Item_ID . "' class='prod-cat-addt-details-thumb' onclick='ZoomImage(\"" . $Product->Item_ID . "\", \"0\");'>";}
+		foreach ($Item_Images as $Image) {$ProductString .= "<img src='" . htmlspecialchars($Image->Item_Image_URL, ENT_QUOTES) . "' id='prod-cat-addt-details-thumb-". $Image->Item_Image_ID . "' class='prod-cat-addt-details-thumb' onclick='ZoomImage(\"" . $Product->Item_ID . "\", \"" . $Image->Item_Image_ID . "\");'>";}
+		$ItemVideos = $wpdb->get_results("SELECT * FROM $item_videos_table_name WHERE Item_ID='" . $Product->Item_ID . "' ORDER BY Item_Video_Order ASC");
+		foreach ($ItemVideos as $Video) {$ProductString .= "<iframe width='300' height='225' src='http://www.youtube.com/embed/" . $Video->Item_Video_URL . "?rel=0&fs=1' webkitallowfullscreen mozallowfullscreen allowfullscreen onclick='ZoomImage(\"" . $Product->Item_ID . "\", \"" . $Video->Video_ID . "\");'></iframe>";}
+		$ProductString .= "</div>";
+		$ProductString .= "</div>";
+
+		$ProductString .= "<div class='upcp-tabbed-main-product-details'>";
+		$ProductString .= "<h2 class='prod-cat-addt-details-title'><a class='no-underline' href='http://" . $_SERVER['HTTP_HOST'] . $SP_Perm_URL . "'>" . $Product->Item_Name . "</a></h2>";
+		if ($Single_Page_Price == "Yes") {$ProductString .= "<h3 class='prod-cat-addt-details-price'>" . $Product->Item_Price . "</h3>";}
+		$ProductString .= "</div>";
+
+		$ProductString .= "<div id='upcp-tabbed-tabs-holder-" . $Product->Item_ID . "' class='upcp-tabbed-tabs-holder'>";
+
+		$ProductString .= "<div id='upcp-tabbed-description-" . $Product->Item_ID . "' class='upcp-tabbed-description upcp-tabbed-tab'>";
+		$ProductString .= $Description;
+		$ProductString .= "</div>";
+
+		$ProductString .= "<div id='upcp-tabbed-addtl-info-" . $Product->Item_ID . "' class='upcp-tabbed-addtl-info upcp-tabbed-tab'>";
+			$ProductString .= "<div class='prod-details-right'>";
+			if (in_array("Category", $Extra_Elements)) {$ProductString .= "<div class='upcp-tabbed-category-container'>\n<div class='upcp-tab-title'>" . __('Category', 'UPCP') . ": </div>" . $Product->Category_Name . "</div>";}
+			if (in_array("SubCategory", $Extra_Elements)) {$ProductString .= "<div class='upcp-tabbed-subcategory-container'>\n<div class='upcp-tab-title'>" . __('Sub-Category', 'UPCP') . ": </div>" . $Product->SubCategory_Name . "</div>";}
+			if (in_array("Tags", $Extra_Elements)) {$ProductString .= "<div class='upcp-tabbed-tag-container'>\n<div class='upcp-tab-title'>Tags:</div>" . $TagsString . "</div>";}
+			if (in_array("CustomFields", $Extra_Elements)) {
+				$ProductString .= "<div class='upcp-tabbed-cf-container'>";
+				$Fields = $wpdb->get_results("SELECT Field_Name, Field_ID FROM $fields_table_name WHERE Field_Display_Tabbed='Yes'");
+				foreach ($Fields as $Field) {
+					$Value = $wpdb->get_row("SELECT Meta_Value FROM $fields_meta_table_name WHERE Item_ID='" . $Product->Item_ID . "'and Field_ID='" . $Field->Field_ID ."'");
+					$ProductString .= "<div class='upcp-tab-title'>" . $Field->Field_Name . ":</div>" . $Value->Meta_Value . "<br>";
+				}
+				$ProductString .= "</div>";
+			}
+		$ProductString .= "</div>";
+
+		if ($Product_Inquiry_Form == "Yes" ) {
+			$ProductString .= "<div id='upcp-tabbed-contact-form-" . $Product->Item_ID . "' class='upcp-tabbed-contact-form upcp-tabbed-tab'>";
+			$ProductString .= Add_Product_Inquiry_Form();
+			$ProductString .= "</div>";
+		}
+
+		if ($Show_Reviews == "Yes" ) {
+			$ProductString .= "<div id='upcp-tabbed-reviews-" . $Product->Item_ID . "' class='upcp-tabbed-reviews upcp-tabbed-tab'>";
+			$ProductString .= Add_Product_Reviews();
+			$ProductString .= "</div>";
+		}
+
+		$ProductString .= "<div id='upcp-tabbed-similar-products-div-" . $Product->Item_ID . "' class='upcp-tabbed-similar-products-div'>";
+		if ($Related_Type == "Manual" or $Related_Type == "Auto") {$ProductString .= Get_Related_Products($Product, $Related_Type);}
+		if ($Next_Previous == "Manual") {$ProductString .= Get_Next_Previous($Product, $Next_Previous);}
+		$ProductString .= "</div>";
 				
 		$ProductString .= "</div>\n";
 	}
@@ -1399,6 +1467,11 @@ function Add_Product_Inquiry_Form() {
 	return $ReturnString;
 }
 
+function Add_Product_Reviews() {
+
+	return $ReturnString;
+}
+
 function Order_Products($Product, $Related_Products_Array) {
 	global $wpdb, $tagged_items_table_name;
 
@@ -1570,7 +1643,7 @@ function AddCustomFields($ProductID, $Layout) {
 	$Fields = $wpdb->get_results("SELECT Field_ID, Field_Name, Field_Type FROM $fields_table_name WHERE Field_Displays='" . $Layout . "' OR Field_Displays='both'");
 	if (is_array($Fields)) {
 		$CustomFieldString .= "<div class='upcp-prod-desc-custom-fields upcp-custom-field-" . $Layout . "'>";
-		if ($Layout == "details") {$AddBreak = "<br />";}
+		if ($Layout == "details" or $Layout == "list") {$AddBreak = "<br />";}
 		else {$AddBreak = "";}
 		foreach ($Fields as $Field) {
 			$Meta = $wpdb->get_row("SELECT Meta_Value FROM $fields_meta_table_name WHERE Field_ID='" . $Field->Field_ID . "' AND Item_ID='" . $ProductID . "'");

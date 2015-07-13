@@ -52,6 +52,7 @@
 								<select name="Field_Displays" id="Field_Displays">
 										<option value='none' <?php if ($Field->Field_Displays == "none") {echo "selected=selected";} ?>><?php _e("None", 'UPCP') ?></option>
 										<option value='thumbs' <?php if ($Field->Field_Displays == "thumbs") {echo "selected=selected";} ?>><?php _e("Thumbnail View", 'UPCP') ?></option>
+										<option value='list' <?php if ($Field->Field_Displays == "list") {echo "selected=selected";} ?>><?php _e("List View", 'UPCP') ?></option>
 										<option value='details' <?php if ($Field->Field_Displays == "details") {echo "selected=selected";} ?>><?php _e("Details View", 'UPCP') ?></option>
 										<option value='both' <?php if ($Field->Field_Displays == "both") {echo "selected=selected";} ?>><?php _e("Both", 'UPCP') ?></option>
 								</select>

@@ -162,9 +162,7 @@ div.upcp-detail-image-div img {
 ************************************************************/
 @media only screen and (max-width: 480px){
 .upcp-thumb-item {
-    float:none;
     margin:0 auto 10px;
-    max-height:325px;
     min-height:0;
     min-width:80px;
     width:97% !important;

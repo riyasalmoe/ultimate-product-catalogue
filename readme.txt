@@ -178,6 +178,11 @@ Premium Features
 5. The admin area
 
 == Changelog == 
+= 3.3.1 =
+- Added the option to display custom fields in the "List" view
+- Fixed a mobile CSS styling issue
+- Fixed a display issue with reordering products within categories
+
 = 3.3.0 = 
 - Added an option to include a product inquiry form (requires Contact Form 7 plugin)
 - Added a number of styling options for the pagination buttons
