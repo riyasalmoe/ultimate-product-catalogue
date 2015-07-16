@@ -960,7 +960,9 @@ function SingleProductPage() {
 
 		$ProductString .= "<div class='upcp-tabbed-images-container'>";
 		$ProductString .= "<div id='upcp-tabbed-main-image-div-" . $Product->Item_ID . "' class='upcp-tabbed-main-image-div'>";
+		$ProductString .= "<div class='upcp-tabbed-main-image-inner'>";
 		$ProductString .= $PhotoCode;
+		$ProductString .= "</div>";
 		$ProductString .= "</div>";
 		$ProductString .= "<div class='upcp-clear'></div>";
 		$ProductString .= "<div id='upcp-tabbed-image-thumbs-div-" . $Product->Item_ID . "' class='upcp-tabbed-image-thumbs-div'>";
@@ -971,6 +973,7 @@ function SingleProductPage() {
 		$ProductString .= "</div>";
 		$ProductString .= "</div>";
 
+		$ProductString .= "<div class='upcp-tabbed-main-product-container'>";
 		$ProductString .= "<div class='upcp-tabbed-main-product-details'>";
 		$ProductString .= "<h2 class='prod-cat-addt-details-title'><a class='no-underline' href='http://" . $_SERVER['HTTP_HOST'] . $SP_Perm_URL . "'>" . $Product->Item_Name . "</a></h2>";
 		if ($Single_Page_Price == "Yes") {$ProductString .= "<h3 class='prod-cat-addt-details-price'>" . $Product->Item_Price . "</h3>";}
@@ -978,11 +981,20 @@ function SingleProductPage() {
 
 		$ProductString .= "<div id='upcp-tabbed-tabs-holder-" . $Product->Item_ID . "' class='upcp-tabbed-tabs-holder'>";
 
+		$ProductString .= "<div class='upcp-tabbed-tabs-menu'>";
+		$ProductString .= "<ul id='upcp-tabs'>";
+		$ProductString .= "<li class='upcp-tabbed-layout-tab upcp-tabbed-description-menu' id='upcp-tabbed-tab'><a data-class='upcp-tabbed-description' class='upcp-tab-slide'> Product Details </a></li>";
+		$ProductString .= "<li class='upcp-tabbed-layout-tab upcp-tabbed-addtl-info-menu upcp-tab-layout-tab-unclicked ' id='upcp-tabbed-tab'><a data-class='upcp-tabbed-addtl-info' class='upcp-tab-slide'> Additional Information </a></li>";
+		if ($Product_Inquiry_Form == "Yes" ) {$ProductString .= "<li class='upcp-tabbed-layout-tab upcp-tabbed-contact-form-menu upcp-tab-layout-tab-unclicked' id='upcp-tabbed-tab'><a data-class='upcp-tabbed-contact-form' class='upcp-tab-slide'> Contact Us </a></li>";}
+		if ($Show_Reviews == "Yes" ) {$ProductString .= "<li class='upcp-tabbed-layout-tab upcp-tabbed-reviews-menu upcp-tab-layout-tab-unclicked' id='upcp-tabbed-tab'><a data-class='upcp-tabbed-reviews' class='upcp-tab-slide'> Customer Reviews </a></li>";}
+		$ProductString .= "</ul>";
+		$ProductString .= "</div>";
+
 		$ProductString .= "<div id='upcp-tabbed-description-" . $Product->Item_ID . "' class='upcp-tabbed-description upcp-tabbed-tab'>";
 		$ProductString .= $Description;
 		$ProductString .= "</div>";
 
-		$ProductString .= "<div id='upcp-tabbed-addtl-info-" . $Product->Item_ID . "' class='upcp-tabbed-addtl-info upcp-tabbed-tab'>";
+		$ProductString .= "<div id='upcp-tabbed-addtl-info-" . $Product->Item_ID . "' class='upcp-tabbed-addtl-info upcp-tabbed-tab upcp-Hide-Item'>";
 			$ProductString .= "<div class='prod-details-right'>";
 			if (in_array("Category", $Extra_Elements)) {$ProductString .= "<div class='upcp-tabbed-category-container'>\n<div class='upcp-tab-title'>" . __('Category', 'UPCP') . ": </div>" . $Product->Category_Name . "</div>";}
 			if (in_array("SubCategory", $Extra_Elements)) {$ProductString .= "<div class='upcp-tabbed-subcategory-container'>\n<div class='upcp-tab-title'>" . __('Sub-Category', 'UPCP') . ": </div>" . $Product->SubCategory_Name . "</div>";}
@@ -999,16 +1011,17 @@ function SingleProductPage() {
 		$ProductString .= "</div>";
 
 		if ($Product_Inquiry_Form == "Yes" ) {
-			$ProductString .= "<div id='upcp-tabbed-contact-form-" . $Product->Item_ID . "' class='upcp-tabbed-contact-form upcp-tabbed-tab'>";
+			$ProductString .= "<div id='upcp-tabbed-contact-form-" . $Product->Item_ID . "' class='upcp-tabbed-contact-form upcp-tabbed-tab upcp-Hide-Item'>";
 			$ProductString .= Add_Product_Inquiry_Form();
 			$ProductString .= "</div>";
 		}
 
 		if ($Show_Reviews == "Yes" ) {
-			$ProductString .= "<div id='upcp-tabbed-reviews-" . $Product->Item_ID . "' class='upcp-tabbed-reviews upcp-tabbed-tab'>";
+			$ProductString .= "<div id='upcp-tabbed-reviews-" . $Product->Item_ID . "' class='upcp-tabbed-reviews upcp-tabbed-tab upcp-Hide-Item'>";
 			$ProductString .= Add_Product_Reviews();
 			$ProductString .= "</div>";
 		}
+		$ProductString .= "</div>";
 
 		$ProductString .= "<div id='upcp-tabbed-similar-products-div-" . $Product->Item_ID . "' class='upcp-tabbed-similar-products-div'>";
 		if ($Related_Type == "Manual" or $Related_Type == "Auto") {$ProductString .= Get_Related_Products($Product, $Related_Type);}

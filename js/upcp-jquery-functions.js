@@ -35,6 +35,17 @@ jQuery(document).ready(function(){
 	);
 });
 
+jQuery(document).ready(function() {
+	jQuery('.upcp-tab-slide').on('click', function(event) {
+		jQuery('.upcp-tabbed-tab').each(function() {jQuery(this).addClass('upcp-Hide-Item');});
+		jQuery('.upcp-tabbed-layout-tab').each(function() {jQuery(this).addClass('upcp-tab-layout-tab-unclicked');});
+		var TabClass = jQuery(this).data('class');
+		jQuery('.'+TabClass).removeClass('upcp-Hide-Item');
+		jQuery('.'+TabClass+'-menu').removeClass('upcp-tab-layout-tab-unclicked');
+		event.preventDefault;
+	});
+});
+
 function screenshotThumbHolderWidth(){
 	var screenshotImage = jQuery('.prod-cat-addt-details-thumbs-div img:first-child');
 	var thumbnailHolderContainer = jQuery('.game-thumbnail-holder');

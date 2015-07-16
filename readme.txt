@@ -178,6 +178,9 @@ Premium Features
 5. The admin area
 
 == Changelog == 
+= 3.3.2 =
+- Added extra links to support materials to the dashboard tab
+
 = 3.3.1 =
 - Added the option to display custom fields in the "List" view
 - Fixed a mobile CSS styling issue
