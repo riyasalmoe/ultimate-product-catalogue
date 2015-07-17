@@ -178,6 +178,9 @@ Premium Features
 5. The admin area
 
 == Changelog == 
+= 3.3.3 =
+- Fixed a potential notice notification when working with SEO By Yoast
+
 = 3.3.2 =
 - Added extra links to support materials to the dashboard tab
 
