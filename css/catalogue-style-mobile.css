@@ -1,3 +1,16 @@
+/********************************************
+* 
+********************************************/
+@media only screen and (max-width: 670px) {
+  .upcp-standard-product-page,
+    .upcp-custom-large-product-page {
+      display: none;
+    }
+    .upcp-standard-product-page-mobile {
+      display: inline;
+        width: 100%;
+    }
+}
 
 /********************************************
 SIDEBAR - HEADER VIEW

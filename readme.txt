@@ -178,6 +178,9 @@ Premium Features
 5. The admin area
 
 == Changelog == 
+= 3.3.4 =
+- Fixed a display issue with the mobile version of the custom product page
+
 = 3.3.3 =
 - Fixed a potential notice notification when working with SEO By Yoast
 
