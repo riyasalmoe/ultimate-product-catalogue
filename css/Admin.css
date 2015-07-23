@@ -89,6 +89,23 @@ a {
 	width:95%;
 }
 
+.upcp-option-tab {
+  cursor: pointer;
+  margin-bottom: 8px;
+  padding: 8px 24px 8px 12px;
+  background: #CCCCCC;
+  border-radius: 10px;
+}
+.upcp-selected-options {
+  background: #949494;
+}
+.upcp-options-table {
+  margin-left: 40px;
+}
+.upcp-hidden {
+  display: none;
+}
+
 /***********************************************************
 * VIDEO TABLE STYLE
 ***********************************************************/

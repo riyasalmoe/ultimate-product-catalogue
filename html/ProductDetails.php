@@ -225,7 +225,7 @@
 						<th><label for="Item_Image"><?php _e("Image", 'UPCP') ?></label></th>
 						<td><input id="Item_Image_Addt" type="text" size="36" name="Item_Image[]" value="http://" /> 
 						<input id="Item_Image_Addt_button" class="button" type="button" value="<?php _e('Upload Image', 'UPCP');?>" />
-						<p><?php _e("The secondaries images that will be displayed.", 'UPCP') ?></p></td>
+						<p><?php _e("The secondary images that will be displayed.", 'UPCP') ?></p></td>
 					</tr>
 				</table>
 				<p class="submit"><input type="submit" name="submit" id="submit" class="button-primary" value="Add Image"  /></p>
@@ -294,6 +294,7 @@ option of deleting them or switching the order around -->
     foreach ($ItemVideos as $ItemVideo) {
 		$ItemVideoThumb = $ItemVideo->Item_Video_URL;
 		/* Getting the title text from YouTube */
+		//AIzaSyApqwiOW9RVDghX2BnbIdNYxKCtIr4DWU8
 		$video_info = 'http://gdata.youtube.com/feeds/api/videos/'.$ItemVideoThumb;
 		
 		if($video_info != ""){
@@ -305,7 +306,7 @@ option of deleting them or switching the order around -->
 			$response = curl_exec($ch);
 			curl_close($ch);
 			
-			if ($response) {
+			if ($response and $response != "No longer available") {
 				$xml   = new SimpleXMLElement($response);
 				$ItemVideoDescription = (string) $xml->title;
 			} else {

@@ -35,6 +35,17 @@ jQuery(document).ready(function(){
 	);
 });
 
+jQuery(document).ready(function() {
+	jQuery('.upcp-tab-slide').on('click', function(event) {
+		jQuery('.upcp-tabbed-tab').each(function() {jQuery(this).addClass('upcp-Hide-Item');});
+		jQuery('.upcp-tabbed-layout-tab').each(function() {jQuery(this).addClass('upcp-tab-layout-tab-unclicked');});
+		var TabClass = jQuery(this).data('class');
+		jQuery('.'+TabClass).removeClass('upcp-Hide-Item');
+		jQuery('.'+TabClass+'-menu').removeClass('upcp-tab-layout-tab-unclicked');
+		event.preventDefault;
+	});
+});
+
 function screenshotThumbHolderWidth(){
 	var screenshotImage = jQuery('.prod-cat-addt-details-thumbs-div img:first-child');
 	var thumbnailHolderContainer = jQuery('.game-thumbnail-holder');
@@ -345,14 +356,25 @@ jQuery(document).ready(function()
 });
 
 function adjustCatalogueHeight() {
- 		var objHeight = 0;
+ 	var objHeight = 0;
+
     jQuery.each(jQuery('.prod-cat-inner').children(), function(){
-           if (!jQuery(this).hasClass('hidden-field')) {
-					 		 objHeight = Math.max(jQuery(this).height(), objHeight);
-					 }
+     if (!jQuery(this).hasClass('hidden-field')) {
+		objHeight = Math.max(jQuery(this).height(), objHeight);
+		}
     });
-		objHeight = objHeight + 120;
+
+	objHeight = objHeight + 120;
     jQuery('.prod-cat-inner').height(objHeight);
+
+    if (jQuery(window).width() <= 715) {
+    	objHeight = jQuery('.prod-cat-inner').height() + jQuery('.prod-cat-sidebar').height();
+    	jQuery('.prod-cat-container').height(objHeight);
+	}
+	else {
+		objHeight = Math.max(jQuery('.prod-cat-inner').height(), jQuery('.prod-cat-sidebar').height());
+		jQuery('.prod-cat-container').height(objHeight);
+	}
 }
 
 /* Sort by price or by name */

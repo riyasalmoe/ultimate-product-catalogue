@@ -7,7 +7,7 @@ Author: Etoile Web Design
 Author URI: http://www.EtoileWebDesign.com/
 Terms and Conditions: http://www.etoilewebdesign.com/plugin-terms-and-conditions/
 Text Domain: UPCP
-Version: 3.2.1
+Version: 3.3.4
 */
 
 global $UPCP_db_version;
@@ -38,7 +38,7 @@ $tagged_items_table_name = $wpdb->prefix . "UPCP_Tagged_Items";
 $tag_groups_table_name = $wpdb->prefix . "UPCP_Tag_Groups";
 $fields_table_name = $wpdb->prefix . "UPCP_Custom_Fields";
 $fields_meta_table_name = $wpdb->prefix . "UPCP_Fields_Meta";
-$UPCP_db_version = "3.2.0";
+$UPCP_db_version = "3.3.0";
 
 define( 'UPCP_CD_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'UPCP_CD_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -128,7 +128,9 @@ function UPCP_Add_Stylesheet() {
 	$Pagination_Style = get_option("UPCP_Pagination_Style");
 
     wp_register_style( 'catalogue-style', plugins_url('css/catalogue-style.css', __FILE__) );
+    wp_register_style( 'catalogue-style-mobile', plugins_url('css/catalogue-style-mobile.css', __FILE__) );
     wp_enqueue_style( 'catalogue-style' );
+    wp_enqueue_style( 'catalogue-style-mobile' );
 	if (is_rtl()) {
 		wp_register_style( 'upcp-rtl-style', plugins_url('css/rtl-style.css', __FILE__) );
     	wp_enqueue_style( 'upcp-rtl-style' );
@@ -188,6 +190,7 @@ include "Functions/FrontEndAjaxUrl.php";
 include "Functions/UPCP_Add_SEO.php";
 include "Functions/UPCP_Create_XML_Sitemap.php";
 include "Functions/UPCP_Export_To_Excel.php";
+include "Functions/UPCP_Product_Inquiry_Form.php";
 include "Functions/UPCP_Widget.php";
 
 // Updates the UPCP database when required

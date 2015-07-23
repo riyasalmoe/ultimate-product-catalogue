@@ -225,6 +225,7 @@
 	<select name="Field_Displays" id="Field_Displays">
 			<option value='none'><?php _e("None", 'UPCP') ?></option>
 			<option value='thumbs'><?php _e("Thumbnail View", 'UPCP') ?></option>
+			<option value='list'><?php _e("List View", 'UPCP') ?></option>
 			<option value='details'><?php _e("Details View", 'UPCP') ?></option>
 			<option value='both'><?php _e("Both", 'UPCP') ?></option>
 	</select>
