@@ -190,7 +190,7 @@ function Insert_Product_Catalog($atts) {
 			$Custom_Fields_Sql_String .= "(";
 			$Custom_Fields_Sql_String .= "Field_ID='" . $Field_ID . "' AND (";
 			foreach ($Selected_Custom_Field as $Value){
-				$Custom_Fields_Sql_String .= "Meta_Value='" . $Value . "' OR ";
+				$Custom_Fields_Sql_String .= "Meta_Value LIKE '" . $Value . "' OR ";
 			}
 			$Custom_Fields_Sql_String = substr($Custom_Fields_Sql_String, 0, -4);
 			$Custom_Fields_Sql_String .= "))";
@@ -224,7 +224,7 @@ function Insert_Product_Catalog($atts) {
 			$Product = $wpdb->get_row("SELECT * FROM $items_table_name WHERE Item_ID=" . $CatalogueItem->Item_ID);
 			$ProdTagObj = $wpdb->get_results("SELECT Tag_ID FROM $tagged_items_table_name WHERE Item_ID=" . $CatalogueItem->Item_ID);
 			if ($ajax_reload == "No") {
-				$Prod_Custom_Fields = $wpdb->get_results("SELECT Field_ID, Meta_Value FROM $fields_meta_table_name WHERE Item_ID=" . $Product->Item_ID);
+				$Prod_Custom_Fields = $wpdb->get_results("SELECT Field_ID, Field_Type, Meta_Value FROM $fields_meta_table_name WHERE Item_ID=" . $Product->Item_ID);
 			}
 						
 			if ($Product->Item_Display_Status != "Hide") {
@@ -1549,7 +1549,16 @@ function FilterCount($Product, $Tags, $Custom_Fields) {
 	$ProdSubCats[$Product->SubCategory_ID]++;
 	foreach ($Tags as $Tag) {$ProdTags[$Tag->Tag_ID]++;}
 	if (is_array($Custom_Fields)) {
-		foreach ($Custom_Fields as $Custom_Field) {$ProdCustomFields[$Custom_Field->Field_ID][$Custom_Field->Meta_Value]++;}
+		foreach ($Custom_Fields as $Custom_Field) {
+			if ($Custom_Field->Field_Type == "checkbox") {
+				$Checkbox_Values = explode(",", $Custom_Field->Meta_Value);
+				if (!is_array($Checkbox_Values)) {$Checkbox_Values = array();}
+				foreach ($Checkbox_Values as $Individual_Value) {
+					$ProdCustomFields[$Custom_Field->Field_ID][$Individual_Value]++;
+				}
+			}
+			else {$ProdCustomFields[$Custom_Field->Field_ID][$Custom_Field->Meta_Value]++;}
+		}
 	}
 }
 

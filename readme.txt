@@ -32,7 +32,7 @@ Perfect for your store, restaurant and more!
 
 
 = Premium Features =
-The premium version includes a lot of great features including: the ability to add over 100 products, additional product images, SEO friendly URLs, product tags and custom fields for sorting, custom product pages, a minimalist layout option and more!
+The premium version includes a huge number of features including: the ability to add over 100 products, additional product images, SEO friendly URLs, product tags and custom fields for sorting, custom product pages, a minimalist layout option and more!
 
 * Drag-and-drop product pages layout
 * Product tags, additional images and videos
