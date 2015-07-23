@@ -46,6 +46,27 @@ jQuery(document).ready(function() {
 	});
 });
 
+jQuery(document).ready(function() {
+	jQuery('.upcp-tabbed-button-left').on('click', function() {
+		jQuery('.upcp-scroll-list li:first').before(jQuery('.upcp-scroll-list li:last'));  
+		jQuery('.upcp-scroll-list').animate({left:'-=117px'}, 0);
+		jQuery('.upcp-scroll-list').animate({left:'+=117px'}, 600);
+	});
+	jQuery('.upcp-tabbed-button-right').on('click', function() {
+		jQuery('.upcp-scroll-list').animate({left:'-=117px'}, 600, function() {
+			jQuery('.upcp-scroll-list li:last').after(jQuery('.upcp-scroll-list li:first'));
+			jQuery('.upcp-scroll-list').animate({left:'+=117px'}, 0);
+		});
+	});
+});
+
+jQuery(document).ready(function($) {
+	jQuery('.upcp-fancybox').fancybox({
+				autoResize: true,
+				autoCenter: true,
+				});
+	});
+
 function screenshotThumbHolderWidth(){
 	var screenshotImage = jQuery('.prod-cat-addt-details-thumbs-div img:first-child');
 	var thumbnailHolderContainer = jQuery('.game-thumbnail-holder');
@@ -336,6 +357,7 @@ function ZoomImage(ProdID, ItemID) {
 				PhotoSRC = jQuery('#prod-cat-addt-details-thumb-'+ItemID).attr('src');
 		}
 		jQuery('.prod-cat-addt-details-main').each(function() {jQuery(this).attr('src', PhotoSRC)});
+		jQuery('.prod-cat-addt-details-link-a').each(function() {jQuery(this).attr('href', PhotoSRC)});
 		html = '<div style="width:auto;height:auto;overflow: auto;position:relative;">';
 		html += jQuery('#prod-cat-addt-details-'+ProdID).html();
 		html += "</div>";

@@ -105,6 +105,9 @@ function Add_UPCP_Scripts() {
 		$url_six = plugins_url("ultimate-product-catalogue/js/jquery.confirm.min.js");
 		$url_seven = plugins_url("ultimate-product-catalogue/js/product-page-builder.js");
 		$url_eight = plugins_url("ultimate-product-catalogue/js/jquery.gridster.js");
+		$url_nine = plugins_url("ultimate-product-catalogue/js/lightbox/jquery.fancybox.pack.js");
+		$url_ten = plugins_url("ultimate-product-catalogue/js/lightbox/jquery.fancybox.js");
+
 		wp_enqueue_script('PageSwitch', $url_one, array('jquery'));
 		wp_enqueue_script('sorttable', $url_two, array('jquery'));
 		wp_enqueue_script('UpdateSubCats', $url_three, array('jquery'));
@@ -113,6 +116,8 @@ function Add_UPCP_Scripts() {
 		wp_enqueue_script('Confirm', $url_six, array('jquery'));
 		wp_enqueue_script('Page-Builder', $url_seven, array('jquery'), '1.0', true);
 		wp_enqueue_script('Gridster', $url_eight, array('jquery'), '1.0', true);
+		wp_enqueue_script('UPCP-FancyBoxPack', $url_nine, array('jquery'));
+		wp_enqueue_script('UPCP-FancyBox', $url_ten, array('jquery'));
 		wp_enqueue_script('jquery-ui-sortable');
 		wp_enqueue_script('update-catalogue-order', plugin_dir_url(__FILE__) . '/js/update-catalogue-order.js');
 		wp_enqueue_media();
@@ -137,7 +142,9 @@ function UPCP_Add_Stylesheet() {
 	}
 	if ($Full_Version == "Yes") {
 		wp_register_style( 'upcp-gridster', plugins_url("ultimate-product-catalogue/css/jquery.gridster.css"));
+    	wp_register_style( 'fancybox-style', plugins_url('js/lightbox/jquery.fancybox.css', __FILE__) );
     	wp_enqueue_style( 'upcp-gridster' );
+		wp_enqueue_style( 'fancybox-style');
 		//wp_enqueue_style( 'wp-admin' );
 	}
 
