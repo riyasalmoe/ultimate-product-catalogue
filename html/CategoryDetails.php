@@ -18,7 +18,7 @@
 				    	</tr>
 				    </thead>
 				    <tbody>
-				    <?php $Products = $wpdb->get_results($wpdb->prepare("SELECT Item_ID, Item_Name FROM $items_table_name WHERE Category_ID='%d' ORDER BY Item_Category_Product_Order", $_GET['Category_ID']));
+				    <?php $Products = $wpdb->get_results($wpdb->prepare("SELECT Item_ID, Item_Name FROM $items_table_name WHERE Category_ID='%d'", $_GET['Category_ID']));
 					if (empty($Products)) { echo "<div class='product-category-row list-item'><p>No products currently in category<p/></div>"; }
 					else {
 				    	foreach ($Products as $Product) {

@@ -1011,72 +1011,65 @@ function Delete_Product_Image() {
 function Update_UPCP_Options() {
 	global $Full_Version;
 	$InstallVersion = get_option("UPCP_First_Install_Version");
-
-	if ($_POST['product_inquiry_form'] == "Yes" and get_option("UPCP_Product_Inquiry_Form") == "No"){UPCP_Product_Inquiry_Form();}
 	
-	if (isset($_POST['color_scheme'])) {update_option('UPCP_Color_Scheme', $_POST['color_scheme']);}
-	if (isset($_POST['product_links'])) {update_option('UPCP_Product_Links', $_POST['product_links']);}
-	if (isset($_POST['tag_logic'])) {update_option('UPCP_Tag_Logic', $_POST['tag_logic']);}
-	if (isset($_POST['filter_type'])) {update_option('UPCP_Filter_Type', $_POST['filter_type']);}
-	if (isset($_POST['read_more'])) {update_option("UPCP_Read_More", $_POST['read_more']);}
-	if (isset($_POST['desc_count'])) {update_option("UPCP_Desc_Chars", $_POST['desc_count']);}
-	if (isset($_POST['sidebar_order'])) {update_option("UPCP_Sidebar_Order", $_POST['sidebar_order']);}
-	if (isset($_POST['product_search'])) {update_option("UPCP_Product_Search", $_POST['product_search']);}
+	update_option('UPCP_Color_Scheme', $_POST['color_scheme']);
+	update_option('UPCP_Product_Links', $_POST['product_links']);
+	update_option('UPCP_Tag_Logic', $_POST['tag_logic']);
+	update_option('UPCP_Filter_Type', $_POST['filter_type']);
+	update_option("UPCP_Read_More", $_POST['read_more']);
+	update_option("UPCP_Desc_Chars", $_POST['desc_count']);
+	update_option("UPCP_Sidebar_Order", $_POST['sidebar_order']);
+	update_option("UPCP_Product_Search", $_POST['product_search']);
 	$DetailsImageLink = Prepare_Details_Image();
-	if (isset($_POST['Details_Image'])) {update_option("UPCP_Details_Image", $DetailsImageLink);}
-	if (isset($_POST['single_page_price'])) {update_option("UPCP_Single_Page_Price", $_POST['single_page_price']);}
-	if (isset($_POST['case_insensitive_search'])) {update_option("UPCP_Case_Insensitive_Search", $_POST['case_insensitive_search']);}
-	if (isset($_POST['contents_filter'])) {update_option("UPCP_Apply_Contents_Filter", $_POST['contents_filter']);}
-	if (isset($_POST['maintain_filtering'])) {update_option("UPCP_Maintain_Filtering", $_POST['maintain_filtering']);}
+	update_option("UPCP_Details_Image", $DetailsImageLink);
+	update_option("UPCP_Single_Page_Price", $_POST['single_page_price']);
+	update_option("UPCP_Case_Insensitive_Search", $_POST['case_insensitive_search']);
+	update_option("UPCP_Apply_Contents_Filter", $_POST['contents_filter']);
+	update_option("UPCP_Maintain_Filtering", $_POST['maintain_filtering']);
 	$Extra_Elements_Array = $_POST['extra_elements'];
 	if (!is_array($Extra_Elements_Array)) {$Extra_Elements_Array = array();}
 	$Extra_Elements = implode(",", $Extra_Elements_Array);
-	if (isset($_POST['extra_elements'])) {update_option("UPCP_Extra_Elements", $Extra_Elements);}
+	update_option("UPCP_Extra_Elements", $Extra_Elements);
 	
-	if ($Full_Version == "Yes" and isset($_POST['filter_title'])) {update_option("UPCP_Filter_Title", $_POST['filter_title']);}
-	if ($Full_Version == "Yes" and isset($_POST['custom_product_page'])) {update_option("UPCP_Custom_Product_Page", $_POST['custom_product_page']);}
-	if ($Full_Version == "Yes" and isset($_POST['product_inquiry_form'])) {update_option("UPCP_Product_Inquiry_Form", $_POST['product_inquiry_form']);}
-	if ($Full_Version == "Yes" and isset($_POST['products_per_page'])) {update_option("UPCP_Products_Per_Page", $_POST['products_per_page']);}
-	if ($Full_Version == "Yes" and isset($_POST['pagination_location'])) {update_option("UPCP_Pagination_Location", $_POST['pagination_location']);}
-	if ($Full_Version == "Yes" and isset($_POST['product_sort'])) {update_option("UPCP_Product_Sort", $_POST['product_sort']);}
-	if ($Full_Version == "Yes" and isset($_POST['cf_converion'])) {update_option("UPCP_CF_Conversion", $_POST['cf_converion']);}
-	if ($Full_Version == "Yes" and isset($_POST['related_products'])) {update_option("UPCP_Related_Products", $_POST['related_products']);}
-	if ($Full_Version == "Yes" and isset($_POST['next_previous'])) {update_option("UPCP_Next_Previous", $_POST['next_previous']);}
-	if ($Full_Version == "Yes" and isset($_POST['access_role'])) {update_option("UPCP_Access_Role", $_POST['access_role']);}
-	if ($Full_Version == "Yes" and isset($_POST['custom_fields_show_hide'])) {update_option("UPCP_Custom_Fields_Show_Hide", $_POST['custom_fields_show_hide']);}
-	if ($Full_Version == "Yes" and isset($_POST['custom_fields_blank'])) {update_option("UPCP_Custom_Fields_Blank", $_POST['custom_fields_blank']);}
-	if ($Full_Version == "Yes" and isset($_POST['pp_grid_width'])) {update_option("UPCP_PP_Grid_Width", $_POST['pp_grid_width']);}
-	if ($Full_Version == "Yes" and isset($_POST['pp_grid_height'])) {update_option("UPCP_PP_Grid_Height", $_POST['pp_grid_height']);}
-	if ($Full_Version == "Yes" and isset($_POST['pp_top_bottom_padding'])) {update_option("UPCP_Top_Bottom_Padding", $_POST['pp_top_bottom_padding']);}
-	if ($Full_Version == "Yes" and isset($_POST['pp_left_right_padding'])) {update_option("UPCP_Left_Right_Padding", $_POST['pp_left_right_padding']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Filter_Title", $_POST['filter_title']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Custom_Product_Page", $_POST['custom_product_page']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Products_Per_Page", $_POST['products_per_page']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Pagination_Location", $_POST['pagination_location']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Product_Sort", $_POST['product_sort']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_CF_Conversion", $_POST['cf_converion']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Related_Products", $_POST['related_products']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Next_Previous", $_POST['next_previous']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Access_Role", $_POST['access_role']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Custom_Fields_Show_Hide", $_POST['custom_fields_show_hide']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Custom_Fields_Blank", $_POST['custom_fields_blank']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_PP_Grid_Width", $_POST['pp_grid_width']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_PP_Grid_Height", $_POST['pp_grid_height']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Top_Bottom_Padding", $_POST['pp_top_bottom_padding']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Left_Right_Padding", $_POST['pp_left_right_padding']);}
 	
-	if ($Full_Version == "Yes" and isset($_POST['categories_label'])) {update_option("UPCP_Categories_Label", $_POST['categories_label']);}
-	if ($Full_Version == "Yes" and isset($_POST['subcategories_label'])) {update_option("UPCP_SubCategories_Label", $_POST['subcategories_label']);}
-	if ($Full_Version == "Yes" and isset($_POST['tags_label'])) {update_option("UPCP_Tags_Label", $_POST['tags_label']);}
-	if ($Full_Version == "Yes" and isset($_POST['custom_fields_label'])) {update_option("UPCP_Custom_Fields_Label", $_POST['custom_fields_label']);}
-	if ($Full_Version == "Yes" and isset($_POST['details_label'])) {update_option("UPCP_Details_Label", $_POST['details_label']);}
-	if ($Full_Version == "Yes" and isset($_POST['sort_by_label'])) {update_option("UPCP_Sort_By_Label", $_POST['sort_by_label']);}
-	if ($Full_Version == "Yes" and isset($_POST['product_name_search_label'])) {update_option("UPCP_Product_Name_Search_Label", $_POST['product_name_search_label']);}
-	if ($Full_Version == "Yes" and isset($_POST['product_name_text_label'])) {update_option("UPCP_Product_Name_Text_Label", $_POST['product_name_text_label']);}
-	if ($Full_Version == "Yes" and isset($_POST['back_to_catalogue'])) {update_option("UPCP_Back_To_Catalogue_Label", $_POST['back_to_catalogue']);}
-	if ($Full_Version == "Yes" and isset($_POST['no_results_found_label'])) {update_option("UPCP_No_Results_Found_Label", $_POST['no_results_found_label']);}
-	if ($Full_Version == "Yes" and isset($_POST['products_pagination_label'])) {update_option("UPCP_Products_Pagination_Label", $_POST['products_pagination_label']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Categories_Label", $_POST['categories_label']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_SubCategories_Label", $_POST['subcategories_label']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Tags_Label", $_POST['tags_label']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Custom_Fields_Label", $_POST['custom_fields_label']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Details_Label", $_POST['details_label']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Sort_By_Label", $_POST['sort_by_label']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Product_Name_Search_Label", $_POST['product_name_search_label']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Product_Name_Text_Label", $_POST['product_name_text_label']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Back_To_Catalogue_Label", $_POST['back_to_catalogue']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_No_Results_Found_Label", $_POST['no_results_found_label']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Products_Pagination_Label", $_POST['products_pagination_label']);}
 
-	if ($Full_Version == "Yes" and isset($_POST['pretty_links'])) {update_option("UPCP_Pretty_Links", $_POST['pretty_links']);}
-	if ($Full_Version == "Yes" and isset($_POST['xml_sitemap_url'])) {update_option("UPCP_XML_Sitemap_URL", $_POST['xml_sitemap_url']);}
-	if ($Full_Version == "Yes" and isset($_POST['seo_option'])) {update_option("UPCP_SEO_Option", $_POST['seo_option']);}
-	if ($Full_Version == "Yes" and isset($_POST['seo_integration'])) {update_option("UPCP_SEO_Integration", $_POST['seo_integration']);}
-	if ($Full_Version == "Yes" and isset($_POST['seo_title'])) {update_option("UPCP_SEO_Title", $_POST['seo_title']);}
-	if ($Full_Version == "Yes" and isset($_POST['update_breadcrumbs'])) {update_option("UPCP_Update_Breadcrumbs", $_POST['update_breadcrumbs']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Pretty_Links", $_POST['pretty_links']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_XML_Sitemap_URL", $_POST['xml_sitemap_url']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_SEO_Option", $_POST['seo_option']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_SEO_Integration", $_POST['seo_integration']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_SEO_Title", $_POST['seo_title']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Update_Breadcrumbs", $_POST['update_breadcrumbs']);}
 
-	if ($Full_Version == "Yes" and isset($_POST['catalogue_style'])) {update_option("UPCP_Catalogue_Style", $_POST['catalogue_style']);}
-	if ($Full_Version == "Yes" and isset($_POST['sidebar_style'])) {update_option("UPCP_Sidebar_Style", $_POST['sidebar_style']);}
-	if ($Full_Version == "Yes" and isset($_POST['pagination_background'])) {update_option("UPCP_Pagination_Background", $_POST['pagination_background']);}
-	if ($Full_Version == "Yes" and isset($_POST['pagination_border'])) {update_option("UPCP_Pagination_Border", $_POST['pagination_border']);}
-	if ($Full_Version == "Yes" and isset($_POST['pagination_shadow'])) {update_option("UPCP_Pagination_Shadow", $_POST['pagination_shadow']);}
-	if ($Full_Version == "Yes" and isset($_POST['pagination_gradient'])) {update_option("UPCP_Pagination_Gradient", $_POST['pagination_gradient']);}
-	if ($Full_Version == "Yes" and isset($_POST['pagination_font'])) {update_option("UPCP_Pagination_Font", $_POST['pagination_font']);}
-
+	if ($Full_Version == "Yes") {update_option("UPCP_Catalogue_Style", $_POST['catalogue_style']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Sidebar_Style", $_POST['sidebar_style']);}
+	if ($Full_Version == "Yes") {update_option("UPCP_Pagination_Style", $_POST['pagination_style']);}
+	
 	if ($_POST['Pretty_Links'] == "Yes") {
 		 update_option("UPCP_Update_RR_Rules", "Yes");
 	}

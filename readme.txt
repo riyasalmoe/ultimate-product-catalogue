@@ -32,7 +32,7 @@ Perfect for your store, restaurant and more!
 
 
 = Premium Features =
-The premium version includes a huge number of features including: the ability to add over 100 products, additional product images, SEO friendly URLs, product tags and custom fields for sorting, custom product pages, a minimalist layout option and more!
+The premium version includes a lot of great features including: the ability to add over 100 products, additional product images, SEO friendly URLs, product tags and custom fields for sorting, custom product pages, a minimalist layout option and more!
 
 * Drag-and-drop product pages layout
 * Product tags, additional images and videos
@@ -178,47 +178,6 @@ Premium Features
 5. The admin area
 
 == Changelog == 
-= 3.3.4 =
-- Fixed a display issue with the mobile version of the custom product page
-
-= 3.3.3 =
-- Fixed a potential notice notification when working with SEO By Yoast
-
-= 3.3.2 =
-- Added extra links to support materials to the dashboard tab
-
-= 3.3.1 =
-- Added the option to display custom fields in the "List" view
-- Fixed a mobile CSS styling issue
-- Fixed a display issue with reordering products within categories
-
-= 3.3.0 = 
-- Added an option to include a product inquiry form (requires Contact Form 7 plugin)
-- Added a number of styling options for the pagination buttons
-- Fixed a couple of small bugs
-
-= 3.2.7 =
-- Condensed the "Options" tab so that it's easier to navigate
-
-= 3.2.6 =
-- Fixed an error where xls spreadsheets weren't allowed to be uploaded
-- Fixed a grammatical error
-
-= 3.2.5 =
-- Fixed a bug that could erase all options and product page layouts on some installations
-
-= 3.2.4 =
-- Minor CSS update for to correct small problems in the recent update
-- Minor javascript fix to correct for incorrect catalogue height on some pages after recent update
-
-= 3.2.3 =
-- Major upgrade to plugin CSS to increase responsivenss (WARNING: may cause any Custom CSS added to not work correctly)
-- Fixed a deprecated YouTube API error
-
-= 3.2.2 =
-- Blank options no longer show in the "Additional Options" area 
-- Additional filtering options are now sorted alphabetically
-
 = 3.2.1 =
 - Fixed category label not displaying when products are filtered
 - Fixed a javascript error most users were getting

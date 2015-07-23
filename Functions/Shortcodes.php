@@ -21,12 +21,6 @@ function Insert_Product_Catalog($atts) {
 	$Products_Per_Page = get_option("UPCP_Products_Per_Page");
 	$ProductSearch = get_option("UPCP_Product_Search");
 
-	$Pagination_Background = get_option("UPCP_Pagination_Background");		
-	$Pagination_Border = get_option("UPCP_Pagination_Border");
-	$Pagination_Shadow = get_option("UPCP_Pagination_Shadow");
-	$Pagination_Gradient = get_option("UPCP_Pagination_Gradient");
-	$Pagination_Font = get_option("UPCP_Pagination_Font");
-
 	$Products_Pagination_Label = get_option("UPCP_Products_Pagination_Label");
 	$Product_Name_Search_Label = get_option("UPCP_Product_Name_Search_Label");
 	$Product_Search_Text_Label = get_option("UPCP_Product_Name_Text_Label");
@@ -190,7 +184,7 @@ function Insert_Product_Catalog($atts) {
 			$Custom_Fields_Sql_String .= "(";
 			$Custom_Fields_Sql_String .= "Field_ID='" . $Field_ID . "' AND (";
 			foreach ($Selected_Custom_Field as $Value){
-				$Custom_Fields_Sql_String .= "Meta_Value LIKE '" . $Value . "' OR ";
+				$Custom_Fields_Sql_String .= "Meta_Value='" . $Value . "' OR ";
 			}
 			$Custom_Fields_Sql_String = substr($Custom_Fields_Sql_String, 0, -4);
 			$Custom_Fields_Sql_String .= "))";
@@ -224,7 +218,7 @@ function Insert_Product_Catalog($atts) {
 			$Product = $wpdb->get_row("SELECT * FROM $items_table_name WHERE Item_ID=" . $CatalogueItem->Item_ID);
 			$ProdTagObj = $wpdb->get_results("SELECT Tag_ID FROM $tagged_items_table_name WHERE Item_ID=" . $CatalogueItem->Item_ID);
 			if ($ajax_reload == "No") {
-				$Prod_Custom_Fields = $wpdb->get_results("SELECT Field_ID, Field_Type, Meta_Value FROM $fields_meta_table_name WHERE Item_ID=" . $Product->Item_ID);
+				$Prod_Custom_Fields = $wpdb->get_results("SELECT Field_ID, Meta_Value FROM $fields_meta_table_name WHERE Item_ID=" . $Product->Item_ID);
 			}
 						
 			if ($Product->Item_Display_Status != "Hide") {
@@ -397,12 +391,7 @@ function Insert_Product_Catalog($atts) {
 		$PrevPage = max($current_page - 1, 1);
 		$NextPage = min($current_page + 1, $Num_Pages);
 				
-		$PaginationString .= "<div class='catalogue-nav ";
-		$PaginationString .= "upcp-cat-nav-bg-" . $Pagination_Background . " ";
-		$PaginationString .= "upcp-cat-nav-border-" . $Pagination_Border . " ";
-		$PaginationString .= "upcp-cat-nav-" . $Pagination_Shadow . " ";
-		$PaginationString .= "upcp-cat-nav-" . $Pagination_Gradient . " ";
-		$PaginationString .= "'>";
+		$PaginationString .= "<div class='catalogue-nav'>";
 		$PaginationString .= "<span class='displaying-num'>" . $Total_Products . $Products_Pagination_Text . "</span>";
 		$PaginationString .= "<span class='pagination-links'>";
 		$PaginationString .= "<a class='first-page' title='Go to the first page' href='#' onclick='UPCP_DisplayPage(\"1\")'>&#171;</a>";
@@ -499,8 +488,8 @@ function Insert_Product_Catalog($atts) {
 	$ReturnString .= "<div class='prod-cat-container'>";
 	$ReturnString .= $HeaderBar;
 	$ReturnString .= $MobileMenuString;
-	$ReturnString .= $SidebarString;
 	$ReturnString .= $InnerString;
+	$ReturnString .= $SidebarString;
 	$ReturnString .= $Bottom_JS;
 	$ReturnString .= "<div class='upcp-clear'></div></div>";
 		
@@ -679,7 +668,6 @@ function AddProduct($format, $Item_ID, $Product, $Tags, $AjaxReload = "No", $Aja
 		$ProductString .= "</a>";
 		$ProductString .= "</div>\n";
 		$ProductString .= "<div id='prod-cat-desc-" . $Product->Item_ID . "' class='prod-cat-desc upcp-list-desc'>" . $Description . "</div>\n";
-		$ProductString .= AddCustomFields($Product->Item_ID, "list");
 		$ProductString .= "<a class='upcp-catalogue-link ";
 		if ($FancyBoxClass and !$NewWindow) {$ProductString .= "fancybox";}
 		$ProductString .= "' ";
@@ -778,7 +766,6 @@ function SingleProductPage() {
 	$Extra_Elements = explode(",", $Extra_Elements_String);
 	$Single_Page_Price = get_option("UPCP_Single_Page_Price");
 	$Custom_Product_Page = get_option("UPCP_Custom_Product_Page");
-	$Product_Inquiry_Form = get_option("UPCP_Product_Inquiry_Form");
 	$Related_Type = get_option("UPCP_Related_Products");
 	$Next_Previous = get_option("UPCP_Next_Previous");
 	$Product_Page_Serialized = get_option("UPCP_Product_Page_Serialized");
@@ -846,7 +833,6 @@ function SingleProductPage() {
 	$TagGroupNames = $wpdb->get_results("SELECT * FROM $tag_groups_table_name ORDER BY Tag_Group_Order ASC");
 	$ProductVideos = $wpdb->get_results($wpdb->prepare("SELECT * FROM $item_videos_table_name WHERE Item_ID='%d' ORDER BY Item_Video_Order ASC", $Product->Item_ID));
 		
-	// Regular product page 
 	if ($Custom_Product_Page == "No") {
 		$ProductString .= "<div class='upcp-standard-product-page'>";
 				
@@ -903,14 +889,12 @@ function SingleProductPage() {
 						$response = curl_exec($ch);
 						curl_close($ch);
 						
-						if ($response and $response != "No longer available") {
+						if ($response) {
 							$xml   = new SimpleXMLElement($response);
 							$ItemVideoDescription = (string) $xml->title;
 						} else {
 							$ItemVideoDescription = "No title available for this video";
 						}
-					} else{
-						$ItemVideoDescription = $ItemVideoThumb;
 					}
 					$ProductString .= "<div class='upcp-side-title upcp-product-video'>" . $ItemVideoDescription . "</div>";
 					$ProductString .= "<iframe width='300' height='225' src='http://www.youtube.com/embed/" . $Video->Item_Video_URL . "?rel=0&fs=1' webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>";
@@ -919,10 +903,7 @@ function SingleProductPage() {
 			}
 			$ProductString .= "</div>";
 		}
-		if ($Product_Inquiry_Form == "Yes" ) {
-			$ProductString .= "<div class='upcp-clear'></div>";
-			$ProductString .= Add_Product_Inquiry_Form();
-		}
+		//$ProductString .= "</div>\n"; Is this doubled up?
 				
 		$ProductString .= "</div>\n";
 				
@@ -950,117 +931,6 @@ function SingleProductPage() {
 		$ProductString .= "</div>\n";
 				
 		$ProductString .= "</div>\n";
-	}
-	elseif ($Custom_Product_Page == "Tabbed") {
-	
-		$ProductString .= "<div class='upcp-tabbed-product-page'>";
-
-		$ProductString .= "<div class='prod-cat-back-link'>";
-		$ProductString .= "<a class='upcp-catalogue-link' href='" . $Return_URL . "'>&#171; " . $Back_To_Catalogue_Text . "</a>";
-		$ProductString .= "</div>";
-
-		$ProductString .= "<div class='upcp-tabbed-images-container'>";
-		$ProductString .= "<div id='upcp-tabbed-main-image-div-" . $Product->Item_ID . "' class='upcp-tabbed-main-image-div'>";
-		$ProductString .= "<div class='upcp-tabbed-main-image-inner'>";
-		$ProductString .= "<a href='" . $PhotoURL . "' class='upcp-fancybox prod-cat-addt-details-link-a' rel='upcp-gallery'> ";
-		$ProductString .= "  $PhotoCode " ;
-		$ProductString .= "</a>";
-		$ProductString .= "</div>";
-		$ProductString .= "</div>";
-
-		$ProductString .= "<div class='upcp-clear'></div>";
-	  	/*Slider container*/
-		$ProductString .= "<div id='upcp-tabbed-image-thumbs-div-" . $Product->Item_ID . "' class='upcp-tabbed-image-thumbs-div'>";
-	  	/*Back button*/
-	  	$ProductString .= "<div class='upcp-tabbed-button-left-div upcp-tabbed-button-div'> ";
-	  	$ProductString .= "<button class='upcp-tabbed-button-left'><</button>";
-	  	$ProductString .= "</div>"; 
-	  	/*Images*/
-	  	$ProductString .= "<div class='upcp-scroll-content'> ";
-	  	$ProductString .= "<ul class='upcp-scroll-list'>";
-	  	
-		if (isset($PhotoURL)) {$ProductString .= "<li class='upcp-tabbed-addt-img-thumbs'><a class='upcp-thumb-anchor upcp-fancybox' rel='upcp-gallery' href='" . $PhotoURL ."'><img src='" . $PhotoURL . "' id='prod-cat-addt-details-thumb-P". $Product->Item_ID . "' class='upcp-tabbed-addt-details-thumb' onclick='ZoomImage(\"" . $Product->Item_ID . "\", \"0\");'></a></li>";}
-		foreach ($Item_Images as $Image) {$ProductString .= "<li class='upcp-tabbed-addt-img-thumbs'><a class='upcp-thumb-anchor upcp-fancybox' rel='upcp-gallery' href='" . htmlspecialchars($Image->Item_Image_URL, ENT_QUOTES) . "'><img src='" . htmlspecialchars($Image->Item_Image_URL, ENT_QUOTES) . "' id='prod-cat-addt-details-thumb-". $Image->Item_Image_ID . "' class='upcp-tabbed-addt-details-thumb' onclick='ZoomImage(\"" . $Product->Item_ID . "\", \"" . $Image->Item_Image_ID . "\");' ></a></li>";}
-		$ItemVideos = $wpdb->get_results("SELECT * FROM $item_videos_table_name WHERE Item_ID='" . $Product->Item_ID . "' ORDER BY Item_Video_Order ASC");
-		foreach ($ItemVideos as $Video) {$ProductString .= "<iframe width='300' height='225' src='http://www.youtube.com/embed/" . $Video->Item_Video_URL . "?rel=0&fs=1' webkitallowfullscreen mozallowfullscreen allowfullscreen onclick='ZoomImage(\"" . $Product->Item_ID . "\", \"" . $Video->Video_ID . "\");'></iframe>";}
-		
-	  	/*Next button*/
-	  	$ProductString .= "</ul>";
-	  	$ProductString .= "</div>";
-	  	$ProductString .= "<div class='upcp-tabbed-button-right-div upcp-tabbed-button-div'> ";
-	  	$ProductString .= "<button class='upcp-tabbed-button-right'>></button>";
-		$ProductString .= "</div>";
-		$ProductString .= "</div>";
-		$ProductString .= "</div>";
-
-		$ProductString .= "<div class='upcp-tabbed-main-product-container'>";
-
-		$ProductString .= "<div class='upcp-tabbed-main-product-details'>";
-		$ProductString .= "<h2 class='upcp-tabbed-product-name'><a class='no-underline' href='http://" . $_SERVER['HTTP_HOST'] . $SP_Perm_URL . "'>" . $Product->Item_Name . "</a></h2>";
-		if ($Single_Page_Price == "Yes") {$ProductString .= "<h3 class='upcp-tabbed-product-price'>" . $Product->Item_Price . "</h3>";}
-		$ProductString .= "</div>";
-
-		$ProductString .= "<div id='upcp-tabbed-tabs-holder-" . $Product->Item_ID . "' class='upcp-tabbed-tabs-holder'>";
-
-		$ProductString .= "<div class='upcp-tabbed-tabs-menu'>";
-		$ProductString .= "<ul id='upcp-tabs'>";
-		$ProductString .= "<li class='upcp-tabbed-layout-tab upcp-tabbed-description-menu' id='upcp-tabbed-tab'><a data-class='upcp-tabbed-description' class='upcp-tab-slide'> <span class='upcp-tab-break'>Product</span> <span class='upcp-tab-break'>Details</span></a></li>";
-		$ProductString .= "<li class='upcp-tabbed-layout-tab upcp-tabbed-addtl-info-menu upcp-tab-layout-tab-unclicked ' id='upcp-tabbed-tab'><a data-class='upcp-tabbed-addtl-info' class='upcp-tab-slide'> <span class='upcp-tab-break'>Additional</span> <span class='upcp-tab-break'>Information </span></a></li>";
-		if ($Product_Inquiry_Form == "Yes" ) {$ProductString .= "<li class='upcp-tabbed-layout-tab upcp-tabbed-contact-form-menu upcp-tab-layout-tab-unclicked' id='upcp-tabbed-tab'><a data-class='upcp-tabbed-contact-form' class='upcp-tab-slide'><span class='upcp-tab-break'>Contact</span> <span class='upcp-tab-break'>Us</span></a></li>";}
-		if ($Show_Reviews == "Yes" ) {$ProductString .= "<li class='upcp-tabbed-layout-tab upcp-tabbed-reviews-menu upcp-tab-layout-tab-unclicked' id='upcp-tabbed-tab'><a data-class='upcp-tabbed-reviews' class='upcp-tab-slide'> <span class='upcp-tab-break'>Customer</span> <span class='upcp-tab-break'>Reviews</span></a></li>";}
-		$ProductString .= "</ul>";
-		$ProductString .= "</div>";
-
-		$ProductString .= "<div id='upcp-tabbed-description-" . $Product->Item_ID . "' class='upcp-tabbed-description upcp-tabbed-tab'>";
-		$ProductString .= "<div id='upcp-tabbed-content'>";
-		$ProductString .= $Description;
-		$ProductString .= "</div>";
-		$ProductString .= "</div>";
-
-		$ProductString .= "<div id='upcp-tabbed-addtl-info-" . $Product->Item_ID . "' class='upcp-tabbed-addtl-info upcp-tabbed-tab upcp-Hide-Item'>";
-			$ProductString .= "<div class='upcp-tabbed-details'>";
-			$ProductString .= "<div id='upcp-tabbed-content'>";
-			if (in_array("Category", $Extra_Elements)) {$ProductString .= "<div class='upcp-tabbed-category-container'>\n<div class='upcp-tab-title'>" . __('Category', 'UPCP') . ": </div>" . $Product->Category_Name . "</div>";}
-			if (in_array("SubCategory", $Extra_Elements)) {$ProductString .= "<div class='upcp-tabbed-subcategory-container'>\n<div class='upcp-tab-title'>" . __('Sub-Category', 'UPCP') . ": </div>" . $Product->SubCategory_Name . "</div>";}
-			if (in_array("Tags", $Extra_Elements)) {$ProductString .= "<div class='upcp-tabbed-tag-container'>\n<div class='upcp-tab-title'>Tags:</div>" . $TagsString . "</div>";}
-			if (in_array("CustomFields", $Extra_Elements)) {
-				$ProductString .= "<div class='upcp-tabbed-cf-container'>";
-				$Fields = $wpdb->get_results("SELECT Field_Name, Field_ID FROM $fields_table_name WHERE Field_Display_Tabbed='Yes'");
-				foreach ($Fields as $Field) {
-					$Value = $wpdb->get_row("SELECT Meta_Value FROM $fields_meta_table_name WHERE Item_ID='" . $Product->Item_ID . "'and Field_ID='" . $Field->Field_ID ."'");
-					$ProductString .= "<div class='upcp-tab-title'>" . $Field->Field_Name . ":</div>" . $Value->Meta_Value . "<br>";
-				}
-				$ProductString .= "</div>";
-			}
-		$ProductString .= "</div>";
-		$ProductString .= "</div>";
-		$ProductString .= "</div>";
-
-		if ($Product_Inquiry_Form == "Yes" ) {
-			$ProductString .= "<div id='upcp-tabbed-contact-form-" . $Product->Item_ID . "' class='upcp-tabbed-contact-form upcp-tabbed-tab upcp-Hide-Item'>";
-			$ProductString .= "<div id='upcp-tabbed-content'>";
-			$ProductString .= Add_Product_Inquiry_Form();
-			$ProductString .= "</div>";
-			$ProductString .= "</div>";
-		}
-
-		if ($Show_Reviews == "Yes" ) {
-			$ProductString .= "<div id='upcp-tabbed-reviews-" . $Product->Item_ID . "' class='upcp-tabbed-reviews upcp-tabbed-tab upcp-Hide-Item'>";
-			$ProductString .= "<div id='upcp-tabbed-content'>";
-			$ProductString .= Add_Product_Reviews();
-			$ProductString .= "</div>";
-			$ProductString .= "</div>";
-		}
-		$ProductString .= "</div>";
-		$ProductString .= "</div>";
-		$ProductString .= "</div>";
-
-		$ProductString .= "<div id='upcp-tabbed-similar-products-div-" . $Product->Item_ID . "' class='upcp-tabbed-similar-products-div'>";
-		if ($Related_Type == "Manual" or $Related_Type == "Auto") {$ProductString .= Get_Related_Products($Product, $Related_Type);}
-		if ($Next_Previous == "Manual") {$ProductString .= Get_Next_Previous($Product, $Next_Previous);}
-
-		$ProductString .= "</div>";
-				
 	}
 	else {
 		if ($Custom_Product_Page == "Large" or $Mobile_Product_Page_Serialized != "") {$ProductString .= "<div class='upcp-custom-large-product-page'>";}
@@ -1295,14 +1165,11 @@ function BuildSidebar($category, $subcategory, $tags, $prod_name) {
 			$SidebarString .= "<div id='prod-cat-sidebar-cf-" . $Custom_Field->Field_ID . "' class='prod-cat-sidebar-cf' data-cfid='" . $Custom_Field->Field_ID . "'>\n";
 			$SidebarString .= "<div class='prod-cat-sidebar-cf-title' data-cfid='" . $Custom_Field->Field_ID . "' onclick='UPCP_Show_Hide_CF(this);'>" . $Custom_Field->Field_Name . "</div>";
 			$SidebarString .= "<div id='prod-cat-sidebar-cf-options-" . $id . "' class='prod-cat-cf-sidebar-option upcp-cf-" . $Custom_Fields_Show_Hide . "' data-cfid='" . $Custom_Field->Field_ID . "'>";
-			ksort($ProdCustomFields[$Custom_Field->Field_ID]);
 			foreach ($ProdCustomFields[$Custom_Field->Field_ID]  as $Meta_Value => $Count) {
-				if ($Meta_Value != "") {
-					$SidebarString .= "<div class='prod-cat-sidebar-cf-value-div'>";
-					$SidebarString .= "<input type='checkbox' name='Custom_Field[]' value='" . $Meta_Value . "'  onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");' id='cf-" . $Custom_Field->Field_ID . "-" . $Meta_Value . "' class='jquery-prod-cf-value' /> ";
-					$SidebarString .= "<label class='upcp-label' for='cf-" . $Custom_Field->Field_ID . "-" . $Meta_Value . "'>" . $Meta_Value . " (" . $Count . ")</label>";
-					$SidebarString .= "</div>";
-				}
+				$SidebarString .= "<div class='prod-cat-sidebar-cf-value-div'>";
+				$SidebarString .= "<input type='checkbox' name='Custom_Field[]' value='" . $Meta_Value . "'  onclick='UPCP_DisplayPage(\"1\"); UPCPHighlight(this, \"" . $Color . "\");' id='cf-" . $Custom_Field->Field_ID . "-" . $Meta_Value . "' class='jquery-prod-cf-value' /> ";
+				$SidebarString .= "<label class='upcp-label' for='cf-" . $Custom_Field->Field_ID . "-" . $Meta_Value . "'>" . $Meta_Value . " (" . $Count . ")</label>";
+				$SidebarString .= "</div>";
 			}
 			$SidebarString .= "</div>";
 			$SidebarString .= "</div>\n";
@@ -1488,31 +1355,7 @@ function Get_Related_Products($Product, $Related_Type = "Auto") {
 		$ReturnString .= "</div>";
 	}
 	$RetunString .= "</div>";
-	$ReturnString .= "<div class='upcp-clear'></div>";
 	$RetunString .= "</div>";
-	$ReturnString .= "<div class='upcp-clear'></div>";
-
-	return $ReturnString;
-}
-
-function Add_Product_Inquiry_Form() {
-	$plugin = "contact-form-7/wp-contact-form-7.php";
-	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-	$CF_7_Installed = is_plugin_active($plugin);
-
-	if ($CF_7_Installed) {
-		$UPCP_Contact_Form = get_page_by_path('upcp-product-inquiry-form', OBJECT, 'wpcf7_contact_form');
-
-		$ReturnString .= "<div class='upcp-contact-form-7-product-form'>";
-		$ReturnString .= "<h4>" . __("Product Inquiry Form", "UPCP") . "</h4>";
-		$ReturnString .= do_shortcode('[contact-form-7 id="' . $UPCP_Contact_Form->ID . '" title="' . $UPCP_Contact_Form->post_title . '"]');
-		$ReturnString .= "</div>";
-	}
-
-	return $ReturnString;
-}
-
-function Add_Product_Reviews() {
 
 	return $ReturnString;
 }
@@ -1581,16 +1424,7 @@ function FilterCount($Product, $Tags, $Custom_Fields) {
 	$ProdSubCats[$Product->SubCategory_ID]++;
 	foreach ($Tags as $Tag) {$ProdTags[$Tag->Tag_ID]++;}
 	if (is_array($Custom_Fields)) {
-		foreach ($Custom_Fields as $Custom_Field) {
-			if ($Custom_Field->Field_Type == "checkbox") {
-				$Checkbox_Values = explode(",", $Custom_Field->Meta_Value);
-				if (!is_array($Checkbox_Values)) {$Checkbox_Values = array();}
-				foreach ($Checkbox_Values as $Individual_Value) {
-					$ProdCustomFields[$Custom_Field->Field_ID][$Individual_Value]++;
-				}
-			}
-			else {$ProdCustomFields[$Custom_Field->Field_ID][$Custom_Field->Meta_Value]++;}
-		}
+		foreach ($Custom_Fields as $Custom_Field) {$ProdCustomFields[$Custom_Field->Field_ID][$Custom_Field->Meta_Value]++;}
 	}
 }
 
@@ -1697,7 +1531,7 @@ function AddCustomFields($ProductID, $Layout) {
 	$Fields = $wpdb->get_results("SELECT Field_ID, Field_Name, Field_Type FROM $fields_table_name WHERE Field_Displays='" . $Layout . "' OR Field_Displays='both'");
 	if (is_array($Fields)) {
 		$CustomFieldString .= "<div class='upcp-prod-desc-custom-fields upcp-custom-field-" . $Layout . "'>";
-		if ($Layout == "details" or $Layout == "list") {$AddBreak = "<br />";}
+		if ($Layout == "details") {$AddBreak = "<br />";}
 		else {$AddBreak = "";}
 		foreach ($Fields as $Field) {
 			$Meta = $wpdb->get_row("SELECT Meta_Value FROM $fields_meta_table_name WHERE Field_ID='" . $Field->Field_ID . "' AND Item_ID='" . $ProductID . "'");

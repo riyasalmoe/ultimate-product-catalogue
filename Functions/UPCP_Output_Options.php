@@ -23,10 +23,6 @@ function UPCP_Output_Options() {
 		$_GET['OrderBy'] = null;
 	}
 
-	if (!isset($_GET['SingleProduct'])) {
-		$_GET['SingleProduct'] = null;
-	}
-
 	// Stop buffering and exit for Excel, CSV, etc. file downloads
 	if ($_GET['Action'] == "UPCP_ExportToExcel") {ob_end_clean(); exit();}
 
