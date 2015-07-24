@@ -178,6 +178,9 @@ Premium Features
 5. The admin area
 
 == Changelog == 
+= 3.4.1 =
+- Fixed a jQuery conflict error
+
 = 3.4.0 =
 - Major changes in this update, so use caution when upgrading a production site!
 - Added a new premium product page layout option, tabbed, which is completely responsive

@@ -60,17 +60,19 @@ jQuery(document).ready(function() {
 	});
 });
 
-jQuery(document).ready(function($) {
-	jQuery('a.upcp-featherlight').featherlightGallery({
-		gallery: {
-			fadeIn: 300,
-			fadeOut: 300,
-			next: 'next »',
-			previous: '« previous'
-		},
-		openSpeed:    300,
-		closeSpeed:   300
-	});
+jQuery(document).ready(function() {
+	if (typeof jQuery.featherlight !== 'undefined' && jQuery.isFunction(jQuery.featherlight)) {
+		jQuery('a.upcp-featherlight').featherlightGallery({
+			gallery: {
+				fadeIn: 300,
+				fadeOut: 300,
+				next: 'next »',
+				previous: '« previous'
+			},
+			openSpeed:    300,
+			closeSpeed:   300
+		});
+	}
 });
 
 function screenshotThumbHolderWidth(){
