@@ -32,7 +32,7 @@ Perfect for your store, restaurant and more!
 
 
 = Premium Features =
-The premium version includes a lot of great features including: the ability to add over 100 products, additional product images, SEO friendly URLs, product tags and custom fields for sorting, custom product pages, a minimalist layout option and more!
+The premium version includes a huge number of features including: the ability to add over 100 products, additional product images, SEO friendly URLs, product tags and custom fields for sorting, custom product pages, a minimalist layout option and more!
 
 * Drag-and-drop product pages layout
 * Product tags, additional images and videos
@@ -178,6 +178,13 @@ Premium Features
 5. The admin area
 
 == Changelog == 
+= 3.4.0 =
+- Major changes in this update, so use caution when upgrading a production site!
+- Added a new premium product page layout option, tabbed, which is completely responsive
+- Added a lightbox option for the images on the product page
+- Added a number of sidebar styling options
+- Fixed a number of small CSS issues and functionality bugs
+
 = 3.3.4 =
 - Fixed a display issue with the mobile version of the custom product page
 

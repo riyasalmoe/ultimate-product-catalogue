@@ -18,6 +18,7 @@
 	$InstallVersion = get_option("UPCP_First_Install_Version");
 	$Custom_Product_Page = get_option("UPCP_Custom_Product_Page");
 	$Product_Inquiry_Form = get_option("UPCP_Product_Inquiry_Form");
+	$Lightbox = get_option("UPCP_Lightbox");
 	$Products_Per_Page = get_option("UPCP_Products_Per_Page");
 	$Pagination_Location = get_option("UPCP_Pagination_Location");
 	$Product_Search = get_option("UPCP_Product_Search");
@@ -59,6 +60,9 @@
 	$Pagination_Shadow = get_option("UPCP_Pagination_Shadow");
 	$Pagination_Gradient = get_option("UPCP_Pagination_Gradient");
 	$Pagination_Font = get_option("UPCP_Pagination_Font");
+	$Sidebar_Title_Collapse = get_option("UPCP_Sidebar_Title_Collapse");
+	$Sidebar_Title_Hover = get_option("UPCP_Sidebar_Title_Hover");	
+	$Sidebar_Checkbox_Style = get_option("UPCP_Sidebar_Checkbox_Style");
 ?>
 <div class="wrap">
 <div id="icon-options-general" class="icon32"><br /></div><h2>Settings</h2>
@@ -249,7 +253,7 @@
 </th>
 <td>
 	<fieldset><legend class="screen-reader-text"><span><?php _e("Use your custom designed page (Product Page tab) instead of the default?", 'UPCP')?></span></legend>
-	<!--<label title='Tabbed'><input type='radio' name='custom_product_page' value='Tabbed' <?php if($Custom_Product_Page == "Tabbed") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Tabbed Product Page", 'UPCP')?></span></label><br /> -->
+	<label title='Tabbed'><input type='radio' name='custom_product_page' value='Tabbed' <?php if($Custom_Product_Page == "Tabbed") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Tabbed Product Page", 'UPCP')?></span></label><br />
 	<label title='Yes'><input type='radio' name='custom_product_page' value='Yes' <?php if($Custom_Product_Page == "Yes") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Custom Product Page", 'UPCP')?></span></label><br />
 	<label title='Large'><input type='radio' name='custom_product_page' value='Large' <?php if($Custom_Product_Page == "Large") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Custom Page - Large Screen Only", 'UPCP')?></span></label><br />
 	<label title='No'><input type='radio' name='custom_product_page' value='No' <?php if($Custom_Product_Page == "No") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Default", 'UPCP')?></span></label><br />
@@ -265,6 +269,18 @@
 	<fieldset><legend class="screen-reader-text"><span><?php _e("Should a form be added to inquire about products on the product page (requires plugin 'Contact Form 7')?", 'UPCP')?></span></legend>
 	<label title='Yes'><input type='radio' name='product_inquiry_form' value='Yes' <?php if($Product_Inquiry_Form == "Yes") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Yes", 'UPCP')?><?php _e(" (requires plugin 'Contact Form 7')", 'UPCP')?></span></label><br />
 	<label title='No'><input type='radio' name='product_inquiry_form' value='No' <?php if($Product_Inquiry_Form == "No") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("No", 'UPCP')?></span></label><br />
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row"><?php _e("Lightbox", 'UPCP')?> <br/> 
+<div onMouseOver="ShowToolTip('lightbox_exp')" onMouseOut="HideToolTip('lightbox_exp')" class="questionMark"><br> 
+<div id="lightbox_exp" class="toolTip" ><?php _e("Should a lightbox pop-up on the product page when an image is clicked?", 'UPCP')?></div></div>
+</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span><?php _e("Should a lightbox pop-up on the product page when an image is clicked?", 'UPCP')?></span></legend>
+	<label title='Yes'><input type='radio' name='lightbox' value='Yes' <?php if($Lightbox == "Yes") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Yes", 'UPCP')?></span></label><br />
+	<label title='No'><input type='radio' name='lightbox' value='No' <?php if($Lightbox == "No") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("No", 'UPCP')?></span></label><br />
 	</fieldset>
 </td>
 </tr>
@@ -642,32 +658,6 @@
 	</fieldset>
 </td>
 </tr>
-<!--<tr>
-<th scope="row"><?php _e("Sidebar Style", 'UPCP')?> <br/> 
-<div onMouseOver="ShowToolTip('sidebar_style_exp')" onMouseOut="HideToolTip('sidebar_style_exp')" class="questionMark"><br> 
-<div id="sidebar_style_exp" class="toolTip" ><?php _e("Selects a layout style for your sidebar.", 'UPCP')?></div></div>
-</th>
-<td>
-	<fieldset><legend class="screen-reader-text"><span><?php _e("Selects a layout style for your catalogue.", 'UPCP')?></span></legend>
-	<label title='Default'><input type='radio' name='sidebar_style' value='None' <?php if($Sidebar_Style == "None") {echo "checked='checked'";} ?> /> <span><?php _e("Default", 'UPCP')?></span></label><br />
-	<label title='Large Bar'><input type='radio' name='sidebar_style' value='pag-large-bar' <?php if($Sidebar_Style == "pag-large-bar") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Large Bar", 'UPCP')?></span></label><br />
-	</fieldset>
-</td>
-</tr>-->
-<tr>
-<th scope="row"><?php _e("Pagination Background", 'UPCP')?> <br/> 
-<div onMouseOver="ShowToolTip('pagination_background_exp')" onMouseOut="HideToolTip('pagination_background_exp')" class="questionMark"><br> 
-<div id="pagination_background_exp" class="toolTip" ><?php _e("Selects a background style for pagination links.", 'UPCP')?></div></div>
-</th>
-<td>
-	<fieldset><legend class="screen-reader-text"><span><?php _e("Selects a background style for pagination links.", 'UPCP')?></span></legend>
-	<label title='none'><input type='radio' name='pagination_background' value='none' <?php if($Pagination_Background == "none") {echo "checked='checked'";} ?> /> <span><?php _e("Default", 'UPCP')?></span></label><br /> 
-	<label title='light'><input type='radio' name='pagination_background' value='light' <?php if($Pagination_Background == "light") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Light", 'UPCP')?></span></label><br />	
-	<label title='dark'><input type='radio' name='pagination_background' value='dark' <?php if($Pagination_Background == "dark") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Dark", 'UPCP')?></span></label><br />
-	</fieldset>
-</td>
-</tr>
-<tr>
 <th scope="row"><?php _e("Pagination Border", 'UPCP')?> <br/> 
 <div onMouseOver="ShowToolTip('pagination_border_exp')" onMouseOut="HideToolTip('pagination_border_exp')" class="questionMark"><br> 
 <div id="pagination_border_exp" class="toolTip" ><?php _e("Selects a border for pagination links.", 'UPCP')?></div></div>
@@ -675,9 +665,9 @@
 <td>
 	<fieldset><legend class="screen-reader-text"><span><?php _e("Selects a border for pagination links.", 'UPCP')?></span></legend>
 	<label title='Default'><input type='radio' name='pagination_border' value='none' <?php if($Pagination_Border == "none") {echo "checked='checked'";} ?> /> <span><?php _e("Default", 'UPCP')?></span></label><br /> 
-	<label title='black'><input type='radio' name='pagination_border' value='black' <?php if($Pagination_Border == "black") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Black", 'UPCP')?></span></label><br />
-	<label title='blue'><input type='radio' name='pagination_border' value='blue' <?php if($Pagination_Border == "blue") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Blue", 'UPCP')?></span></label><br />
-	<label title='grey'><input type='radio' name='pagination_border' value='grey' <?php if($Pagination_Border == "grey") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Grey", 'UPCP')?></span></label><br />
+	<label title='Black'><input type='radio' name='pagination_border' value='black' <?php if($Pagination_Border == "black") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Black", 'UPCP')?></span></label><br />
+	<label title='Blue'><input type='radio' name='pagination_border' value='blue' <?php if($Pagination_Border == "blue") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Blue", 'UPCP')?></span></label><br />
+	<label title='Grey'><input type='radio' name='pagination_border' value='grey' <?php if($Pagination_Border == "grey") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Grey", 'UPCP')?></span></label><br />
 	</fieldset>
 </td>
 </tr>
@@ -688,8 +678,8 @@
 </th>
 <td>
 	<fieldset><legend class="screen-reader-text"><span><?php _e("Should a shadow be added to pagination links?", 'UPCP')?></span></legend>
-	<label title='shadow-none'><input type='radio' name='pagination_shadow' value='shadow-none' <?php if($Pagination_Shadow == "shadow-none") {echo "checked='checked'";} ?> /> <span><?php _e("No", 'UPCP')?></span></label><br /> 
-	<label title='shadow'><input type='radio' name='pagination_shadow' value='shadow' <?php if($Pagination_Shadow == "shadow") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Yes", 'UPCP')?></span></label><br />
+	<label title='No'><input type='radio' name='pagination_shadow' value='shadow-none' <?php if($Pagination_Shadow == "shadow-none") {echo "checked='checked'";} ?> /> <span><?php _e("No", 'UPCP')?></span></label><br /> 
+	<label title='Yes'><input type='radio' name='pagination_shadow' value='shadow' <?php if($Pagination_Shadow == "shadow") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Yes", 'UPCP')?></span></label><br />
 	</fieldset>
 </td>
 </tr>
@@ -700,8 +690,8 @@
 </th>
 <td>
 	<fieldset><legend class="screen-reader-text"><span><?php _e("Should a gradient be added to pagination links (on hover)?", 'UPCP')?></span></legend>
-	<label title='gradient-none'><input type='radio' name='pagination_gradient' value='gradient-none' <?php if($Pagination_Gradient == "gradient-none") {echo "checked='checked'";} ?> /> <span><?php _e("No", 'UPCP')?></span></label><br /> 
-	<label title='gradient'><input type='radio' name='pagination_gradient' value='gradient' <?php if($Pagination_Gradient == "gradient") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Yes", 'UPCP')?></span></label><br />
+	<label title='No'><input type='radio' name='pagination_gradient' value='gradient-none' <?php if($Pagination_Gradient == "gradient-none") {echo "checked='checked'";} ?> /> <span><?php _e("No", 'UPCP')?></span></label><br /> 
+	<label title='Yes'><input type='radio' name='pagination_gradient' value='gradient' <?php if($Pagination_Gradient == "gradient") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Yes", 'UPCP')?></span></label><br />
 	</fieldset>
 </td>
 </tr>
@@ -713,9 +703,46 @@
 <td>
 	<fieldset><legend class="screen-reader-text"><span><?php _e("Selects a font color for pagination links.", 'UPCP')?></span></legend>
 	<label title='Default'><input type='radio' name='pagination_font' value='none' <?php if($Pagination_Font == "none") {echo "checked='checked'";} ?> /> <span><?php _e("Default", 'UPCP')?></span></label><br /> 
-	<label title='black'><input type='radio' name='pagination_font' value='black' <?php if($Pagination_Font == "black") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Black", 'UPCP')?></span></label><br />
-	<label title='blue'><input type='radio' name='pagination_font' value='blue' <?php if($Pagination_Font == "blue") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Blue", 'UPCP')?></span></label><br />
-	<label title='grey'><input type='radio' name='pagination_font' value='grey' <?php if($Pagination_Font == "grey") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Grey", 'UPCP')?></span></label><br />
+	<label title='Black'><input type='radio' name='pagination_font' value='black' <?php if($Pagination_Font == "black") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Black", 'UPCP')?></span></label><br />
+	<label title='Blue'><input type='radio' name='pagination_font' value='blue' <?php if($Pagination_Font == "blue") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Blue", 'UPCP')?></span></label><br />
+	<label title='Grey'><input type='radio' name='pagination_font' value='grey' <?php if($Pagination_Font == "grey") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Grey", 'UPCP')?></span></label><br />
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row"><?php _e("Collapsible Sidebar", 'UPCP')?> <br/> 
+<div onMouseOver="ShowToolTip('sidebar_title_collapse_exp')" onMouseOut="HideToolTip('sidebar_title_collapse_exp')" class="questionMark"><br> 
+<div id="sidebar_title_collapse_exp" class="toolTip" ><?php _e("Should sidebar titles collapse on-click?", 'UPCP')?></div></div>
+</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span><?php _e("Should sidebar titles collapse on-click?", 'UPCP')?></span></legend>
+	<label title='No'><input type='radio' name='sidebar_title_collapse' value='no' <?php if($Sidebar_Title_Collapse == "no") {echo "checked='checked'";} ?> /> <span><?php _e("No", 'UPCP')?></span></label><br /> 
+	<label title='Yes'><input type='radio' name='sidebar_title_collapse' value='yes' <?php if($Sidebar_Title_Collapse == "yes") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Yes", 'UPCP')?></span></label><br />
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row"><?php _e("Sidebar Title Hover Effect", 'UPCP')?> <br/> 
+<div onMouseOver="ShowToolTip('sidebar_title_hover_exp')" onMouseOut="HideToolTip('sidebar_title_hover_exp')" class="questionMark"><br> 
+<div id="sidebar_title_hover_exp" class="toolTip" ><?php _e("Which hover effect should apply on sidebar titles?", 'UPCP')?></div></div>
+</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span><?php _e("Which hover effect should apply on sidebar titles?", 'UPCP')?></span></legend>
+	<label title='None'><input type='radio' name='sidebar_title_hover' value='none' <?php if($Sidebar_Title_Hover == "none") {echo "checked='checked'";} ?> /> <span><?php _e("None", 'UPCP')?></span></label><br /> 
+	<label title='Underline'><input type='radio' name='sidebar_title_hover' value='underline' <?php if($Sidebar_Title_Hover == "underline") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Underline", 'UPCP')?></span></label><br />
+	</fieldset>
+</td>
+</tr>
+<tr>
+<th scope="row"><?php _e("Sidebar Checkbox Styling", 'UPCP')?> <br/> 
+<div onMouseOver="ShowToolTip('sidebar_checkbox_style_exp')" onMouseOut="HideToolTip('sidebar_checkbox_style_exp')" class="questionMark"><br> 
+<div id="sidebar_checkbox_style_exp" class="toolTip" ><?php _e("Which style of checkbox should be applied to sidebar items?", 'UPCP')?></div></div>
+</th>
+<td>
+	<fieldset><legend class="screen-reader-text"><span><?php _e("Which style of checkbox should be applied to sidebar items?", 'UPCP')?></span></legend>
+	<label title='Default'><input type='radio' name='sidebar_checkbox_style' value='none' <?php if($Sidebar_Checkbox_Style == "none") {echo "checked='checked'";} ?> /> <span><?php _e("Default", 'UPCP')?></span></label><br /> 
+	<label title='Square'><input type='radio' name='sidebar_checkbox_style' value='square' <?php if($Sidebar_Checkbox_Style == "square") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Square", 'UPCP')?></span></label><br />
+	<label title='Minimalist'><input type='radio' name='sidebar_checkbox_style' value='minimalist' <?php if($Sidebar_Checkbox_Style == "minimalist") {echo "checked='checked'";} ?> <?php if ($Full_Version != "Yes") {echo "disabled";} ?>/> <span><?php _e("Minimalist", 'UPCP')?></span></label><br />
 	</fieldset>
 </td>
 </tr>

@@ -1036,6 +1036,7 @@ function Update_UPCP_Options() {
 	if ($Full_Version == "Yes" and isset($_POST['filter_title'])) {update_option("UPCP_Filter_Title", $_POST['filter_title']);}
 	if ($Full_Version == "Yes" and isset($_POST['custom_product_page'])) {update_option("UPCP_Custom_Product_Page", $_POST['custom_product_page']);}
 	if ($Full_Version == "Yes" and isset($_POST['product_inquiry_form'])) {update_option("UPCP_Product_Inquiry_Form", $_POST['product_inquiry_form']);}
+	if ($Full_Version == "Yes" and isset($_POST['lightbox'])) {update_option("UPCP_Lightbox", $_POST['lightbox']);}
 	if ($Full_Version == "Yes" and isset($_POST['products_per_page'])) {update_option("UPCP_Products_Per_Page", $_POST['products_per_page']);}
 	if ($Full_Version == "Yes" and isset($_POST['pagination_location'])) {update_option("UPCP_Pagination_Location", $_POST['pagination_location']);}
 	if ($Full_Version == "Yes" and isset($_POST['product_sort'])) {update_option("UPCP_Product_Sort", $_POST['product_sort']);}
@@ -1076,6 +1077,9 @@ function Update_UPCP_Options() {
 	if ($Full_Version == "Yes" and isset($_POST['pagination_shadow'])) {update_option("UPCP_Pagination_Shadow", $_POST['pagination_shadow']);}
 	if ($Full_Version == "Yes" and isset($_POST['pagination_gradient'])) {update_option("UPCP_Pagination_Gradient", $_POST['pagination_gradient']);}
 	if ($Full_Version == "Yes" and isset($_POST['pagination_font'])) {update_option("UPCP_Pagination_Font", $_POST['pagination_font']);}
+	if ($Full_Version == "Yes" and isset($_POST['sidebar_title_collapse'])) {update_option("UPCP_Sidebar_Title_Collapse", $_POST['sidebar_title_collapse']);}
+	if ($Full_Version == "Yes" and isset($_POST['sidebar_title_hover'])) {update_option("UPCP_Sidebar_Title_Hover", $_POST['sidebar_title_hover']);}
+	if ($Full_Version == "Yes" and isset($_POST['sidebar_checkbox_style'])) {update_option("UPCP_Sidebar_Checkbox_Style", $_POST['sidebar_checkbox_style']);}
 
 	if ($_POST['Pretty_Links'] == "Yes") {
 		 update_option("UPCP_Update_RR_Rules", "Yes");

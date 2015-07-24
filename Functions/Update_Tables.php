@@ -194,6 +194,7 @@ function UpdateTables() {
 	if (get_option("UPCP_Product_Page_Serialized_Mobile") == "") {update_option("UPCP_Product_Page_Serialized_Mobile", get_option("UPCP_Product_Page_Serialized"));}
 	
 	if (get_option("UPCP_Product_Inquiry_Form") == "") {update_option("UPCP_Product_Inquiry_Form", "No");}
+	if (get_option("UPCP_Lightbox") == "") {update_option("UPCP_Lightbox", "No");}
 	if (get_option("UPCP_Products_Per_Page") == "") {update_option("UPCP_Products_Per_Page", 1000000);}
 	if (get_option("UPCP_Pagination_Location") == "") {update_option("UPCP_Pagination_Location", "Top");}
 	if (get_option("UPCP_CF_Conversion") == "") {update_option("UPCP_CF_Conversion", "No");}
@@ -213,5 +214,8 @@ function UpdateTables() {
 	if (get_option("UPCP_Pagination_Shadow") == "") {update_option("UPCP_Pagination_Shadow", "shadow-none");}
 	if (get_option("UPCP_Pagination_Gradient") == "") {update_option("UPCP_Pagination_Gradient", "gradient-none");}
 	if (get_option("UPCP_Pagination_Font") == "") {update_option("UPCP_Pagination_Font", "none");}
+	if (get_option("UPCP_Sidebar_Title_Collapse") == "") {update_option("UPCP_Sidebar_Title_Collapse", "no");}
+	if (get_option("UPCP_Sidebar_Title_Hover") == "") {update_option("UPCP_Sidebar_Title_Hover", "none");}
+	if (get_option("UPCP_Sidebar_Checkbox_Style") == "") {update_option("UPCP_Sidebar_Checkbox_Style", "none");}
 }
 ?>

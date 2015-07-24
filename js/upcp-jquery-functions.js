@@ -46,6 +46,33 @@ jQuery(document).ready(function() {
 	});
 });
 
+jQuery(document).ready(function() {
+	jQuery('.upcp-tabbed-button-left').on('click', function() {
+		jQuery('.upcp-scroll-list li:first').before(jQuery('.upcp-scroll-list li:last'));  
+		jQuery('.upcp-scroll-list').animate({left:'-=117px'}, 0);
+		jQuery('.upcp-scroll-list').animate({left:'+=117px'}, 600);
+	});
+	jQuery('.upcp-tabbed-button-right').on('click', function() {
+		jQuery('.upcp-scroll-list').animate({left:'-=117px'}, 600, function() {
+			jQuery('.upcp-scroll-list li:last').after(jQuery('.upcp-scroll-list li:first'));
+			jQuery('.upcp-scroll-list').animate({left:'+=117px'}, 0);
+		});
+	});
+});
+
+jQuery(document).ready(function($) {
+	jQuery('a.upcp-featherlight').featherlightGallery({
+		gallery: {
+			fadeIn: 300,
+			fadeOut: 300,
+			next: 'next »',
+			previous: '« previous'
+		},
+		openSpeed:    300,
+		closeSpeed:   300
+	});
+});
+
 function screenshotThumbHolderWidth(){
 	var screenshotImage = jQuery('.prod-cat-addt-details-thumbs-div img:first-child');
 	var thumbnailHolderContainer = jQuery('.game-thumbnail-holder');
@@ -133,9 +160,18 @@ function UPCP_Show_Hide_CF(cf_title) {
 
 	jQuery('.prod-cat-cf-sidebar-option').each(function() {
 		if (jQuery(this).data('cfid') == CFID) {
-			if (jQuery(this).hasClass('upcp-cf-Hide')) {jQuery(this).removeClass('upcp-cf-Hide');}
-			else {jQuery(this).addClass('upcp-cf-Hide');}
+			jQuery(this).slideToggle("slow");
 		}
+	});
+}
+
+function UPCP_Show_Hide_Sidebar(sidebar_title) {
+	var TITLE = jQuery(sidebar_title).data('title');
+	
+	jQuery('.prod-cat-sidebar-content').each(function() {
+	if(jQuery(this).data('title') == TITLE) {
+		jQuery(this).slideToggle("slow");
+	}
 	});
 }
 
@@ -336,6 +372,7 @@ function ZoomImage(ProdID, ItemID) {
 				PhotoSRC = jQuery('#prod-cat-addt-details-thumb-'+ItemID).attr('src');
 		}
 		jQuery('.prod-cat-addt-details-main').each(function() {jQuery(this).attr('src', PhotoSRC)});
+		jQuery('.prod-cat-addt-details-link-a').each(function() {jQuery(this).attr('href', PhotoSRC)});
 		html = '<div style="width:auto;height:auto;overflow: auto;position:relative;">';
 		html += jQuery('#prod-cat-addt-details-'+ProdID).html();
 		html += "</div>";

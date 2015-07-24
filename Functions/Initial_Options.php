@@ -18,6 +18,7 @@ function Initial_UPCP_Options() {
 	if (get_option("UPCP_Product_Search") == "") {update_option("UPCP_Product_Search", "name");}
 	if (get_option("UPCP_Custom_Product_Page") == "") {update_option("UPCP_Custom_Product_Page", "No");}
 	if (get_option("UPCP_Product_Inquiry_Form") == "") {update_option("UPCP_Product_Inquiry_Form", "No");}
+	if (get_option("UPCP_Lightbox") == "") {update_option("UPCP_Lightbox", "No");}
 	if (get_option("UPCP_Products_Per_Page") == "") {update_option("UPCP_Products_Per_Page", 1000000);}
 	if (get_option("EWD_OTP_Access_Role") == "") {update_option("UPCP_Access_Role", "administrator");}
 	if (get_option("UPCP_PP_Grid_Width") == "") {update_option("UPCP_PP_Grid_Width", 90);}
@@ -35,4 +36,7 @@ function Initial_UPCP_Options() {
 	if (get_option("UPCP_Pagination_Shadow") == "") {update_option("UPCP_Pagination_Shadow", "shadow-none");}
 	if (get_option("UPCP_Pagination_Gradient") == "") {update_option("UPCP_Pagination_Gradient", "gradient-none");}
 	if (get_option("UPCP_Pagination_Font") == "") {update_option("UPCP_Pagination_Font", "none");}
+	if (get_option("UPCP_Sidebar_Title_Collapse") == "") {update_option("UPCP_Sidebar_Title_Collapse", "no");}
+	if (get_option("UPCP_Sidebar_Title_Hover") == "") {update_option("UPCP_Sidebar_Title_Hover", "none");}
+	if (get_option("UPCP_Sidebar_Checkbox_Style") == "") {update_option("UPCP_Sidebar_Checkbox_Style", "none");}
 }

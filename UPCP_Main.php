@@ -7,7 +7,7 @@ Author: Etoile Web Design
 Author URI: http://www.EtoileWebDesign.com/
 Terms and Conditions: http://www.etoilewebdesign.com/plugin-terms-and-conditions/
 Text Domain: UPCP
-Version: 3.3.4
+Version: 3.4.0
 */
 
 global $UPCP_db_version;
@@ -38,7 +38,7 @@ $tagged_items_table_name = $wpdb->prefix . "UPCP_Tagged_Items";
 $tag_groups_table_name = $wpdb->prefix . "UPCP_Tag_Groups";
 $fields_table_name = $wpdb->prefix . "UPCP_Custom_Fields";
 $fields_meta_table_name = $wpdb->prefix . "UPCP_Fields_Meta";
-$UPCP_db_version = "3.3.0";
+$UPCP_db_version = "3.4.0";
 
 define( 'UPCP_CD_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'UPCP_CD_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -105,6 +105,7 @@ function Add_UPCP_Scripts() {
 		$url_six = plugins_url("ultimate-product-catalogue/js/jquery.confirm.min.js");
 		$url_seven = plugins_url("ultimate-product-catalogue/js/product-page-builder.js");
 		$url_eight = plugins_url("ultimate-product-catalogue/js/jquery.gridster.js");
+
 		wp_enqueue_script('PageSwitch', $url_one, array('jquery'));
 		wp_enqueue_script('sorttable', $url_two, array('jquery'));
 		wp_enqueue_script('UpdateSubCats', $url_three, array('jquery'));
@@ -136,8 +137,12 @@ function UPCP_Add_Stylesheet() {
     	wp_enqueue_style( 'upcp-rtl-style' );
 	}
 	if ($Full_Version == "Yes") {
-		wp_register_style( 'upcp-gridster', plugins_url("ultimate-product-catalogue/css/jquery.gridster.css"));
+		wp_register_style( 'upcp-gridster', plugins_url("css/jquery.gridster.css", __FILE__));
+    	wp_register_style( 'featherlight-style', plugins_url('css/featherlight.css', __FILE__) );
+    	wp_register_style( 'featherlight-gallery-style', plugins_url('css/featherlight.gallery.css', __FILE__) );
     	wp_enqueue_style( 'upcp-gridster' );
+		wp_enqueue_style( 'featherlight-style');
+		wp_enqueue_style( 'featherlight-gallery-style');
 		//wp_enqueue_style( 'wp-admin' );
 	}
 
@@ -148,9 +153,15 @@ function UPCP_Add_Stylesheet() {
 
 add_action( 'wp_enqueue_scripts', 'Add_UPCP_FrontEnd_Scripts' );
 function Add_UPCP_FrontEnd_Scripts() {
+	$Lightbox = get_option("UPCP_Lightbox");
+
 	wp_enqueue_script('upcpjquery', plugins_url( '/js/upcp-jquery-functions.js' , __FILE__ ), array( 'jquery' ));
 	wp_enqueue_script('upcp-page-builder', plugins_url( '/js/product-page-display.js' , __FILE__ ), array( 'jquery' ), '1.0', true);
 	wp_enqueue_script('gridster', plugins_url("/js/jquery.gridster.js", __FILE__ ), array( 'jquery' ), '1.0', true);
+	if ($Lightbox == "Yes") {
+		wp_enqueue_script('featherlight', plugins_url("js/featherlight.js", __FILE__), array('jquery'));
+		wp_enqueue_script('featherlight-gallery', plugins_url("js/featherlight.gallery.js", __FILE__), array('jquery'));
+	}
 }
 
 function UPCP_Admin_Options() {
