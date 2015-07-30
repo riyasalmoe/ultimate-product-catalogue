@@ -73,6 +73,11 @@ jQuery(document).ready(function() {
 			closeSpeed:   300
 		});
 	}
+	else {
+		jQuery('a.upcp-featherlight').on('click', function(event) {
+			event.preventDefault();
+		});
+	}
 });
 
 function screenshotThumbHolderWidth(){

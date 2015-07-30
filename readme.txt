@@ -178,6 +178,9 @@ Premium Features
 5. The admin area
 
 == Changelog == 
+= 3.4.2 =
+- Fixed a linking error for additional images
+
 = 3.4.1 =
 - Fixed a jQuery conflict error
 
