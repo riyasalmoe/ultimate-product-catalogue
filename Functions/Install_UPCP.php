@@ -167,6 +167,7 @@ function Install_UPCP_DB() {
 		Field_Displays text DEFAULT '' NOT NULL,
 		Field_Searchable text DEFAULT '' NOT NULL,
 		Field_Sidebar_Order mediumint(9) DEFAULT '9999',
+		Field_Display_Tabbed text DEFAULT '' NOT NULL,
 		Field_Date_Created datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
   		UNIQUE KEY id (Field_ID)
     	)

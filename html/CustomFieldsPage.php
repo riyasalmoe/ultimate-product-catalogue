@@ -241,6 +241,15 @@
 	<p><?php _e("Should this field be searchable in your catalogues?", 'UPCP') ?></p>
 </div>
 
+<div class="form-field">
+	<label for="Field_Display_Tabbed"><?php _e("Display in Tabbed Layout?", 'UPCP') ?></label>
+	<select name="Field_Display_Tabbed" id="Field_Display_Tabbed">
+			<option value='No'><?php _e("No", 'UPCP') ?></option>
+			<option value='Yes'><?php _e("Yes", 'UPCP') ?></option>
+	</select>
+	<p><?php _e("Should this field be displayed in the 'Additional Information' area of the tabbed view?", 'UPCP') ?></p>
+</div>
+
 <p class="submit"><input type="submit" name="submit" id="submit" class="button-primary" value="<?php _e('Add New Field', 'UPCP') ?>"  /></p></form>
 
 </div>

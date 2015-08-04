@@ -29,6 +29,18 @@ function ShowTab(TabName) {
 	jQuery("#"+TabName+"_Menu").addClass("nav-tab-active");
 }
 
+function ShowOptionTab(TabName) {
+	jQuery(".upcp-option-set").each(function() {
+		jQuery(this).addClass("upcp-hidden");
+	});
+	jQuery("#"+TabName).removeClass("upcp-hidden");
+	
+	jQuery(".options-subnav-tab").each(function() {
+		jQuery(this).removeClass("options-subnav-tab-active");
+	});
+	jQuery("#"+TabName+"_Menu").addClass("options-subnav-tab-active");
+}
+
 function Reload_PP_Page(Value) {
 	var Layout = jQuery('#PP-type-select').val();
 	window.location.href = "admin.php?page=UPCP-options&DisplayPage=ProductPage&CPP_Mobile=" + Layout;
