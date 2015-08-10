@@ -7,7 +7,7 @@ Author: Etoile Web Design
 Author URI: http://www.EtoileWebDesign.com/
 Terms and Conditions: http://www.etoilewebdesign.com/plugin-terms-and-conditions/
 Text Domain: UPCP
-Version: 3.4.3
+Version: 3.4.4
 */
 
 global $UPCP_db_version;
@@ -38,7 +38,7 @@ $tagged_items_table_name = $wpdb->prefix . "UPCP_Tagged_Items";
 $tag_groups_table_name = $wpdb->prefix . "UPCP_Tag_Groups";
 $fields_table_name = $wpdb->prefix . "UPCP_Custom_Fields";
 $fields_meta_table_name = $wpdb->prefix . "UPCP_Fields_Meta";
-$UPCP_db_version = "3.4.0";
+$UPCP_db_version = "3.4.4";
 
 define( 'UPCP_CD_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'UPCP_CD_PLUGIN_URL', plugin_dir_url( __FILE__ ) );

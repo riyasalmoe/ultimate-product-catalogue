@@ -178,7 +178,10 @@ Premium Features
 5. The admin area
 
 == Changelog == 
-= 3.2.3 =
+= 3.4.4 =
+- Fixed a custom field adding and editing bug
+
+= 3.4.3 =
 - Added an option to display custom fields in the tabbed layout
 - Fixed a few small CSS issues
 - Potentially fixed a missing div problem for the default product page
