@@ -16,7 +16,7 @@ text-align: center;
 
 input#upcp-name-search {
 }
-
+.prod-cat-end-detail-div a.upcp-catalogue-link,
 .prod-cat-details-link {display:none;}
 
 a.upcp-catalogue-link.no-underline {display: block; width:100%; text-align:center;}
@@ -28,7 +28,7 @@ a.upcp-catalogue-link.no-underline {display: block; width:100%; text-align:cente
 .upcp-thumb-price {
 width:100%;
 padding:0;
-text-align: center;
+margin:;
 }
 .upcp-thumb-item, .upcp-detail-item{
 	-webkit-transform: translateZ(0);
@@ -66,15 +66,19 @@ a.upcp-catalogue-link.no-underline {
 line-height: 18px;
 }
 
-.upcp-prod-desc-custom-fields {
-line-height: 18px;
-padding-top: 0px;
+.upcp-prod-desc-custom-fields.upcp-custom-fields-thumbs {
+line-height: 24px;
+padding-top: 3px;
 }
 
 .upcp-mid-detail-div {border:none;}
 
 .upcp-detail-item {border:none;}
 
-.upcp-detail-price {padding:none;}
+.upcp-detail-price {
+	padding:none;
+	float:right;
+	margin:0 20px 5px;
+}
 
 .upcp-detail-image-div {background:none;}

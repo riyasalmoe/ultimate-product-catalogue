@@ -156,7 +156,7 @@ div.upcp-detail-image-div img {
 }
 
 .upcp-list-desc {
-    margin-top:10px;
+    margin:0 5px;
     float:left;
     min-height:150px;   
     width:55%;
@@ -169,7 +169,6 @@ div.upcp-detail-image-div img {
     background-position: center right;
     color: #50a3d1;
     height: 40px;
-    width:110px;
     float: left;
     padding:0 15px;
     
@@ -184,7 +183,6 @@ div.upcp-detail-image-div img {
 .upcp-thumb-item {
     float:none;
     margin:0 auto 10px;
-    max-height:325px;
     min-height:0;
     min-width:80px;
     width:97% !important;
@@ -205,7 +203,7 @@ div.upcp-thumb-image-div img {
     width:96% !important;
 }
 .upcp-thumb-price {
-    width:50%;
+    width:45%;
     min-width:81px;
 }
 .upcp-thumb-details-link {
@@ -278,9 +276,9 @@ min-width:80px;
 }
 .upcp-detail-item {
     width: 95%;
-    height:22em;
     min-width:200px;
     overflow:hidden;
+    flex-flow:column nowrap;
 }
 .upcp-detail-image-div {
     float:left;
@@ -289,6 +287,7 @@ min-width:80px;
     min-width:50px;
     height:150px;
     position:relative;
+    margin: 10px auto;
 }
 .upcp-detail-image-div a {
     max-width:150px;
@@ -306,25 +305,42 @@ div.upcp-detail-image-div img {
     width:95%;
     float:left;
     overflow:hidden;
-    height:175px;
+    height:auto;
     margin: 0;
     padding-right: 5px;
     border:none;
     border-top:1px solid #e0e0e0;
+    min-height:0;
 }
 .upcp-detail-title{
     padding-left:5px;
     padding-right:5px;
 }
 .upcp-detail-desc{
-    padding-right:5px;
+    padding: 0 5px;
 }  
 .upcp-end-detail-div {
-    float:right;
-    position:absolute;
-    left:65%;
-    min-height: 150px;
-    width:50%;
+  float: none;
+  max-width: none;
+  min-height: 0;
+  width: 100%;
+  padding: 0;
+}
+.prod-cat-end-detail-div a.upcp-catalogue-link {
+height:40px;
+float:right;
+position:relative;
+bottom:5px;
+margin:0 20px;
+}
+.prod-cat-end-detail-div .upcp-detail-price{
+    width: auto !important;
+    margin:0 10px;
 }
 
+.upcp-detail-details-link {
+    height:40px;
+    background:none;
+    font-size: 1.2em;
+}
 }

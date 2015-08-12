@@ -178,6 +178,9 @@ Premium Features
 5. The admin area
 
 == Changelog == 
+= 3.4.5 =
+- Minor CSS update to make the plugin more responsive
+
 = 3.4.4 =
 - Fixed a custom field adding and editing bug
 

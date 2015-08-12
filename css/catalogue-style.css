@@ -395,6 +395,7 @@ select:active {
   margin: 10px;
   width: 215px!important;
   min-height: 306px;
+  max-height:325px;
   /*overflow: hidden;*/
 	margin-bottom:32px;
 }
@@ -437,7 +438,7 @@ div.upcp-thumb-image-div img {
 	background: url("../images/details_icon.png");
 	background-repeat: no-repeat;
 	background-position: center right;
-	color: #80bee1;
+	color: #80bee1 !important;
 	height: 40px;
 	float: right;
 	line-height: 40px;
@@ -445,7 +446,7 @@ div.upcp-thumb-image-div img {
 	margin-right: 6px;
 }
 .upcp-thumb-title a{
-	color:#1b8be0;
+	color:#1b8be0 !important;
 }
 .upcp-thumb-title a:hover, 
 .upcp-thumb-title a:focus,
@@ -491,8 +492,11 @@ color:#404040;
 	cursor: pointer;
 }
 .upcp-list-details {
-    height:240px;
-	width: 100%;
+    min-height:240px;
+	width: 95%;
+	display:flex;
+	flex-flow:row wrap;
+	float:left;
 }
 .upcp-list-image-div {
 	width: 35%;
@@ -504,6 +508,7 @@ color:#404040;
 	border: 1px solid #e0e0e0;
 	background: #fafafa;
 	margin-top:5px;
+	flex-grow:1;
 }
 .upcp-list-image-div a {
     width: 100%;
@@ -514,7 +519,7 @@ color:#404040;
 	vertical-align: middle;
 }
 .upcp-list-image-div img {
-    max-width:100%;
+    max-width:200px !important;
     max-height:180px;
     margin:0 auto;
 }
@@ -527,6 +532,7 @@ color:#404040;
     max-height:200px;
     padding: 0 15px;
     text-align:justify;
+    flex: 1 1 auto;
 }
 .upcp-list-details-link {
   background: url("../images/details_icon.png");
@@ -534,12 +540,19 @@ color:#404040;
 	background-position: right;
 	color: #50a3d1;
 	height: 40px;
-		width:15%;
-    min-width:40px;
+	width:15%;
+    min-width:90px;
 	float:right;
 	line-height: 40px;
-	margin-right:10px;
-	margin-top:5px;
+	margin: 5px 2px !important;	
+}
+.upcp-list-details .upcp-catalogue-link{
+	flex: 1 0 auto;
+}
+.upcp-prod-desc-custom-fields.upcp-custom-field-list{
+	min-height: 40px;
+    padding: 5px 15px;
+    flex:1 0 auto;
 }
 
 /************************************************************
@@ -555,6 +568,7 @@ color:#404040;
 	margin-right:8px;
 }
 .upcp-detail-item {
+	display:flex;
  	width:95%;
 	border: 1px solid #e0e0e0;
 	margin:15px auto;
@@ -724,10 +738,12 @@ div.upcp-detail-image-div img {
 	width: 115px;
 	float: left;
 	padding-right: 10px;
+	margin: 0 5px;
 }
 .upcp-minimal-img-div {
 	height: 115px;
 	text-align: center;
+	width:100%;
 }
 .upcp-minimal-img {
 	max-width: 115px;

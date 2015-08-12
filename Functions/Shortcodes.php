@@ -1720,7 +1720,8 @@ function AddCustomFields($ProductID, $Layout) {
 	$Fields = $wpdb->get_results("SELECT Field_ID, Field_Name, Field_Type FROM $fields_table_name WHERE Field_Displays='" . $Layout . "' OR Field_Displays='both'");
 	if (is_array($Fields)) {
 		$CustomFieldString .= "<div class='upcp-prod-desc-custom-fields upcp-custom-field-" . $Layout . "'>";
-		if ($Layout == "details" or $Layout == "list") {$AddBreak = "<br />";}
+		if ($Layout == "details") {$AddBreak = "<br />";}
+		if ($Layout == "list") {$AddBreak = " ";}
 		else {$AddBreak = "";}
 		foreach ($Fields as $Field) {
 			$Meta = $wpdb->get_row("SELECT Meta_Value FROM $fields_meta_table_name WHERE Field_ID='" . $Field->Field_ID . "' AND Item_ID='" . $ProductID . "'");
