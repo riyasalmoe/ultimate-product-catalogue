@@ -178,6 +178,9 @@ Premium Features
 5. The admin area
 
 == Changelog == 
+= 3.4.6 =
+- Changed the layout of the "Product Pages" tab to help reduce custom page scrambling
+
 = 3.4.5 =
 - Minor CSS update to make the plugin more responsive
 

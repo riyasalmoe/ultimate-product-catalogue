@@ -25,8 +25,8 @@ echo "</script>";
 	</div>
 	
 	<!-- Create the form to edit the basic catalogue details -->
-	<div id="nav-menus-frame">
-	<div id="menu-settings-column" class="metabox-holder">
+	<div id="">
+	<div id="" class="metabox-holder">
 		<div id="side-sortables" class="meta-box-sortables">
 		<div id='pp-select' class='pp-select'>
 			<h3>Selected Layout:</h3>

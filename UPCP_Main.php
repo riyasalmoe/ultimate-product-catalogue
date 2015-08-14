@@ -7,7 +7,7 @@ Author: Etoile Web Design
 Author URI: http://www.EtoileWebDesign.com/
 Terms and Conditions: http://www.etoilewebdesign.com/plugin-terms-and-conditions/
 Text Domain: UPCP
-Version: 3.4.5
+Version: 3.4.6
 */
 
 global $UPCP_db_version;
@@ -140,10 +140,11 @@ function UPCP_Add_Stylesheet() {
 		wp_register_style( 'upcp-gridster', plugins_url("css/jquery.gridster.css", __FILE__));
     	wp_register_style( 'featherlight-style', plugins_url('css/featherlight.css', __FILE__) );
     	wp_register_style( 'featherlight-gallery-style', plugins_url('css/featherlight.gallery.css', __FILE__) );
+    	wp_register_style( 'rrssb', plugins_url("css/rrssb-min.css", __FILE__));
     	wp_enqueue_style( 'upcp-gridster' );
 		wp_enqueue_style( 'featherlight-style');
 		wp_enqueue_style( 'featherlight-gallery-style');
-		//wp_enqueue_style( 'wp-admin' );
+		wp_enqueue_style( 'rrssb');
 	}
 
 	if ($Catalogue_Style != "None" and $Catalogue_Style != "") {wp_register_style('upcp-addtl-stylesheet', UPCP_CD_PLUGIN_URL . "css/addtl/" . $Catalogue_Style . ".css"); wp_enqueue_style('upcp-addtl-stylesheet');}
@@ -199,9 +200,11 @@ include "Functions/Rewrite_Rules.php";
 include "Functions/Update_Tables.php";
 include "Functions/FrontEndAjaxUrl.php";
 include "Functions/UPCP_Add_SEO.php";
+include "Functions/UPCP_Add_Social_Media_Buttons.php";
 include "Functions/UPCP_Create_XML_Sitemap.php";
 include "Functions/UPCP_Export_To_Excel.php";
 include "Functions/UPCP_Product_Inquiry_Form.php";
+include "Functions/UPCP_Styling.php";
 include "Functions/UPCP_Widget.php";
 
 // Updates the UPCP database when required
