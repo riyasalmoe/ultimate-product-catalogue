@@ -178,6 +178,9 @@ Premium Features
 5. The admin area
 
 == Changelog == 
+= 3.4.7 =
+- Fixed a missing files error
+
 = 3.4.6 =
 - Changed the layout of the "Product Pages" tab to help reduce custom page scrambling
 
