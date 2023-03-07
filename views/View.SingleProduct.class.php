@@ -750,6 +750,7 @@ class ewdupcpViewSingleProduct extends ewdupcpViewProduct {
 	    	'offers'			=> array(
 	    		'type'				=> 'Offer',
 	    		'price'				=> $this->product->current_price,
+				'priceCurrency'		=> $this->get_option('currency-symbol'),
 	    		'url'				=> $this->details_link,
 	    	)
 	    );
