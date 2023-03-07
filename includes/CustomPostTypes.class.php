@@ -393,6 +393,7 @@ class ewdupcpCustomPostTypes {
 		$sale_price = get_post_meta( $post->ID, 'sale_price', true );
 		$sale_mode = get_post_meta( $post->ID, 'sale_mode', true );
 		$link = get_post_meta( $post->ID, 'link', true );
+		$pdesc = get_post_meta( $post->ID, 'product_description', true );
 		$display = $post->post_status != 'auto-draft' ? get_post_meta( $post->ID, 'display', true ) : true;
 
 		?>
@@ -435,6 +436,20 @@ class ewdupcpCustomPostTypes {
 					<input type='checkbox' class='ewd-upcp-admin-option-toggle' data-inputname='sale_mode' <?php echo ( $sale_mode ? 'checked' : '' ); ?>>
 					<span class='ewd-upcp-admin-switch-slider round'></span>
 				</label>
+			</div>
+		</div>
+
+		<div class='ewd-upcp-meta-field'>
+			<div class='ewd-upcp-meta-field-label'>
+				<label for='pdescription'>
+					<?php _e( 'Meta description:', 'ultimate-product-catalogue' ); ?>
+				</label>
+			</div>
+			<div class='ewd-upcp-meta-field-input'>
+				<!-- <input type='text' name='pdescription' value='<?php //echo esc_attr( $pdesc ); ?>' size='1000' /> -->
+				<textarea id='pdescription' name='pdescription'  
+				rows=5 cols=50 size='1000' ><?php echo esc_attr( $pdesc ); ?></textarea>
+				<?php //print_r($post) ?>
 			</div>
 		</div>
 
@@ -1032,7 +1047,8 @@ class ewdupcpCustomPostTypes {
 		if ( isset( $_POST['price'] ) ) 			{ update_post_meta( $post_id, 'price', sanitize_text_field( $_POST['price'] ) ); }
 		if ( isset( $_POST['sale_price'] ) ) 		{ update_post_meta( $post_id, 'sale_price', sanitize_text_field( $_POST['sale_price'] ) ); }
 		if ( isset( $_POST['link'] ) ) 				{ update_post_meta( $post_id, 'link', sanitize_text_field( $_POST['link'] ) ); }
-
+		if ( isset( $_POST['pdescription'] ) ) 		{ update_post_meta( $post_id, 'product_description', sanitize_text_field( $_POST['pdescription'] ) ); }
+		
 		update_post_meta( $post_id, 'sale_mode', empty( $_POST['sale_mode'] ) ? false : true );
 		update_post_meta( $post_id, 'display', empty( $_POST['display'] ) ? false : true );
 		

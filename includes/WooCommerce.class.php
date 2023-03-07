@@ -629,6 +629,7 @@ class ewdupcpWooCommerce {
 				'price'					=> get_post_meta( $wc_product->ID, '_regular_price', true ),
 				'sale_price'			=> get_post_meta( $wc_product->ID, '_sale_price', true ),
 				'sale_mode'				=> get_post_meta( $wc_product->ID, '_sale_price', true ) == get_post_meta( $wc_product->ID, '_price', true ) ? true : false,
+				'pdesc'					=> get_post_meta( $wc_product->ID, 'product_description', true),
 				'views'					=> 0,
 				'display'				=> $wc_product->post_status == 'publish' ? true : false,
 				'related_products'		=> array(),

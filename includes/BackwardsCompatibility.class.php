@@ -543,6 +543,7 @@ class ewdupcpBackwardsCompatibility {
 				update_post_meta( $post_id, 'sale_price', $old_product->Item_Sale_Price );
 				update_post_meta( $post_id, 'sale_mode', $old_product->Item_Sale_Mode == 'Yes' ? true : false );
 				update_post_meta( $post_id, 'link', $old_product->Item_Link );
+				update_post_meta( $post_id, 'pdesc', $old_product->product_description );
 				update_post_meta( $post_id, 'views', $old_product->Item_Views );
 				update_post_meta( $post_id, 'display', $old_product->Item_Display_Status == 'Show' ? true : false );
 				update_post_meta( $post_id, 'related_products', explode( ',', $old_product->Item_Related_Products ) );

@@ -165,6 +165,7 @@ class ewdupcpProduct {
 		$this->sale_price 		= get_post_meta( $this->ID, 'sale_price', true );
 		$this->sale_mode 		= get_post_meta( $this->ID, 'sale_mode', true );
 		$this->link 			= get_post_meta( $this->ID, 'link', true );
+		$this->pdesc            = get_post_meta( $this->ID, 'product_description', true);
 		$this->display 			= get_post_meta( $this->ID, 'display', true );
 		$this->category_order 	= get_post_meta( $this->ID, 'order', true );
 		$this->woocommerce_id 	= get_post_meta( $this->ID, 'woocommerce_id', true );
