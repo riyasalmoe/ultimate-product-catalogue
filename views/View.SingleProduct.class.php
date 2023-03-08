@@ -745,6 +745,7 @@ class ewdupcpViewSingleProduct extends ewdupcpViewProduct {
 			'@context'			=> 'https://schema.org',
 	    	'@type' 			=> 'Product',
 	    	'name' 				=> $this->product->name,
+			'description'		=> $this->product->pdesc,
 	    	'image' 			=> $this->product->get_main_image_url(),
 	    	'url'				=> $this->details_link,
 	    	'offers'			=> array(
@@ -752,6 +753,7 @@ class ewdupcpViewSingleProduct extends ewdupcpViewProduct {
 	    		'price'				=> $this->product->current_price,
 				'priceCurrency'		=> $this->get_option('currency-symbol'),
 	    		'url'				=> $this->details_link,
+				//'keywords'			=> "['". $this->product->name  . "','copier']",
 	    	)
 	    );
 

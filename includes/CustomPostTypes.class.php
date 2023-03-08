@@ -438,7 +438,7 @@ class ewdupcpCustomPostTypes {
 				</label>
 			</div>
 		</div>
-
+		
 		<div class='ewd-upcp-meta-field'>
 			<div class='ewd-upcp-meta-field-label'>
 				<label for='pdescription'>
@@ -1048,7 +1048,7 @@ class ewdupcpCustomPostTypes {
 		if ( isset( $_POST['sale_price'] ) ) 		{ update_post_meta( $post_id, 'sale_price', sanitize_text_field( $_POST['sale_price'] ) ); }
 		if ( isset( $_POST['link'] ) ) 				{ update_post_meta( $post_id, 'link', sanitize_text_field( $_POST['link'] ) ); }
 		if ( isset( $_POST['pdescription'] ) ) 		{ update_post_meta( $post_id, 'product_description', sanitize_text_field( $_POST['pdescription'] ) ); }
-		
+
 		update_post_meta( $post_id, 'sale_mode', empty( $_POST['sale_mode'] ) ? false : true );
 		update_post_meta( $post_id, 'display', empty( $_POST['display'] ) ? false : true );
 		
