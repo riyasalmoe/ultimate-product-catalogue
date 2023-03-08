@@ -1,4 +1,14 @@
 === Ultimate Product Catalog ===
+custom release
+Requirements remains same as original source
+Tested on: 6.1.1
+Version: v5.2.3.1
+Working Branch: From_5.2.3_2023
+License: GPLv3
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
+Credits: All credits to the actual contributors!
+
+=== Ultimate Product Catalog ===
 Contributors: Rustaurius, EtoileWebDesign
 Donate Link: https://www.etoilewebdesign.com/plugin-donations/
 Tags: product catalog, catalog, product, products, product catalogue, catalogue, catalogs, catalogues, product catalog wp, product catalog wordpress, product catalog import, product catalog export, best product catalog, product catalog ajax, product catalog shortcode, product catalog inventory, product catalog list, product catalog search, product catalog organization, product catalog easy, product catalog simple, product catalog smart, catalog for products, wp catalog, catalog of goods, blog catalog, catalog plugin, wp catalogue, catalogue plugin, display products, product portfolio, WordPress product catalog, woocommerce product catalog, woocommerce catalog, woocommerce checkout, woocommerce products, gutenberg products, gutenberg catalog, gutenberg product catalog
