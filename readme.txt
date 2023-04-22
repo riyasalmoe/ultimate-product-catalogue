@@ -1,9 +1,9 @@
 === Ultimate Product Catalog ===
 custom release
 Requirements remains same as original source
-Tested on: 6.1.1
-Version: v5.2.4.1
-Working Branch: From_5.2.4_2023
+Tested on: 6.2
+Version: v5.2.5.1
+Working Branch: From_5.2.5_2023
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Credits: All credits to the actual contributors!
@@ -14,7 +14,7 @@ Donate Link: https://www.etoilewebdesign.com/plugin-donations/
 Tags: product catalog, catalog, product, products, product catalogue, catalogue, catalogs, catalogues, product catalog wp, product catalog wordpress, product catalog import, product catalog export, best product catalog, product catalog ajax, product catalog shortcode, product catalog inventory, product catalog list, product catalog search, product catalog organization, product catalog easy, product catalog simple, product catalog smart, catalog for products, wp catalog, catalog of goods, blog catalog, catalog plugin, wp catalogue, catalogue plugin, display products, product portfolio, WordPress product catalog, woocommerce product catalog, woocommerce catalog, woocommerce checkout, woocommerce products, gutenberg products, gutenberg catalog, gutenberg product catalog
 Requires at least: 5.0
 Tested up to: 6.2
-Stable tag: 5.2.4.1
+Stable tag: 5.2.5.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -270,6 +270,11 @@ For more info about the premium version, please see here: https://doc.etoilewebd
 -----------------------------------------------------------------------------------
 
 == Changelog ==
+= 5.2.5.1 (2023-04-22)
+- Migrated custom fields from 5.2.4.1 Custom Release
+
+= 5.2.5 (2023-04-19) =
+- Added an option to search without accents (e.g. if you search for rose, it will also return rosé).
 
 = 5.2.4 (2023-03-30) =
 - Updated blocks for compatibility with WordPress 6.2.

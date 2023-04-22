@@ -7,7 +7,7 @@ Author: Etoile Web Design
 Author URI: https://www.etoilewebdesign.com/
 Terms and Conditions: https://www.etoilewebdesign.com/plugin-terms-and-conditions/
 Text Domain: ultimate-product-catalogue
-Version: 5.2.4.1
+Version: 5.2.5.1
 */
 
 
@@ -50,7 +50,7 @@ class ewdupcpInit {
 		define( 'EWD_UPCP_PLUGIN_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
 		define( 'EWD_UPCP_PLUGIN_FNAME', plugin_basename( __FILE__ ) );
 		define( 'EWD_UPCP_TEMPLATE_DIR', 'ewd-upcp-templates' );
-		define( 'EWD_UPCP_VERSION', '5.2.4.1' );
+		define( 'EWD_UPCP_VERSION', '5.2.5.1' );
 
 		define( 'EWD_UPCP_PRODUCT_POST_TYPE', 'upcp_product' );
 		define( 'EWD_UPCP_CATALOG_POST_TYPE', 'upcp_catalog' );

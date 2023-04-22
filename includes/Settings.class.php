@@ -557,6 +557,17 @@ class ewdupcpSettings {
 			'ewd-upcp-catalog-page-functionality',
 			'toggle',
 			array(
+				'id'			=> 'product-search-without-accents',
+				'title'			=> __( 'Search without Accents', 'ultimate-product-catalogue' ),
+				'description'	=> __( 'Lets you search without having to include accents on letters (e.g. rose will also return rosé).', 'ultimate-product-catalogue' )
+			)
+		);
+
+		$sap->add_setting(
+			'ewd-upcp-settings',
+			'ewd-upcp-catalog-page-functionality',
+			'toggle',
+			array(
 				'id'			=> 'clear-all-filtering',
 				'title'			=> __( '\'Clear All\' Option', 'ultimate-product-catalogue' ),
 				'description'	=> __( 'Should an option be added to the top of sidebar to clear all filtering options?', 'ultimate-product-catalogue' )

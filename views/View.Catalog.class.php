@@ -1295,11 +1295,11 @@ class ewdupcpViewCatalog extends ewdupcpView {
 
 				$match_function = extension_loaded( 'mbstring' ) ? 'mb_stripos' : 'stripos';
 
-				if ( $match_function( $product->name, $this->filtering_text ) !== false ) { 
+				if ( $this->text_match( $product->name ) ) { 
 
 					$match = true; 
 				}
-				elseif ( in_array( 'description', $ewd_upcp_controller->settings->get_setting( 'product-search' ) ) and $match_function( $product->description, $this->filtering_text ) !== false ) { 
+				elseif ( in_array( 'description', $ewd_upcp_controller->settings->get_setting( 'product-search' ) ) and $this->text_match( $product->description ) ) { 
 
 					$match = true; 
 				}
@@ -1311,7 +1311,7 @@ class ewdupcpViewCatalog extends ewdupcpView {
 
 						foreach ( (array) $field_values as $field_value ) {
 							
-							if ( $match_function( $field_value, $this->filtering_text ) !== false ) { $match = true; }
+							if ( $this->text_match( $field_value ) ) { $match = true; }
 						}
 					}
 				}
@@ -1434,6 +1434,20 @@ class ewdupcpViewCatalog extends ewdupcpView {
 		}
 
 		$this->items = $items;
+	}
+
+	/**
+	 * Match text based on settings and server extensions
+	 * @since 5.2.4
+	 */
+	public function text_match( $text ) {
+		global $ewd_upcp_controller;
+
+		$match_function = extension_loaded( 'mbstring' ) ? 'mb_stripos' : 'stripos';
+
+		$match = $match_function( ( $ewd_upcp_controller->settings->get_setting( 'product-search-without-accents') ? remove_accents( $text ) : $text ), $this->filtering_text ) !== false;
+
+		return $match;
 	}
 
 	/**
@@ -1647,6 +1661,8 @@ class ewdupcpViewCatalog extends ewdupcpView {
 		$this->filtering_categories 	= ! empty( $this->category ) ? ( ! empty( $this->filtering_categories ) ? array_intersect( $this->filtering_categories, explode( ',', $this->category ) ) : explode( ',', $this->category ) ) : $this->filtering_categories;
 		$this->filtering_subcategories 	= ! empty( $this->subcategory ) ? ( ! empty( $this->filtering_subcategories ) ? array_intersect( $this->filtering_subcategories, explode( ',', $this->subcategory ) ) : explode( ',', $this->subcategory ) ) : $this->filtering_subcategories;
 		$this->filtering_tags 			= ! empty( $this->tags ) ? ( ! empty( $this->filtering_tags ) ? array_intersect( $this->filtering_tags, explode( ',', $this->tags ) ) : explode( ',', $this->tags ) ) : $this->filtering_tags;
+
+		$this->filtering_text = $ewd_upcp_controller->settings->get_setting( 'product-search-without-accents') ? remove_accents( $this->filtering_text ) : $this->filtering_text;
 
 		$this->filtering_custom_fields = array();
 
