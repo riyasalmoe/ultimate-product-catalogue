@@ -2,12 +2,12 @@
 /*
 Plugin Name: Ultimate Product Catalog
 Plugin URI: https://www.etoilewebdesign.com/plugins/ultimate-product-catalog/
-Description: Product catalog plugin that is responsive and designed to display your products in a sleek and easy to customize catalog format.
+Description: Flexible, customizable and easy-to-use product catalog plugin with a modern, responsive design. Can be used standalone or integrated with WooCommerce.
 Author: Etoile Web Design
 Author URI: https://www.etoilewebdesign.com/
 Terms and Conditions: https://www.etoilewebdesign.com/plugin-terms-and-conditions/
 Text Domain: ultimate-product-catalogue
-Version: 5.2.3.1
+Version: 5.2.4.1
 */
 
 
@@ -50,7 +50,7 @@ class ewdupcpInit {
 		define( 'EWD_UPCP_PLUGIN_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
 		define( 'EWD_UPCP_PLUGIN_FNAME', plugin_basename( __FILE__ ) );
 		define( 'EWD_UPCP_TEMPLATE_DIR', 'ewd-upcp-templates' );
-		define( 'EWD_UPCP_VERSION', '5.2.3.1' );
+		define( 'EWD_UPCP_VERSION', '5.2.4.1' );
 
 		define( 'EWD_UPCP_PRODUCT_POST_TYPE', 'upcp_product' );
 		define( 'EWD_UPCP_CATALOG_POST_TYPE', 'upcp_catalog' );
@@ -412,7 +412,7 @@ class ewdupcpInit {
 				array_unshift( $links, '<a class="ewd-upcp-plugin-page-upgrade-link" href="https://www.etoilewebdesign.com/license-payment/?Selected=UPCP&Quantity=1&utm_source=wp_admin_plugins_page" title="' . __( 'Try Premium', 'ultimate-product-catalogue' ) . '" target="_blank">' . __( 'Try Premium', 'ultimate-product-catalogue' ) . '</a>' );
 			}
 
-			$links['settings'] = '<a href="admin.php?page=ewd-upcp-settings" title="' . __( 'Head to the settings page for Ultimate Product Catalog', 'ultimate-product-catalogue' ) . '">' . __( 'Settings', 'ultimate-product-catalogue' ) . '</a>';
+			$links['settings'] = '<a href="edit.php?post_type=upcp_product&page=ewd-upcp-settings" title="' . __( 'Head to the settings page for Ultimate Product Catalog', 'ultimate-product-catalogue' ) . '">' . __( 'Settings', 'ultimate-product-catalogue' ) . '</a>';
 		}
 
 		return $links;
@@ -570,7 +570,7 @@ class ewdupcpInit {
 			<a id="import-menu" href='admin.php?page=ewd-upcp-import' class="menu-tab nav-tab <?php if ( $screen->id == 'ewd-upcp-import' ) {echo 'nav-tab-active';}?>"><?php _e("Import", 'ultimate-product-catalogue'); ?></a>
 			<a id="custom-fields-menu" href='admin.php?page=ewd-upcp-custom-fields' class="menu-tab nav-tab <?php if ( $screen->id == 'ewd-upcp-custom-fields' ) {echo 'nav-tab-active';}?>"><?php _e("Custom Fields", 'ultimate-product-catalogue'); ?></a>
 			<a id="product-page-menu" href='admin.php?page=ewd-upcp-product-page' class="menu-tab nav-tab <?php if ( $screen->id == 'ewd-upcp-product-page' ) {echo 'nav-tab-active';}?>"><?php _e("Product Page", 'ultimate-product-catalogue'); ?></a>
-			<a id="options-menu" href='admin.php?page=ewd-upcp-settings' class="menu-tab nav-tab <?php if ( $screen->id == 'ewd_upcp_page_ewd-upcp-settings' ) {echo 'nav-tab-active';}?>"><?php _e("Settings", 'ultimate-product-catalogue'); ?></a>
+			<a id="options-menu" href='edit.php?post_type=upcp_product&page=ewd-upcp-settings' class="menu-tab nav-tab <?php if ( $screen->id == 'ewd_upcp_page_ewd-upcp-settings' ) {echo 'nav-tab-active';}?>"><?php _e("Settings", 'ultimate-product-catalogue'); ?></a>
 			</h2>
 		</div>
 		<?php

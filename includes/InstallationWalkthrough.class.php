@@ -497,13 +497,13 @@ class ewdupcpInstallationWalkthrough {
 
 					<div class='ewd-upcp-welcome-clear'></div>
 					<div class='ewd-upcp-welcome-screen-previous-button' data-previousaction='options'><?php _e('Previous', 'ultimate-product-catalogue'); ?></div>
-					<div class='ewd-upcp-welcome-screen-finish-button'><a href='admin.php?page=ewd-upcp-settings'><?php _e('Finish', 'ultimate-product-catalogue'); ?></a></div>
+					<div class='ewd-upcp-welcome-screen-finish-button'><a href='edit.php?post_type=upcp_product&page=ewd-upcp-settings'><?php _e('Finish', 'ultimate-product-catalogue'); ?></a></div>
 					<div class='ewd-upcp-clear'></div>
 				</div>
 			</div>
 
 			<div class='ewd-upcp-welcome-screen-skip-container'>
-				<a href='admin.php?page=ewd-upcp-settings'><div class='ewd-upcp-welcome-screen-skip-button'><?php _e('Skip Setup', 'ultimate-product-catalogue'); ?></div></a>
+				<a href='edit.php?post_type=upcp_product&page=ewd-upcp-settings'><div class='ewd-upcp-welcome-screen-skip-button'><?php _e('Skip Setup', 'ultimate-product-catalogue'); ?></div></a>
 			</div>
 		</div>
 

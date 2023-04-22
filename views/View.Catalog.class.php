@@ -1258,22 +1258,24 @@ class ewdupcpViewCatalog extends ewdupcpView {
 			}
 
 			if ( ! empty( $this->filtering_custom_fields ) ) { 
-
+				
 				foreach ( $this->filtering_custom_fields as $field_id => $field_values ) {
-
+					
 					if (
 						$control_types[ $field_id ] == 'slider'
 						and
 						(
 							$product->custom_fields[ $field_id ] < min( $field_values )
 							or
-							$product->custom_fields[ $field_id ] > max( $field_values )
+							max( $field_values ) < $product->custom_fields[ $field_id ]
 						)
 					) {
 						// Skip this product
 						continue 2;
 					}
 					elseif (
+						$control_types[ $field_id ] != 'slider'
+						and
 						empty(
 							array_intersect(
 								(array) $product->custom_fields[ $field_id ],

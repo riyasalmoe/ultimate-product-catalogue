@@ -1,9 +1,9 @@
 var el = wp.element.createElement,
 	registerBlockType = wp.blocks.registerBlockType,
-	ServerSideRender = wp.components.ServerSideRender,
+	ServerSideRender = wp.serverSideRender,
 	TextControl = wp.components.TextControl,
 	SelectControl = wp.components.SelectControl,
-	InspectorControls = wp.editor.InspectorControls,
+	InspectorControls = wp.blockEditor.InspectorControls,
 	Localize = wp.i18n.__,
 	ewdUpcpBlocks = ewd_upcp_blocks,
 	existingCatalogs = ewdUpcpBlocks.catalogOptions;

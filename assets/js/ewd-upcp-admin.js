@@ -289,6 +289,8 @@ jQuery( document ).ready( function() {
 
 	var custom_uploader;
 
+	jQuery( '.ewd-upcp-product-meta-menu-tab:first-of-type' ).addClass( 'ewd-upcp-product-meta-menu-tab-selected' );
+
 	jQuery( '.ewd-upcp-product-meta-tab' ).hide();
 
 	jQuery( '.ewd-upcp-product-meta-tab[data-tab_id="details"]' ).show();

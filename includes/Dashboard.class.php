@@ -43,7 +43,7 @@ class ewdupcpDashboard {
 		foreach ( $submenu['edit.php?post_type=upcp_product'] as $key => $sub_item ) {
 			
 			if ( $sub_item[0] == 'Dashboard' ) { $new_submenu[0] = $sub_item; }
-			elseif ( $sub_item[0] == 'Settings' ) { $new_submenu[ sizeof( $submenu ) ] = $sub_item; }
+			elseif ( $sub_item[0] == 'Settings' ) { $new_submenu[ sizeof( $submenu ) + 1 ] = $sub_item; }
 			else {
 				
 				$new_submenu[$menu_item_count] = $sub_item;

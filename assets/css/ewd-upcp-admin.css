@@ -1474,21 +1474,6 @@ NEW DASHBOARD
   width: 100px;
   cursor: pointer;
 }
-.ewd-upcp-add-related-product {
-  position: relative;
-  float: left;
-  padding: 5px 40px;
-  text-align: center;
-  border: 1px solid #6026B4;
-  border-radius: 4px;
-  background: transparent;
-  color: #6026B4;
-  cursor: pointer;
-}
-.ewd-upcp-add-related-product:hover {
-  background: #6026B4;
-  color: #fff;
-}
 
 .ewd-upcp-product-image,
 .ewd-upcp-product-video {
@@ -1512,11 +1497,29 @@ NEW DASHBOARD
   max-width: 300px;
 }
 
-.ewd-upcp-add-product-image {
+.ewd-upcp-add-product-image,
+.ewd-upcp-add-product-video,
+.ewd-upcp-add-related-product {
+  float: left;
+  padding: 8px 18px;
+  background: #6026B4;
+  color: #fff;
+  font-size: 13px;
+  font-weight: normal;
+  text-decoration: none;
+  border: none;
+  border-radius: 10px;
   cursor: pointer;
+  transition: background .35s;
+}
+.ewd-upcp-add-product-image:hover,
+.ewd-upcp-add-product-video:hover,
+.ewd-upcp-add-related-product:hover {
+  background: #894ae1;
 }
 
-.ewd-upcp-delete-product-image {
+.ewd-upcp-delete-product-image,
+.ewd-upcp-delete-product-video {
   color: red;
   cursor: pointer;
 }

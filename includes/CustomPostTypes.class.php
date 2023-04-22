@@ -357,7 +357,7 @@ class ewdupcpCustomPostTypes {
 
 				<?php foreach ( $tabs as $count => $tab ) { ?>
 
-					<div class='ewd-upcp-product-meta-menu-tab <?php echo ( $count == 0 ? 'ewd-upcp-product-meta-menu-tab-selected' : '' ); ?>' data-tab_id='<?php echo esc_attr( $tab['id'] ); ?>'>
+					<div class='ewd-upcp-product-meta-menu-tab' data-tab_id='<?php echo esc_attr( $tab['id'] ); ?>'>
 						<?php echo esc_attr( $tab['name'] ); ?>
 					</div>
 

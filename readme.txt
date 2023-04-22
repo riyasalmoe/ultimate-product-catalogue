@@ -2,8 +2,8 @@
 custom release
 Requirements remains same as original source
 Tested on: 6.1.1
-Version: v5.2.3.1
-Working Branch: From_5.2.3_2023
+Version: v5.2.4.1
+Working Branch: From_5.2.4_2023
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Credits: All credits to the actual contributors!
@@ -13,42 +13,42 @@ Contributors: Rustaurius, EtoileWebDesign
 Donate Link: https://www.etoilewebdesign.com/plugin-donations/
 Tags: product catalog, catalog, product, products, product catalogue, catalogue, catalogs, catalogues, product catalog wp, product catalog wordpress, product catalog import, product catalog export, best product catalog, product catalog ajax, product catalog shortcode, product catalog inventory, product catalog list, product catalog search, product catalog organization, product catalog easy, product catalog simple, product catalog smart, catalog for products, wp catalog, catalog of goods, blog catalog, catalog plugin, wp catalogue, catalogue plugin, display products, product portfolio, WordPress product catalog, woocommerce product catalog, woocommerce catalog, woocommerce checkout, woocommerce products, gutenberg products, gutenberg catalog, gutenberg product catalog
 Requires at least: 5.0
-Tested up to: 6.1
-Stable tag: 5.2.3
+Tested up to: 6.2
+Stable tag: 5.2.4.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Product catalog plugin that is responsive and designed to display your products in a modern and easy to customize catalog format.
+Flexible, customizable and easy-to-use product catalog plugin with a modern, responsive design. Can be used standalone or integrated with WooCommerce.
 
 == Description ==
 
 <a href='https://www.etoilewebdesign.com/ultimate-product-catalogue-demo/'>Product Catalog Demo</a>
 
-The Ultimate Product Catalog is a fully responsive plugin that lets you showcase your products in a sleek and modern catalog. It comes with a powerful feature set and is easy to customize. 
+The Ultimate Product Catalog is a fully responsive plugin that lets you showcase your products in a sleek and modern catalog layout. It comes with a powerful feature set and is easy to customize. 
 
-<strong>The plugin includes Gutenberg blocks as well as shortcodes, so you can display either your whole catalog or just individual products on any page, no matter which page editing system you are using. We also include several patterns, so you can integrate your products and catalog directly into your block-based theme.</strong>
+<em>The plugin includes <strong>Gutenberg blocks</strong> as well as <strong>shortcodes</strong>, so you can display either your whole catalog or just individual products on any page, no matter which page editing system you are using. We also <strong>include several patterns</strong>, so you can integrate your products and catalog directly into your block-based theme.</em>
 
 = Key Features =
 
 * 3 product catalog layouts that can be dynamically viewed and switched by the user with no page reload.
 * Powerful product catalog filtering and sorting system, including for categories, sub-categories, price and product name. All handled in real time with asynchronous requests, so no page reloads. 
-* Dynamic product search that works with the filtering, so your customers can quickly find exactly what they're looking for. 
+* Dynamic product catalog search that works with the filtering, so your customers can quickly find exactly what they're looking for. 
 * Set sale prices for products, and easily toggle sale prices on and off for the entire catalog or individual products.
-* Organize your catalog into categories and sub-categories to make searching and filtering products easy.
-* Includes widgets to add a product search field as well as to display recent products, a product list or random products.
+* Organize your product catalog into categories and sub-categories to make searching and filtering products easy.
+* Includes extra blocks (and also widgets for legacy support) to add a product catalog search field as well as to display recent products, a product list or random products anywhere on your site.
 
 <em>The Ultimate Product Catalog is very user friendly and comes with a walk-through that runs automatically when you activate the plugin and will help you create your first products and catalog!</em>
 
 [youtube https://www.youtube.com/watch?v=auFCDBgt0xY]
 
-The plugin comes with several features that will help you to offer a great experience for your customers and visitors. These include the ability to set up a catalog overview page, which shows a thumbnail of each product category and lets people click through to view just those products, a separate block (and shortcode) to display a list of featured products (instead of the whole catalog), a price slider for filtering, different sale modes and much more!
+The plugin comes with several features that will help you to offer a great experience for your customers and visitors. These include the ability to set up a product catalog overview page, which shows a thumbnail of each product category and lets people click through to view just those products, a separate block (and shortcode) to display a list of featured products (instead of the whole catalog), a price slider for filtering, different sale modes and much more!
 
 `[product-catalogue id="X"] or [product-catalog id="X"]
 `
 
-Simply insert the <em>Display Product Catalog</em> block or either of the shortcodes above (replacing the "X" with the actual ID of your product catalog) to add a catalog, with product filters, to any page.
+Simply insert the <em>Display Product Catalog</em> block or either of the shortcodes above (replacing the "X" with the actual ID of your product catalog) to add a product catalog with filters to any page.
 
-It's easy to modify the styling of your catalog with custom CSS, which will help it to further fit with the look of your site. We provide a list of the most common classes from our plugin, as well as an exmaple of how to implement custom CSS, <a href="https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/user/styling/css">in our documentation</a>.
+It's easy to modify the styling of your product catalog with custom CSS, which will help it to further fit with the look of your site. We provide a list of the most common classes from our plugin, as well as an exmaple of how to implement custom CSS, <a href="https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/user/styling/css">in our documentation</a>.
 
 It's the perfect solution to create a product catalog for your store, agency, art gallery, restaurant and more!
 
@@ -60,10 +60,10 @@ Some other great features included with the Ultimate Product Catalog plugin are:
 * Choose currency symbol and location.
 * Price slider that lets you filter the catalog for products that match exact price criteria.
 * Easy-to-use block and shortcode attributes that let you set a starting layout, exclude layouts, hide the sidebar, etc.
-* Make use of URL parameters to load the catalog with a specific category already pre-selected.
-* Thumbnail support option, which displays a smaller version of your product image, to help with page load times.
+* Make use of URL parameters to load the product catalog with a specific category already pre-selected.
+* Thumbnail support option, which displays a smaller version of your product image, to help with catalog page load times.
 * Easy-to-use and comprehensive settings page, which makes it easy to customize product catalog features.
-* Several different breadcrumbs options.
+* Several different breadcrumbs options for your product catalog.
 * Social media sharing options.
 
 The Ultimate Product Catalog is also a great solution for those who are running affiliate stores, in which you link out to products for sale on other sites. With the ability to specify a unique link for each product (using the "Product Link" field), you can insert your affiliate link and then set it up so that, when someone clicks on a product in your catalog, they are brought to that link instead of the product page in the plugin. You get all the benefits and functionality of the Ultimate Product Catalog while being able to sell as an affiliate.
@@ -72,17 +72,17 @@ The Ultimate Product Catalog is also a great solution for those who are running 
 
 <a href='https://www.etoilewebdesign.com/ultimate-woocommerce-catalog/'>WooCommerce Catalog Demo</a>
 
-The premium version offers full WooCommerce product integration, allowing you to sync all your products between the product catalog and your WooCommerce shop/products, and also allowing your customers to check out directly from the catalog.
+The premium version offers full WooCommerce product integration, allowing you to sync all your products between the product catalog and your WooCommerce shop, and also allowing your customers to check out directly from the catalog.
 
 * WooCoommerce Sync: Ultimate Product Catalog products are exported to WooCommerce and WooCommerce products are imported into the catalog.
 * With WooCommerce Sync enabled, products edited in one plugin are also edited in the other.
 * WooCommerce Checkout: Allow people to add items in your product catalog directly to the WooCommerce shopping cart, and then check out and purchase the items.
 * Choose to display the number of items in the cart directly on all product catalog pages.
-* Choose to have the products in your product catalog link directly to the WooCommerce product pages, for ultimate flexibility and customization.
+* Choose to have the products in your catalog link directly to the WooCommerce product pages, for ultimate flexibility and customization.
 
-Combining the Ultimate Product Catalog with WooCommerce will allow you to create the perfect ecommerce catalog or e-commerce store to sell products. You will now be able to have advanced WooCommerce products filters in a customizable catalog, with all the checkout and ecommerce capabilities available in WooCommerce.
+Combining the Ultimate Product Catalog with WooCommerce will allow you to create the perfect ecommerce catalog or e-commerce store to sell products. You will now be able to have advanced WooCommerce products filters in a customizable product catalog, with all the checkout and ecommerce capabilities available in WooCommerce.
 
-It is great option for those running a mobile shop or mobile store and who are concerned with the responsive aspects of their mobile ecommerce. Our wide array of catalog page and product page styles are all responsive and, by combining the Ultimate Product Catalog with your WooCommerce products, you can have a responsive store that looks great on desktop and as a mobile store.
+The Ultimate Product Catalog is also a great option for those running a mobile shop or mobile store and who are concerned with the responsive aspects of their mobile ecommerce. Our wide array of catalog page and product page styles are all responsive and, by combining the Ultimate Product Catalog with your WooCommerce products, you can have a responsive store that looks great on desktop and as a mobile store.
 
 [youtube https://www.youtube.com/watch?v=sQMkiEG9gNg]
 
@@ -90,29 +90,29 @@ The flexibility, advanced product filter and features you love from the Ultimate
 
 = Premium Features =
 
-If you're looking for a more dynamic and feature-packed catalog, the premium version offers several extras that will take the experience to the next level. These include the ability to add over 100 products, product image galleries, product videos, SEO friendly URLs, product tags and custom fields for sorting within your product catalog, custom product pages, a product inquiry cart, multiple layout options, product export and more!
+If you're looking for a more dynamic and feature-packed product catalog, the premium version offers several extras that will take the experience to the next level. These include the ability to add over 100 products, product image galleries, product videos, SEO friendly URLs, product tags and custom fields for sorting within your product catalog, custom product pages, a product inquiry cart, multiple layout options, product export and more!
 
 Choose between several newly-redesigned responsive layouts and styles for your catalog and product pages, and then refine these with hundreds of styling options.
 
-Custom fields allow you to specify additional attributes for your products (like colors, dimensions, availability, etc.) and then include those attributes as filters, giving you the most powerful catalog possible, and making sure your visitiors/customers find exactly what they're looking for, in no time at all.
+Custom fields allow you to specify additional attributes for your products (like colors, dimensions, availability, etc.) and then include those attributes as filters, giving you the most powerful product catalog possible, and making sure your visitiors/customers find exactly what they're looking for in no time at all.
 
 Premium features include:
 
-* Choose from 3 new ultra responsive catalog styles.
+* Choose from 3 new ultra responsive product catalog styles.
 * Choose from 4 custom-designed product page layouts, including the popular tabbed and shop styles. 
 * Product Comparison: Allow people to select multiple products in your catalog to view and compare side by side.
 * Custom fields that can be added to your product catalog and used to include product manuals, additional information, etc., and for product filtering.
 * Choose between checkbox, radio button, dropdown and slider for the front-end control type for your custom fields.
-* Product inquiry form (you can choose to have the form automatically created using either WPForms or Contact Form 7).
-* Product inquiry cart: Allow people to add multiple products to an inquiry cart and then send one global inquiry about/for all those products
-* Product reviews (using <a href='https://wordpress.org/plugins/ultimate-reviews/'>Ultimate Reviews</a>)
-* Add FAQs (frequently asked questions) to your products. Uses the <a href='https://wordpress.org/plugins/ultimate-faqs/'>Ultimate FAQs</a> plugin.
+* Product inquiry form (you can choose to have the form automatically created using either WPForms or Contact Form 7) so people can request more info or a quote for any product in your catalog.
+* Product inquiry cart: Allow people to add multiple products to an inquiry cart and then send one global inquiry about/for all those products.
+* Product reviews (using the <a href='https://wordpress.org/plugins/ultimate-reviews/'>Ultimate Reviews</a> plugin).
+* Add FAQs (frequently asked questions) to any or all products in your catalog. Uses the <a href='https://wordpress.org/plugins/ultimate-faqs/'>Ultimate FAQs</a> plugin.
 * Display product ratings on main catalog pages.
-* Product tags for enhanced product catalog organization.
+* Product tags for better catalog organization.
 * Additional images and videos for better product catalog display and product management.
-* SEO-friendly catalog single product pages.
+* SEO-friendly single product pages.
 * SEO By Yoast Integration for your product catalogs.
-* Product catalog styling options, labelling options for product directory elements.
+* Product catalog styling options and labelling options for product directory elements.
 
 [youtube https://www.youtube.com/watch?v=KNmruA5EVsA]
 
@@ -122,7 +122,7 @@ For further information and purchasing options, please visit our <strong><a href
 
 = Customize Your Product Catalog with the Included Template System =
 
-The Ultimate Product Catalog is built on a series of templates, such that everything that displays on the front end of the plugin can be customized by creating your own template files (to modify and/or overwrite the existing templates files). This gives you a powerful and non-destructive way to custmoize the look and functionality of the catalog to your exact needs. More info about this can be found <a href="https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/developer/">in our documentation</a>. 
+The Ultimate Product Catalog is built on a series of templates, such that everything that displays on the front end of the plugin can be customized by creating your own template files (to modify and/or overwrite the existing templates files). This gives you a powerful and non-destructive way to custmoize the look and functionality of the procuct catalog to your exact needs. More info about this can be found <a href="https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/developer/">in our documentation</a>. 
 
 = Product Catalog Additional Languages =
 Thanks to the generous contribution of many of those who use our product catalog plugin, we're able to include translation files for the following languages:
@@ -141,7 +141,9 @@ Thanks to the generous contribution of many of those who use our product catalog
 * Spanish product catalog (Thanks to Irene L.)
 * Turkish product catalog (Thanks to Ayhan)
 
-Thanks to James K for a number of excellent product catalog features
+You can also view the official WordPress.org community translations for the product catalog plugin here: https://translate.wordpress.org/projects/wp-plugins/ultimate-product-catalogue/
+
+Thanks to James K for a number of excellent product catalog features.
 
 = For help and support, please see: =
 
@@ -268,6 +270,14 @@ For more info about the premium version, please see here: https://doc.etoilewebd
 -----------------------------------------------------------------------------------
 
 == Changelog ==
+
+= 5.2.4 (2023-03-30) =
+- Updated blocks for compatibility with WordPress 6.2.
+- Fixed an issue with filtering and double results when infinite scroll was enabled.
+- Fixed an issue in which the Settings sub-menu wasn't displaying in the WordPress sidebar. 
+- Fixed an issue in which the slider control type for custom fields was only showing results for values that fell on the handles of the slider and not the values in between.
+- Updated the styling of several buttons in the admin. 
+- Updated a few navigation links in the admin.
 
 = 5.2.3 (2023-01-04) =
 - Fixes a potential fatal error on the settings page.

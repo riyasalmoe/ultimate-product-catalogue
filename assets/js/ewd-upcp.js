@@ -1,4 +1,4 @@
-var Filtering_Running = "No";
+var filtering_running = false;
 var clearingFilters = false;
 
 jQuery(document).ready(function(){
@@ -337,6 +337,8 @@ jQuery( document ).ready( function() {
 		if ( ! ewd_upcp_php_data.infinite_scroll ) { return; }
 
 		if ( infinite_scroll_loading ) { return; }
+
+		if ( filtering_running ) { return; }
 
 		if ( jQuery( 'input[name="catalog-current-page"]' ).val() == jQuery( 'input[name="catalog-max-page"]' ).val() ) { return; }
 
@@ -715,6 +717,8 @@ function ewd_upcp_update_catalog() {
 
 	request_count = request_count + 1;
 
+	filtering_running = true;
+
 	if ( infinite_scroll_loading ) {
 
 		jQuery( '.ewd-upcp-thumbnail-view, .ewd-upcp-list-view, .ewd-upcp-detail-view' ).append( '<h3 class="ewd-upcp-inifinite-scroll-updating">' + ewd_upcp_php_data.updating_results_label + '</h3>' );
@@ -730,36 +734,35 @@ function ewd_upcp_update_catalog() {
 		
 		if ( response.data.request_count != request_count ) { return; } 
 
-			if ( infinite_scroll_loading ) {
+		if ( infinite_scroll_loading ) {
 				
-				jQuery( '.ewd-upcp-inifinite-scroll-updating' ).remove();
+			jQuery( '.ewd-upcp-inifinite-scroll-updating' ).remove();
 
-				jQuery( '.ewd-upcp-thumbnail-view' ).append( response.data.thumbnail_view ? response.data.thumbnail_view : ewd_upcp_php_data.no_results_found_label );
-				jQuery( '.ewd-upcp-list-view' ).append( response.data.list_view ? response.data.list_view : ewd_upcp_php_data.no_results_found_label );
-				jQuery( '.ewd-upcp-detail-view' ).append( response.data.detail_view ? response.data.detail_view : ewd_upcp_php_data.no_results_found_label );
-			}
-			else {
+			//If results exist, don't add the 'No Results Found' text
+			var no_result_text = jQuery( '.ewd-upcp-catalog-product-div' ).length ? '' : ewd_upcp_php_data.no_results_found_label;
+
+			jQuery( '.ewd-upcp-thumbnail-view' ).append( response.data.thumbnail_view ? response.data.thumbnail_view : no_result_text );
+			jQuery( '.ewd-upcp-list-view' ).append( response.data.list_view ? response.data.list_view : no_result_text );
+			jQuery( '.ewd-upcp-detail-view' ).append( response.data.detail_view ? response.data.detail_view : no_result_text );
+		}
+		else {
 				
-				jQuery( '.ewd-upcp-thumbnail-view' ).html( response.data.thumbnail_view ? response.data.thumbnail_view : ewd_upcp_php_data.no_results_found_label );
-				jQuery( '.ewd-upcp-list-view' ).html( response.data.list_view ? response.data.list_view : ewd_upcp_php_data.no_results_found_label );
-				jQuery( '.ewd-upcp-detail-view' ).html( response.data.detail_view ? response.data.detail_view : ewd_upcp_php_data.no_results_found_label );
-			}
+			jQuery( '.ewd-upcp-thumbnail-view' ).html( response.data.thumbnail_view ? response.data.thumbnail_view : ewd_upcp_php_data.no_results_found_label );
+			jQuery( '.ewd-upcp-list-view' ).html( response.data.list_view ? response.data.list_view : ewd_upcp_php_data.no_results_found_label );
+			jQuery( '.ewd-upcp-detail-view' ).html( response.data.detail_view ? response.data.detail_view : ewd_upcp_php_data.no_results_found_label );
+		}
 
-			ewd_upcp_adjust_sidebar_counts( response.data.filters );
+		ewd_upcp_adjust_sidebar_counts( response.data.filters );
 
-			ewd_upcp_set_click_handlers();
+		ewd_upcp_set_click_handlers();
 			
-			ewd_upcp_thumbnail_height();
+		ewd_upcp_thumbnail_height();
 
-			ewd_upcp_adjust_thumbnail_heights();
+		ewd_upcp_adjust_thumbnail_heights();
 
-			infinite_scroll_loading = false;
-			
-			/*adjustCatalogueHeight();
-			addClickHandlers();
-			addLightboxHandlers();
-			addProductcomparisonClickHandlers();
-			addInquiryAndCartHandlers();*/
+		filtering_running = false;
+		
+		infinite_scroll_loading = false;
 	});
 }
 
