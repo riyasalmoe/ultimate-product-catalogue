@@ -1,764 +1,532 @@
-=== Plugin Name ===
-Contributors: Rustaurius, EtoileWebDesign
-Donate Link: http://www.etoilewebdesign.com/plugin-donations/
-Tags: product catalogue, product catalog, restaurant menu, responsive, customizable CSS, SEO friendly, SEO By Yoast, affiliate links,  affiliates, attributes, blog catalog, catalog, catalogue, katalog, commerce, directory, display products, e-commerce, ecommerce, gallery, inventory, list products, manage, plugin, product, product feed, product gallery, product management, product portfolio, products, sales, sell, shipping, shop, shopping, shortcode, shortcodes, store, wp catalog, wp catalogue, widget, widgets, easy to use, user friendly
-Requires at least: 3.5.0
-Tested up to: 4.2.4
+=== Ultimate Product Catalog ===
+custom release
+Requirements remains same as original source
+Tested on: 6.22
+Version: v5.2.7.1
+Working Branch: From_5.2.7_2023
 License: GPLv3
-License URI:http://www.gnu.org/licenses/gpl-3.0.html
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
+Credits: All credits to the actual contributors!
 
-A responsive and easily customizable plugin for all your product catalogue needs.
+=== Ultimate Product Catalog ===
+Contributors: Rustaurius, EtoileWebDesign
+Donate Link: https://www.etoilewebdesign.com/plugin-donations/
+Tags: product catalog, catalog, product, products, product catalogue, catalogue, catalogs, catalogues, product catalog wp, product catalog wordpress, product catalog import, product catalog export, best product catalog, product catalog ajax, product catalog shortcode, product catalog inventory, product catalog list, product catalog search, product catalog organization, product catalog easy, product catalog simple, product catalog smart, catalog for products, wp catalog, catalog of goods, blog catalog, catalog plugin, wp catalogue, catalogue plugin, display products, product portfolio, WordPress product catalog, woocommerce product catalog, woocommerce catalog, woocommerce checkout, woocommerce products, gutenberg products, gutenberg catalog, gutenberg product catalog
+Requires at least: 5.0
+Tested up to: 6.2
+Stable tag: 5.2.7
+License: GPLv3
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
+
+Flexible, customizable and easy-to-use product catalog plugin with a modern, responsive design. Can be used standalone or integrated with WooCommerce.
 
 == Description ==
 
-Use this plugin to display your products in an a sleek and easy to customize catalog(ue). Choose between three default responsive layouts or customize it to suit your needs in the Custom CSS. Make your catalog easy to browse, sort and update with categories, sub-categories, and tags. Simple to add to any page using the [product-catalogue] shortcode!
+<a href='https://www.etoilewebdesign.com/ultimate-product-catalogue-demo/'>Product Catalog Demo</a>
 
-Perfect for your store, restaurant and more!
+The Ultimate Product Catalog is a fully responsive plugin that lets you showcase your products in a sleek and modern catalog layout. It comes with a powerful feature set and is easy to customize. 
+
+<em>The plugin includes <strong>Gutenberg blocks</strong> as well as <strong>shortcodes</strong>, so you can display either your whole catalog or just individual products on any page, no matter which page editing system you are using. We also <strong>include several patterns</strong>, so you can integrate your products and catalog directly into your block-based theme.</em>
 
 = Key Features =
 
-* 3 default layouts (thumbnail, detail and list)
-* Categories and sub-categories
-* Custom fields
-* Custom product pages 
-* Fully customizable with CSS
-* Widgets to display recent products, product list, random products
-* Include catalogs using the [product-catalogue id=’X’] shortcode
-* Upload products directly from a spreadsheet
-* UTF8 support
-* Search function with Javascript or AJAX
-* Easy to use attributes like [starting_layout], [excluded_layout]
-* Options page that makes it easy to customize features
+* 3 product catalog layouts that can be dynamically viewed and switched by the user with no page reload.
+* Powerful product catalog filtering and sorting system, including for categories, sub-categories, price and product name. All handled in real time with asynchronous requests, so no page reloads. 
+* Dynamic product catalog search that works with the filtering, so your customers can quickly find exactly what they're looking for. 
+* Set sale prices for products, and easily toggle sale prices on and off for the entire catalog or individual products.
+* Organize your product catalog into categories and sub-categories to make searching and filtering products easy.
+* Includes extra blocks (and also widgets for legacy support) to add a product catalog search field as well as to display recent products, a product list or random products anywhere on your site.
 
+<em>The Ultimate Product Catalog is very user friendly and comes with a walk-through that runs automatically when you activate the plugin and will help you create your first products and catalog!</em>
+
+[youtube https://www.youtube.com/watch?v=auFCDBgt0xY]
+
+The plugin comes with several features that will help you to offer a great experience for your customers and visitors. These include the ability to set up a product catalog overview page, which shows a thumbnail of each product category and lets people click through to view just those products, a separate block (and shortcode) to display a list of featured products (instead of the whole catalog), a price slider for filtering, different sale modes and much more!
+
+`[product-catalogue id="X"] or [product-catalog id="X"]
+`
+
+Simply insert the <em>Display Product Catalog</em> block or either of the shortcodes above (replacing the "X" with the actual ID of your product catalog) to add a product catalog with filters to any page.
+
+It's easy to modify the styling of your product catalog with custom CSS, which will help it to further fit with the look of your site. We provide a list of the most common classes from our plugin, as well as an exmaple of how to implement custom CSS, <a href="https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/user/styling/css">in our documentation</a>.
+
+It's the perfect solution to create a product catalog for your store, agency, art gallery, restaurant and more!
+
+= Additional Features =
+
+Some other great features included with the Ultimate Product Catalog plugin are:
+
+* Catalog overview mode, showing category or sub-category images (such as brands, etc.).
+* Choose currency symbol and location.
+* Price slider that lets you filter the catalog for products that match exact price criteria.
+* Easy-to-use block and shortcode attributes that let you set a starting layout, exclude layouts, hide the sidebar, etc.
+* Make use of URL parameters to load the product catalog with a specific category already pre-selected.
+* Thumbnail support option, which displays a smaller version of your product image, to help with catalog page load times.
+* Easy-to-use and comprehensive settings page, which makes it easy to customize product catalog features.
+* Several different breadcrumbs options for your product catalog.
+* Social media sharing options.
+
+The Ultimate Product Catalog is also a great solution for those who are running affiliate stores, in which you link out to products for sale on other sites. With the ability to specify a unique link for each product (using the "Product Link" field), you can insert your affiliate link and then set it up so that, when someone clicks on a product in your catalog, they are brought to that link instead of the product page in the plugin. You get all the benefits and functionality of the Ultimate Product Catalog while being able to sell as an affiliate.
+
+= WooCommerce Product Catalog Integration (Requires Premium) =
+
+<a href='https://www.etoilewebdesign.com/ultimate-woocommerce-catalog/'>WooCommerce Catalog Demo</a>
+
+The premium version offers full WooCommerce product integration, allowing you to sync all your products between the product catalog and your WooCommerce shop, and also allowing your customers to check out directly from the catalog.
+
+* WooCoommerce Sync: Ultimate Product Catalog products are exported to WooCommerce and WooCommerce products are imported into the catalog.
+* With WooCommerce Sync enabled, products edited in one plugin are also edited in the other.
+* WooCommerce Checkout: Allow people to add items in your product catalog directly to the WooCommerce shopping cart, and then check out and purchase the items.
+* Choose to display the number of items in the cart directly on all product catalog pages.
+* Choose to have the products in your catalog link directly to the WooCommerce product pages, for ultimate flexibility and customization.
+
+Combining the Ultimate Product Catalog with WooCommerce will allow you to create the perfect ecommerce catalog or e-commerce store to sell products. You will now be able to have advanced WooCommerce products filters in a customizable product catalog, with all the checkout and ecommerce capabilities available in WooCommerce.
+
+The Ultimate Product Catalog is also a great option for those running a mobile shop or mobile store and who are concerned with the responsive aspects of their mobile ecommerce. Our wide array of catalog page and product page styles are all responsive and, by combining the Ultimate Product Catalog with your WooCommerce products, you can have a responsive store that looks great on desktop and as a mobile store.
+
+[youtube https://www.youtube.com/watch?v=sQMkiEG9gNg]
+
+The flexibility, advanced product filter and features you love from the Ultimate Product Catalog combined with the ease and power of WooCommerce checkout! For more information about WooCommerce integration, please see the video above.
 
 = Premium Features =
-The premium version includes a huge number of features including: the ability to add over 100 products, additional product images, SEO friendly URLs, product tags and custom fields for sorting, custom product pages, a minimalist layout option and more!
 
-* Drag-and-drop product pages layout
-* Product tags, additional images and videos
-* Custom fields that can be used to include product manuals, additional information, etc.
-* SEO friendly single product pages
-* SEO By Yoast Integration
-* For a more in depth list, please visit our FAQ page:
+If you're looking for a more dynamic and feature-packed product catalog, the premium version offers several extras that will take the experience to the next level. These include the ability to add over 100 products, product image galleries, product videos, SEO friendly URLs, product tags and custom fields for sorting within your product catalog, custom product pages, a product inquiry cart, multiple layout options, product export and more!
 
-<http://www.etoilewebdesign.com/ultimate-product-catalogue-faq>
+Choose between several newly-redesigned responsive layouts and styles for your catalog and product pages, and then refine these with hundreds of styling options.
 
-= Additional Languages =
-* Brazilian Portugese (Thanks to <a href='http://wordpress.org/support/profile/tito_cadallora'>Tito_Cadallora</a>);
-* Bulgarian (Thanks to Preslav P.)
-* Canadian French (Thanks to Pascale DRP)
-* Dutch (Thanks to Martin S.)
-* Greek (Thanks to <a href='http://bigdrop.gr/'>Christoforos A.</a>)
-* Italian
-* Lithuanian (Thanks to <a href='http://wordpress.org/support/profile/adart'>AdArt</a>);
-* Russian (Thanks to Alexander M.)
-* Spanish (Thanks to Irene L.)
-* Turkish (Thanks to Ayhan)
+Custom fields allow you to specify additional attributes for your products (like colors, dimensions, availability, etc.) and then include those attributes as filters, giving you the most powerful product catalog possible, and making sure your visitiors/customers find exactly what they're looking for in no time at all.
 
-Thanks to James K for a number of excellent features
+Premium features include:
 
-Check out our Frequently Asked Questions here:
-<https://wordpress.org/plugins/ultimate-product-catalogue/faq/>
+* Choose from 3 new ultra responsive product catalog styles.
+* Choose from 4 custom-designed product page layouts, including the popular tabbed and shop styles. 
+* Product Comparison: Allow people to select multiple products in your catalog to view and compare side by side.
+* Custom fields that can be added to your product catalog and used to include product manuals, additional information, etc., and for product filtering.
+* Choose between checkbox, radio button, dropdown and slider for the front-end control type for your custom fields.
+* Product inquiry form (you can choose to have the form automatically created using either WPForms or Contact Form 7) so people can request more info or a quote for any product in your catalog.
+* Product inquiry cart: Allow people to add multiple products to an inquiry cart and then send one global inquiry about/for all those products.
+* Product reviews (using the <a href='https://wordpress.org/plugins/ultimate-reviews/'>Ultimate Reviews</a> plugin).
+* Add FAQs (frequently asked questions) to any or all products in your catalog. Uses the <a href='https://wordpress.org/plugins/ultimate-faqs/'>Ultimate FAQs</a> plugin.
+* Display product ratings on main catalog pages.
+* Product tags for better catalog organization.
+* Additional images and videos for better product catalog display and product management.
+* SEO-friendly single product pages.
+* SEO By Yoast Integration for your product catalogs.
+* Product catalog styling options and labelling options for product directory elements.
 
-Head over to the "Support" forum to report issues or make suggestions:
-<https://wordpress.org/support/plugin/ultimate-product-catalogue>
+[youtube https://www.youtube.com/watch?v=KNmruA5EVsA]
 
-[youtube https://www.youtube.com/watch?v=z6XL7whjY1Q]
+For further information and purchasing options, please visit our <strong><a href="https://www.etoilewebdesign.com/plugins/ultimate-product-catalog/">WordPress product catalog</a></strong> homepage.
 
-Check out more videos on the FAQ page.
+** We are pleased to offer a free 7-day trial of the premium version of the product catalog, which you can use to test out premium features, such as WooCommerce product sync and custom fields, before buying! **
+
+= Customize Your Product Catalog with the Included Template System =
+
+The Ultimate Product Catalog is built on a series of templates, such that everything that displays on the front end of the plugin can be customized by creating your own template files (to modify and/or overwrite the existing templates files). This gives you a powerful and non-destructive way to custmoize the look and functionality of the procuct catalog to your exact needs. More info about this can be found <a href="https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/developer/">in our documentation</a>. 
+
+= Product Catalog Additional Languages =
+Thanks to the generous contribution of many of those who use our product catalog plugin, we're able to include translation files for the following languages:
+
+* Brazilian Portugese product catalog (Thanks to <a href='https://wordpress.org/support/profile/tito_cadallora'>Tito_Cadallora</a>)
+* Bulgarian product catalog (Thanks to Preslav P.)
+* Canadian French product catalog (Thanks to Pascale DRP)
+* Dutch product catalog (Thanks to Martin S.)
+* France French product catalog (Thanks to Olivier G.)
+* German product catalog (Thanks to <a href='https://profiles.wordpress.org/thomymaster'>Thomas S.</a>)
+* Greek product catalog (Thanks to <a href='https://bigdrop.gr/'>Christoforos A.</a>)
+* Italian product catalog
+* Lithuanian product catalog (Thanks to <a href='https://wordpress.org/support/profile/adart'>AdArt</a>)
+* Romanian product catalog (Thanks to Eszter N.)
+* Russian product catalog 
+* Spanish product catalog (Thanks to Irene L.)
+* Turkish product catalog (Thanks to Ayhan)
+
+You can also view the official WordPress.org community translations for the product catalog plugin here: https://translate.wordpress.org/projects/wp-plugins/ultimate-product-catalogue/
+
+Thanks to James K for a number of excellent product catalog features.
+
+= For help and support, please see: =
+
+* Our documentation, here: [https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/user/](https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/user/)
+* Our FAQ pages, here: [https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/user/faq](https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/user/faq), and here: [https://wordpress.org/plugins/ultimate-product-catalogue/faq/](https://wordpress.org/plugins/ultimate-product-catalogue/faq/)
+* Our installation guide and information about the walk-through, here: [https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/user/getting-started/install](https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/user/getting-started/install)
+* Our tutorial videos, here: [https://www.youtube.com/playlist?list=PLEndQUuhlvSoTRGeY6nWXbxbhmgepTyLi](https://www.youtube.com/playlist?list=PLEndQUuhlvSoTRGeY6nWXbxbhmgepTyLi)
+* The Ultimate Product Catalog support forum, here: [https://wordpress.org/support/plugin/ultimate-product-catalogue](https://wordpress.org/support/plugin/ultimate-product-catalogue)
+* Our Support Center, here: [https://www.etoilewebdesign.com/support-center/](https://www.etoilewebdesign.com/support-center/)
+
+-----------------------------------------------------------------------------------
 
 == Installation ==
 
-1. Upload the `ultimate-product-catalogue` folder to the `/wp-content/plugins/` directory
+1. Upload the 'ultimate-product-catalogue' folder to the '/wp-content/plugins/' directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Place "[product-catalogue id='X']" on the page where you want your catalog to display, where X is the ID of the catalog to display
-4. *The page that displays the product catalog needs to be a full-width type page for the catalog to display correctly*
 
---------------------------------------------------------------
+or
 
-To get started using the plugin, you can:
-- Go to the "Products" tab in the Ultimate Product Catalogue Plugin (UPCP) admin menu, add products one at a time or by uploading a spreadsheet
-- Create categories in the "Categories" tab, then create sub-categories in the "Sub-Categories" tab and assign your sub-categories to the correct category
-- Create a catalog in the "Catalogues" tab, then add products, categories, or sub-categories to that catalog
-- Add additional images to a product by clicking on it and then adding them from the "Product Details" screen
-- Create tags in the "Tags" tab, then assign as many tags as necessary to each product from the "Product Details" screen
-- Re-order your catalogs by dragging and dropping items in the "Catalog Details" screen
+1. Go to the 'Plugins' menu in WordPress and click 'Add New'
+2. Search for 'Ultimate Product Catalog' and select 'Install Now'
+3. Activate the plugin when prompted
 
+= Getting Started =
+
+After activating the plugin, <strong>a walk-through will run automatically</strong>, which will help you to create your first products and catalog, and to set a few key options. 
+
+For more info on installing and activating the plugin, and on the walk-through, please see here: [https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/user/getting-started/install](https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/user/getting-started/install)
+
+= For help and support, please see: =
+
+* Our documentation, here: [https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/user/](https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/user/)
+* Our FAQ pages, here: [https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/user/faq](https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/user/faq), and here: [https://wordpress.org/plugins/ultimate-product-catalogue/faq/](https://wordpress.org/plugins/ultimate-product-catalogue/faq/)
+* Our tutorial videos, here: [https://www.youtube.com/playlist?list=PLEndQUuhlvSoTRGeY6nWXbxbhmgepTyLi](https://www.youtube.com/playlist?list=PLEndQUuhlvSoTRGeY6nWXbxbhmgepTyLi)
+* The Ultimate Product Catalog support forum, here: [https://wordpress.org/support/plugin/ultimate-product-catalogue](https://wordpress.org/support/plugin/ultimate-product-catalogue)
+* Our Support Center, here: [https://www.etoilewebdesign.com/support-center/](https://www.etoilewebdesign.com/support-center/)
+
+-----------------------------------------------------------------------------------
 
 == Frequently Asked Questions ==
 
-= How do I display my catalog? If I have more than one catalog, what do I do? =
+= Is there a shortcode to display the catalog? =
 
-Put this shortcode on whatever page you’re trying to put the catalog on: ‘[product-catalogue id=’X’]’ and replace the ‘X’ with the ID of your catalog. This can be found by clicking on your catalog, the catalog ID  is beside the catalog name on the catalog’s details page. You can also copy the shortcode directly from the “Catalogues” page.
+Yes, you can use the [product-catalog] shortcode. For more info, see <a href="https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/user/block-shortcodes/product-catalog-shortcode">here</a>.
 
-To display one of your catalogu use the corresponding attribute ‘id='X'’ in the product-catalogue shortcode to specify that catalog, where 'X' is replaced with the catalog ID.
+= Is there a Gutenberg block to display the catalog? =
 
-= Can my products be in more than one category or sub-category? =
+Yes, you can search for the Display Product Catalog block. Alternatively, you'll find it in its own block category/section called Ultimate Product Catalog. For more info, see <a href="https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/user/block-shortcodes/product-catalog-shortcode">here</a>.
 
-No, products can only be in a single category and sub-category. Products can have as many tags desired, since tags are used to represent product attributes.
+= Can I change the default layout of the catalog? =
 
-= Can I start with a layout other than the default "Thumbnail" layout? =
+Yes, you can use the `starting_layout` shortcode attribute for this. For more info see <a href="https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/user/block-shortcodes/product-catalog-shortcode">here</a>. If you're using the block, there is a dropdown to select the starting layout. For more info, see <a href="https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/user/block-shortcodes/display-catalog-block">here</a>.
 
-Add the attribute [starting_layout='LAYOUT’], where LAYOUT is replaced with the layout you would like to be the starting layout (List or Detail are the two options currently).
+= Can I remove layouts from the catalog? =
 
-= I only want to display one layout and to remove the layout bar at the top from my catalog? =
+Yes, you can use the excluded_layouts shortcode attribute for this. For more info see <a href="https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/user/block-shortcodes/product-catalog-shortcode">here</a>. If you’re using the block, there is a field to enter the layouts you want to exclude. For more info, see <a href="https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/user/block-shortcodes/display-catalog-block">here</a>.
 
-The attribute ‘excluded_layouts’ lets you stop one or more layouts from being displayed. It accepts a comma separated list of layouts you wish to exclude. For example, [excluded_layouts='Thumbnail, List’] would make your catalog display only the "Detail" view.
-To remove the layout bar you can try adding the following into your Custom.css box (where the colour matches the colour of the catalog you are using):
-‘.Blue-prod-cat-header-div {display: none;}’
+= Can I remove the sidebar from my catalog page? =
 
-= My product description gets cut off even though I have changed the max characters, how can I fix this? =
+Yes, you can use the sidebar shortcode attribute for this. For more info see <a href="https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/user/block-shortcodes/product-catalog-shortcode">here</a>. If you’re using the block, there is a dropdown to select whether or not you want to display the sidebar. For more info, see <a href="https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/user/block-shortcodes/display-catalog-block">here</a>.
 
-There is a text area labelled "Custom CSS" when you click on the catalog that you're editing. Try adding this to it:  ‘.prod-cat-addt-details-desc-div {max-height:none;}’
+= How do I sort the order of the products in my catalog? =
 
-= How do I remove the sidebar? =
+The default order of the items in the catalog can be set directly on the catalog edit screen. For more info, see <a href="https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/user/catalogs/order">here</a>. For the categories and products within specific categories, the order is modified in the Categories area of the admin. For more info, see <a href="https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/user/products/categories#order-of-categories-and-products-in-a-category">here</a>.
 
-You can use the attribute [sidebar=‘No'] in the product-catalogue shortcode to remove the sidebar from a catalog.
+= Can I translate my products and catalogs? =
 
-= Why aren’t my products uploading from the spreadsheet? =
+Yes, the plugin uses custom post types and all the strings/labels are localized in the code. For more information on plugin translation, please see <a href="https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/user/labelling/translating">here</a>.
 
-There are a number of reasons why products might not be uploading correctly.
-First, make sure that you’re uploading either a .xls or .xlsx file type (not .csv).
-Second, make sure that you’ve written all of your field names correctly (Name, Slug, Description, Price, Image, Category, Sub-Category, Tags), especially custom fields, which need to be exactly the same as the field name.
-Third, make sure that you don’t have any columns that have been edited unintentionally (which gives an “incorrect field name” error).
+= Is this compatible with WPML? =
 
-= How do I get custom changes I’ve made to the product page layout or the custom fields I’ve added in the product details to display? =
+Yes, the plugin uses custom post types. As such, if you enable our post types in the WPML settings, you’ll be able to create translations of your products (and categories, sub-categories, tags, etc.) and catalogs. As well, all the strings/labels are localized in the code. As such, they will be picked up by WPML’s String Translation tool for easy direct translating.
 
-On  the “Options” page the “Custom Product Page” needs to be set to “Yes” for custom layout to display.
+For more info on translating the plugin, please see <a href="https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/user/labelling/translating">here</a>.
 
-= How do I sort the order of the products within the catalog? =
+= Is there a limit on the number of products? =
 
-You can arrange the order of the products by dragging and dropping the products on the “Catalogue Details” page .
+In this free version of the plugin, there is a limit of 100 products.
 
-= How do I translate the plugin into my language? =
-A great place to start learning about how to translate a plugin is at the link below: <http://premium.wpmudev.org/blog/how-to-translate-a-wordpress-plugin>
+= What is enabled in the premium version? =
 
-Once translated, you'll need to put the translated mo- and po- files directly in the lang folder and make sure they are named properly for your localization.
-If you do translate the plugin, other users would love to have access to the files in your language. You can send them to us at Contact@EtoileWebDesign.com, and we’ll be sure they’re included in a future release.
+For more info about the premium version, please see here: https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/user/premium/benefits
 
-= What is enabled in the 'Premium' version? =
+= For help and support, please see: =
 
-The premium version includes a lot of great features including: the ability to add over 100 products, additional product images, SEO friendly URLs, product tags and custom fields for sorting, custom product pages, a minimalist layout option and more!
+* Our documentation, here: [https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/user/](https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/user/)
+* Our installation guide and information about the walk-through, here: [https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/user/getting-started/install](https://doc.etoilewebdesign.com/plugins/ultimate-product-catalog/user/getting-started/install)
+* Our tutorial videos, here: [https://www.youtube.com/playlist?list=PLEndQUuhlvSoTRGeY6nWXbxbhmgepTyLi](https://www.youtube.com/playlist?list=PLEndQUuhlvSoTRGeY6nWXbxbhmgepTyLi)
+* The Ultimate Product Catalog support forum, here: [https://wordpress.org/support/plugin/ultimate-product-catalogue](https://wordpress.org/support/plugin/ultimate-product-catalogue)
+* Our Support Center, here: [https://www.etoilewebdesign.com/support-center/](https://www.etoilewebdesign.com/support-center/)
 
-* Drag-and-drop product pages layout
-* Product tags
-* Custom fields that can be used to include product manuals, additional information, etc.
-* SEO friendly single product pages
-* Unlimited products
-* Additional images per product
-* Pretty permalinks
-* More layout options
-* Related and Next/Previous product display
-
-For a more in depth list, please visit our FAQ page:
-<http://www.etoilewebdesign.com/ultimate-product-catalogue-faq>
-
-For more questions and support you can post in the support forum:
-<https://wordpress.org/support/plugin/ultimate-product-catalogue>
-
-
-
-= Videos =
-
-Tutorial Part 1
-[youtube http://www.youtube.com/watch?v=9sdHtGGZpKU]
-
-Tutorial Part 2
-[youtube http://www.youtube.com/watch?v=KBhdiNCtLvM]
-
-Premium Features
-[youtube http://www.youtube.com/watch?v=l9mWNqOIB_w]
+-----------------------------------------------------------------------------------
 
 == Screenshots ==
 
-1. The "detail" catalog view
-2. A product's detailed view, with mutiple images that can be clicked to display in the main image area
-3. The "thumbnail" catalog view
-4. The "list" catalog view
-5. The admin area
-
-== Changelog == 
-= 3.4.7 =
-- Fixed a missing files error
-
-= 3.4.6 =
-- Changed the layout of the "Product Pages" tab to help reduce custom page scrambling
-
-= 3.4.5 =
-- Minor CSS update to make the plugin more responsive
-
-= 3.4.4 =
-- Fixed a custom field adding and editing bug
-
-= 3.4.3 =
-- Added an option to display custom fields in the tabbed layout
-- Fixed a few small CSS issues
-- Potentially fixed a missing div problem for the default product page
-
-= 3.4.2 =
-- Fixed a linking error for additional images
-
-= 3.4.1 =
-- Fixed a jQuery conflict error
-
-= 3.4.0 =
-- Major changes in this update, so use caution when upgrading a production site!
-- Added a new premium product page layout option, tabbed, which is completely responsive
-- Added a lightbox option for the images on the product page
-- Added a number of sidebar styling options
-- Fixed a number of small CSS issues and functionality bugs
-
-= 3.3.4 =
-- Fixed a display issue with the mobile version of the custom product page
-
-= 3.3.3 =
-- Fixed a potential notice notification when working with SEO By Yoast
-
-= 3.3.2 =
-- Added extra links to support materials to the dashboard tab
-
-= 3.3.1 =
-- Added the option to display custom fields in the "List" view
-- Fixed a mobile CSS styling issue
-- Fixed a display issue with reordering products within categories
-
-= 3.3.0 = 
-- Added an option to include a product inquiry form (requires Contact Form 7 plugin)
-- Added a number of styling options for the pagination buttons
-- Fixed a couple of small bugs
-
-= 3.2.7 =
-- Condensed the "Options" tab so that it's easier to navigate
-
-= 3.2.6 =
-- Fixed an error where xls spreadsheets weren't allowed to be uploaded
-- Fixed a grammatical error
-
-= 3.2.5 =
-- Fixed a bug that could erase all options and product page layouts on some installations
-
-= 3.2.4 =
-- Minor CSS update for to correct small problems in the recent update
-- Minor javascript fix to correct for incorrect catalogue height on some pages after recent update
-
-= 3.2.3 =
-- Major upgrade to plugin CSS to increase responsivenss (WARNING: may cause any Custom CSS added to not work correctly)
-- Fixed a deprecated YouTube API error
-
-= 3.2.2 =
-- Blank options no longer show in the "Additional Options" area 
-- Additional filtering options are now sorted alphabetically
-
-= 3.2.1 =
-- Fixed category label not displaying when products are filtered
-- Fixed a javascript error most users were getting
-
-= 3.2.0 =
-- Added ability to sort order of products in category by dragging and dropping from the category details page
-- Added ability to sort order of categories, sub-categories, tags and custom fields in the sidebar (careful when upgrading, removes alphabetical ordering)
-- Hide/Show custom field sorting options
-- Option to default show or hide custom fields
-- Option to not display custom fields on the main catalogue page if they are empty
-- Added the "Custom CSS" box to the 'Catalogues' tab
-- Improved initial page load time slightly
-- Fixed an error with xlsx file uploads
-
-= 3.1.11 =
-- Fixed a potential spreadsheet upload error
-
-= 3.1.10 =
-- Fixed a CSS conflict that occurs in the sidebar labels with some themes
-
-= 3.1.9 =
-- Made titles clickable in "Details" layout
-- Fixed a potential extra div error
-
-= 3.1.8 =
-- Included a Greek translation
-- Fixed a small product pages bug
-
-= 3.1.7 =
-- Fixed a custom fields display error
-- Fixed a tag groups tag display error
-
-= 3.1.6 =
-- Fixed an error with file downloads on custom product pages
-
-= 3.1.5 =
-- Fixed a potential error with product descriptions containing HTML tags
-
-= 3.1.4 =
-- Fixed a related products linking error
-- Fixed extra text at the end of exports
-- Fixed a warning on the "options" page
-- Fixed a number of PHP warnings
-- Fixed a minor potential security issue for malicious authenticated users
-
-= 3.1.3 =
-- Security fix for potential SQL-injection, depending on Options settings
-
-= 3.1.2 =
-- Security fix for spreadsheet uploads
-
-= 3.1.1 =
-- Fixed a selector conflict with WP Super Cache
-- Fixed a number of PHP notices
-
-= 3.1.0 =
-- Added SEO By Yoast Integration
-- Added ability to add YouTube videos for products
-- Added ability to group tags
-- Added option to display additional product information on the right side of the product page
-- Added ability to sort additional images
-- Added ability to export to CSV
-- Switched the default action when editing an item so that admins remain on the edit page
-- Fixed a bug with the "file" custom field type
-- Fixed an include error for the admin area
-
-= 3.0.16 =
-- Fixed an error with the recent and random product widgets
-
-= 3.0.15 =
-- Fixed an error with Next/Previous products
-
-= 3.0.14 =
-- Fixed a mobile pagination error
-- Fixed a text filtering problem with pagination
-
-= 3.0.13=
-- Fixed a small display bug
-
-= 3.0.12 =
-- Fixed an error with the access role option
-
-= 3.0.11 =
-- Fixed a mobile display issue
-- Fixed an error with setting user access role
-
-= 3.0.10 =
-- Added a new premium option to set the user role that can access the plugin menus
-
-= 3.0.9 =
-- Fixed a related products link error
-
-= 3.0.8 =
-- Made searcing more than one custom field at a time possible
-- Returned the missing category labels on category pages
-
-= 3.0.7 =
-- Fixed a mobile page display error
-
-= 3.0.6 =
-- Removed some debugging code accidentally left in from the last update
-
-= 3.0.5 =
-- Fixed an error on for checkbox custom field types
-
-= 3.0.4 =
-- Fixed a Tags display problem with category items in catalogues
-
-= 3.0.3 =
-- Fixed an error with filtering and labels
-- Fixed a List-view height adjustment problem
-
-= 3.0.2 =
-- Fixed a repeating div that would be added in AJAX filtering
-
-= 3.0.1 =
-- Fixed a filtering error
-
-= 3.0.0 =
-- Added the ability to search custom fields
-- Added a new display style for the catalogue
-- Added arguments to the new "insert-products" shortcode, so that products from a category or sub-category can be displayed
-- Fixed a number of small display bugs
-
-= 2.6.1 =
-- Changed the behaviour of the new insert-products shortcode, when a catalogue_url is included
-
-= 2.6 =
-- Added 3 widgets, which let users display a number of products
-- Added a new shortcode, insert-products, which lets users insert a small number of products
-- Added next/previous products for individual products
-- Added related products feature for individual products
-- Fixed a "Back to Catalogue" potential link error
-- Fixed an image display problem with https sites
-
-= 2.5.12 =
-- Fixed error where links would not open in new windows even with the option set
-
-= 2.5.11 =
-- Added a search box for products
-- Fixed a translation filtering error
-- Fixed a redirect error for sub-domains using default WordPress permalink structure
-
-= 2.5.10 =
-- Fixed a small product pages bug
-
-= 2.5.9 = 
-- Fixes an important jquery error on non-plugin pages
-
-= 2.5.8 =
-- Fixed a linking error for users using the default WordPress link structure
-
-= 2.5.7 =
-- Added a label for "Back to Catalogue"
-- Added an option to not maintain filtering between page loads, to address some redirection issues
-- Fixed an export to Excel error
-- Fixed a filtering error on custom product pages
-
-= 2.5.6=
-- Correct version of Shortcodes.php file included with this version (sorry!)
-
-= 2.5.5 =
-- Included the missing "Export to Excel" files
-- Added an option to turn on custom field slug conversions (which are not set to off by default)
-
-= 2.5.4 =
-- Filtering settings are preserved when using the "Back to Catalogue" link
-- Added an option to display a message when no products are found 
-- Added a label for the placeholder text in the text search field
-
-= 2.5.3 =
-- Fixed a checkboxes error with custom fields
-- Additional fix for products not displaying on homepage
-
-= 2.5.2 =
-- Fixed a bug that didn't allow catalogues to be displayed on home pages
-- Fixed a labelling search bug
-
-= 2.5.1 =
-- Added custom fields to Fancyboxes
-
-= 2.5 =
-- Allows relabelling of some front-end text, the first in a series of major new features being rolled out over the next few weeks
-
-= 2.4.43 =
-- Fixes an image switching error with mobile product pages
-- Support for FancyBox for WP is being dropped. We believe the plugins will still work together to create a FancyBox for each product, but we're no longer actively supporting that feature.
-
-= 2.4.42 =
-- Fixed a mobile custom product page bug
-
-= 2.4.41 =
-- Made the selector for custom product page list elements more selective
-- Added a div around custom fields in the thumbnail and details layouts, so that they can displayed or hidden
-- Included an improved version of the Brazillian Portugese translation
-
-= 2.4.40 =
-- Fixed two potential admin display issues
-
-= 2.4.39 =
-- Shortcodes can be used in "text" custom elements
-- Fixes custom product page element styles
-
-= 2.4.38 = 
-- Removes the grey background from custom product page elements
-
-= 2.4.37 =
-- Fixed a potential filtering error
-
-= 2.4.36 =
-- New premium feature: ability to export all products to Excel!
-
-= 2.4.35 =
-- Added the abilit to put [upcp-price] in a product's description, to include the product's price
-
-= 2.4.34 =
-- Fixed a bug on the sub-category details page
-
-= 2.4.33 =
-- Fixed a commenting error with AJAX searches
-
-= 2.4.32 =
-- Added support for additional shortcodes inside of descriptions
-
-= 2.4.31 =
-- Fixed the translation bug where no products would display if "Name" had been translated
-
-= 2.4.30 =
-- Fixed a spreadsheet upload warning when no custom fields existed
-
-= 2.4.29=
-- Added a new .pot file with many of the missing strings
-- Fixed an error that was preventing images from being uploaded
-
-= 2.4.28 = 
-- Prices with text and currency signs will now be sorted correctly
-- Fixed sorting so that products stay sorted after selecting a category, sub-category or tag
-
-= 2.4.27 =
-- Added tooltip help for the "Options" tab
-- Made it easier to identify category, sub-category and tag IDs
-- Fixed an error where products deleted from catalogues were left in as blank entries
-
-= 2.4.26 =
-- Custom product pages minor update
-- Fixed a fields label error
-
-= 2.4.25 =
-- Added hierarchical sub-categories as a sidebar option 
-
-= 2.4.24 =
-- Fixed a product pages CSS error
-
-= 2.4.23 =
-- Fixed a javascript error with image zooming in FancyBox
-- Updated to the newest version of Gridster
-
-= 2.4.22 =
-- Fixed a sorting PHP warning
-
-= 2.4.21 =
-- Categories, Sub-Categories and Tags are now listed alphabetically
-- Added an option to add pagination links to the bottom of the page
-- Fixed a small jQuery error
-
-= 2.4.20 =
-- Fixed an error with "Checkbox" type custom fields
-
-= 2.4.19 =
-- Fixed a "Custom Product Pages" error
-- Fixed an error where the "Product Sort" option was not displaying on the "Options" page
-
-= 2.4.18 =
-- "Catalogue ID" can now be included in spreadsheet product uploads to add a product directly to a certain catalogue
-- Eliminated "Mobile Stylesheet" as an option, since there is a custom mobile layout option
-- Fixed a product page bug that didn't allow images at the start of a product description
-- Eliminated the max-width and max-height restrictions on main images on custom product pages
-- Renamed French and Spanish translation files so that they should work correctly
-- Fixed a bug where mobile layout images couldn't be swapped
-
-= 2.4.17 =
-- Fixed a product page error
-
-= 2.4.16 =
-- Fixed a product page error
-- Fixed the "Back to Catalogue" link
-
-= 2.4.15 =
-- Added a second custom product display, "Mobile", that can be used for small-screen devices
-- Added options to customize the "Sort By" box so that it can be eliminated or reduced
-
-= 2.4.14 =
-- Product link can now be included in a spreadsheet upload
-- An XML sitemap of the products in a catalogue is automatically generated each time a product is created or edited
-
-= 2.4.13 =
-- Tags should now display correctly on custom product pages
-- Categories, Sub-Categories and Tags can now be added as URL parameters (categories, subcategories, tags are the parameters)
-
-= 2.4.12 =
-- In the sidebar, Category, Sub-Category and Tag checkboxes should now be ordered by date created
-
-= 2.4.11 =
-- Current layout is now saved when visitors switch pages using pagination
-- Fixed a height error for pagination
-
-= 2.4.10 =
-- Fixed an error when custom fields and tags were uploaded in the same sheet
-
-= 2.4.9 =
-- Fixed two custom product page image bugs
-
-= 2.4.8 =
-- Added an option to deal with Custom product pages on mobile devices
-
-= 2.4.7 =
-- Fixed category and sub-category count when pagination is being used
-
-= 2.4.6 =
-- Fixed sorting by name error
-
-= 2.4.5 =
-- Extended "AND" logic for Tags to AJAX filtering
-- Fixed a small error with "Delete All Products"
-
-= 2.4.4 =
-- Fixed the filtering errors with "Molbile Stylesheet"
-
-= 2.4.3 =
-- Fixed a responsive CSS error that was stopping clicks from being able to be clicked
-
-= 2.4.2 =
-- Fixed an error where multiple custom fields being uploaded from a spreadsheet would sometimes fail
-- Added a Russian translation
-
-= 2.4.1 =
-- Fixed a custom fields error
-- Changed the text on the product pages restore confirmation
-
-= 2.4 =
-- Added pagination, allowing large catalogues to be split onto multiple pages
-- Fixed a small display error
+1. Catalog thumbnail view
+2. Catalog detail view
+3. Catalog list view
+4. Catalog with minimalist/hover style applied
+5. Default product page
+6. Tabbed product page also showing related products
+7. Additional information tab on product page
+8. Product inquiry form
+9. Reviews enabled on product page
+10. Ratings enabled on catalog page
+11. FAQs enabled on product page
+12. Image gallery on product page
+13. Video on product page
+14. Lightbox image gallery on product page
+15. Shop style product page
+16. Social sharing options
+17. Product comparison
+18. WooCommerce integration enabled
+19. Catalog overview mode
+20. Page edit screen with block added
+21. Admin dashboard screen
+22. Products overview page
+23. Product edit page
+24. Catalogs overview page
+25. Catalog edit page
+26. Basic settings page
+27. Styling settings page
+
+-----------------------------------------------------------------------------------
+
+== Changelog ==
+
+= 5.2.7 (2023-06-02) =
+- Fixed issue in which custom fields with a dropdown control type were not resetting after clicking the "Clear All" button.
+
+= 5.2.6 (2023-05-31) =
+- Updated the validation for a few fields in the walk-through.
+
+= 5.2.5 (2023-04-19) =
+- Added an option to search without accents (e.g. if you search for rose, it will also return rosé).
+
+= 5.2.4 (2023-03-30) =
+- Updated blocks for compatibility with WordPress 6.2.
+- Fixed an issue with filtering and double results when infinite scroll was enabled.
+- Fixed an issue in which the Settings sub-menu wasn't displaying in the WordPress sidebar. 
+- Fixed an issue in which the slider control type for custom fields was only showing results for values that fell on the handles of the slider and not the values in between.
+- Updated the styling of several buttons in the admin. 
+- Updated a few navigation links in the admin.
+
+= 5.2.3 (2023-01-04) =
+- Fixes a potential fatal error on the settings page.
+
+= 5.2.2 (2023-01-03) =
+- Update to the settings page to correct an issue that could cause an error to display for checkbox options.
+
+= 5.2.1 (2022-12-23) =
+- Fixes an issue in which custom fields were sometimes not correctly filtering for specific values.
+
+= 5.2.0 (2022-12-21) =
+- Added new tutorial videos to the settings pages that explain and show what each option does.
+- Added quick links to the admin about page to re-run the walk-through, view tutorial videos and suggest a feature.
+- Added new popular products Gutenberg block and shortcode.
+- Added new recent products Gutenberg block and shortcode.
+- Added new random products Gutenberg block and shortcode.
+- Added new product search Gutenberg block and shortcode.
+- Updated the insert-products shortcode with extra logic, so it can be used, for example, to display popular, recent or random products.
+- Fixed an issue in which custom fields were sometimes filtering extra products.
+- Fixed lightbox functionality issues (including background click not working and associated console errors).
+- Fixed issue with alphabetical sort buttons not working on the catalog edit screen after having added items to the catalog.
+- Fixed an issue with failed imports when using the Display column in your spreadsheet. 
+- Small styling updates for the admin/dashboard.
+- Tested with PHP 8.1 and corrected for a warning that was appearing when submitting a review on the product page.
+
+= 5.1.10 (2022-09-07) =
+- Updated the automatic related products to make sure they pull products from the same category.
+
+= 5.1.9 (2022-08-22) =
+- Updating a condition to make sure the new block patterns don't cause an error on WordPress installations using a version of WordPress older than 5.5.
+
+= 5.1.8 (2022-08-09) =
+- Introducing new block patterns, which can be used to integrate a whole catalog or featured products directly into your block-based theme templates.
+- Added a block to insert specific (featured) products into a page or post.
+- Added catalog and tag IDs to their respective admin overview tables.
+- Custom field input values are now automatically sorted alphabetically.
+- Fixed an issue causing the search widget to not work.
+- Fixed a CSS conflict with the Order Tracking plugin causing the styling of some toggle switches to be incorrect.
+
+= 5.1.7 (2022-05-20) =
+- Tested with WordPress 6.0.
+
+= 5.1.6 (2022-05-17) =
+- Added previews for Gutenberg blocks (i.e. on the page edit screen, when you add the block, it will show a preview).
+- Fixed incorrect URL for catalog links on the admin dashboard page.
+
+= 5.1.5 (2022-05-10) =
+- Updating escaping to fix issue with before and after widget code displaying.
+
+= 5.1.4 (2022-04-22) =
+- Added the ability to update existing products via spreadsheet (via ID column, which has been added to both the export and import).
+- Added a link type custom field.
+- Added a rich text editor type custom field.
+- Added "Back to Catalog" link to product comparison page. 
+- Added an alt attribute to Product Image elements.
+- Added tabindex to "Compare" button.
+- Removed extra spaces that were showing in the edit text areas for certain fields.
+- Fixed an issue in which the handles on the price slider filter wouldn't return to their starting positions when using the "Clear All" button.
+- Fixed an issue in which the "Clear All" button wasn't appearing when some custom field control types were used.
+- Fixed an issue in which setting "Catalog Overview Mode" to "Categories and Subcategories" was causing the front end to display nothing when selecting a category with no subcategory.
+- Fixed an issue in which, if a product had only one additional image, it couldn't be deleted.
+- Fixed an issue in which the next page button was going past the last page.
+- Fixed a styling issue that was causing overly-cropped images on the product comparison page.
+
+= 5.1.3 (2022-04-13) =
+- Fixed an issue in which the filtering wasn't being applied for custom fields in some instances.
+
+= 5.1.2 (2022-04-11) =
+- Fixed an issue in which the slider control type for number custom fields was filtering products for exact values instead of everything in between.
+- Styling updates for admin screens.
+
+= 5.1.1 (2022-03-01) =
+- Updated import to allow text custom field values to include some limited HTML.
+- Fixed an issue with the export of custom fields with multiple values.
+
+= 5.1.0 (2022-02-01) =
+- Fixed compatibility issue when using block-based themes.
+- Changed how premium settings areas are previewed.
+
+= 5.0.31 (2022-01-21) =
+- Fixed an issue in which the Details button in the lightbox mode was not linking to the product page.
+- Updated an incorrect function name that was causing an internal server error in certain instances.
+
+= 5.0.30 (2022-01-14) =
+- Fixed an issue with the lightbox mode still redirecting to the product page.
+- Fixed an issue in which Gutenberg block editor code was being output in the lightbox mode lightbox.
+
+= 5.0.29 (2022-01-06) =
+- Corrected an issue that was causing all products to be displayed even if you chose a specific filter.
+
+= 5.0.28 (2022-01-04) =
+- Updated class naming and domain issues.
+- Fixed a few styling issues with the walk-through.
+
+= 5.0.27 (2022-01-04) =
+- Updates to sanitizing and escaping. 
+- Update to the way files are called.
+
+= 5.0.26 (2021-12-29) =
+- Updating nonce and authorization checks for AJAX calls.
+- Updating sanitizing and escaping. 
+
+= 5.0.25 (2021-12-01) =
+- Updating the enqueue condition for the catalog block to fix an issue with the media library.
+
+= 5.0.24 (2021-11-24) =
+- Changed the catalog selection in the Gutenberg block to a dropdown (with all existing catalogs) instead of the text input for the ID.
+- Localized the strings in the Gutenberg block.
+- Fixed a warning for null product image on the product edit screen related to PHP 8.
+
+= 5.0.23 (2021-11-04) =
+- Updates to SAP library version 2.6.1
+- Makes the display of a number of settings conditional on the value of other settings
+- Allows the use of paragraphs and line breaks within the product description on the single product page
+- Changes the sanitization function for custom fields, allowing HTML tags to be used if the template is edited
+
+= 5.0.22 (2021-10-18) =
+- Minor update so that prices are not appended to the URL if price filtering is disabled
+
+= 5.0.21 (2021-10-13) =
+- Fixed an error where some products created in the installation walk-through weren't being displayed in the published list
+
+= 5.0.20 (2021-09-10) =
+- Updated the settings page library.
+- Fixed an issue in which, on import, the category was not being assigned if no sub-category was specified.
+- Updated the import so the display setting for a product is enabled by default.
+- Fixed an issue with the product page template when pretty permalink were enabled and the catalog was on your homepage.
+- Updated the WooCommerce sub-settings to be conditional on the main WooCommerce sync being enabled.
+- Added alphabetical sort buttons to the catalog edit screen.
+
+= 5.0.19 (2021-09-03) =
+- Added the 'Catalog ID' column back into the catalogs screen.
+- Removed a warning on the catalog edit screen if a catalog had no items in it.
+
+= 5.0.18 (2021-08-24) =
+- Added additional images to the export/import.
+- Added an id attribute to taxonomy filter radio buttons and the for attribute to their labels.
+- Removed a warning.
+
+= 5.0.17 (2021-08-13) =
+- Fix for the catalogs not being displayed in the dashboard when navigating from the sidebar submenu
+- Fix for the last image and video not being deletable from a product
+- Fix for added videos showing a broken thumbnail on the product edit screen
+- Corrected a few minor styling issues with the comparison page images, the inputs for the custom field slider control type, related product thumbnail wrapping, thumbnail images on default product page and the strikethrough of the original price on the product page for sale items.
+
+= 5.0.16 (2021-08-10) =
+- Fixed an issue causing the newest/oldest sorting to be reversed.
+- Fixed an issue with imported products not showing up in the Products tab in the admin.
+- Fixed a styling issue sometimes causing the catalog to use a different font family.
+- Fixed an issue with the Display Product Catalog block not correctly displaying the catalog.
+- Update for the deprecated block_categories.
  
-= 2.3.12 =
-- Catalogue product count should now be accurate
-- Product page grid widths, heights and margins are now adjustable
-- "Restore Default" button added to the individual product pages
-- Made saving of a custom layout an explicit action instead of saving each time an action was performed
 
-= 2.3.11 =
-- It is now possible to put code into the "Image" field instead of the URL of an image (ex: to add a slideshow for a product instead of an image)
-- Added a visual editor for "Description" instead of a plain text area input
- 
-= 2.3.10 = 
-- Made it possible to upload "slugs" from a spreadsheet
+= 5.0.15 (2021-07-28) =
+- Fixed an issue with the value for a file type custom field being erased when updating a product.
+- Fixed an issue in which the thumbnail view was showing for all views in paginated catalogs.
+- Fixed an issue with the thumbnail view not loading when the catalog had something other than thumbnail set as the starting layout.
+- Fixed a notice that was causing custom fields to not display on the custom product page.
 
-= 2.3.9 = 
-- Updated CSS for single product pages for small screen devices
-- Added a advisory on the Custom Product Pages feature tab
-- Added a Dutch translation
+= 5.0.14 (2021-07-27) =
+- Added an option to choose the number of columns in the thumbnail view for large screens.
+- Added the ability to drag and drop to re-order items on the products post type and taxonomy screens, so you can now drag and drop categories and tags into the order you want, and also drag and drop products within a category.
+- Fixed an issue in which you couldn't update the featured image for a product that was using an external image URL in the old version.
+- Fixed an issue in which deleted products were still showing as a blank row on the catalog edit screen.
+- Fixed an issue in the Post ID column on the Products admin screen, where the word "Duplicate" was showing instead of the ID.
+- Fixed a styling issue in which, in certain circumstances, there was a missing margin between thumbnails.
+- Fixed an issue with the currency symbol still showing when no price was set for a product.
+- Fixed an issue with custom fields not filtering if they were using the dropdown control type.
+- Made it so the upgrading process (from old version to new version of the plugin) runs in the background until complete (to correct the issue those with large catalogs were sometimes seeing if it timed out and didn't restart). 
 
-= 2.3.8 = 
-- Fixed a spreadsheet upload bug
+= 5.0.13 (2021-07-23) =
+- <strong>Please be sure to back up your site before updating. The 5.0 update includes a big change to the construction of the plugin, so please take caution and test before updating on a live site (or wait a few days before updating in case some minor corrective updates need to be released).</strong>
+- Fixed sale flag not showing.
+- Corrected URL for catalog shortcut links on the Dashboard screen.
+- Enables custom field file URLs to be links when used in custom tabs.
+- Further update for parse errors when updating on Windows servers.
 
-= 2.3.7 = 
- - Added a new product search option
- - Fixed an error on the "Product Page" tab
- - Added Spanish translation files
+= 5.0.12 (2021-07-21) =
+- <strong>Please be sure to back up your site before updating. This update includes a big change to the construction of the plugin, so please take caution and test before updating on a live site (or wait a few days before updating in case some minor corrective updates need to be released).</strong>
+- Removed UPCP_Main.php (no more duplicate plugin entry or false update flag).
+- Fixed a scrolling/styling issue with the "add items" pop-up on the catalog edit screen.
+- Updated the output of the value for a file type custom field in the Additional Information tab, so the URL is a link.
+- Regular price now re-shows, crossed out, in addition to the sale price.
+- Added Restore Default Layout button to custom product page layout editor screen.
+- Fixed the link for the "Back" element on the custom product page, so it now correct goes back to the catalog. 
+- Further changes to rectify parse errors happening on Windows servers.
 
-= 2.3.6 = 
-- Fixed a search error related to the new options
+= 5.0.11 (2021-07-21) =
+- <strong>Please be sure to back up your site before updating. This update includes a big change to the construction of the plugin, so please take caution and test before updating on a live site (or wait a few days before updating in case some minor corrective updates need to be released).</strong>
+- Fixed a scrolling/styling issue with the "add items" pop-up on the catalog edit screen.
+- Updated the output of the value for a file type custom field in the Additional Information tab, so the URL is a link.
+- Regular price now re-shows, crossed out, in addition to the sale price.
+- Added Restore Default Layout button to custom product page layout editor screen.
+- Fixed the link for the "Back" element on the custom product page, so it now correct goes back to the catalog. 
+- Further changes to rectify parse errors happening on Windows servers.
 
-= 2.3.5 = 
-- Make searching more than 1 category at a time possible
-- Added an option to search product description as well as name
-- Fixed a problem that prevented most users from using the custom product pages feature
-- Fixed a number of small CSS problems
+= 5.0.10 (2021-07-20) =
+- <strong>Please be sure to back up your site before updating. This update includes a big change to the construction of the plugin, so please take caution and test before updating on a live site (or wait a few days before updating in case some minor corrective updates need to be released).</strong>
+- Fix for the list view description being incorrectly escaped.
+- Fix for the "Product Displaying" toggle not being correctly applied.
+- Fix for the drag and drop catalog item re-ordering.
+- Styling fix for the "add items" pop-up being partially hidden for some screen resolutions.
+- Re-introduces the "Edit Product" link in the admin bar.
 
-= 2.3.4 = 
-- Fixed a spreadsheet upload error
+= 5.0.9 (2021-07-20) =
+- <strong>Please be sure to back up your site before updating. This update includes a big change to the construction of the plugin, so please take caution and test before updating on a live site (or wait a few days before updating in case some minor corrective updates need to be released).</strong>
+- Fix for the issue with duplicated products after updating from 4.4.x to 5.0.x.
+- Fix for a parse issue on Windows servers
+- Facilitating the re-import process for users who have products not displaying after updating from 4.4.x to 5.0.x.
 
-= 2.3.3 =
-- Fixed a permalinks error after AJAX sorting
-- Fixed a "Read more" link error
+= 5.0.1 to 5.0.8 (2021-07-19) =
+- Fixes for versioning issues/errors relating to activation of the 5.0 update.
 
-= 2.3.2 =
-- Fixed a JQuery error
-
-= 2.3.1 =
-- Fixed a product count error
-
-= 2.3 =
-- New premium feature: custom product page design, let's you drag and drop product pages to change the layout in the back-end
-- Contact forms and PayPal buttons can be included on product pages with the new layout feature
-- Added the ability to add multiple additional images at once
-- Custom fields can now be uploaded with products being uploaded by spreadsheet (Limited testing, please let us know if you find any errors with this)
-- Added a new custom field type, file, so that PDF's and other files can be included with products
-- Added a "Details" image option, so that the arrow can be replaced with any image of your choosing
-- Added an italian language translation
-- Fixed a small spreadsheet error
-
-= 2.2.12 =
- - Fixed a display bug for individual product pages
-
-= 2.2.11 =
-- Major custom fields improvement: allow fields to be displayed on main catalogue pages
-- Minor css upgrades to the main catalogue pages
-
-= 2.2.10 =
-- Fixed an individual product pages bug
-
-= 2.2.9 =
-- Fixed the pretty permalinks rewrites to be compatible with recent WordPress updates
-- Added a "Delete All Products" button
-- Added the ability to require confirmation
-- Added Turkish as a language option
-
-= 2.2.8 =
-- Disabled the "Enter" function on the search form
-- Fixed spreadsheet upload bugs
-- Fixed FancyBoxes after AJAX search
-
-= 2.2.7 =
-- Fixed "custom fields" error with no validation entered
-
-= 2.2.6 =
-- Added French as a supported language
-- Improved the AJAX search function
-
-= 2.2.5 =
-- Added css support for a large number of new themes
-
-= 2.2.4 =
-- Added case-insensitive search for AJAX filtering
-
-= 2.2.3 =
-- Small update for uploading products from spreadsheets
-
-= 2.2.2 =
-- Bug fixes for custom fields
-- Shortcodes can now be used in product descriptions
-
-= 2.2.1 =
-- Two small bug fixes
-
-= 2.2 =
-- New Premium feature: Custom Fields!
-- Custom fields let you add fields to your products, that can be included in the description of your products via shortcode, so that you can have a common product template
-- New feature: Non-displayed products
-- Non-displayed products let you temporarily remove a product from all catalogues (ex: if it's out of stock)
-- Tags can now be imported via spreadsheet
-- Catalogue height now adjusts depending on the size of the current layout
-- Tutorial videos are available in the FAQ section
-
-= 2.1.5 =
-- Small bug fix
-- Some language files added
-
-= 2.1.4 =
-- Three small fixes for the front-end and product page
-
-= 2.1.3 =
-- Small fix for "Tags" functionality with new AJAX filtering
-- Small optimizations to return catalogue quicker after users filter the catalogue
-
-= 2.1.2 =
-- Beta AJAX catalogue filtering as an option
-- Number of characters in a product's "details" view description added as an option
-- Fixed a small catalogue detail's page bug
-
-= 2.1 =
-- Implemented view counting for products, based on clicks on title or image links
-- Added mobile stylesheet (v1) and product sorting for premium users
-- Increased compatibility for uploaded product spreadsheets (more forgiving of small errors in column names, better error reporting)
-- Attempted to make tables compatible with MySQL strict mode
-- Fixed an error where SEO friendly URL's stopped working shortly after being setup
-
-= 2.0.1 =
-- Added in the WordPress Uploader for product images
-- SEO friendly single product URLs are now an option
-- Plugin tables now use UTF8 encoding
-
-= 2.0 =
-- Added an 'Options' page
-- Added 'Read More' as an option on the 'Options' page
-- Added 'Color Scheme' as an option on the 'Options' page
-- Added 'Tags Logic' as an option on the 'Options' page
-- Added 'Product Links' as an option on the 'Options' page
-- Implemented a premium version for new users
-
-= 1.2 = 
-- Added pagination for the admin pages to allow easier access to all products
-- Added a 'product link' field for sites participating in affiliate programs
-- Made shortcode easier to find
-- Added single product pages if FancyBox for WordPress isn't installed
-- Fixed the issue with product images being deleted on upgrade
-- Fixed category labels behaviour when products are being filtered
-
-= 1.1 = 
-- Added localization (hopefully!)
-- Added an "initial_layout" shortcode
-- Added an "exclude_layouts" shortcode
-- Added individual product URLs, when blogs have FancyBox for WordPress installed
-- Made a number of small changes
-
-= 1.0 =
-Initial Version.
-
-== Upgrade Notice ==
-
-= 2.1.4 = 
-
-- Three small fixes for the front-end and product page
+= 5.0.0 (2021-07-19) =
+- <strong>5.0.0 is here with huge improvements to catalog performance, usability, design and layout, UI/UX, filtering, and so much more!</strong>
+- <strong>This update includes a big change to the construction of the plugin, so please take caution and test before updating on a live site (or wait a few days before updating in case some minor corrective updates need to be released).</strong>
+- <strong>Please also double check after updating to see if the plugin was automatically re-activated. If not, you just need to manually click the Activate button.</strong>
+- <strong>The class names/IDs/selectors have been standardized across the whole plugin. This was necessary and long overdue. However, as a consequence, it is quite likely that, if you are using custom CSS, some or many of the selectors will have been updated. If you find some of your custom CSS no longer working, please just provide us with your existing custom CSS and we will provide you with updated CSS to do the same.</strong>
+- Rebuilt the plugin, from the ground up, to be object oriented.
+- Products and catalogs are now custom post types! Make use of Gutenberg and WordPress's built-in post type meta structure to edit your products.
+- Categories and Tags are now taxonomies. Easily set up categories and sub-categories, and assign a product to multiple categories!
+- <strong>Huge performance boost relating to query and page load time, due to the use of post types and taxonomies, and a completely rewritten filtering and querying system.</strong>
+- Default catalog design and layout and have been completely overhauled. The catalog looks great right out of the box!
+- The premium styling options have been totally revamped, including a brand new fixed thumbnail size option, rewritten catalog styles, consolidated font/color/border/etc. options, and much more!
+- Updated the premium product page types to be even more functional and sleek.
+- Updated the product edit UI to be more focused and clear.
+- Updated the catalog edit UI.
+- Updated the structure of the settings pages.
+- Consolidated many settings.
+- All filtering and sorting now applies across pagination.
+- Updated the structured data to use the new JSON-LD format.
+- Updates to the breadcrumbs.
+- Cleaned up/fixed styling and functionality issues relating to the lightbox features.
+- Fixed issues relating to the infinite scroll feature.
+- Fixed issue with thumbnail support applying to certain images it shouldn't have been (e.g. the main image on certain product page layouts). 
+- Fixed several issues related to the WooCommerce sync/integration.
+- Updated several option descriptions, to clarify them.
+- Updated the conditional loading of CSS and JS assets. 
+- Updated labelling options.
+- Cleaning up/removing unnecessary code and files.
+- Eliminating notices.
+- JS localization.
+- Updated .pot file. (If you have created a translation based on the old version, you might need to just update your .po file for this new version.)
