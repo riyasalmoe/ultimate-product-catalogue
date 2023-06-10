@@ -18,8 +18,8 @@ jQuery(document).ready(function() {
 
 		jQuery('.ewd-upcp-welcome-screen-show-created-categories').show();
 
-		var category_name = jQuery('.ewd-upcp-welcome-screen-add-category-name input').val();
-		var category_description = jQuery('.ewd-upcp-welcome-screen-add-category-description textarea').val();
+		var category_name = jQuery('.ewd-upcp-welcome-screen-add-category-name input').val().replace(/(<([^>]+)>)/ig,"");
+		var category_description = jQuery('.ewd-upcp-welcome-screen-add-category-description textarea').val().replace(/(<([^>]+)>)/ig,"");
 
 		jQuery('.ewd-upcp-welcome-screen-add-category-name input').val('');
 		jQuery('.ewd-upcp-welcome-screen-add-category-description textarea').val('');
@@ -47,7 +47,7 @@ jQuery(document).ready(function() {
 	});
 
 	jQuery('.ewd-upcp-welcome-screen-add-catalog-page-button').on('click', function() {
-		var catalog_name = jQuery('.ewd-upcp-welcome-screen-add-catalog-page-name input').val();
+		var catalog_name = jQuery('.ewd-upcp-welcome-screen-add-catalog-page-name input').val().replace(/(<([^>]+)>)/ig,"");
 
 		var categories = [];
 		jQuery('.ewd-upcp-welcome-screen-add-product-category select option').each(function() {
@@ -71,7 +71,7 @@ jQuery(document).ready(function() {
 	});
 
 	jQuery('.ewd-upcp-welcome-screen-save-options-button').on('click', function() {
-		var currency_symbol = jQuery('input[name="currency_symbol"]').val();
+		var currency_symbol = jQuery('input[name="currency_symbol"]').val().replace(/(<([^>]+)>)/ig,"");
 		var color_scheme = jQuery('input[name="color_scheme"]:checked').val();
 		var product_links = jQuery('input[name="product_links"]:checked').val();
 		var product_search = jQuery.map( jQuery( 'input[name="product_search\\[\\]"]:checked' ), function( n, i ) { return n.value; } ).join( ',' );
@@ -96,11 +96,11 @@ jQuery(document).ready(function() {
 
 		jQuery('.ewd-upcp-welcome-screen-show-created-products').show();
 
-		var product_name = jQuery('.ewd-upcp-welcome-screen-add-product-name input').val();
+		var product_name = jQuery('.ewd-upcp-welcome-screen-add-product-name input').val().replace(/(<([^>]+)>)/ig,"");
 		var product_image = jQuery('.ewd-upcp-welcome-screen-add-product-image input[name="product_image_url"]').val();
-		var product_description = jQuery('.ewd-upcp-welcome-screen-add-product-description textarea').val();
+		var product_description = jQuery('.ewd-upcp-welcome-screen-add-product-description textarea').val().replace(/(<([^>]+)>)/ig,"");
 		var product_category = jQuery('.ewd-upcp-welcome-screen-add-product-category select').val();
-		var product_price = jQuery('.ewd-upcp-welcome-screen-add-product-price input').val();
+		var product_price = jQuery('.ewd-upcp-welcome-screen-add-product-price input').val().replace(/(<([^>]+)>)/ig,"");
 
 		jQuery('.ewd-upcp-welcome-screen-add-product-name input').val('');
 		jQuery('.ewd-upcp-welcome-screen-image-preview').addClass('upcp-hidden');

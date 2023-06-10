@@ -363,7 +363,7 @@ jQuery( document ).ready( function() {
 		jQuery( '#ewd-upcp-price-range input[name="ewd-upcp-price-slider-max"]' ).val( jQuery( '#ewd-upcp-price-range input[name="ewd-upcp-price-slider-max"]' ).data( 'max_price' ) );
 
 		jQuery( '.ewd-upcp-catalog-sidebar-category input, .ewd-upcp-catalog-sidebar-subcategory input, .ewd-upcp-catalog-sidebar-tag input, .ewd-upcp-catalog-sidebar-custom-field input' ).prop( 'checked', false );
-		jQuery( '.ewd-upcp-catalog-sidebar-categories select, .ewd-upcp-catalog-sidebar-subcategories select, .ewd-upcp-catalog-sidebar-tags select, .ewd-upcp-catalog-sidebar-custom-field select' ).val( 'all' );
+		jQuery( '.ewd-upcp-catalog-sidebar-categories select, .ewd-upcp-catalog-sidebar-subcategories select, .ewd-upcp-catalog-sidebar-tags select, .ewd-upcp-catalog-sidebar-custom-field-div select' ).val( 'all' );
 
 		ewd_upcp_setup_sliders();
 
